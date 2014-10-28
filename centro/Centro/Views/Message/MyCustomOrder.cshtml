@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "ViewRequest";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title
+{
+ My Custom Request
+}
+@{
+    GetRequestInfoByRequestId_Result request = (GetRequestInfoByRequestId_Result)ViewBag.Request;
+    List<InvoiceViewModel> invoiceList = (List<InvoiceViewModel>)ViewBag.Invoices;
+    //var Manufacturers = ViewBag.Manufacturers;    
+    var requestStatus = (List<SelectListItem>)ViewBag.StatusList;
+    var requestStatusList = new SelectList(requestStatus, "Value", "Text", requestStatus.Where(z => z.Selected == true).Select(z => z.Value).FirstOrDefault());
+    SiteUserDetails CentroUsers;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+    CentroUsers = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+
+    var buyer = string.IsNullOrEmpty(request.BuyerUserName) ? null : UsersHandler.UserByUsername(request.BuyerUserName).Object;
+    var seller = UsersHandler.UserByUsername(request.SellerUserName).Object;
+
+    var buyerShop = buyer != null ? SellersHandler.ShopByUserId(buyer.UserID).Object : null;
+    var sellerShop = SellersHandler.ShopByUserId(seller.UserID).Object;
+}
+
+<aside class="floatLeft left-side">
+    @Html.Partial("_LeftMenu")
+<br />
+   @Html.Partial("_MessageContratorMenuLeft")
+</aside>
+<div class="right-side floatRight">
+	<div class="box">
+		<div class="box-inner pb20">
+            <div class="breadcrums"><a href="@Url.Action("Jobs", "User")">Jobs</a> > <a href="@Url.Action("MyContracts", "User")">Manage My Team</a> > 
+                <a href="@Url.Action("MyContracts", "User")">Active Contracts</a> > @request.BuyerUserName</div>
+			<div class="row pt10" id="Result">
+            @using (Ajax.BeginForm("UpdateCustomOrderRequest", "Shops", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "Request.OnRequestComplete" }, new { @name = "customRequest" }))
+            {
+                @Html.Hidden("RequestID", request.RequestID)
+                @Html.Hidden("From", (string)ViewBag.From)
+                <input type="hidden" id="hdnFiles" name="hdnFiles" value="" />
+				<div class="actv-contrat-main">
+					<div class="actv-contrat-bnr1 p15 mb10 botline ffamily-Arial">
+						<h2 class="ffamily-Arial">
+                        <span class="lbltitle">@request.RequestTitle</span>
+                        <input type="text" class="txttitle greyline p5 black f12" style="display:none;" />
+                        <a class="ml5 edit f12 mt5 read-more colorOrange" href="javascript:;" onclick="ChangeTitle(this, 'title', @request.RequestID)"><strong>Edit</strong></a>
+                        <a class="ml10 update ml5 f12 mt5 read-more colorOrange" style="display:none;" href="javascript:;" onclick="UpdateTitle(this, 'title', @request.RequestID)"><strong>Update</strong></a>
+                        <a class="ml10 cancel ml5 f12 mt5 read-more colorOrange" style="display:none;" href="javascript:;" onclick="CancelChange(this, 'title')"><strong>Cancel</strong></a>
+                        </h2> 
+						@*<a href="@Url.Action("Index", "Message")" class="floatRight button1"> Return to Active Contracts </a>*@
+					</div>
+					<div class="actv-contrat-doc-upld">
+						<div class="row">
+                            <div class="floatLeft">
+                                <input type="file" id="requestAttachment" class="input-box mco-cus1 p0 m0" name="requestAttachment" onchange="UploadRequestAttachment(this, 'request-attachment-form');" />
+                                <span class="field-validation-error" data-valmsg-replace="true" id="request_attachment_msg" data-valmsg-for="requestAttachment"></span><span class="field-validation-error shopBanner"></span>
+                                <div class="uploaded-files line"></div>                        
+                            </div>
+                            <div class="floatRight">
+                                <span>
+                                <strong>Status:</strong>
+                                @Html.DropDownList("RequestStatus", requestStatusList, new { @class = "input-box rad3", @style = "width:130px; padding:2px 0 2px 2px;" })
+                                </span> 
+                            </div>
+                        </div>
+                        
+						<div class="actv-contrat-doc-upld-tbl mt15">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<th width="15%" scope="col">Client Approval</th>
+									<th width="15%" scope="col">Contractor Approval</th>
+									<th width="45%" scope="col">Document Title</th>
+									<th width="14%" scope="col">View</th>
+									<th width="11%" scope="col">Delete</th>
+								</tr>
+                            @foreach (var attachment in (List<RequestAttachment>)ViewBag.Attachments)
+                            {
+                                string clientcss, contratorcss;
+                                clientcss = attachment.IsClientApproved.HasValue && attachment.IsClientApproved.Value ? "happy" : "sad";
+                                contratorcss = attachment.IsContractorApproved.HasValue && attachment.IsContractorApproved.Value ? "happy" : "sad";
+								<tr class="@attachment.AttachmentID">
+									<td align="center"><div class="@clientcss" title="@clientcss">&nbsp;</div></td>
+									<td align="center">
+                                    @if (attachment.IsContractorApproved.HasValue && attachment.IsContractorApproved.Value)
+                                    {
+                                        <div class="@contratorcss" title="@contratorcss">&nbsp;</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="@contratorcss" onclick="setDocStatus(this, @attachment.AttachmentID, 2, '@contratorcss')" title="@contratorcss">&nbsp;</div>
+                                    }
+                                    </td>
+									<td>@attachment.DisplayName</td>
+									<td><a href="@Url.Action("DownloadFile", "Shops", new { attachment_id = attachment.AttachmentID, request_id = @request.RequestID })">@*<img src="@Url.Content("~/Content/images/dwn.png")" width="16" title="Download">*@View</a></td>
+									<td><a href="javascript:;" onclick="DeleteContractDoc(this, @attachment.AttachmentID)"> Delete </a></td>
+								</tr>
+                            }
+							</table>
+						</div>
+					</div>
+					<div class="actv-contrat-doc-upld-ryt">
+                        @if (request.BuyerId.HasValue && request.SellerId.HasValue)
+                        {
+                        <a href="@Url.Action("Create", "Invoice", new { id = @request.BuyerUserName, req_id = @request.RequestID })" class="button1 mt10 mb10 floatLeft"> Create Invoice </a>
+                        <input type="submit" class="button1-blk floatRight mt10 mb10" value="&nbsp; Save &nbsp;" />
+                        }
+						<div class="senders-details">
+							<h2>By and Between</h2>
+							<ul class="buyer-seller">
+								<li>
+                                    <a href="@(buyerShop == null ? "javascript:;" : Url.Action("Shop", "Shops", new { id = Utility.SpacesToHifen(buyerShop.ShopName) }))">
+                                        <img src="@Url.Content(buyer!=null && buyer.ProfilePicUrl != null ? buyer.ProfilePicUrl : "~/Content/images/user.jpg")" class="img" width="50" >
+                                    </a>
+                                    <div class="detail"> <h4>The Client</h4>
+                                    @if (!string.IsNullOrEmpty(request.BuyerUserName))
+                                    {
+                                        <a href="@(buyerShop == null ? "javascript:;" : Url.Action("Shop", "Shops", new { id = Utility.SpacesToHifen(buyerShop.ShopName) }))" title="No Shop Exists"><strong>@request.BuyerUserName</strong></a>
+                                    }
+                                    else
+                                    {
+                                        <strong>User Deleted</strong>
+                                    }
+                                        <br>&nbsp;  </div>
+								</li>
+								<li> 
+                                    <a href="@(sellerShop == null ? "javascript:;" : Url.Action("Shop", "Shops", new { id = Utility.SpacesToHifen(sellerShop.ShopName) }))">
+                                        <img src="@Url.Content(seller.ProfilePicUrl != null ? seller.ProfilePicUrl : "~/Content/images/user.jpg")" class="img" width="50" >
+                                    </a>                                
+									<div class="detail"> <h4>The Contractor</h4> 
+                                        <a href="@(sellerShop == null ? "javascript:;" : Url.Action("Shop", "Shops", new { id = Utility.SpacesToHifen(sellerShop.ShopName) }))" title="No Shop Exists"><strong>@CentroUsers.LoginText (Me)</strong></a>
+                                        <br>&nbsp; </div>
+								</li>
+							</ul>
+							
+						</div>
+					</div>
+					<div class="actv-contrat-tbl row mt20 mb20">
+						<table width="100%" border="0" cellspacing="0" cellpadding="5" class="mt20">
+                        @if (invoiceList.Count() > 0)
+                        {
+                            SiteFee fee=Config.SiteFee;
+                            int i = 1;
+                            <tr><th>Invoice Title</th><th>Date Started</th><th>Payment Breakdown<br />User / Centro</th><th>Total Paid</th><th>Next Step</th><th class="colorOrange">Edit/View</th><th class="colorOrange">$$ Pay</th></tr>
+                            foreach (var item in invoiceList)
+                            {
+                                decimal sum = item.InvoiceViewItems.Sum(m => m.Amount.Value);
+                                <tr align="center" class="trInvoice" id="tr_@item.InvoiceID">
+								    <td align="left"> <p>@item.Title</p> <p>@*Session 2  Basic Commands*@</p></td>
+								    <td><p>@item.CreatedOn.ToShortDateString()</p></td>
+                                    
+								    <td> $@Math.Round(sum, 2) / $
+                                    @(fee.IsPercentage? Math.Round((sum * fee.SiteFee1 / 100), 2): fee.SiteFee1)</td>
+								    <td><p> $@item.InvoiceAmount</p></td>
+								    @*<p> Total&nbsp;Amount&nbsp;Paid</p>*@
+                                    <td>
+                                    @if (item.InvoiceStatus == InvoiceStatus.ReleasePayment)
+                                    {
+                                        <p>Completed</p>
+                                        @*<h4>@(item.ReleasedOn.HasValue ? item.ReleasedOn.Value.ToShortDateString() : "")</h4><p>Date Completed</p>*@
+                                    }
+                                    else if (item.InvoiceStatus == InvoiceStatus.EscrowPayment)
+                                    {
+                                        @*<h4>@(item.EscrowedOn.HasValue ? item.EscrowedOn.Value.ToShortDateString() : "")</h4><p>Date Escrowed</p>*@
+                                        <p>Buyer to Release Payment</p>
+                                    }
+                                    else
+                                    {
+                                        <p> Buyer to Escrow Payment </p>
+                                    }
+                                    </td>
+								    <td>
+                                        <a href="@Url.Action("View", "Invoice", new { id = item.InvoiceID, userType = "S" })" class="button1 button1-blk-s p-lr15 floatNone">View</a>
+                                    </td>
+								    <td>
+                                        @if (item.InvoiceStatus == InvoiceStatus.Pending)
+                                        {
+                                            <a href="javascript:;" onclick="DeleteInvoice(@item.InvoiceID)" class="button1-blk button1-blk-s p-lr15 floatNone">Delete</a>
+                                        }
+                                    </td>
+							    </tr>                            
+                                        i++;
+                            }
+                        }
+                        else
+                        {
+                            <tr class="even">
+                                <td colspan="5">
+                                    No Invoices found
+                                </td>
+                            </tr>
+                        }	
+						</table>
+                        
+					</div>
+				</div>
+            }
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Custom/CustomRequest.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/css/jquery.ui.all.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.widget.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.menu.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/search.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/messages.js")"></script>
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>    
+}
+<script src="@Url.Content("~/Scripts/Custom/messagePaging.js")" type="text/javascript"></script>

@@ -1,0 +1,190 @@
+﻿@model List<SalesTax>
+@{
+    List<StateProvince> States = ViewBag.States;
+    var itemsStates = new SelectList(States, "StateID", "StateName");
+
+    List<Country> Countries = ViewBag.Countries;
+    var us = Countries.Where(m => m.CountryShortCode == "US").FirstOrDefault();
+    Countries = Countries.Where(m => m.CountryShortCode == "VE").ToList();
+    //Countries.Remove(us);
+    var itemsCountries = new SelectList(Countries/*.Where(m => m.CountryShortCode != "US").ToList()*/, "CountryID", "CountryName");
+
+    int usa_id = ViewBag.USID;
+    int shop_id = ViewBag.ShopId;
+    bool shopClosed = SellersHandler.IsShopClosed(shop_id) != null ? SellersHandler.IsShopClosed(shop_id) : true;
+}
+
+    <div class="main-heading">
+        Sales Tax</div>
+   
+    @using (Ajax.BeginForm("SalesTax", "User", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnUSComplete" }))
+    {
+    <div class="box-out">
+            <div class="box-in">
+               
+                <div class="row">
+                    @{
+        string chk = /*!(bool)ViewBag.ShipToUSOnly && */Model.Count() > 0 ? "checked=checked" : "";
+
+                        <input type="checkbox" name="ShipToUSOnly" id="ShipToUSOnly" @chk onclick="ShowCountries(this)" />
+                    }
+                    <div class="salestax-notes">
+                        
+                        As a venue, Centro
+                        can not offer tax advice. Please
+                        consult a tax professional or qualified
+                        3rd party to determine what the legal tax
+                        rate is for your location and make sure
+                        to comply with the Marketplace Falmess
+                        Act, 2013. Please note that for United
+                        States sales, if you do not input a sales
+                        tax rate for a certain state it will charge
+                        the buyer a 0% sales tax. For
+                        international sales, if you do not select a
+                        country and input the tax rate, buyer will
+                        not be able to make purchases from
+                        your shop in any non-specified
+                        countries.
+                    </div>
+                </div>
+                <dl>
+                    <dt class="bold">@*Choose a Country*@</dt>
+                    <dd>
+                        @Html.Hidden("ShopId", shop_id)
+                        @*@Html.DropDownList("ToCountryID", itemsCountries, "Select a country...", new { @style = "width:170px;", @class = "input-box", @onchange = "OnCountryChange(this,'ToStateID');" })*@
+                        @Html.ValidationMessage("ToCountryID")
+                        @Html.DropDownList("ToStateID", itemsCountries, "Select a state...", new { @style = "width:170px;display:none;", @class = "input-box" })
+                        @Html.ValidationMessage("ToStateID")
+                        @*<button id="otherCountryTaxAddBtn" class="button2 ml10" type="button" onclick="AddCountry(this);">Add Tax Rate</button>*@
+                        @if (Model.Count() == 0)
+                        {
+                            @Html.Hidden("SelectedCountries")
+                            @Html.Hidden("SelectedStates")
+                            <div class="row pt10 TaxRow" style="display: none;">
+                                <div class="add-locations-column countryTaxAdd">
+                                    <ul class="headRow countryHead">
+                                        <li class="col1">Country </li>
+                                        <li class="col2">Tax Rate</li>
+                                        <li class="col3">&nbsp;</li>
+                                    </ul>
+                                </div>
+                                <div class="row pt20">
+                                    <div class="submit">
+                                        <input type="submit" value="Save" class="button1 fl mt10 ml10 mb10 TaxSave" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            string countriesOld = "";
+                            string statesOld = string.Join(",", Model.Where(m => m.ToStateID.HasValue).Select(m => m.ToStateID));
+                            <div class="row pt10 TaxRow">
+                                <div class="add-locations-column countryTaxAdd">
+                                    <ul class="headRow countryHead">
+                                        <li class="col1">Country </li>
+                                        @*<li class="col2">State </li>*@
+                                        <li class="col2 w100px">Tax Rate</li>
+                                        <li class="col3 w25px">&nbsp;</li>
+                                    </ul>
+                                    @foreach (var item in Model)
+                                    {
+                                        countriesOld = countriesOld + item.ToCountryID + ",";
+                                        // statesOld = statesOld + item.ToStateID + ",";
+                                        <ul>
+                                            <li class="col1">@item.CountryName
+                                                <input type="hidden" name="Country_@item.ToCountryID" value="@item.ToCountryID" />
+                                            </li>
+                                            @*<li class="col2 w100px">@item.StateName
+                                                <input type="hidden" name="State_@item.ToStateID" value="@item.ToStateID" />
+                                            </li>*@
+                                            <li class="col2">
+                                                <input data-val-required="Required." data-val-regex-pattern="^\d{0,2}(\.\d{1,2})?$" data-val-regex="Invalid Tax value." value="@item.Tax" data-val="true"  type="text" name="Tax_@Html.Raw(item.ToCountryID == 1 ? item.ToStateID : item.ToCountryID)" style="width: 60px;" min="0" max="100" class="input-box required number ml5" style="width:50px;" step="any" />
+                                                % <span class="field-validation-error" data-valmsg-for="Tax_@item.ToCountryID" data-valmsg-replace="true">
+                                                    <span class="" for="Tax_@item.ToCountryID" generated="true"></span></span>
+                                            </li>
+                                            @*<li class="col3 w25px">
+                                                <img onclick="deleteCountry(this,@item.ToCountryID, @item.SalesTaxID);" alt="Remove" src="/images/close-btn.png">
+                                            </li>*@
+                                        </ul>
+                                    }
+                                    @{
+                                    countriesOld = countriesOld.Remove(countriesOld.Length - 1);
+                                    // statesOld = statesOld.Remove(statesOld.Length - 1);                
+                                    }
+                                    @Html.Hidden("SelectedCountries", countriesOld)
+                                    @Html.Hidden("SelectedStates", statesOld)
+                                    <div class="row pt20">
+                                        <div class="submit">
+                                            @*<input type="submit" value="Save" class="button1 fl mt10 ml10 mb10" />*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </dd>
+                </dl>
+                <div class="note">
+                    *Note: Users must research, input, and keep all their tax rates accurate and up to date at all times.
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="submit shop-submit-btn-row floatRight">
+            @*@if (shopClosed)
+    {*@
+            <input type="button" value="Next" id="taxBtn" class="button1-blk" onclick="GotoPayments(this);" />
+            <span id="submitPaymentMethod"></span>@*}*@
+        </div>
+    </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var count = parseInt('@Model.Count()');
+        ResetUnobtrusiveValidation($('form'));
+        checkNext();
+        var ShipToUSOnly = '@ViewBag.ShipToUSOnly';
+        console.log(ShipToUSOnly);
+        if (ShipToUSOnly == 'False' && count > 0)
+            $('#ToCountryID').removeAttr('disabled');
+        else
+            $('#ToCountryID').attr('disabled', 'disabled');
+
+    });
+
+    function OnCountryChange(sender, state, city) {
+        var $this = $(sender);
+        if ($this.find('option:selected').val() != 1) {
+            $("select#" + state).hide();
+            return false;
+        }
+        $("select#" + state).find('option').remove().end().append('<option value="">Select a state...</option>').val('');
+        //$("select#" + city).find('option').remove().end().append('<option value="">Select a city...</option>').val('');
+        if ($this.val() != "" && $this.val() != undefined) {
+            AjaxFormSubmit({
+                type: "Post",
+                validate: false,
+                messageControl: null,
+                throbberPosition: { my: "left center", at: "right center", of: sender, offset: "5 0" },
+                url: '/User/GetStateList',
+                data: { country_id: $(sender).val() },
+                success: function (data) {
+                    if (data.Status == ActionStatus.Successfull) {
+                        if (data.Results == null || data.Results == 'null') {
+                            Message(data.Message, ActionStatus.Error);
+                        }
+                        else {
+                            FillSelectList($("select#" + state), data.Results[0], false);
+                            $("select#" + state).show();
+                            HideMessage();
+                        }
+                    }
+                    else {
+                        Message(data.Message, ActionStatus.Error);
+                    }
+                }
+            });
+        }
+    }
+</script>

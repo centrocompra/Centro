@@ -1,0 +1,28 @@
+﻿@model Shop
+<div class="autofeedback">
+    <span name="StatusMessagePopup" class="errormessage" style="display: none; width: 478px;
+        margin-bottom: 15px"></span>
+</div>
+@{
+    string action = ViewBag.Action;
+}
+@if (action == "SellerInfo")
+{
+    <div>@Model.SellerInformation</div>
+}
+else if (action == "Policy")
+{
+    <h3>Payment Policy</h3>
+    <div>@Model.PaymentPolicy</div>
+    <br /><br />
+    <h3>Refund Policy</h3>
+    <div>@Model.RefundPolicy</div>
+    <br /><br />
+    <h3>Delivery Policy</h3>
+    <div>@Model.DeliveryInformation</div>
+}
+else if (action == "MessageForBuyers")
+{
+   
+    <div>@Model.MessageForBuyers</div>
+}

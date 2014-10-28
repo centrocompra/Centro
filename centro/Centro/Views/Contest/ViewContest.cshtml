@@ -1,0 +1,107 @@
+﻿@model PagingResult<ContestViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = (bool)ViewBag.IsLoggedIn ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+ View all Contests
+}
+@{
+    List<Product> LastViewedProducts = (List<Product>)ViewBag.LastViewedProducts;
+    string[] url = Request.Url.AbsolutePath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+    string selectedCategory = "";
+    string selectedService = "";
+    if (url.Length == 4)
+    {
+        selectedCategory = url[3].Replace("-", " ");
+        selectedService = url[2].Replace("-", " ");
+    }
+    else if (url.Length == 5)
+    {
+        selectedCategory = url[4].Replace("-", " ");
+    }
+}
+
+<aside class="floatLeft left-side">
+    @Html.Partial("_ContestLeftMenu")
+</aside>
+<div class="create-contest">
+    <div class="entries-contest">
+        <div class="">
+            <div class="product-left">
+                <div class="sections pb0">
+                    <div class="contest-header floatLeft" style="width: 500px;">
+                        <h3 class="colorOrange">
+                            UX Challenges
+                        </h3>
+                    </div>
+                    <div class="floatRight" style="text-align: right;">
+                        <button class="button1" id="btnReqChallenge" onclick="OpenRequestChallenge(this)">Request A Challenge</button>
+                        <div>
+                            <span class="grey f13">@selectedCategory</span> <span class="floatRight grey f13">
+                                <br />
+                                Sort By:
+                                <select id="SortBy" onchange="SortContest(this)">
+                                @if (ViewBag.UserID == null)
+                                {
+                                    <option value="CreatedOn" order="Desc">All</option>
+                                    <option value="TotalViews" order="Desc">Most Popular</option>
+                                    <option value="IsActive" order="DESC">Active</option>
+                                    <option value="IsActive" order="ASC">Finished</option>
+                                }
+                                else
+                                {
+                                    <option value="Contest.CreatedOn" order="Desc">All</option>
+                                    <option value="Contest.TotalViews" order="Desc">Most Popular</option>
+                                    <option value="Contest.IsActive" order="DESC">Active</option>
+                                    <option value="Contest.IsActive" order="ASC">Finished</option>
+                                }
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <p style="width: 500px;">
+                        The best-designs are usually those born from addressing the simpliest problems.
+                        Think outside the box and challenge yourself to view the world from a different
+                        angle. There are no right or wrong answers; these challenges are just a way to have
+                        fun dabbling, making mistakes, tearing things apart, inspiring and receiving feedback.</p>
+                    @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet turpis eu diam tristique feugiat. Cras ornare rutrum turpis, ac vehicula ligula varius id. Ut lacus dolor, auctor eu vehicula vitae, scelerisque vel nisl. Phasellus eget enim ut eros porta consectetur. Etiam eget congue purus. Morbi commodo facilisis lorem, sit amet porta enim fermentum ac.</p>
+					<p>Nulla hendrerit dignissim lacus, et sodales quam fermentum id. Quisque ac nibh nec quam elementum auctor. Integer congue mollis tortor, in convallis eros rhoncus ut. Praesent mollis, lectus sit amet ultricies ullamcorper, enim turpis vulputate lectus, a pulvinar sem mauris nec nulla. In hac habitasse platea dictumst.</p>*@
+                </div>
+                <div class="sections pb0 pt0 tabs floatNone view-contest">
+                    @Html.Partial("_Paging")
+                    <div class="tabs-body floatLeft" id="Result">@Html.Partial("_ContestList", Model.List)</div>
+                    @Html.Partial("_Paging")
+                </div>
+                <div class="divClear">
+                </div>
+            </div>
+            <div class="divClear">
+            </div>
+        </div>
+    </div>
+</div>
+@*<div id="divRequesetContest">
+    <div style="width: 600px; height: 400px;">
+        <h3>
+            Send Challenge Request</h3>
+    </div>
+</div>*@
+@section scripts{
+    <script type="text/javascript">
+        var totalCount = 0;
+        var MyContest = '@ViewBag.MyContest';
+        var UID = '@ViewBag.UserID';
+        var CID = '@ViewBag.CategoryID';
+        $(document).ready(function () {
+            totalCount = parseInt('@Model.TotalCount');
+        });
+    </script>
+    <script src="@Url.Content("~/Scripts/System/jquery-ui-1.8.20.js")" type="text/javascript"></script>
+    @*<link href="@Url.Content("~/Content/css/jquery.fancybox-1.3.4.css")" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.fancybox-1.3.4.js")"></script>*@
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Custom/contest.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Custom/ContestPaging.js")" type="text/javascript"></script>
+}

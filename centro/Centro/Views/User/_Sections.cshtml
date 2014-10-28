@@ -1,0 +1,208 @@
+﻿@model List<ShopSection>
+@{
+    int shop_id = Convert.ToInt32(ViewBag.ShopID);
+    List<Product> products = ViewBag.Products;
+    string username = ViewBag.Username;
+    bool shopClosed = SellersHandler.IsShopClosed(shop_id);
+    //string count = Model.Count() > 0 ? "trueaa" : "";
+}
+<div class="main-heading">
+    Shop <span class="orng">Sections</span>
+</div>
+<div class="row pb10 mb20 f13">
+    Organize your shop and make it
+easier for shoppers to browse your
+products! You’ll be able to create a
+total of 10 sections for your shop.
+    @*Sections help shoppers browse your shop and appear in your shop's left navigation. You can have up to 10. Empty sections will not show up in your shop.*@
+</div>
+<div class="box-out">
+    <div class="box-in">
+        <div class="section-section-area">
+            <div class="row">
+                <h2 class="row pb5"> <!-- widgetTitle -->Your Sections</h2>
+                <p class="f12">
+                    <strong>Click &amp; drag
+                    <img class="pr5 mr5 mb-2" alt="" src="@Url.Content("~/Content/images/move.png")">to reorder.</strong>
+                </p>
+            </div>
+            <div class="row pt5">                
+                <ul id="sortable" class="sortable-sections ui-sortable">
+                @foreach (var item in Model.OrderBy(m=>m.DisplayOrder).ToList())
+                {
+                    <li id="@item.ShopSectionID"><div val="@item.ShopSectionID" style="word-wrap: break-word;"><a href="javascript:;">@item.SectionName</a><a href="javascript:;" val="@item.SectionName" onclick="Edit(this)" class="edit"></a><a value="@item.ShopSectionID" href="javascript:;" onclick="Delete(this)" class="delete"></a></div></li>
+                }
+                </ul>
+            </div>
+            <div class="row pt10">
+                @using (Ajax.BeginForm("ShopSectoion", "User", FormMethod.Post, new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnSectionComplete" }))
+                {
+                    <input type="hidden" name="ShopID" value="@shop_id" />
+                    <div class="input_field">
+                        @*<input id="SectionName" class="text-box single-line" type="text" value="" name="SectionName" data-val-required="*Required." data-val-length-min="6" data-val-length-max="100" maxlength = 100 data-val-length="Mininum 6 and Maximum 100 characters are allowed."  data-val="true" />*@
+                        <input type="text" value="" id="SectionName" name="SectionName" data-val-required="*Required." data-val-regex-pattern="^([A-Za-z0-9 ']*)$" data-val-regex="Only letters, numbers, ' are allowed." data-val-length-min="3" data-val-length-max="100" data-val-length="Mininum 3 and Maximum 100 characters are allowed." data-val="true" class="valid" />
+                    </div>
+                    if (Model.Count() < 10)
+                    {
+                    <div class="submit"><input type="submit" value="Add" class="button2 ml10 fl"></div>
+                    }
+                    <span class="field-validation-error" data-valmsg-replace="true" data-valmsg-for="SectionName"></span>
+                }
+            </div>
+        </div>
+        <div class="sectionUser">
+            <div class="row">                
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" class="product-grid">
+                   <thead>
+                        <tr>
+                            <th align="left" colspan="5">Sections for all Product Listings</th>
+                        </tr>
+                        <tr>
+                            <th width="15">
+                                <input type="checkbox" class="checkAll" name="checkbox" onclick="checkAll(this)" />
+                            </th>
+                               <th colspan="2" class="pos-rel">
+                              <span style=" float:left; padding: 7px 10px 0 0;">Filter By: </span>
+                                <select name="SortSection" class="input-box fl required" style="width: 170px;" id="SortSection" onchange="SortBySection(this);">
+                                    <option value="">All Sections</option>
+                                @foreach (var item in Model)
+                                {
+                                    <option value="@item.ShopSectionID">@item.SectionName</option>
+                                }
+                                </select>
+                             
+                            </th>
+                            <th class="pos-rel w200px" colspan="2">
+                                <select name="SectionList" class="input-box fl required" style="width: 140px;" id="SectionList">
+                                    <option value="">Move to Section</option>
+                                @foreach (var item in Model)
+                                {
+                                    <option value="@item.ShopSectionID">@item.SectionName</option>
+                                }
+                                </select>
+                                <input type="button" value="Save" id="saveSection" class="button1 ml10" onclick="ChangeSection(this)" />
+                                <span class="field-validation-error" style="display:none;"></span>
+                            </th>
+                        </tr>
+                        </thead>
+                         <tbody>
+                    @foreach (Product p in products.OrderByDescending(m=>m.ShopSectionId).ToList())
+                    {
+                        <tr id="section_@p.ShopSectionId">
+							<td>
+                                <input type="checkbox" id="Product_@p.ProductID" value="@p.ProductID" class="checkListItem" name="Product_@p.ProductID"/></td>
+                            <td>
+                            @if (p.PrimaryPicture != null)
+                            {
+                                <img width="45" alt="" src="~/Images/ProductImages/@username/thumb_@p.PrimaryPicture">
+                            }
+                            else
+                            {
+                                <img width="45" alt="" src="~/Content/images/default_product.png" />
+                            }
+                            </td>
+                            <td width="184">
+                                @p.Title</td>
+                                <td>@Model.Where(m=>m.ShopSectionID==p.ShopSectionId).Select(m=>m.SectionName).FirstOrDefault()</td>
+                            <td><strong class="f14">$ @p.UnitPrice USD </strong></td>
+                        </tr>
+                    }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      
+    </div>
+     
+</div>
+ <div class="row">
+    <div class="submit floatRight">
+        <button type="button" id="Submit1" onclick="savenNextShopName();" class="button1-blk shop1">
+        Next</button>&nbsp;
+    </div>
+    <div class="submit floatRight">
+        <button type="button" id="Submit2" onclick="window.location.href='@Url.Action("PreviewShop", "User")'" class="button1-blk list">
+        Next</button>&nbsp;
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        SortInit('@shop_id');
+        var shopClosed = '@shopClosed';
+        ResetUnobtrusiveValidation($('form'));
+
+        $('.Sections').parent().parent().find('li').removeClass('active');
+        $('.Sections').parent().addClass('active');
+
+        var url = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+
+        if (shopClosed == 'False' && url.toLowerCase() == 'listitems') {
+             $('.list').remove();
+            $('.shop1').remove();
+        }
+        else if (url.toLowerCase() == 'listitems') {
+            $('.list').show();
+            $('.shop1').remove();
+        }
+        else {
+            $('.list').remove();
+            $('.shop1').show();
+        }
+    });
+
+    function checkAll(sender) {
+        if ($(sender).is(':checked')) {
+            $('.product-grid').find("input[type=checkbox]").attr('checked', 'checked');
+        } else {
+            $('.product-grid').find("input[type=checkbox]").removeAttr('checked');
+        }
+    }
+
+    function ChangeSection(sender) {
+        var shop_section_id = $('#SectionList').val();
+        var shop_id='@shop_id';
+        if (shop_section_id == '') {
+            $('#SectionList').parent().find('span').text('*Required.').show();
+            return false;
+        }
+        else {
+            $('#SectionList').parent().find('span').hide();
+        }
+        var productIds = '';
+        $('.product-grid').find("input[type=checkbox]:checked").each(function () {
+            if ($(this).attr('value') != '' && $(this).attr('value').toLowerCase() != 'on') {
+                //productIds.push($(this).attr('value'));
+                productIds = productIds + $(this).attr('value') + ',';
+            }
+        });
+        if (productIds == '') {
+            $('#SectionList').parent().find('span').text('Please chose at-least one item.').show();
+            return false;
+        }
+        else {
+            $('#SectionList').parent().find('span').hide();
+        }
+
+        AjaxFormSubmit({
+            type: "POST",
+            validate: false,
+            parentControl: $(sender).parents("form:first"),
+            data: { shop_section_id: shop_section_id, productIds: productIds, shop_id: shop_id },
+            messageControl: null,
+            throbberPosition: { my: "left center", at: "right center", of: sender, offset: "5 0" },
+            url: '/User/ChangeSection',
+            success: function (data) {
+                if (data.Status == ActionStatus.Successfull) {
+                    Message(data.Message, ActionStatus.Successfull);
+                    $("div#ui-product-tabs").html(data.Results[0]);                    
+                }
+                else if (data.Status == ActionStatus.Error) {
+                    Message(data.Message, ActionStatus.Error);
+                }
+            }
+        });
+    }
+</script>

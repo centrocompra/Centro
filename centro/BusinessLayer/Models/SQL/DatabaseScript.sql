@@ -1,0 +1,1420 @@
+﻿--USE [master]
+--GO
+--/****** Object:  Database [Centro]    Script Date: 03/15/2013 16:10:58 ******/
+--CREATE DATABASE [Centro] ON  PRIMARY 
+--( NAME = N'Centro', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\Centro.mdf' , SIZE = 2304KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+-- LOG ON 
+--( NAME = N'Centro_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\Centro_log.LDF' , SIZE = 504KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+--GO
+--ALTER DATABASE [Centro] SET COMPATIBILITY_LEVEL = 100
+--GO
+--IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+--begin
+--EXEC [Centro].[dbo].[sp_fulltext_database] @action = 'enable'
+--end
+--GO
+--ALTER DATABASE [Centro] SET ANSI_NULL_DEFAULT OFF
+--GO
+--ALTER DATABASE [Centro] SET ANSI_NULLS OFF
+--GO
+--ALTER DATABASE [Centro] SET ANSI_PADDING OFF
+--GO
+--ALTER DATABASE [Centro] SET ANSI_WARNINGS OFF
+--GO
+--ALTER DATABASE [Centro] SET ARITHABORT OFF
+--GO
+--ALTER DATABASE [Centro] SET AUTO_CLOSE OFF
+--GO
+--ALTER DATABASE [Centro] SET AUTO_CREATE_STATISTICS ON
+--GO
+--ALTER DATABASE [Centro] SET AUTO_SHRINK OFF
+--GO
+--ALTER DATABASE [Centro] SET AUTO_UPDATE_STATISTICS ON
+--GO
+--ALTER DATABASE [Centro] SET CURSOR_CLOSE_ON_COMMIT OFF
+--GO
+--ALTER DATABASE [Centro] SET CURSOR_DEFAULT  GLOBAL
+--GO
+--ALTER DATABASE [Centro] SET CONCAT_NULL_YIELDS_NULL OFF
+--GO
+--ALTER DATABASE [Centro] SET NUMERIC_ROUNDABORT OFF
+--GO
+--ALTER DATABASE [Centro] SET QUOTED_IDENTIFIER OFF
+--GO
+--ALTER DATABASE [Centro] SET RECURSIVE_TRIGGERS OFF
+--GO
+--ALTER DATABASE [Centro] SET  ENABLE_BROKER
+--GO
+--ALTER DATABASE [Centro] SET AUTO_UPDATE_STATISTICS_ASYNC OFF
+--GO
+--ALTER DATABASE [Centro] SET DATE_CORRELATION_OPTIMIZATION OFF
+--GO
+--ALTER DATABASE [Centro] SET TRUSTWORTHY OFF
+--GO
+--ALTER DATABASE [Centro] SET ALLOW_SNAPSHOT_ISOLATION OFF
+--GO
+--ALTER DATABASE [Centro] SET PARAMETERIZATION SIMPLE
+--GO
+--ALTER DATABASE [Centro] SET READ_COMMITTED_SNAPSHOT OFF
+--GO
+--ALTER DATABASE [Centro] SET HONOR_BROKER_PRIORITY OFF
+--GO
+--ALTER DATABASE [Centro] SET  READ_WRITE
+--GO
+--ALTER DATABASE [Centro] SET RECOVERY FULL
+--GO
+--ALTER DATABASE [Centro] SET  MULTI_USER
+--GO
+--ALTER DATABASE [Centro] SET PAGE_VERIFY CHECKSUM
+--GO
+--ALTER DATABASE [Centro] SET DB_CHAINING OFF
+--GO
+--EXEC sys.sp_db_vardecimal_storage_format N'Centro', N'ON'
+--GO
+--USE [Centro]
+--GO
+--/****** Object:  Table [dbo].[GlobalCodes]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[GlobalCodes](
+--	[GlobalCodeID] [int] IDENTITY(1,1) NOT NULL,
+--	[GroupName] [varchar](200) NOT NULL,
+--	[Lable] [varchar](200) NOT NULL,
+-- CONSTRAINT [PK_GlobalCodes_GlobalCodeID] PRIMARY KEY CLUSTERED 
+--(
+--	[GlobalCodeID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[ErrorLog]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[ErrorLog](
+--	[ErrorLogID] [int] IDENTITY(1,1) NOT NULL,
+--	[Message] [varchar](500) NULL,
+--	[StackTrace] [varchar](max) NULL,
+--	[InnerException] [varchar](max) NULL,
+--	[LoggedInDetails] [varchar](max) NULL,
+--	[QueryData] [varchar](max) NULL,
+--	[FormData] [varchar](max) NULL,
+--	[RouteData] [varchar](max) NULL,
+--	[LoggedOn] [datetime] NULL,
+-- CONSTRAINT [PK_ErrorLog_ErrorLogID] PRIMARY KEY CLUSTERED 
+--(
+--	[ErrorLogID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[Country]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Country](
+--	[CountryID] [int] IDENTITY(1,1) NOT NULL,
+--	[CountryName] [varchar](100) NOT NULL,
+--	[CountryShortCode] [varchar](20) NULL,
+-- CONSTRAINT [PK_Country_CountryID] PRIMARY KEY CLUSTERED 
+--(
+--	[CountryID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[PaymentStatus]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[PaymentStatus](
+--	[PaymentStatusID] [int] IDENTITY(1,1) NOT NULL,
+--	[Status] [tinyint] NULL,
+--	[Description] [varchar](1000) NULL,
+-- CONSTRAINT [PK_PaymentStatus_PaymentStatusID] PRIMARY KEY CLUSTERED 
+--(
+--	[PaymentStatusID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[OrderStatus]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[OrderStatus](
+--	[OrderStatusID] [int] IDENTITY(1,1) NOT NULL,
+--	[Status] [tinyint] NULL,
+--	[Description] [varchar](1000) NULL,
+-- CONSTRAINT [PK_OrderStatus_OrderStatusID] PRIMARY KEY CLUSTERED 
+--(
+--	[OrderStatusID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[ShippingStatus]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[ShippingStatus](
+--	[ShippingStatusID] [int] IDENTITY(1,1) NOT NULL,
+--	[Status] [tinyint] NULL,
+--	[Description] [varchar](1000) NULL,
+-- CONSTRAINT [PK_ShippingStatus_ShippingStatusID] PRIMARY KEY CLUSTERED 
+--(
+--	[ShippingStatusID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[Roles]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Roles](
+--	[RoleID] [int] IDENTITY(1,1) NOT NULL,
+--	[RoleName] [varchar](50) NULL,
+-- CONSTRAINT [PK_Roles_RoleID] PRIMARY KEY CLUSTERED 
+--(
+--	[RoleID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[StateProvince]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[StateProvince](
+--	[StateID] [int] IDENTITY(1,1) NOT NULL,
+--	[CountryID] [int] NOT NULL,
+--	[StateName] [varchar](100) NOT NULL,
+--	[StateShortCode] [varchar](20) NULL,
+-- CONSTRAINT [PK_StateProvince_StateID] PRIMARY KEY CLUSTERED 
+--(
+--	[StateID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[Address]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Address](
+--	[AddressID] [int] IDENTITY(1,1) NOT NULL,
+--	[CountryId] [int] NOT NULL,
+--	[StateId] [int] NOT NULL,
+--	[City] [varchar](50) NULL,
+--	[Address1] [varchar](max) NULL,
+--	[Address2] [varchar](max) NULL,
+--	[ZipCode] [varchar](20) NULL,
+--	[PhoneNumber1] [varchar](20) NULL,
+--	[PhoneNumber2] [varchar](20) NULL,
+--	[FaxNumber] [varchar](20) NULL,
+-- CONSTRAINT [PK_Address_AddressID] PRIMARY KEY CLUSTERED 
+--(
+--	[AddressID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[Users]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Users](
+--	[UserID] [int] IDENTITY(1,1) NOT NULL,
+--	[UserGUID] [uniqueidentifier] ROWGUIDCOL  NULL,
+--	[FirstName] [varchar](200) NOT NULL,
+--	[LastName] [varchar](200) NOT NULL,
+--	[EmailId] [varchar](200) NOT NULL,
+--	[UserName] [varchar](200) NOT NULL,
+--	[Password] [varchar](100) NULL,
+--	[Gender] [tinyint] NULL,
+--	[IsVerified] [bit] NOT NULL,
+--	[VerifiedOn] [datetime] NULL,
+--	[RegistrationIP] [varchar](50) NULL,
+--	[RoleId] [int] NOT NULL,
+--	[IsFeatured] [bit] NOT NULL,
+--	[NewsLetterEnabled] [bit] NOT NULL,
+--	[BillingAddressId] [int] NULL,
+--	[ShippingAddressId] [int] NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_Users_UserID] PRIMARY KEY CLUSTERED 
+--(
+--	[UserID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY],
+--UNIQUE NONCLUSTERED 
+--(
+--	[EmailId] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY],
+--UNIQUE NONCLUSTERED 
+--(
+--	[UserName] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[Pictures]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Pictures](
+--	[PictureID] [int] IDENTITY(1,1) NOT NULL,
+--	[PictureBinary] [varbinary](max) NOT NULL,
+--	[MimeType] [varchar](50) NOT NULL,
+--	[FileName] [varchar](300) NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_Pictures_PictureID] PRIMARY KEY CLUSTERED 
+--(
+--	[PictureID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[Order]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Order](
+--	[OrderID] [int] IDENTITY(1,1) NOT NULL,
+--	[OrderGuid] [uniqueidentifier] ROWGUIDCOL  NULL,
+--	[UserId] [int] NOT NULL,
+--	[BillingAddressId] [int] NULL,
+--	[ShippingAddressId] [int] NULL,
+--	[OrderStatusId] [int] NOT NULL,
+--	[ShippingStatusId] [int] NOT NULL,
+--	[PaymentStatusId] [int] NOT NULL,
+--	[DiscountRate] [decimal](18, 2) NULL,
+--	[OrderAmount] [decimal](18, 2) NULL,
+--	[TaxRateOnOrder] [decimal](18, 2) NULL,
+--	[PaymentMethod] [tinyint] NULL,
+--	[PaymentAmount] [decimal](18, 2) NULL,
+--	[PaymentTransactionId] [varchar](100) NULL,
+--	[PaymentDate] [datetime] NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_Order_OrderID] PRIMARY KEY CLUSTERED 
+--(
+--	[OrderID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[Categories]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Categories](
+--	[CategoryID] [int] IDENTITY(1,1) NOT NULL,
+--	[Name] [varchar](200) NULL,
+--	[Description] [varchar](500) NULL,
+--	[Published] [bit] NOT NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_Categories_CategoryID] PRIMARY KEY CLUSTERED 
+--(
+--	[CategoryID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[BlockedIPAddress]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[BlockedIPAddress](
+--	[ID] [int] IDENTITY(1,1) NOT NULL,
+--	[IPAddress] [varchar](50) NULL,
+--	[BlockedDescription] [varchar](1000) NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_BlockedIPAddress_ID] PRIMARY KEY CLUSTERED 
+--(
+--	[ID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[Shop]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Shop](
+--	[ShopID] [int] IDENTITY(1,1) NOT NULL,
+--	[UserId] [int] NULL,
+--	[ShopTitle] [varchar](200) NULL,
+--	[ShopAnnouncement] [varchar](200) NULL,
+--	[MessageForBuyers] [varchar](1000) NULL,
+--	[IsClosed] [bit] NOT NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_Shop_ShopID] PRIMARY KEY CLUSTERED 
+--(
+--	[ShopID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[UserLoginHistory]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[UserLoginHistory](
+--	[ID] [int] IDENTITY(1,1) NOT NULL,
+--	[UserId] [int] NOT NULL,
+--	[LastLoginOn] [datetime] NULL,
+--	[LastLoginIP] [varchar](50) NULL,
+-- CONSTRAINT [PK_UserLoginHistory_ID] PRIMARY KEY CLUSTERED 
+--(
+--	[ID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[SubCategories]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[SubCategories](
+--	[SubCategoryID] [int] IDENTITY(1,1) NOT NULL,
+--	[CategoryID] [int] NOT NULL,
+--	[Name] [varchar](200) NULL,
+--	[Description] [varchar](500) NULL,
+--	[Published] [bit] NOT NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBY] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_SubCategories_SubCategoryID] PRIMARY KEY CLUSTERED 
+--(
+--	[SubCategoryID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[ShopPictures]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--CREATE TABLE [dbo].[ShopPictures](
+--	[ShopPictureID] [int] IDENTITY(1,1) NOT NULL,
+--	[ShopId] [int] NOT NULL,
+--	[PictureId] [int] NOT NULL,
+--	[DisplayOrder] [int] NULL,
+-- CONSTRAINT [PK_ShopPictures_ShopPictureID] PRIMARY KEY CLUSTERED 
+--(
+--	[ShopPictureID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--/****** Object:  Table [dbo].[Products]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[Products](
+--	[ProductID] [int] IDENTITY(1,1) NOT NULL,
+--	[CategoryId] [int] NOT NULL,
+--	[SubCategoryId] [int] NULL,
+--	[ShopId] [int] NULL,
+--	[Name] [varchar](500) NULL,
+--	[ShortDescription] [varchar](500) NULL,
+--	[FullDescription] [varchar](max) NULL,
+--	[Title] [varchar](500) NULL,
+--	[ShopSection] [varchar](500) NULL,
+--	[Manufacturer] [varchar](500) NULL,
+--	[Recipient] [varchar](500) NULL,
+--	[Occasion] [varchar](500) NULL,
+--	[Style] [varchar](500) NULL,
+--	[Price] [decimal](18, 2) NULL,
+--	[Quantity] [int] NOT NULL,
+--	[Tax] [decimal](18, 2) NULL,
+--	[LastViewedOn] [datetime] NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_Products_ProductID] PRIMARY KEY CLUSTERED 
+--(
+--	[ProductID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[ProductTag]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[ProductTag](
+--	[ProductTagID] [int] IDENTITY(1,1) NOT NULL,
+--	[ProductId] [int] NULL,
+--	[TagName] [varchar](200) NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_ProductTag_ProductTagID] PRIMARY KEY CLUSTERED 
+--(
+--	[ProductTagID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[ProductReviews]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[ProductReviews](
+--	[ProductReviewID] [int] IDENTITY(1,1) NOT NULL,
+--	[ProductId] [int] NULL,
+--	[Title] [varchar](250) NULL,
+--	[ReviewText] [varchar](max) NULL,
+--	[Rating] [int] NULL,
+--	[CreatedOn] [datetime] NULL,
+--	[CreatedBy] [int] NULL,
+--	[UpdatedOn] [datetime] NULL,
+--	[UpdatedBy] [int] NULL,
+--	[DeletedOn] [datetime] NULL,
+--	[DeletedBy] [int] NULL,
+--	[IsDeleted] [bit] NOT NULL,
+-- CONSTRAINT [PK_ProductReviews_ProductReviewID] PRIMARY KEY CLUSTERED 
+--(
+--	[ProductReviewID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Table [dbo].[ProductPictures]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--CREATE TABLE [dbo].[ProductPictures](
+--	[ProductPictureID] [int] IDENTITY(1,1) NOT NULL,
+--	[ProductId] [int] NOT NULL,
+--	[PictureId] [int] NOT NULL,
+--	[DisplayOrder] [int] NULL,
+-- CONSTRAINT [PK_ProductPictures_ProductPictureID] PRIMARY KEY CLUSTERED 
+--(
+--	[ProductPictureID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--/****** Object:  Table [dbo].[ProductMaterial]    Script Date: 03/15/2013 16:11:00 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--SET ANSI_PADDING ON
+--GO
+--CREATE TABLE [dbo].[ProductMaterial](
+--	[ProductMaterialID] [int] IDENTITY(1,1) NOT NULL,
+--	[ProductId] [int] NULL,
+--	[MaterialName] [varchar](250) NULL,
+-- CONSTRAINT [PK_ProductMaterial_ProductMaterialID] PRIMARY KEY CLUSTERED 
+--(
+--	[ProductMaterialID] ASC
+--)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+--SET ANSI_PADDING OFF
+--GO
+--/****** Object:  Default [DF__Users__UserGUID__1367E606]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Users] ADD  DEFAULT (newsequentialid()) FOR [UserGUID]
+--GO
+--/****** Object:  Default [DF__Order__OrderGuid__5BE2A6F2]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order] ADD  DEFAULT (newsequentialid()) FOR [OrderGuid]
+--GO
+--/****** Object:  ForeignKey [FK_StateProvince_Country_CountryID]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[StateProvince]  WITH CHECK ADD  CONSTRAINT [FK_StateProvince_Country_CountryID] FOREIGN KEY([CountryID])
+--REFERENCES [dbo].[Country] ([CountryID])
+--GO
+--ALTER TABLE [dbo].[StateProvince] CHECK CONSTRAINT [FK_StateProvince_Country_CountryID]
+--GO
+--/****** Object:  ForeignKey [FK_Address_Country_CountryId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Address]  WITH CHECK ADD  CONSTRAINT [FK_Address_Country_CountryId] FOREIGN KEY([CountryId])
+--REFERENCES [dbo].[Country] ([CountryID])
+--GO
+--ALTER TABLE [dbo].[Address] CHECK CONSTRAINT [FK_Address_Country_CountryId]
+--GO
+--/****** Object:  ForeignKey [FK_Address_StateProvince_StateId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Address]  WITH CHECK ADD  CONSTRAINT [FK_Address_StateProvince_StateId] FOREIGN KEY([StateId])
+--REFERENCES [dbo].[StateProvince] ([StateID])
+--GO
+--ALTER TABLE [dbo].[Address] CHECK CONSTRAINT [FK_Address_StateProvince_StateId]
+--GO
+--/****** Object:  ForeignKey [FK_Users_Address_BillingAddressId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Address_BillingAddressId] FOREIGN KEY([BillingAddressId])
+--REFERENCES [dbo].[Address] ([AddressID])
+--GO
+--ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Address_BillingAddressId]
+--GO
+--/****** Object:  ForeignKey [FK_Users_Address_ShippingAddressId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Address_ShippingAddressId] FOREIGN KEY([ShippingAddressId])
+--REFERENCES [dbo].[Address] ([AddressID])
+--GO
+--ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Address_ShippingAddressId]
+--GO
+--/****** Object:  ForeignKey [FK_Users_Roles_RoleId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Roles_RoleId] FOREIGN KEY([RoleId])
+--REFERENCES [dbo].[Roles] ([RoleID])
+--GO
+--ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Roles_RoleId]
+--GO
+--/****** Object:  ForeignKey [FK_Users_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Users_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Users_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Pictures_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Pictures]  WITH CHECK ADD  CONSTRAINT [FK_Pictures_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Pictures] CHECK CONSTRAINT [FK_Pictures_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Pictures_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Pictures]  WITH CHECK ADD  CONSTRAINT [FK_Pictures_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Pictures] CHECK CONSTRAINT [FK_Pictures_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Pictures_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Pictures]  WITH CHECK ADD  CONSTRAINT [FK_Pictures_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Pictures] CHECK CONSTRAINT [FK_Pictures_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Order_Address_BillingAddressId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_Address_BillingAddressId] FOREIGN KEY([BillingAddressId])
+--REFERENCES [dbo].[Address] ([AddressID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_Address_BillingAddressId]
+--GO
+--/****** Object:  ForeignKey [FK_Order_Address_ShippingAddressId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_Address_ShippingAddressId] FOREIGN KEY([ShippingAddressId])
+--REFERENCES [dbo].[Address] ([AddressID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_Address_ShippingAddressId]
+--GO
+--/****** Object:  ForeignKey [FK_Order_OrderStatus_OrderStatusId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_OrderStatus_OrderStatusId] FOREIGN KEY([OrderStatusId])
+--REFERENCES [dbo].[OrderStatus] ([OrderStatusID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_OrderStatus_OrderStatusId]
+--GO
+--/****** Object:  ForeignKey [FK_Order_PaymentStatus_PaymentStatusId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_PaymentStatus_PaymentStatusId] FOREIGN KEY([PaymentStatusId])
+--REFERENCES [dbo].[PaymentStatus] ([PaymentStatusID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_PaymentStatus_PaymentStatusId]
+--GO
+--/****** Object:  ForeignKey [FK_Order_ShippingStatus_ShippingStatusId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_ShippingStatus_ShippingStatusId] FOREIGN KEY([ShippingStatusId])
+--REFERENCES [dbo].[ShippingStatus] ([ShippingStatusID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_ShippingStatus_ShippingStatusId]
+--GO
+--/****** Object:  ForeignKey [FK_Order_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Order_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Order_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Order_Users_UserId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_Users_UserId] FOREIGN KEY([UserId])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_Users_UserId]
+--GO
+--/****** Object:  ForeignKey [FK_Categories_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Categories]  WITH CHECK ADD  CONSTRAINT [FK_Categories_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Categories] CHECK CONSTRAINT [FK_Categories_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Categories_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Categories]  WITH CHECK ADD  CONSTRAINT [FK_Categories_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Categories] CHECK CONSTRAINT [FK_Categories_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Categories_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Categories]  WITH CHECK ADD  CONSTRAINT [FK_Categories_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Categories] CHECK CONSTRAINT [FK_Categories_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_BlockedIPAddress_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[BlockedIPAddress]  WITH CHECK ADD  CONSTRAINT [FK_BlockedIPAddress_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[BlockedIPAddress] CHECK CONSTRAINT [FK_BlockedIPAddress_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_BlockedIPAddress_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[BlockedIPAddress]  WITH CHECK ADD  CONSTRAINT [FK_BlockedIPAddress_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[BlockedIPAddress] CHECK CONSTRAINT [FK_BlockedIPAddress_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_BlockedIPAddress_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[BlockedIPAddress]  WITH CHECK ADD  CONSTRAINT [FK_BlockedIPAddress_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[BlockedIPAddress] CHECK CONSTRAINT [FK_BlockedIPAddress_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Shop_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Shop]  WITH CHECK ADD  CONSTRAINT [FK_Shop_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Shop] CHECK CONSTRAINT [FK_Shop_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Shop_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Shop]  WITH CHECK ADD  CONSTRAINT [FK_Shop_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Shop] CHECK CONSTRAINT [FK_Shop_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Shop_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Shop]  WITH CHECK ADD  CONSTRAINT [FK_Shop_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Shop] CHECK CONSTRAINT [FK_Shop_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Shop_Users_UserId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Shop]  WITH CHECK ADD  CONSTRAINT [FK_Shop_Users_UserId] FOREIGN KEY([UserId])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Shop] CHECK CONSTRAINT [FK_Shop_Users_UserId]
+--GO
+--/****** Object:  ForeignKey [FK_UserLoginHistory_Users_UserId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[UserLoginHistory]  WITH CHECK ADD  CONSTRAINT [FK_UserLoginHistory_Users_UserId] FOREIGN KEY([UserId])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[UserLoginHistory] CHECK CONSTRAINT [FK_UserLoginHistory_Users_UserId]
+--GO
+--/****** Object:  ForeignKey [FK_SubCategories_Categories_CategoryID]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[SubCategories]  WITH CHECK ADD  CONSTRAINT [FK_SubCategories_Categories_CategoryID] FOREIGN KEY([CategoryID])
+--REFERENCES [dbo].[Categories] ([CategoryID])
+--ON DELETE CASCADE
+--GO
+--ALTER TABLE [dbo].[SubCategories] CHECK CONSTRAINT [FK_SubCategories_Categories_CategoryID]
+--GO
+--/****** Object:  ForeignKey [FK_SubCategories_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[SubCategories]  WITH CHECK ADD  CONSTRAINT [FK_SubCategories_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[SubCategories] CHECK CONSTRAINT [FK_SubCategories_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_SubCategories_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[SubCategories]  WITH CHECK ADD  CONSTRAINT [FK_SubCategories_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[SubCategories] CHECK CONSTRAINT [FK_SubCategories_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_SubCategories_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[SubCategories]  WITH CHECK ADD  CONSTRAINT [FK_SubCategories_Users_UpdatedBy] FOREIGN KEY([UpdatedBY])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[SubCategories] CHECK CONSTRAINT [FK_SubCategories_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_ShopPictures_Pictures_PictureId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ShopPictures]  WITH CHECK ADD  CONSTRAINT [FK_ShopPictures_Pictures_PictureId] FOREIGN KEY([PictureId])
+--REFERENCES [dbo].[Pictures] ([PictureID])
+--GO
+--ALTER TABLE [dbo].[ShopPictures] CHECK CONSTRAINT [FK_ShopPictures_Pictures_PictureId]
+--GO
+--/****** Object:  ForeignKey [FK_ShopPictures_Shop_ShopId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ShopPictures]  WITH CHECK ADD  CONSTRAINT [FK_ShopPictures_Shop_ShopId] FOREIGN KEY([ShopId])
+--REFERENCES [dbo].[Shop] ([ShopID])
+--GO
+--ALTER TABLE [dbo].[ShopPictures] CHECK CONSTRAINT [FK_ShopPictures_Shop_ShopId]
+--GO
+--/****** Object:  ForeignKey [FK_Products_Categories_CategoryId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_Categories_CategoryId] FOREIGN KEY([CategoryId])
+--REFERENCES [dbo].[Categories] ([CategoryID])
+--GO
+--ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_Categories_CategoryId]
+--GO
+--/****** Object:  ForeignKey [FK_Products_Shop_ShopId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_Shop_ShopId] FOREIGN KEY([ShopId])
+--REFERENCES [dbo].[Shop] ([ShopID])
+--GO
+--ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_Shop_ShopId]
+--GO
+--/****** Object:  ForeignKey [FK_Products_SubCategories_SubCategoryId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_SubCategories_SubCategoryId] FOREIGN KEY([SubCategoryId])
+--REFERENCES [dbo].[SubCategories] ([SubCategoryID])
+--GO
+--ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_SubCategories_SubCategoryId]
+--GO
+--/****** Object:  ForeignKey [FK_Products_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Products_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_Products_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_ProductTag_Products_ProductId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductTag]  WITH CHECK ADD  CONSTRAINT [FK_ProductTag_Products_ProductId] FOREIGN KEY([ProductId])
+--REFERENCES [dbo].[Products] ([ProductID])
+--GO
+--ALTER TABLE [dbo].[ProductTag] CHECK CONSTRAINT [FK_ProductTag_Products_ProductId]
+--GO
+--/****** Object:  ForeignKey [FK_ProductTag_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductTag]  WITH CHECK ADD  CONSTRAINT [FK_ProductTag_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[ProductTag] CHECK CONSTRAINT [FK_ProductTag_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_ProductTag_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductTag]  WITH CHECK ADD  CONSTRAINT [FK_ProductTag_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[ProductTag] CHECK CONSTRAINT [FK_ProductTag_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_ProductTag_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductTag]  WITH CHECK ADD  CONSTRAINT [FK_ProductTag_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[ProductTag] CHECK CONSTRAINT [FK_ProductTag_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_ProductReviews_Products_ProductId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductReviews]  WITH CHECK ADD  CONSTRAINT [FK_ProductReviews_Products_ProductId] FOREIGN KEY([ProductId])
+--REFERENCES [dbo].[Products] ([ProductID])
+--GO
+--ALTER TABLE [dbo].[ProductReviews] CHECK CONSTRAINT [FK_ProductReviews_Products_ProductId]
+--GO
+--/****** Object:  ForeignKey [FK_ProductReviews_Users_CreatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductReviews]  WITH CHECK ADD  CONSTRAINT [FK_ProductReviews_Users_CreatedBy] FOREIGN KEY([CreatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[ProductReviews] CHECK CONSTRAINT [FK_ProductReviews_Users_CreatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_ProductReviews_Users_DeletedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductReviews]  WITH CHECK ADD  CONSTRAINT [FK_ProductReviews_Users_DeletedBy] FOREIGN KEY([DeletedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[ProductReviews] CHECK CONSTRAINT [FK_ProductReviews_Users_DeletedBy]
+--GO
+--/****** Object:  ForeignKey [FK_ProductReviews_Users_UpdatedBy]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductReviews]  WITH CHECK ADD  CONSTRAINT [FK_ProductReviews_Users_UpdatedBy] FOREIGN KEY([UpdatedBy])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[ProductReviews] CHECK CONSTRAINT [FK_ProductReviews_Users_UpdatedBy]
+--GO
+--/****** Object:  ForeignKey [FK_ProductPictures_Pictures_PictureId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductPictures]  WITH CHECK ADD  CONSTRAINT [FK_ProductPictures_Pictures_PictureId] FOREIGN KEY([PictureId])
+--REFERENCES [dbo].[Pictures] ([PictureID])
+--GO
+--ALTER TABLE [dbo].[ProductPictures] CHECK CONSTRAINT [FK_ProductPictures_Pictures_PictureId]
+--GO
+--/****** Object:  ForeignKey [FK_ProductPictures_Products_ProductId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductPictures]  WITH CHECK ADD  CONSTRAINT [FK_ProductPictures_Products_ProductId] FOREIGN KEY([ProductId])
+--REFERENCES [dbo].[Products] ([ProductID])
+--GO
+--ALTER TABLE [dbo].[ProductPictures] CHECK CONSTRAINT [FK_ProductPictures_Products_ProductId]
+--GO
+--/****** Object:  ForeignKey [FK_ProductMaterial_Products_ProductId]    Script Date: 03/15/2013 16:11:00 ******/
+--ALTER TABLE [dbo].[ProductMaterial]  WITH CHECK ADD  CONSTRAINT [FK_ProductMaterial_Products_ProductId] FOREIGN KEY([ProductId])
+--REFERENCES [dbo].[Products] ([ProductID])
+--GO
+--ALTER TABLE [dbo].[ProductMaterial] CHECK CONSTRAINT [FK_ProductMaterial_Products_ProductId]
+--GO
+
+--Create table ShopSections
+--(
+--ShopSectionID int identity(1,1) constraint PK_ShopSections_ShopSectionID primary key,
+--ShopId int not null constraint FK_ShopSections_Shop_ShopId foreign key references Shop(ShopID),
+--SectionName varchar(200) not null,
+--DisplayOrder int
+--)
+--ALTER TABLE [Centro].[dbo].[Products]
+--ADD ShopSectionId int not null constraint Products_ShopSections_ShopSectionId foreign key references ShopSections(ShopSectionID)
+ 
+
+--ALTER TABLE [Centro].[dbo].[Shop]
+--ADD WelcomeMessage varchar(max)
+--ALTER TABLE [Centro].[dbo].[Shop]
+--ADD PaymentPolicy varchar(max)
+--ALTER TABLE [Centro].[dbo].[Shop]
+--ADD RefundPolicy varchar(max)
+--ALTER TABLE [Centro].[dbo].[Shop]
+--ADD SellerInformation varchar(max)
+--ALTER TABLE [Centro].[dbo].[Shop]
+--ADD AdditionalInformation varchar(max)
+--ALTER TABLE [Centro].[dbo].[Shop]
+--ADD DeliveryInformation varchar(max)
+
+--ALTER TABLE [Centro].[dbo].[Users]
+--ADD AuthenticationID varchar(100)
+--ALTER TABLE [Centro].[dbo].[Users]
+--ADD IsPasswordReset bit default 0
+
+--ALTER TABLE [Centro].[dbo].[Users]
+--ADD AlterateEmailId varchar(200)
+
+
+ --ALTER TABLE [dbo].[UserLoginHistory]  WITH CHECK ADD  CONSTRAINT [FK_UserLoginHistory_Users_UserId] FOREIGN KEY([UserId])
+--REFERENCES [dbo].[Users] ([UserID])
+--GO
+--ALTER TABLE [dbo].[UserLoginHistory] CHECK CONSTRAINT [FK_UserLoginHistory_Users_UserId]
+--ALTER TABLE UserLoginHistory
+--DROP CONSTRAINT FK_UserLoginHistory_Users_UserId
+
+--ALTER TABLE UserLoginHistory ADD
+--   CONSTRAINT FK_UserLoginHistory_Users_UserId
+--      FOREIGN KEY (UserId)
+--      REFERENCES Users (UserID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE Shop
+--DROP CONSTRAINT FK_Shop_Users_UserId
+
+--ALTER TABLE Shop ADD
+--   CONSTRAINT K_Shop_Users_UserId
+--      FOREIGN KEY (UserId)
+--      REFERENCES Users (UserID)
+--      ON DELETE CASCADE;
+--ALTER TABLE Shop
+--DROP Constraint K_Shop_Users_UserId
+
+--ALTER TABLE Shop ADD
+--   CONSTRAINT FK_Shop_Users_UserId
+--      FOREIGN KEY (UserId)
+--      REFERENCES Users (UserID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE [Order]
+--DROP CONSTRAINT FK_Order_Users_UserId
+
+--ALTER TABLE [Order] ADD
+--   CONSTRAINT FK_Order_Users_UserId
+--      FOREIGN KEY (UserId)
+--      REFERENCES Users(UserID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE Categories
+--DROP CONSTRAINT FK_Categories_Users_CreatedBy
+
+--ALTER TABLE Categories ADD
+--   CONSTRAINT FK_Categories_Users_CreatedBy
+--      FOREIGN KEY (CreatedBy)
+--      REFERENCES Users(UserID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE Pictures
+--DROP CONSTRAINT FK_Pictures_Users_CreatedBy
+
+--ALTER TABLE Pictures ADD
+--   CONSTRAINT FK_Pictures_Users_CreatedBy
+--      FOREIGN KEY (CreatedBy)
+--      REFERENCES Users(UserID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE ShipingCountries
+--DROP CONSTRAINT FK_ShipingCountries_Users1
+
+--ALTER TABLE ShipingCountries ADD
+--   CONSTRAINT FK_ShipingCountries_Users1
+--      FOREIGN KEY (UserId)
+--      REFERENCES Users(UserID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE ShipingCountries
+--DROP CONSTRAINT FK_ShipingCountries_Products1
+
+--ALTER TABLE ShipingCountries ADD
+--   CONSTRAINT FK_ShipingCountries_Products1
+--      FOREIGN KEY (ProductId)
+--      REFERENCES Products(ProductID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE Shop
+--DROP CONSTRAINT FK_Shop_Users_UserId
+
+--ALTER TABLE Shop ADD
+--   CONSTRAINT FK_Shop_Users_UserId
+--      FOREIGN KEY (UserId)
+--      REFERENCES Users(UserID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE ShopPictures
+--DROP CONSTRAINT FK_ShopPictures_Shop_ShopId
+
+--ALTER TABLE ShopPictures ADD
+--   CONSTRAINT FK_ShopPictures_Shop_ShopId
+--      FOREIGN KEY (ShopId)
+--      REFERENCES Shop(ShopID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE ShopSections
+--DROP CONSTRAINT FK_ShopSections_Shop_ShopId
+
+--ALTER TABLE ShopSections ADD
+--   CONSTRAINT FK_ShopSections_Shop_ShopId
+--      FOREIGN KEY (ShopId)
+--      REFERENCES Shop(ShopID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE ShopSignUpStepCompleted
+--DROP CONSTRAINT FK_ShopSignUpCurrentStep_Shop
+
+--ALTER TABLE ShopSignUpStepCompleted ADD
+--   CONSTRAINT FK_ShopSignUpCurrentStep_Shop
+--      FOREIGN KEY (ShopId)
+--      REFERENCES Shop(ShopID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE SubCategories
+--DROP CONSTRAINT FK_SubCategories_Categories_CategoryID
+
+--ALTER TABLE SubCategories ADD
+--   CONSTRAINT FK_SubCategories_Categories_CategoryID
+--      FOREIGN KEY (CategoryID)
+--      REFERENCES Categories(CategoryID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE ShopSections
+--DROP CONSTRAINT FK_ShopSections_Shop_ShopId
+
+--ALTER TABLE ShopSections ADD
+--   CONSTRAINT FK_ShopSections_Shop_ShopId
+--      FOREIGN KEY (ShopId)
+--      REFERENCES Shop(ShopID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE UserLoginHistory
+--DROP CONSTRAINT FK_UserLoginHistory_Users_UserId
+
+--ALTER TABLE UserLoginHistory ADD
+--   CONSTRAINT FK_UserLoginHistory_Users_UserId
+--      FOREIGN KEY (UserId)
+--      REFERENCES Users(UserID)
+--      ON DELETE CASCADE;
+
+--ALTER TABLE [Centro].[dbo].[Categories]
+--ADD ParentCategoryId int 
+
+---------------------------------------
+--Tables Added On 1st April 2013
+---------------------------------------
+--Create Table Tags(
+--TagID int identity(1,1) constraint PK_Tags_TagID primary key,
+--TagText varchar(50) not null,
+--TagType int
+--)
+--Create Table ProductTags
+--(
+--ProductTagID int identity(1,1) constraint PK_ProductTags_ProductTagID primary key,
+--TagId int  constraint FK_ProductTags_Tags_TagId foreign key references Tags(TagID)
+--)
+
+--Create Table UserTags
+--(
+--UserTagID int identity(1,1) constraint PK_UserTags_UserTagID primary key,
+--TagId int  constraint FK_UserTags_Tags_TagId foreign key references Tags(TagID)
+--)
+
+--Create Table Cities
+--(
+--CityID int identity(1,1) constraint PK_Cities_CityID primary key,
+--StateId int not null constraint FK_Cities_StateProvince_StateId foreign key references StateProvince(StateID),
+--CityName varchar(500)
+--)
+
+--ALTER TABLE ShipingCountries
+--DROP CONSTRAINT FK_ShipingCountries_CountryFrom
+
+--ALTER TABLE ShipingCountries ADD
+--   CONSTRAINT FK_ShipingCountries_CountryFrom
+--      FOREIGN KEY (ShipsFromId)
+--      REFERENCES Country(CountryID)
+--      ON DELETE CASCADE;
+
+--Alter table Users
+--Add DateofBirth datetime
+
+--Alter table Users
+--Add AboutUs varchar(max)
+
+--Alter table Users
+--Add ProfilePicId int
+--ALTER TABLE Users ADD
+--   CONSTRAINT FK_Users_Pictures_ProfilePicId
+--     FOREIGN KEY (ProfilePicId)
+--     REFERENCES Pictures(PictureID)
+--Alter table Users
+--Add CountryId int
+--Alter table Users
+--Add StateId int
+--Alter table Users
+--Add CityId int
+
+--ALTER TABLE Users ADD
+--  CONSTRAINT FK_Users_Country_CountryId
+--    FOREIGN KEY (CountryId)
+--    REFERENCES Country(CountryID)
+    
+--    ALTER TABLE Users ADD
+--  CONSTRAINT FK_Users_StateProvince_StateId
+--    FOREIGN KEY (StateId)
+--    REFERENCES StateProvince(StateID)
+    
+--    ALTER TABLE Users ADD
+--  CONSTRAINT FK_Users_Cities_CityId
+--    FOREIGN KEY (CityId)
+--    REFERENCES Cities(CityID)
+
+--alter table UserTags
+--Add UserId int not null
+
+--alter table UserTags ADD
+--Constraint FK_UserTags_Users_UserId
+--FOREIGN KEY(UserId)
+--REFERENCES Users(UserID)
+
+--alter table ProductTags
+--Add ProductId int not null
+
+--alter table ProductTags ADD
+--Constraint FK_ProductTags_Products_ProductId
+--FOREIGN KEY(ProductId)
+--REFERENCES Products(ProductID)
+
+/* 03/04/2013 */
+--alter table Products Add IsFeatured bit NULL
+/* 04/04/2013 */
+--alter table Users add TotalEarning decimal(18,2)
+
+--alter table Tags
+--ALTER COLUMN TagText varchar(max) not null
+
+/*  05-04-2013   */
+--alter table products Add IsDownloadable bit NOT NULL Default 0
+--CREATE TABLE ProductFiles(
+--	[ProductFileID] [int] IDENTITY(1,1) NOT NULL Primary Key,	
+--	[DisplayName] [varchar](300) NOT NULL,
+--	[SavedName] [varchar](300) NOT NULL,
+--	[MimeType] [varchar](50) NOT NULL,
+--	[SizeInBytes] [int] NOT NULL,
+--	[SizeInKB] [decimal](18, 2) NOT NULL,
+--	[SizeInMB] [decimal](18, 2) NOT NULL,
+--)
+--alter table Products Add ProductFileID int NULL foreign key References ProductFiles(ProductFileID)
+
+/* 11-04-2013 */
+--Create Table BillingAddress
+--(
+--	BillingAddressID int NOT NULL Primary Key Identity(1,1),
+--	UserID int NOT NULL Foreign Key References Users(UserID),
+--	FirstName varchar(25) NOT NULL,
+--	LastName varchar(25) NOT NULL,
+--	CountryID int NOT NULL Foreign Key References Country(CountryID),
+--	StateID int NOT NULL Foreign Key References StateProvince(StateID),
+--	CityID int NOT NULL Foreign Key References Cities(CityID),
+--	[Address] varchar(1000) NOT NULL,
+--	PostCode int NOT NULL,
+--	IsPrimary bit NOT NULL
+--)
+
+--Create Table ShippingAddress
+--(
+--	ShippingAddressID int NOT NULL Primary Key Identity(1,1),
+--	UserID int NOT NULL Foreign Key References Users(UserID),
+--	FirstName varchar(25) NOT NULL,
+--	LastName varchar(25) NOT NULL,
+--	CountryID int NOT NULL Foreign Key References Country(CountryID),
+--	StateID int NOT NULL Foreign Key References StateProvince(StateID),
+--	CityID int NOT NULL Foreign Key References Cities(CityID),
+--	[Address] varchar(1000) NOT NULL,
+--	PostCode int NOT NULL,
+--	IsPrimary bit NOT NULL
+--)
+
+--Create Table ShopOrderItems
+--(
+--	OrderDetailsID int NOT NULL Primary Key Identity(1,1),
+--	OrderID int NOT NULL Foreign Key References [Order](OrderID),
+--	ShopID int NOT NULL Foreign Key References Shop(ShopID),
+--	ProductID int NOT NULL Foreign Key References [Order](OrderID),
+--	Quantity int NOT NULL,
+--	UnitPrice decimal(18,2) NOT NULL,
+--	UnitShippingPrice decimal(18,2) NULL,
+--	UnitShippingAfterFirst decimal(18,2) NULL,
+--	TotalShippingPrice decimal(18,2) NULL,
+--	IsShippingAvailable bit NOT NULL,
+--	IsDownloabale bit NOT NULL,
+--	CreatedOn DateTime NOT NULL	
+--)
+
+--Create Table ShopOrder
+--(
+--	ShopOrderID int NOT NULL Primary Key Identity(1,1),
+--	UserID int NOT NULL Foreign Key References Users(UserID),
+--	NotForShop varchar(2000) NULL,
+--	ItemTotalPrice decimal(18,2) NOT NULL,
+--	ItemTotalShippingPrice decimal(18,2) NOT NULL,
+--	ShipToCountryId int NULL,
+--	CreatedOn DateTime NOT NULL
+--)
+
+/* Dated:22 April 2013 */
+--Create table PrototypeRequest
+--(
+--RequestID bigint identity(11000,1) constraint PK_PrototypeRequest_RequestId primary key,
+--RequestTitle varchar(500) not null,
+--[Description] varchar(max) not null,
+--Dimensions varchar(200),
+--Material varchar(200),
+--MinBudget decimal(18,2) not null,
+--MaxBudget decimal(18,2) not null,
+--BuyerId int not null  constraint FK_PrototypeRequest_Users_BuyerId foreign key references Users(UserID),
+--SellerId int not null  constraint FK_PrototypeRequest_Users_SellerId foreign key references Users(UserID),
+--ShopId int  constraint FK_PrototypeRequest_Shop_ShopId foreign key references Shop(ShopID),
+--IsDeleted bit default 0,
+--RequestStatus int,
+--CreatedOn datetime default GETDATE(),
+--CreatedBy int not null  constraint FK_PrototypeRequest_Users_CreatedBy foreign key references Users(UserID),
+--UpdatedOn datetime,
+--UpdatedBy int  constraint FK_PrototypeRequest_Users_UpdatedBy foreign key references Users(UserID),
+--)
+
+--Create table RequestAttachments
+--(
+--AttachmentID int identity(1,1) constraint PK_RequestAttachments_AttachmentID primary key,
+--RequestId bigint not null  constraint FK_RequestAttachments_PrototypeRequest_RequestId foreign key references PrototypeRequest(RequestID),
+--DisplayName varchar(500) not null,
+--SavedName varchar(500) not null,
+--MimeType varchar(50) not null,
+--SizeInBytes int not null,
+--SizeInKb decimal(18,2) not null,
+--SizeInMb decimal(18,2) not null,
+--CreatedOn datetime not null default GetDate()
+--)
+
+--Alter Table Shop
+--Add ShopSpecialties varchar(200)
+
+
+
+/* 23-04-2013 */
+-- drop table messagereceivers
+-- drop table messages
+--CREATE TABLE [Messages]
+--(
+--  [MessageID] INT not null primary key identity(1,1),
+--  [Subject] NVARCHAR(MAX) ,
+--  [Body] NVARCHAR(MAX) ,
+--  [CreatedOn] DATETIME NOT NULL,
+--  [AuthorID] INT not null constraint FK_Messages_Users_UserID foreign key references Users(UserID)
+--)
+
+--CREATE TABLE [UsersMessages]
+--(
+--  [UsersMessagesID] int not null primary key identity(1,1),
+--  [MessageID] INT not null constraint FK_UsersMessages_Messages_MessageID foreign key references Messages(MessageID),
+--  [UserID] INT not null constraint FK_UsersMessages_Users_UserID foreign key references Users(UserID),
+--  [PlaceHolderID] INT not null,--For example: InBox, SentItems, Draft, Trash, Spam 
+--  [IsRead] BIT not null,
+--  [IsArchived] BIT not null 
+--)
+
+--alter table Messages add ReplyMessageID int null
+
+
+
+/***************************************************** Clear Database Script ******************************************************/
+/***************************************************** Beware to Run it ******************************************************/
+--Delete from [Address]
+--Delete from ProductPictures
+--Delete from ShopPictures
+--Delete from ProductPictures
+--Delete from ProductReviews
+--Delete from ProductTags
+--Delete from SalesTax
+--Delete from ShipingCountries
+--Delete from Products
+--Delete from ShippingStatus
+--Delete from ShopSections
+--Delete from ShopSignUpStepCompleted
+--Delete from Tags
+--Delete from Shop
+--Delete from UserLoginHistory
+--Delete from UserTags
+--Delete from Users
+--Delete from Pictures
+/***************************************************** Beware to Run it ******************************************************/
+/***************************************************** Clear Database Script ******************************************************/
+
+
+/************************** 5-July-2013 ************************************/
+--delete from BuyerJobs
+--Alter Table BuyerJobs Add CategoryId int NOT NULL
+--Alter Table BuyerJobs Add Requirements varchar(8000) NULL
+--Alter Table BuyerJobs Add IdealStartDate DateTime NOT NULL
+
+--delete from PrototypeRequest
+--Alter Table PrototypeRequest Add CategoryId int NOT NULL
+--Alter Table PrototypeRequest Add Requirements varchar(8000) NULL
+--Alter Table PrototypeRequest Add IdealStartDate DateTime NOT NULL

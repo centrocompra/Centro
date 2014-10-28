@@ -1,0 +1,50 @@
+﻿@model Product
+@{
+    ViewBag.Title = "Shop";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{ Products }
+@{
+    SelectedTabs selectedTabs = ViewBag.SelectedTabs;
+    var shopId = ViewBag.ShopId;
+}
+<div class="create-shop-steps-area">
+
+@Html.Partial("_SellerSubMenu", selectedTabs)
+
+</div>
+<div class="white-area-inner p20">
+    <div class="right-panel one-column">
+    <div class="row"> @*<a href="javascript:;" class="button2 fRight"><span class="fwd">List Items</span></a>*@
+    
+    <div>
+        <div class="tabs-outer">
+            <ul class="tabs">
+                <li class="active">@Ajax.ActionLink("List An Item", "_Item", "User", new { shop_id = shopId }, new AjaxOptions { UpdateTargetId = "ui-product-tabs" }, new { @onclick = "SetTab(this)" })</li>
+                <li>@Ajax.ActionLink("Manage Listing", "Listing", "User", new { shop_id = shopId }, new AjaxOptions { UpdateTargetId = "ui-product-tabs" }, new { @onclick = "SetTab(this)" })</li>
+                <li>@Ajax.ActionLink("Sections", "_Sections", "User", new { shop_id = shopId }, new AjaxOptions { UpdateTargetId = "ui-product-tabs" }, new { @class="section", @onclick = "SetTab(this)" })</li>
+            </ul>
+        </div>
+        <div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="ui-product-tabs">        
+            @Html.Partial("_Item", Model)
+        </div>  
+        @*<div class="user-register-msg-box">
+         <div class="fwd top-msg">@ViewBag.UserRegDetail </div>     
+         </div>*@
+    </div>
+    </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.core.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.widget.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.mouse.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.sortable.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/StepsCompleted.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/ListItems.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/CreateShop.js")"></script>
+}
+<script type="text/javascript">
+    var shop_id = '@shopId';
+</script>

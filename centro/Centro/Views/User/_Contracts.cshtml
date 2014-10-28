@@ -1,0 +1,107 @@
+﻿@model string
+@{
+    SiteUserDetails CentroUsers;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+    CentroUsers = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+    
+    PagingResult<ServiceContracts_Result> AsBuyer, AsSeller;
+    if(Model=="Past")
+    {
+        AsBuyer = SellersHandler.GetPastServiceContracts(1, 12, "CreatedOn", "Desc", "BuyerID", CentroUsers.LoggedInUser.Id);
+        AsSeller = SellersHandler.GetPastServiceContracts(1, 12, "CreatedOn", "Desc", "SellerID", CentroUsers.LoggedInUser.Id);
+    }
+    else{
+        AsSeller= SellersHandler.GetServiceContracts(1, 12, "CreatedOn", "Desc", "SellerID", CentroUsers.LoggedInUser.Id);
+        AsBuyer = SellersHandler.GetServiceContracts(1, 12, "CreatedOn", "Desc", "BuyerID", CentroUsers.LoggedInUser.Id);
+    }    
+}
+<h2>My Clients</h2>
+@if (AsSeller.TotalCount > 0)
+{
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+    @foreach (var item in AsSeller.List)
+    {
+        <tr align="center" class="select" onclick="GotoInvoices('@Url.Action("MyCustomOrder", "Message", new { id = item.RequestID, from = "MyContracts" })')">
+    @if (item.RequestStatus != (int)CustomRequestStatus.Completed)
+    {
+        <td>
+            <input type="checkbox" id="@item.RequestID" class="contract-checkbox" onclick="event.cancelBubble = true;if(event.stopPropagation) event.stopPropagation();" />
+        </td>
+    }
+        <td>
+            <img src="@Url.Content("~/Images/ProfileImage/" + item.Username + "/thumb_" + item.PrimaryPicture)" width="50" alt="" /></td>
+        <td align="left">
+            <h4>@item.Username </h4>
+            <p>@item.FirstName @item.LastName</p>
+        </td>
+        <td>
+            <h4>@item.CreatedOn.Value.ToShortDateString()</h4>
+            <p>Contract Started</p>
+        </td>
+        <td>
+            <h4>$@item.TotalEarning USD </h4>
+            <p>Amount Earned </p>
+        </td>
+        <td>
+            <h4>@item.TotalInvoices </h4>
+            <p>Total # invoices </p>
+        </td>        
+    </tr>
+    }
+</table>
+}
+else
+{
+    <div>No record Found</div>
+}
+<h2>My Contractors</h2>
+@if (AsBuyer.TotalCount > 0)
+{
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+    @foreach (var item in AsBuyer.List)
+    {
+        <tr align="center" class="select" onclick="GotoInvoices('@Url.Action("BuyerCustomOrder", "Message", new { id = item.RequestID, from = "MyContracts" })')">
+    @if (item.RequestStatus != (int)CustomRequestStatus.Completed)
+    {
+        <td>
+            <input type="checkbox" id="@item.RequestID" class="contract-checkbox" onclick="event.cancelBubble = true;if(event.stopPropagation) event.stopPropagation();" />
+        </td>
+    }
+        <td>
+            <img src="@Url.Content("~/Images/ProfileImage/" + item.Username + "/thumb_" + item.PrimaryPicture)" width="50" alt="" /></td>
+        <td align="left">
+            <h4>@item.Username </h4>
+            <p>@item.FirstName @item.LastName</p>
+        </td>
+        <td>
+            <h4>@item.CreatedOn.Value.ToShortDateString()</h4>
+            <p>Contract Started</p>
+        </td>
+        <td>
+            <h4>$@item.TotalEarning USD </h4>
+            <p>Amount Earned </p>
+        </td>
+        <td>
+            <h4>@item.TotalInvoices </h4>
+            <p>Total # invoices </p>
+        </td>        
+    </tr>
+    }
+</table>
+}
+else
+{
+    <div>No record Found</div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Model' == "Past") {
+            $('.movetopast').hide();
+        }
+        else {
+            $('.movetopast').show();
+        }
+    });
+</script>

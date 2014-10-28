@@ -1,0 +1,115 @@
+﻿@model Contest
+@{
+    ViewBag.Title = "Index";
+    Layout = ViewBag.LoggedInUser!=null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+     Contest Details
+}
+@{
+    //List<Product> LastViewedProducts = (List<Product>)ViewBag.LastViewedProducts;
+    
+}
+<aside class="floatLeft left-side">
+    @Html.Partial("_LeftSideBuyerCategoryMenuLayout")
+</aside>
+<div class="create-contest">
+    <div class="right-bar">
+        <div class="top-head row">
+            @*<a href="@Url.Action("Profile", "User")" class="button1 fRight"><span>View Profile</span></a>*@
+            <h2 class="orng">@Model.Title</h2>
+        </div>
+            <div class="edit-from-profile floatLeft mb10">
+                <div class="section-inner">
+                    <div class="input-group">
+                        <label for="avatar" class="label">
+                            Contest Picture</label>
+                        <div class="change-avatar-content">
+                            <div class="image-wrapper">
+                                <a class="avatar">
+                                    @if (!String.IsNullOrEmpty(Model.ContestImage))
+                                    {
+                                        <img width="175" height="175"  alt="Profile Image" id="contest_img" src="@Url.Content("~/Images/Contest/"+Model.User.UserName+"/"+Model.ContestImage)" />
+                                    }
+                                    else
+                                    {
+                                        <img width="175" height="175"  alt="Profile Image" id="contest_img" src="@Url.Content("~/Content/images/contest.png")"/>
+                                    }
+                                </a>
+                                    
+                            </div>
+                            
+                        </div>
+                    </div>
+                    @*<div class="input-group">
+                        <label for="full-name" class="label">
+                            Title</label>
+                        <p class="full-name">
+                        <div class="contest-description">
+                            @Html.DisplayFor(m => m.Title, new { @class = "input-box", @style = "width:500px !important;" })                            
+                            </div>
+                        </p>
+                    </div>*@
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Description</label>
+                        <p class="full-name">
+                        <div class="contest-description">
+                            @*@Html.DisplayFor(m => m.Description, new { @class = "input-box", @style = "width:500px !important; height:150px;" })*@
+                            @Html.Raw(Model.Description.Replace("\r\n","<br/>"))
+                            </div>
+                        </p>
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Start / End Date</label>
+                        <p class="full-name">
+                        <div class="contest-description">
+                            @Model.StartDate.ToLongDateString()
+                            -
+                            @Model.EndDate.ToLongDateString()
+                           </div>
+                        </p>
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Terms & Conditions</label>
+                        <p class="full-name">
+                        <div class="contest-description">
+                            @Html.Raw(Model.TermsAndCondition.Replace("\r\n", "<br/>"))
+                            </div>
+                        </p>
+                    </div>
+                @if (Model.ContestAttachments.Count() > 0)
+                {
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Attachments</label>
+                        <p class="full-name">
+                            <div class="contest-description">
+                            @foreach (var item in Model.ContestAttachments)
+                            {
+                                <a href="@Url.Action("Download", "Contest", new { id = item.AttachmentID })" target="_blank">@item.DisplayName</a>
+                            }
+                            </div>
+                        </p>
+                    </div>
+                }
+            
+                </div>            
+
+            </div>
+            
+            @if ((bool)ViewBag.HasShop && ViewBag.LoggedInUser != null && ViewBag.LoggedInUser.Id!=Model.UserID)
+            {
+                <div class="input-group mt15">
+                    <a href="@Url.Action("Participate", "Contest", new { id = @Model.ContestID })" class="button1">Participate</a>
+                </div>
+            }
+    </div>
+</div>
+@section scripts{
+     <script src="@Url.Content("~/Scripts/System/jquery-ui-1.8.20.js")" type="text/javascript"></script>
+}
+
+<script src="@Url.Content("~/Scripts/Custom/contest.js")" type="text/javascript"></script>

@@ -1,0 +1,41 @@
+﻿@model PagingResult<MessagesListing_Result>
+@{
+    ViewBag.Title = "Inbox";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+     Messages
+}
+
+<div class="page-center">
+   <aside class="floatLeft left-side">
+        @Html.Partial("_LeftMenu")
+    <br />
+        @Html.Partial("_MessageContratorMenuLeft")
+    </aside>
+    <div class="right-side floatRight message">
+        <div class="box">
+            <div class="box-inner pb20">
+                <div class="row pt10" id="Result">                    
+                    @Html.Partial("_Messages", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.ui-autocomplete-loading {
+	background: white url('/content/images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+#city { width: 25em; }
+</style>
+@section scripts{
+    <link href="@Url.Content("~/Content/css/jquery.ui.all.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.widget.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.menu.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/search.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/messages.js")"></script>
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>    
+}
+<script src="@Url.Content("~/Scripts/Custom/messagePaging.js")" type="text/javascript"></script>

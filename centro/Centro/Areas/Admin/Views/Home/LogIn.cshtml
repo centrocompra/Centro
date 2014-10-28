@@ -1,0 +1,77 @@
+﻿ @model BusinessLayer.Models.DataModel.User
+@{
+    ViewBag.Title = "Centro Administration Suite";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+@Html.Partial("_AdminScripts")
+</head>
+
+<body class="greybg">
+<!--Wrapper Start from Here-->
+<div id="wrapper">
+  <!--Header Start from Here-->
+  <div id="header">
+      <div id="head_lt">
+    <!--Logo Start from Here-->
+    <span class="floatleft"><a href="@Url.Action("Index", "Home", new { area=""})"><img src="@Url.Content("~/images/logo.png")" alt="" /></a></span><span class="slogan">administration suite</span>
+    <!--Logo end  Here-->
+    </div>
+  <div id="container">
+    
+    <!--Admin logn section Start from Here-->
+    <div id="login-box">
+      <div class="white-box" style="width:425px; padding-top:60px;">
+        <div class="tl">
+          <div class="tr">
+            <div class="tm">&nbsp;</div>
+          </div>
+        </div>
+        <div class="ml">
+          <div class="mr">
+            <div class="middle">
+              <div class="lb-data">
+               <div class="Message_DIV"><span></span></div>
+                <h1>Administrator Login</h1>
+                <p class="top15 gray12">Please enter a valid username and password to gain access to the administration console.</p>
+              @using (Ajax.BeginForm("SignIn", "Home", new AjaxOptions { HttpMethod = "Post", OnBegin = "OnBegin", OnComplete = "OnComplete" }))
+              {
+                <p class="top30"><span class="login_field">
+                  @Html.TextBoxFor(u => u.EmailOrUsername, new { @class = "inpt", @placeholder = "Username" })@Html.ValidationMessageFor(u => u.EmailOrUsername)
+                      
+                      </span></p>
+                <p class="top15"><span class="login_field">
+                        @Html.PasswordFor(u => u.Password, new { @class = "inpt", @placeholder = "Password" })@Html.ValidationMessageFor(u => u.Password)
+                      </span></p>
+
+                <div class="top15">
+                	<div class="floatleft top15 gray12"><input type="checkbox" value="checkbox" id="persistent" name="persistent" class="checkbox">
+                	   <label for="persistent">Remember my login details</label> 
+					</div>
+                   
+					<div class="floatright"><div class="black_btn2"><span class="upper"><input type="submit" value="SUBMIT" name="" class="button1-blk"></span></div>
+				</div>
+                </div>
+              }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bl">
+          <div class="br">
+            <div class="bm">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Admin logn section end Here-->
+  </div>
+  <!--Container end Here-->
+</div>
+<!--Wrapper End from Here-->
+</div>
+</body>
+</html>

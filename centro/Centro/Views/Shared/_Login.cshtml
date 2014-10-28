@@ -1,0 +1,40 @@
+﻿@model User
+<div class="loginBox">
+    <div class="logincenter">
+        <div class="leftside">
+            @using (Ajax.BeginForm("Login", "Home", null, new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnLoginComplete" }))
+            {
+                <h2>
+                    Sign in</h2>
+                <div class="inputtext">
+                    <div class="inputtype">
+                        @Html.TextBoxFor(m => m.EmailOrUsername, new { @watermark = "Email address or Username" })
+                        @Html.ValidationMessageFor(m=>m.EmailOrUsername)
+                    </div>
+                    <button type="submit">
+                        Sign in</button>
+                    <a href="@Url.Action("ForgotPassword", "Home")" onclick="ForgotPassword(this)">forgot password</a>
+                </div>
+                <div class="inputtext">
+                    <div class="inputtype">
+                        @Html.PasswordFor(m => m.Password, new { @watermark = "Password" })
+                        @Html.ValidationMessageFor(m=>m.Password)
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="centerside">
+            <span>Or</span>
+        </div>
+        <div class="rightside">
+            <ul>
+                <li class="user"><a href="javascript:;" onclick="LoginRegister.Registration(this);">Create a user </a></li>
+                <li class="face">
+                    @Html.Action("LoginViaFB", "Home", new { @class = "fb-sigin"} )
+                </li>                
+            </ul>
+        </div>
+        <a class="close" href="#">
+            <img src="~/Content/images/close.png" alt="" /></a>
+    </div>
+</div>

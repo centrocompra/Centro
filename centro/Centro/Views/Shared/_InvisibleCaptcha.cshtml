@@ -1,0 +1,10 @@
+﻿@model Centro.Models.InvisibleCaptcha
+<div style="display:none;">
+    
+        @Html.LabelFor(model => model.InvisibleCaptchaValue)
+   
+    <div class="editor-field">
+        @Html.EditorFor(model => model.InvisibleCaptchaValue)
+        @Html.ValidationMessageFor(model => model.InvisibleCaptchaValue)
+    </div>
+</div>

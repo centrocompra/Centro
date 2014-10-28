@@ -1,0 +1,1430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ReplictivityModelStoreContainer" CdmEntityContainer="ReplictivityEntities">
+    <FunctionImportMapping FunctionImportName="UserListing" FunctionName="ReplictivityModel.Store.UserListing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.UserListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsAccountBlocked" ColumnName="IsAccountBlocked" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CategoryListing" FunctionName="ReplictivityModel.Store.CategoryListing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.CategoryListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Published" ColumnName="Published" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="FeaturedProductsListing" FunctionName="ReplictivityModel.Store.FeaturedProductsListing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.ProductsListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="Condition" ColumnName="Condition" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ShipFromId" ColumnName="ShipFromId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ShopSectionID" ColumnName="ShopSectionID" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Materials" ColumnName="Materials" />
+          <ScalarProperty Name="PrimaryPicture" ColumnName="PrimaryPicture" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="LastViewedOn" ColumnName="LastViewedOn" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="IsDownloadable" ColumnName="IsDownloadable" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetProductsByShopListing" FunctionName="ReplictivityModel.Store.GetProductsByShopListing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.ProductsListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="Condition" ColumnName="Condition" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ShipFromId" ColumnName="ShipFromId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ShopSectionID" ColumnName="ShopSectionID" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Materials" ColumnName="Materials" />
+          <ScalarProperty Name="PrimaryPicture" ColumnName="PrimaryPicture" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="LastViewedOn" ColumnName="LastViewedOn" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="IsDownloadable" ColumnName="IsDownloadable" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetShopListingByServiceId" FunctionName="ReplictivityModel.Store.GetShopListingByShopService">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.GetShopListingByServiceId_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ShopOwnerUserName" ColumnName="ShopOwnerUserName" />
+          <ScalarProperty Name="ShopOwnerFirstName" ColumnName="ShopOwnerFirstName" />
+          <ScalarProperty Name="ShopOwnerLastName" ColumnName="ShopOwnerLastName" />
+          <ScalarProperty Name="TotalEarning" ColumnName="TotalEarning" />
+          <ScalarProperty Name="ShopOwnerProfilePicUrl" ColumnName="ShopOwnerProfilePicUrl" />
+          <ScalarProperty Name="AboutUs" ColumnName="AboutUs" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="ShopTitle" ColumnName="ShopTitle" />
+          <ScalarProperty Name="ShopAnnouncement" ColumnName="ShopAnnouncement" />
+          <ScalarProperty Name="MessageForBuyers" ColumnName="MessageForBuyers" />
+          <ScalarProperty Name="ShopBanner" ColumnName="ShopBanner" />
+          <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="WelcomeMessage" ColumnName="WelcomeMessage" />
+          <ScalarProperty Name="PaymentPolicy" ColumnName="PaymentPolicy" />
+          <ScalarProperty Name="RefundPolicy" ColumnName="RefundPolicy" />
+          <ScalarProperty Name="SellerInformation" ColumnName="SellerInformation" />
+          <ScalarProperty Name="AdditionalInformation" ColumnName="AdditionalInformation" />
+          <ScalarProperty Name="DeliveryInformation" ColumnName="DeliveryInformation" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="PrinterType" ColumnName="PrinterType" />
+          <ScalarProperty Name="Dimensions" ColumnName="Dimensions" />
+          <ScalarProperty Name="Materials" ColumnName="Materials" />
+          <ScalarProperty Name="TagsAndMaterials" ColumnName="TagsAndMaterials" />
+          <ScalarProperty Name="ShopSpecialties" ColumnName="ShopSpecialties" />
+          <ScalarProperty Name="ProductPictures" ColumnName="ProductPictures" />
+          <ScalarProperty Name="LastLoginOn" ColumnName="LastLoginOn" />
+          <ScalarProperty Name="TotalHubs" ColumnName="TotalHubs" />
+          <ScalarProperty Name="TotalContest" ColumnName="TotalContest" />
+          <ScalarProperty Name="AcceptJob" ColumnName="AcceptJob" />
+          <ScalarProperty Name="TotalFollowers" ColumnName="TotalFollowers" />
+          <ScalarProperty Name="PaypalID" ColumnName="PaypalID" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Skills" ColumnName="Skills" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="MessagesListing" FunctionName="ReplictivityModel.Store.MessagesListing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.MessagesListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ReplyMessageID" ColumnName="ReplyMessageID" />
+          <ScalarProperty Name="SentTo" ColumnName="SentTo" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="Addresses">
+      <EntityTypeMapping TypeName="ReplictivityModel.Address">
+        <MappingFragment StoreEntitySet="Address">
+          <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+          <ScalarProperty Name="PhoneNumber2" ColumnName="PhoneNumber2" />
+          <ScalarProperty Name="PhoneNumber1" ColumnName="PhoneNumber1" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BillingAddresses">
+      <EntityTypeMapping TypeName="ReplictivityModel.BillingAddress">
+        <MappingFragment StoreEntitySet="BillingAddress">
+          <ScalarProperty Name="IsPrimary" ColumnName="IsPrimary" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="BillingAddressID" ColumnName="BillingAddressID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BlockedIPAddresses">
+      <EntityTypeMapping TypeName="ReplictivityModel.BlockedIPAddress">
+        <MappingFragment StoreEntitySet="BlockedIPAddress">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="BlockedDescription" ColumnName="BlockedDescription" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="ReplictivityModel.Category">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Published" ColumnName="Published" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="ReplictivityModel.City">
+        <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="ReplictivityModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="CountryShortCode" ColumnName="CountryShortCode" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ErrorLogs">
+      <EntityTypeMapping TypeName="ReplictivityModel.ErrorLog">
+        <MappingFragment StoreEntitySet="ErrorLog">
+          <ScalarProperty Name="LoggedOn" ColumnName="LoggedOn" />
+          <ScalarProperty Name="RouteData" ColumnName="RouteData" />
+          <ScalarProperty Name="FormData" ColumnName="FormData" />
+          <ScalarProperty Name="QueryData" ColumnName="QueryData" />
+          <ScalarProperty Name="LoggedInDetails" ColumnName="LoggedInDetails" />
+          <ScalarProperty Name="InnerException" ColumnName="InnerException" />
+          <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="ErrorLogID" ColumnName="ErrorLogID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GlobalCodes">
+      <EntityTypeMapping TypeName="ReplictivityModel.GlobalCode">
+        <MappingFragment StoreEntitySet="GlobalCodes">
+          <ScalarProperty Name="Lable" ColumnName="Lable" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="GlobalCodeID" ColumnName="GlobalCodeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="ReplictivityModel.Message">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="ReplyMessageID" ColumnName="ReplyMessageID" />
+          <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderItems">
+      <EntityTypeMapping TypeName="ReplictivityModel.OrderItem">
+        <MappingFragment StoreEntitySet="OrderItems">
+          <ScalarProperty Name="ProductTitle" ColumnName="ProductTitle" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDownloabale" ColumnName="IsDownloabale" />
+          <ScalarProperty Name="IsShippingAvailable" ColumnName="IsShippingAvailable" />
+          <ScalarProperty Name="TotalShippingPrice" ColumnName="TotalShippingPrice" />
+          <ScalarProperty Name="UnitShippingAfterFirst" ColumnName="UnitShippingAfterFirst" />
+          <ScalarProperty Name="UnitShippingPrice" ColumnName="UnitShippingPrice" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="OrderItemsID" ColumnName="OrderItemsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pictures">
+      <EntityTypeMapping TypeName="ReplictivityModel.Picture">
+        <MappingFragment StoreEntitySet="Pictures">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="SizeInMB" ColumnName="SizeInMB" />
+          <ScalarProperty Name="SizeInKB" ColumnName="SizeInKB" />
+          <ScalarProperty Name="SizeInBytes" ColumnName="SizeInBytes" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+          <ScalarProperty Name="SavedName" ColumnName="SavedName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="PictureID" ColumnName="PictureID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductFiles">
+      <EntityTypeMapping TypeName="ReplictivityModel.ProductFile">
+        <MappingFragment StoreEntitySet="ProductFiles">
+          <ScalarProperty Name="SizeInMB" ColumnName="SizeInMB" />
+          <ScalarProperty Name="SizeInKB" ColumnName="SizeInKB" />
+          <ScalarProperty Name="SizeInBytes" ColumnName="SizeInBytes" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="SavedName" ColumnName="SavedName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ProductFileID" ColumnName="ProductFileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductPictures">
+      <EntityTypeMapping TypeName="ReplictivityModel.ProductPicture">
+        <MappingFragment StoreEntitySet="ProductPictures">
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductPictureID" ColumnName="ProductPictureID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductReviews">
+      <EntityTypeMapping TypeName="ReplictivityModel.ProductReview">
+        <MappingFragment StoreEntitySet="ProductReviews">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="ReviewText" ColumnName="ReviewText" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductReviewID" ColumnName="ProductReviewID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="ReplictivityModel.Product">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="OtherKeywords" ColumnName="OtherKeywords" />
+          <ScalarProperty Name="DownlodableShippingPolicy" ColumnName="DownlodableShippingPolicy" />
+          <ScalarProperty Name="ProductNumberID" ColumnName="ProductNumberID" />
+          <ScalarProperty Name="SendDownloadVia" ColumnName="SendDownloadVia" />
+          <ScalarProperty Name="IsDownloadViaShip" ColumnName="IsDownloadViaShip" />
+          <ScalarProperty Name="IsDownloadable" ColumnName="IsDownloadable" />
+          <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="LastViewedOn" ColumnName="LastViewedOn" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PrimaryPicture" ColumnName="PrimaryPicture" />
+          <ScalarProperty Name="Materials" ColumnName="Materials" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ShopSectionId" ColumnName="ShopSectionId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ShipFromId" ColumnName="ShipFromId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Condition" ColumnName="Condition" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductTags">
+      <EntityTypeMapping TypeName="ReplictivityModel.ProductTag">
+        <MappingFragment StoreEntitySet="ProductTags">
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="TagId" ColumnName="TagId" />
+          <ScalarProperty Name="ProductTagID" ColumnName="ProductTagID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="ReplictivityModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesTaxes">
+      <EntityTypeMapping TypeName="ReplictivityModel.SalesTax">
+        <MappingFragment StoreEntitySet="SalesTax">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="ToStateID" ColumnName="ToStateID" />
+          <ScalarProperty Name="ToCountryID" ColumnName="ToCountryID" />
+          <ScalarProperty Name="SalesTaxID" ColumnName="SalesTaxID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShipingCountries">
+      <EntityTypeMapping TypeName="ReplictivityModel.ShipingCountry">
+        <MappingFragment StoreEntitySet="ShipingCountries">
+          <ScalarProperty Name="CostAfterFirstProduct" ColumnName="CostAfterFirstProduct" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="ShipsTo" ColumnName="ShipsTo" />
+          <ScalarProperty Name="ShipsFromId" ColumnName="ShipsFromId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ShipingCountryId" ColumnName="ShipingCountryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShippingAddresses">
+      <EntityTypeMapping TypeName="ReplictivityModel.ShippingAddress">
+        <MappingFragment StoreEntitySet="ShippingAddress">
+          <ScalarProperty Name="IsPrimary" ColumnName="IsPrimary" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ShippingAddressID" ColumnName="ShippingAddressID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopMaterials">
+      <EntityTypeMapping TypeName="ReplictivityModel.ShopMaterial">
+        <MappingFragment StoreEntitySet="ShopMaterials">
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="TagId" ColumnName="TagId" />
+          <ScalarProperty Name="ShopMaterialID" ColumnName="ShopMaterialID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopPictures">
+      <EntityTypeMapping TypeName="ReplictivityModel.ShopPicture">
+        <MappingFragment StoreEntitySet="ShopPictures">
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="PictureId" ColumnName="PictureId" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="ShopPictureID" ColumnName="ShopPictureID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopSections">
+      <EntityTypeMapping TypeName="ReplictivityModel.ShopSection">
+        <MappingFragment StoreEntitySet="ShopSections">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="ShopSectionID" ColumnName="ShopSectionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopServices">
+      <EntityTypeMapping TypeName="ReplictivityModel.ShopService">
+        <MappingFragment StoreEntitySet="ShopServices">
+          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="ShopServiceID" ColumnName="ShopServiceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopSignUpStepCompleteds">
+      <EntityTypeMapping TypeName="ReplictivityModel.ShopSignUpStepCompleted">
+        <MappingFragment StoreEntitySet="ShopSignUpStepCompleted">
+          <ScalarProperty Name="StepCompleted" ColumnName="StepCompleted" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="ShopSignUpStepCompletedId" ColumnName="ShopSignUpStepCompletedId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StateProvinces">
+      <EntityTypeMapping TypeName="ReplictivityModel.StateProvince">
+        <MappingFragment StoreEntitySet="StateProvince">
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="StateShortCode" ColumnName="StateShortCode" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="ReplictivityModel.Tag">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="TagType" ColumnName="TagType" />
+          <ScalarProperty Name="TagText" ColumnName="TagText" />
+          <ScalarProperty Name="TagID" ColumnName="TagID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLoginHistories">
+      <EntityTypeMapping TypeName="ReplictivityModel.UserLoginHistory">
+        <MappingFragment StoreEntitySet="UserLoginHistory">
+          <ScalarProperty Name="LastLoginIP" ColumnName="LastLoginIP" />
+          <ScalarProperty Name="LastLoginOn" ColumnName="LastLoginOn" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ReplictivityModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+          <ScalarProperty Name="AttachmentID" ColumnName="AttachmentID" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Backlinked" ColumnName="Backlinked" />
+          <ScalarProperty Name="LinkedIn" ColumnName="LinkedIn" />
+          <ScalarProperty Name="Licence" ColumnName="Licence" />
+          <ScalarProperty Name="Industry" ColumnName="Industry" />
+          <ScalarProperty Name="StreetAddress2" ColumnName="StreetAddress2" />
+          <ScalarProperty Name="StreetAddress1" ColumnName="StreetAddress1" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="LastLoginOn" ColumnName="LastLoginOn" />
+          <ScalarProperty Name="TotalEarning" ColumnName="TotalEarning" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="ProfilePicId" ColumnName="ProfilePicId" />
+          <ScalarProperty Name="AboutUs" ColumnName="AboutUs" />
+          <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+          <ScalarProperty Name="AlterateEmailId" ColumnName="AlterateEmailId" />
+          <ScalarProperty Name="IsAccountBlocked" ColumnName="IsAccountBlocked" />
+          <ScalarProperty Name="AcountBlockedTill" ColumnName="AcountBlockedTill" />
+          <ScalarProperty Name="InValidLoginAttempt" ColumnName="InValidLoginAttempt" />
+          <ScalarProperty Name="IsPasswordReset" ColumnName="IsPasswordReset" />
+          <ScalarProperty Name="AuthenticationID" ColumnName="AuthenticationID" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="PaypalID" ColumnName="PaypalID" />
+          <ScalarProperty Name="ShippingAddressId" ColumnName="ShippingAddressId" />
+          <ScalarProperty Name="BillingAddressId" ColumnName="BillingAddressId" />
+          <ScalarProperty Name="NewsLetterEnabled" ColumnName="NewsLetterEnabled" />
+          <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RegistrationIP" ColumnName="RegistrationIP" />
+          <ScalarProperty Name="VerifiedOn" ColumnName="VerifiedOn" />
+          <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="AuthenticatedVia" ColumnName="AuthenticatedVia" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsersMessages">
+      <EntityTypeMapping TypeName="ReplictivityModel.UsersMessage">
+        <MappingFragment StoreEntitySet="UsersMessages">
+          <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="PlaceHolderID" ColumnName="PlaceHolderID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="UsersMessagesID" ColumnName="UsersMessagesID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserTags">
+      <EntityTypeMapping TypeName="ReplictivityModel.UserTag">
+        <MappingFragment StoreEntitySet="UserTags">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="TagId" ColumnName="TagId" />
+          <ScalarProperty Name="UserTagID" ColumnName="UserTagID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetRequestInfoByRequestId" FunctionName="ReplictivityModel.Store.GetRequestByRequestId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.GetRequestInfoByRequestId_Result">
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="RequestTitle" ColumnName="RequestTitle" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Dimensions" ColumnName="Dimensions" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="MinBudget" ColumnName="MinBudget" />
+          <ScalarProperty Name="MaxBudget" ColumnName="MaxBudget" />
+          <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
+          <ScalarProperty Name="BuyerName" ColumnName="BuyerName" />
+          <ScalarProperty Name="BuyerUserName" ColumnName="BuyerUserName" />
+          <ScalarProperty Name="BuyerEmail" ColumnName="BuyerEmail" />
+          <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+          <ScalarProperty Name="SellerName" ColumnName="SellerName" />
+          <ScalarProperty Name="SellerUserName" ColumnName="SellerUserName" />
+          <ScalarProperty Name="SellerEmail" ColumnName="SellerEmail" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="BuyerAddress" ColumnName="BuyerAddress" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetRequestListingByBuyerOrSellerID" FunctionName="ReplictivityModel.Store.GetRequestListingByBuyerOrSellerID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.GetRequestListingByBuyerOrSellerID_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="RequestTitle" ColumnName="RequestTitle" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Dimensions" ColumnName="Dimensions" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="MinBudget" ColumnName="MinBudget" />
+          <ScalarProperty Name="MaxBudget" ColumnName="MaxBudget" />
+          <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
+          <ScalarProperty Name="BuyerName" ColumnName="BuyerName" />
+          <ScalarProperty Name="BuyerUserName" ColumnName="BuyerUserName" />
+          <ScalarProperty Name="BuyerEmail" ColumnName="BuyerEmail" />
+          <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+          <ScalarProperty Name="SellerName" ColumnName="SellerName" />
+          <ScalarProperty Name="SellerUserName" ColumnName="SellerUserName" />
+          <ScalarProperty Name="SellerEmail" ColumnName="SellerEmail" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProductSearch" FunctionName="ReplictivityModel.Store.ProductSearch">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.ProductsListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="Condition" ColumnName="Condition" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ShipFromId" ColumnName="ShipFromId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ShopSectionID" ColumnName="ShopSectionID" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Materials" ColumnName="Materials" />
+          <ScalarProperty Name="PrimaryPicture" ColumnName="PrimaryPicture" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="LastViewedOn" ColumnName="LastViewedOn" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="IsDownloadable" ColumnName="IsDownloadable" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="IsDownloadViaShip" ColumnName="IsDownloadViaShip" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="InvoiceItems">
+      <EntityTypeMapping TypeName="ReplictivityModel.InvoiceItem">
+        <MappingFragment StoreEntitySet="InvoiceItems">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+          <ScalarProperty Name="InvoiceItemID" ColumnName="InvoiceItemID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="ReplictivityModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="IsPercentage" ColumnName="IsPercentage" />
+          <ScalarProperty Name="TrackingID" ColumnName="TrackingID" />
+          <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="TotalAmountToBePaid" ColumnName="TotalAmountToBePaid" />
+          <ScalarProperty Name="AdminCommission" ColumnName="AdminCommission" />
+          <ScalarProperty Name="DiscountRate" ColumnName="DiscountRate" />
+          <ScalarProperty Name="ShippingStatusId" ColumnName="ShippingStatusId" />
+          <ScalarProperty Name="OrderStatusId" ColumnName="OrderStatusId" />
+          <ScalarProperty Name="ShippingAddressId" ColumnName="ShippingAddressId" />
+          <ScalarProperty Name="BillingAddressId" ColumnName="BillingAddressId" />
+          <ScalarProperty Name="ShipToCountryId" ColumnName="ShipToCountryId" />
+          <ScalarProperty Name="ItemTotalShippingPrice" ColumnName="ItemTotalShippingPrice" />
+          <ScalarProperty Name="ItemTotalPrice" ColumnName="ItemTotalPrice" />
+          <ScalarProperty Name="NotForShop" ColumnName="NotForShop" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shops">
+      <EntityTypeMapping TypeName="ReplictivityModel.Shop">
+        <MappingFragment StoreEntitySet="Shop">
+          <ScalarProperty Name="ShopNumberID" ColumnName="ShopNumberID" />
+          <ScalarProperty Name="ContactCountry" ColumnName="ContactCountry" />
+          <ScalarProperty Name="ContactState" ColumnName="ContactState" />
+          <ScalarProperty Name="ContactCity" ColumnName="ContactCity" />
+          <ScalarProperty Name="ContactAddress" ColumnName="ContactAddress" />
+          <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+          <ScalarProperty Name="ContactLastName" ColumnName="ContactLastName" />
+          <ScalarProperty Name="ContactFirstName" ColumnName="ContactFirstName" />
+          <ScalarProperty Name="Skills" ColumnName="Skills" />
+          <ScalarProperty Name="AcceptJob" ColumnName="AcceptJob" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ScalarProperty Name="ShipToUSOnly" ColumnName="ShipToUSOnly" />
+          <ScalarProperty Name="ShopSpecialties" ColumnName="ShopSpecialties" />
+          <ScalarProperty Name="Materials" ColumnName="Materials" />
+          <ScalarProperty Name="Dimensions" ColumnName="Dimensions" />
+          <ScalarProperty Name="PrinterType" ColumnName="PrinterType" />
+          <ScalarProperty Name="DeliveryInformation" ColumnName="DeliveryInformation" />
+          <ScalarProperty Name="AdditionalInformation" ColumnName="AdditionalInformation" />
+          <ScalarProperty Name="SellerInformation" ColumnName="SellerInformation" />
+          <ScalarProperty Name="RefundPolicy" ColumnName="RefundPolicy" />
+          <ScalarProperty Name="PaymentPolicy" ColumnName="PaymentPolicy" />
+          <ScalarProperty Name="WelcomeMessage" ColumnName="WelcomeMessage" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+          <ScalarProperty Name="ShopBanner" ColumnName="ShopBanner" />
+          <ScalarProperty Name="MessageForBuyers" ColumnName="MessageForBuyers" />
+          <ScalarProperty Name="ShopAnnouncement" ColumnName="ShopAnnouncement" />
+          <ScalarProperty Name="ShopTitle" ColumnName="ShopTitle" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserSettings">
+      <EntityTypeMapping TypeName="ReplictivityModel.UserSetting">
+        <MappingFragment StoreEntitySet="UserSettings">
+          <ScalarProperty Name="ShowFullname" ColumnName="ShowFullname" />
+          <ScalarProperty Name="ShowSkills" ColumnName="ShowSkills" />
+          <ScalarProperty Name="ShowLocation" ColumnName="ShowLocation" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserSettingID" ColumnName="UserSettingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShopAvailablities">
+      <EntityTypeMapping TypeName="ReplictivityModel.ShopAvailablity">
+        <MappingFragment StoreEntitySet="ShopAvailablity">
+          <ScalarProperty Name="ColumnNum" ColumnName="ColumnNum" />
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="ShopAvailablityID" ColumnName="ShopAvailablityID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hubs">
+      <EntityTypeMapping TypeName="ReplictivityModel.Hub">
+        <MappingFragment StoreEntitySet="Hubs">
+          <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+          <ScalarProperty Name="TotalView" ColumnName="TotalView" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="HubPicture" ColumnName="HubPicture" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+          <ScalarProperty Name="HubStatus" ColumnName="HubStatus" />
+          <ScalarProperty Name="HubURL" ColumnName="HubURL" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="HubTemplateID" ColumnName="HubTemplateID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="HubTopicID" ColumnName="HubTopicID" />
+          <ScalarProperty Name="HubID" ColumnName="HubID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HubTopics">
+      <EntityTypeMapping TypeName="ReplictivityModel.HubTopic">
+        <MappingFragment StoreEntitySet="HubTopics">
+          <ScalarProperty Name="HubTopic1" ColumnName="HubTopic" />
+          <ScalarProperty Name="HubTopicID" ColumnName="HubTopicID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HubContents">
+      <EntityTypeMapping TypeName="ReplictivityModel.HubContent">
+        <MappingFragment StoreEntitySet="HubContents">
+          <ScalarProperty Name="SizeInMB" ColumnName="SizeInMB" />
+          <ScalarProperty Name="SizeInKB" ColumnName="SizeInKB" />
+          <ScalarProperty Name="SizeInBytes" ColumnName="SizeInBytes" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="Thumbnail" ColumnName="Thumbnail" />
+          <ScalarProperty Name="SavedName" ColumnName="SavedName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="ContentText" ColumnName="ContentText" />
+          <ScalarProperty Name="HubID" ColumnName="HubID" />
+          <ScalarProperty Name="HubContentID" ColumnName="HubContentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ServiceContracts" FunctionName="ReplictivityModel.Store.ServiceContracts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.ServiceContracts_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="LoggedInUserName" ColumnName="LoggedInUserName" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="TotalEarning" ColumnName="TotalEarning" />
+          <ScalarProperty Name="TotalInvoices" ColumnName="TotalInvoices" />
+          <ScalarProperty Name="PendingInvoices" ColumnName="PendingInvoices" />
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+          <ScalarProperty Name="PrimaryPicture" ColumnName="PrimaryPicture" />
+          <ScalarProperty Name="NextStep" ColumnName="NextStep" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="Favorites">
+      <EntityTypeMapping TypeName="ReplictivityModel.Favorite">
+        <MappingFragment StoreEntitySet="Favorites">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ForProduct" ColumnName="ForProduct" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FavoriteID" ColumnName="FavoriteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="PastServiceContracts" FunctionName="ReplictivityModel.Store.PastServiceContracts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.ServiceContracts_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="LoggedInUserName" ColumnName="LoggedInUserName" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="TotalEarning" ColumnName="TotalEarning" />
+          <ScalarProperty Name="TotalInvoices" ColumnName="TotalInvoices" />
+          <ScalarProperty Name="PendingInvoices" ColumnName="PendingInvoices" />
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+          <ScalarProperty Name="PrimaryPicture" ColumnName="PrimaryPicture" />
+          <ScalarProperty Name="NextStep" ColumnName="NextStep" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="UserTransactions">
+      <EntityTypeMapping TypeName="ReplictivityModel.UserTransaction">
+        <MappingFragment StoreEntitySet="UserTransactions">
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="RefundDate" ColumnName="RefundDate" />
+          <ScalarProperty Name="RefundCorrelationId" ColumnName="RefundCorrelationId" />
+          <ScalarProperty Name="RefundStatus" ColumnName="RefundStatus" />
+          <ScalarProperty Name="ReleasedOn" ColumnName="ReleasedOn" />
+          <ScalarProperty Name="EscrowedOn" ColumnName="EscrowedOn" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="Paykey" ColumnName="Paykey" />
+          <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequestAttachments">
+      <EntityTypeMapping TypeName="ReplictivityModel.RequestAttachment">
+        <MappingFragment StoreEntitySet="RequestAttachments">
+          <ScalarProperty Name="IsContractorApproved" ColumnName="IsContractorApproved" />
+          <ScalarProperty Name="IsClientApproved" ColumnName="IsClientApproved" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="SizeInMb" ColumnName="SizeInMb" />
+          <ScalarProperty Name="SizeInKb" ColumnName="SizeInKb" />
+          <ScalarProperty Name="SizeInBytes" ColumnName="SizeInBytes" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="SavedName" ColumnName="SavedName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="AttachmentID" ColumnName="AttachmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserCarts">
+      <EntityTypeMapping TypeName="ReplictivityModel.UserCart">
+        <MappingFragment StoreEntitySet="UserCart">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CartData" ColumnName="CartData" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserCartID" ColumnName="UserCartID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contests">
+      <EntityTypeMapping TypeName="ReplictivityModel.Contest">
+        <MappingFragment StoreEntitySet="Contest">
+          <ScalarProperty Name="SecondRunnerUp" ColumnName="SecondRunnerUp" />
+          <ScalarProperty Name="FirstRunnerUp" ColumnName="FirstRunnerUp" />
+          <ScalarProperty Name="WhyBotherJoining" ColumnName="WhyBotherJoining" />
+          <ScalarProperty Name="Rules" ColumnName="Rules" />
+          <ScalarProperty Name="Criteria" ColumnName="Criteria" />
+          <ScalarProperty Name="Votes" ColumnName="Votes" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="WinnerID" ColumnName="WinnerID" />
+          <ScalarProperty Name="TotalViews" ColumnName="TotalViews" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Fund" ColumnName="Fund" />
+          <ScalarProperty Name="TermsAndCondition" ColumnName="TermsAndCondition" />
+          <ScalarProperty Name="ContestImage" ColumnName="ContestImage" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ContestID" ColumnName="ContestID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Feedbacks">
+      <EntityTypeMapping TypeName="ReplictivityModel.Feedback">
+        <MappingFragment StoreEntitySet="Feedback">
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="Review" ColumnName="Review" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FeedBackType" ColumnName="FeedBackType" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="FeedBackID" ColumnName="FeedBackID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="FeedBackListing" FunctionName="ReplictivityModel.Store.FeedBackListing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.FeedBackListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="FeedBackID" ColumnName="FeedBackID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="FeedBackType" ColumnName="FeedBackType" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Review" ColumnName="Review" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserImage" ColumnName="UserImage" />
+          <ScalarProperty Name="RequestTitle" ColumnName="RequestTitle" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="ProductOwner" ColumnName="ProductOwner" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="FeedBackListing1" FunctionName="ReplictivityModel.Store.FeedBackListing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.FeedBackListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="FeedBackID" ColumnName="FeedBackID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="FeedBackType" ColumnName="FeedBackType" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Review" ColumnName="Review" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserImage" ColumnName="UserImage" />
+          <ScalarProperty Name="RequestTitle" ColumnName="RequestTitle" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="ProductOwner" ColumnName="ProductOwner" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="ContestAttachments">
+      <EntityTypeMapping TypeName="ReplictivityModel.ContestAttachment">
+        <MappingFragment StoreEntitySet="ContestAttachments">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="SizeInMB" ColumnName="SizeInMB" />
+          <ScalarProperty Name="SizeInKB" ColumnName="SizeInKB" />
+          <ScalarProperty Name="SizeInBytes" ColumnName="SizeInBytes" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="SavedName" ColumnName="SavedName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="ContestID" ColumnName="ContestID" />
+          <ScalarProperty Name="AttachmentID" ColumnName="AttachmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HubComments">
+      <EntityTypeMapping TypeName="ReplictivityModel.HubComment">
+        <MappingFragment StoreEntitySet="HubComments">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="HubID" ColumnName="HubID" />
+          <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContestComments">
+      <EntityTypeMapping TypeName="ReplictivityModel.ContestComment">
+        <MappingFragment StoreEntitySet="ContestComments">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="ContestParticipantID" ColumnName="ContestParticipantID" />
+          <ScalarProperty Name="ContestCommentID" ColumnName="ContestCommentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonationTransactions">
+      <EntityTypeMapping TypeName="ReplictivityModel.DonationTransaction">
+        <MappingFragment StoreEntitySet="DonationTransactions">
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="Paykey" ColumnName="Paykey" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="ContestID" ColumnName="ContestID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccountActivities">
+      <EntityTypeMapping TypeName="ReplictivityModel.AccountActivity">
+        <MappingFragment StoreEntitySet="AccountActivity">
+          <ScalarProperty Name="ActivityImage" ColumnName="ActivityImage" />
+          <ScalarProperty Name="ActivityLink" ColumnName="ActivityLink" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ActivityText" ColumnName="ActivityText" />
+          <ScalarProperty Name="ActivityType" ColumnName="ActivityType" />
+          <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+          <ScalarProperty Name="AccountActivityID" ColumnName="AccountActivityID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Followers">
+      <EntityTypeMapping TypeName="ReplictivityModel.Follower">
+        <MappingFragment StoreEntitySet="Followers">
+          <ScalarProperty Name="FollowType" ColumnName="FollowType" />
+          <ScalarProperty Name="FollowedByID" ColumnName="FollowedByID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FollowerID" ColumnName="FollowerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reports">
+      <EntityTypeMapping TypeName="ReplictivityModel.Report">
+        <MappingFragment StoreEntitySet="Reports">
+          <ScalarProperty Name="RequestSentFromURL" ColumnName="RequestSentFromURL" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="ReportType" ColumnName="ReportType" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BuyerJobAttachments">
+      <EntityTypeMapping TypeName="ReplictivityModel.BuyerJobAttachment">
+        <MappingFragment StoreEntitySet="BuyerJobAttachments">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="SizeInMb" ColumnName="SizeInMb" />
+          <ScalarProperty Name="SizeInKb" ColumnName="SizeInKb" />
+          <ScalarProperty Name="SizeInBytes" ColumnName="SizeInBytes" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="SavedName" ColumnName="SavedName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="AttachmentID" ColumnName="AttachmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BuyerJobs">
+      <EntityTypeMapping TypeName="ReplictivityModel.BuyerJob">
+        <MappingFragment StoreEntitySet="BuyerJobs">
+          <ScalarProperty Name="IdealStartDate" ColumnName="IdealStartDate" />
+          <ScalarProperty Name="Requirements" ColumnName="Requirements" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="IsApplied" ColumnName="IsApplied" />
+          <ScalarProperty Name="JobSentTo" ColumnName="JobSentTo" />
+          <ScalarProperty Name="IsPrivate" ColumnName="IsPrivate" />
+          <ScalarProperty Name="Specialties" ColumnName="Specialties" />
+          <ScalarProperty Name="IsFavorite" ColumnName="IsFavorite" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="AwardedTo" ColumnName="AwardedTo" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="Dimensions" ColumnName="Dimensions" />
+          <ScalarProperty Name="MaxBudget" ColumnName="MaxBudget" />
+          <ScalarProperty Name="MinBudget" ColumnName="MinBudget" />
+          <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+          <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+          <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alerts">
+      <EntityTypeMapping TypeName="ReplictivityModel.Alert">
+        <MappingFragment StoreEntitySet="Alerts">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="AlertLink" ColumnName="AlertLink" />
+          <ScalarProperty Name="AlertText" ColumnName="AlertText" />
+          <ScalarProperty Name="AlertForID" ColumnName="AlertForID" />
+          <ScalarProperty Name="AlertID" ColumnName="AlertID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionDetails">
+      <EntityTypeMapping TypeName="ReplictivityModel.TransactionDetail">
+        <MappingFragment StoreEntitySet="TransactionDetail">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="AuthorizationCode" ColumnName="AuthorizationCode" />
+          <ScalarProperty Name="ResponseCode" ColumnName="ResponseCode" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="TransactionDetailsID" ColumnName="TransactionDetailsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SiteFees">
+      <EntityTypeMapping TypeName="ReplictivityModel.SiteFee">
+        <MappingFragment StoreEntitySet="SiteFees">
+          <ScalarProperty Name="IsPercentage" ColumnName="IsPercentage" />
+          <ScalarProperty Name="SiteFee1" ColumnName="SiteFee" />
+          <ScalarProperty Name="SiteFeeID" ColumnName="SiteFeeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContestParticipants">
+      <EntityTypeMapping TypeName="ReplictivityModel.ContestParticipant">
+        <MappingFragment StoreEntitySet="ContestParticipant">
+          <ScalarProperty Name="Votes" ColumnName="Votes" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="ContestID" ColumnName="ContestID" />
+          <ScalarProperty Name="ContestparticipantID" ColumnName="ContestparticipantID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContestVotes">
+      <EntityTypeMapping TypeName="ReplictivityModel.ContestVote">
+        <MappingFragment StoreEntitySet="ContestVotes">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="VoteDown" ColumnName="VoteDown" />
+          <ScalarProperty Name="VoteUP" ColumnName="VoteUP" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ContestID" ColumnName="ContestID" />
+          <ScalarProperty Name="VoteId" ColumnName="VoteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobApplications">
+      <EntityTypeMapping TypeName="ReplictivityModel.JobApplication">
+        <MappingFragment StoreEntitySet="JobApplications">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ShowIn" ColumnName="ShowIn" />
+          <ScalarProperty Name="RequestAccepted" ColumnName="RequestAccepted" />
+          <ScalarProperty Name="RequestSent" ColumnName="RequestSent" />
+          <ScalarProperty Name="BidAmount" ColumnName="BidAmount" />
+          <ScalarProperty Name="SellerID" ColumnName="SellerID" />
+          <ScalarProperty Name="JobOwnerID" ColumnName="JobOwnerID" />
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+          <ScalarProperty Name="JobApplicationID" ColumnName="JobApplicationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="ReplictivityModel.Invoice">
+        <MappingFragment StoreEntitySet="Invoices">
+          <ScalarProperty Name="NoteForBuyer" ColumnName="NoteForBuyer" />
+          <ScalarProperty Name="TermsAndConditions" ColumnName="TermsAndConditions" />
+          <ScalarProperty Name="InvoiceAmount" ColumnName="InvoiceAmount" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
+          <ScalarProperty Name="SellerID" ColumnName="SellerID" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PrototypeRequests">
+      <EntityTypeMapping TypeName="ReplictivityModel.PrototypeRequest">
+        <MappingFragment StoreEntitySet="PrototypeRequest">
+          <ScalarProperty Name="NextStep" ColumnName="NextStep" />
+          <ScalarProperty Name="IdealStartDate" ColumnName="IdealStartDate" />
+          <ScalarProperty Name="Requirements" ColumnName="Requirements" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+          <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+          <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
+          <ScalarProperty Name="MaxBudget" ColumnName="MaxBudget" />
+          <ScalarProperty Name="MinBudget" ColumnName="MinBudget" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="Dimensions" ColumnName="Dimensions" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="RequestTitle" ColumnName="RequestTitle" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContestParticipantVotes">
+      <EntityTypeMapping TypeName="ReplictivityModel.ContestParticipantVote">
+        <MappingFragment StoreEntitySet="ContestParticipantVotes">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="VoteDown" ColumnName="VoteDown" />
+          <ScalarProperty Name="VoteUP" ColumnName="VoteUP" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ContestparticipantID" ColumnName="ContestparticipantID" />
+          <ScalarProperty Name="VoteId" ColumnName="VoteId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ProductsListingAdmin" FunctionName="ReplictivityModel.Store.ProductsListingAdmin">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.ProductsListingAdmin_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="Condition" ColumnName="Condition" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ShipFromId" ColumnName="ShipFromId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ShopSectionID" ColumnName="ShopSectionID" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Materials" ColumnName="Materials" />
+          <ScalarProperty Name="PrimaryPicture" ColumnName="PrimaryPicture" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="LastViewedOn" ColumnName="LastViewedOn" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+          <ScalarProperty Name="IsDownloadable" ColumnName="IsDownloadable" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="IsDownloadViaShip" ColumnName="IsDownloadViaShip" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CategoryListingAdmin" FunctionName="ReplictivityModel.Store.CategoryListingAdmin">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.CategoryListingAdmin_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Published" ColumnName="Published" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="ContestRequests">
+      <EntityTypeMapping TypeName="ReplictivityModel.ContestRequest">
+        <MappingFragment StoreEntitySet="ContestRequest">
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+          <ScalarProperty Name="Criteria" ColumnName="Criteria" />
+          <ScalarProperty Name="Synosis" ColumnName="Synosis" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ContestRequestId" ColumnName="ContestRequestId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubCategories">
+      <EntityTypeMapping TypeName="ReplictivityModel.SubCategory">
+        <MappingFragment StoreEntitySet="SubCategory">
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Types">
+      <EntityTypeMapping TypeName="ReplictivityModel.Type">
+        <MappingFragment StoreEntitySet="Type">
+          <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ProductsListing" FunctionName="ReplictivityModel.Store.ProductsListing">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ReplictivityModel.ProductsListing_Result">
+          <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+          <ScalarProperty Name="Condition" ColumnName="Condition" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ShipFromId" ColumnName="ShipFromId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ShopSectionID" ColumnName="ShopSectionID" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Materials" ColumnName="Materials" />
+          <ScalarProperty Name="PrimaryPicture" ColumnName="PrimaryPicture" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="LastViewedOn" ColumnName="LastViewedOn" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+          <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+          <ScalarProperty Name="IsDownloadable" ColumnName="IsDownloadable" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="ShopID" ColumnName="ShopID" />
+          <ScalarProperty Name="IsDownloadViaShip" ColumnName="IsDownloadViaShip" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="Attachments">
+      <EntityTypeMapping TypeName="ReplictivityModel.Attachment">
+        <MappingFragment StoreEntitySet="Attachments">
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="SizeInMB" ColumnName="SizeInMB" />
+          <ScalarProperty Name="SizeInKB" ColumnName="SizeInKB" />
+          <ScalarProperty Name="SizeInBytes" ColumnName="SizeInBytes" />
+          <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+          <ScalarProperty Name="SavedName" ColumnName="SavedName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="AttachmentID" ColumnName="AttachmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

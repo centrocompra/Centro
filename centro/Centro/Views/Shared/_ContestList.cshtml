@@ -1,0 +1,70 @@
+﻿@model List<ContestViewModel>
+@if (Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        decimal bar = 0;
+        bar = ((item.Fund.HasValue ? item.Fund.Value : 0) / 1000) * 100;
+        bar = bar > 100 ? 100 : bar;
+    <div class="items gray-border pb10">
+        <div class="image p10 hm-contest1">
+            @if (item.ContestImage != null)
+            {
+                <a class="hm-contest1-img" href="@Url.Action("Entries", "Contest", new { id = item.ContestID })">
+                    <img src="@Url.Content("~/Images/Contest/" + item.Username + "/thumb_" + item.ContestImage)" alt=""></a>
+            }
+            else
+            {
+                <a class="hm-contest1-img" href="@Url.Action("Entries", "Contest", new { id = item.ContestID })">
+                    <img src="@Url.Content("~/Content/Images/Contest.png")" alt=""></a>
+            }
+            <a href="@Url.Action("Entries", "Contest", new { id = item.ContestID })" class="gray mb5 mt5 breakword" title="@item.Title">@Html.Raw(item.Title.Length > 59 ? item.Title.Substring(0, 59) + "..." : item.Title)</a>
+            @*<span class="gray">by @item.Username</span>*@ <span class="row contest-category floatRight colorOrange breakword" title="@item.CategoryName">@Html.Raw(item.CategoryName.Length > 14 ? item.CategoryName.Substring(0, 14) + "..." : item.CategoryName)</span>
+            <div class="clear">
+            </div>
+            <span class="contest-description-list clear breakword">@item.Description</span>
+        </div>
+        <div class="contest-data posted-by home">
+            <div class="bar-outer">
+                <div class="bar" title="$@item.Fund raised in fund" style="width:@bar%">
+                </div>
+            </div>
+            <div class="contest-list-divs">
+                <img src="@Url.Content("~/Content/images/user.png")" class="floatLeft" width="25" />
+                <a class="floatLeft mt5 ml5" href="@Url.Action("Entries", "Contest", new { id = item.ContestID })">@item.TotalEntries</a>
+            </div>
+            <div class="contest-list-divs mt12">
+                <img src="@Url.Content("~/Content/images/heart1.png")" class="floatLeft mt-2" width="20" />
+                <strong class="mb2 ml5 floatLeft">
+                    @Html.Raw(item.Votes.HasValue ? item.Votes.Value : 0)
+                </strong>
+            </div>
+            @if (item.EndDate >= DateTime.Now)
+            {
+                <div class="contest-list-divs widthAuto">
+                    <img src="@Url.Content("~/Content/images/clock.png")" class="floatLeft mt6 mr3" width="16" />
+                    <div class="floatLeft number mt6 ml3">@(Math.Round((item.EndDate.Date - DateTime.Now.Date).TotalDays) + 1)</div>
+                </div>
+            }
+            else
+            {
+                <div class="contest-list-divs widthAuto">
+                    <div class="red mt5">
+                        Finished</div>
+                </div>
+            }
+        </div>
+        @*<div class="p10 contest-data posted-by">
+                <div class="bar-outer"><div class="bar" title="$@item.Fund raised in fund" style="width:@bar%"></div></div>
+                
+			</div>*@
+    </div>
+    }
+}
+else
+{
+    <div class="hub-NA">
+        No Contest found</div>
+}
+<div class="divClear">
+</div>

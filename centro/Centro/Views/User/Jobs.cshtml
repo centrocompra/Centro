@@ -1,0 +1,92 @@
+﻿@model PagingResult<JobsViewModel>
+@section title{
+ Jobs
+}
+@{
+    SiteUserDetails CentroUsers = ViewBag.LoggedInUser;
+
+    var shop = CentroUsers.LoggedInUser != null ? SellersHandler.ShopByUserId(CentroUsers.LoggedInUser.Id).Object : null;
+    var CategoryList = (List<SelectListItem>)Enum.GetValues(typeof(Services)).Cast<Services>().Select(v => new SelectListItem
+                                {
+                                    Text = v.ToEnumDescription(),
+                                    Value = Convert.ToInt32(v).ToString()                                    
+                                }).ToList();
+}
+
+@{
+    Layout = CentroUsers != null && CentroUsers.LoggedInUser != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-center job-listing all-jobs">
+    <aside class="my-contracts-right mr20 floatLeft">
+        <div class="row">
+			@*<a href="/User/CreateJob" class="button-orng floatLeft mb10">Post a Job Listing</a>*@
+            @if (shop != null)
+            {
+			<div class="search-job-mn row mb10">
+				<div class="search-job-inr">
+					<h3>Search Jobs</h3>
+					<div class="row search-job-inr-form">
+                    @using (Ajax.BeginForm("FilterJobs", "User", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnFilterComplete" }))
+                    {
+						<dl>
+							<dt>Keywords</dt>
+							<dd><input name="Job-Keyword" type="text" class="w215px" /></dd>
+							<dt>Category</dt>
+							<dd><select name="searchType" class="gray-select-box w220px">
+                                    <option value="All">All</option>
+                                @foreach (var item in CategoryList)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                                </select></dd>
+							<dt>Min Project Price $</dt>
+							<dd><input type="text" value="" name="MinBudget" id="MinBudget" data-val-required="*Min Budget is Required." data-val-range-min="10" data-val-range-max="1.79769313486232E+308" data-val-range="Minimum Budget is $10." data-val-number="Minimum Budget." data-val="true" class="w215px" />
+                                 <span data-valmsg-replace="true" data-valmsg-for="MinBudget" class="field-validation-error"><span for="MinBudget" generated="true" class=""></span></span><br />
+                            </dd>
+							<dd>
+                            <button type="reset" class="button1-blk">Clear</button>&nbsp;
+                            <button type="submit" class="button1">Match</button> </dd>
+						</dl>
+                    }
+					</div>
+				</div>
+			</div>
+            }
+		</div>
+        @Html.Partial("_ContratorMenuLeft")
+    </aside>
+@if (CentroUsers != null && CentroUsers.LoggedInUser != null)
+{
+    <a href="/User/CreateJob" class="button-orng floatRight mb5">Post a Job Listing</a> 
+}
+	<div class="job-left floatLeft">
+@if (Model.TotalCount > 0)
+{
+    @Html.Partial("_Paging")
+    <div id="Result" class="row">
+        @Html.Partial("_FindJobListing", Model.List)
+    </div>
+   @Html.Partial("_Paging")
+}
+else
+{
+    <div class="sections p20 white-background h-min338px">
+        No Record Found</div>
+}	
+</div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        var totalCount = 0, UserID;
+        $(document).ready(function () {
+            totalCount = parseInt('@Model.TotalCount');
+            UserID = '@ViewBag.UserID';
+            console.log(totalCount);
+        });
+    </script>
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>    
+    <script src="@Url.Content("~/Scripts/Custom/job.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/reports.js")"></script>
+}

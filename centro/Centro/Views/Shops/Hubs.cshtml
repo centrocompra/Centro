@@ -1,0 +1,226 @@
+﻿@model List<Hub>
+@{
+    ViewBag.Title = "Shop";
+    Layout = ViewBag.CentroUsers != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Shop shop = (Shop)ViewBag.Shop;
+    User shopOwner = (User)ViewBag.ShopOwner;
+    List<ShopSection> shopSections = (List<ShopSection>)ViewBag.ShopSection;
+    string totalEarning = shopOwner.TotalEarning.HasValue ? "$" + shopOwner.TotalEarning.Value : "0";
+    string shopOwnerName = (shopOwner.FirstName + " " + shopOwner.LastName.Substring(0, 1));
+    shopOwnerName = shopOwnerName.Length > 8 ? shopOwnerName.Substring(0, 8) : shopOwnerName;
+    Int32 userId = ViewBag.UserId;
+    UserSetting setting = UsersHandler.GetUsersetting(shop.UserId).Object;
+    List<ShopAvailablity> slots = ViewBag.ShopAvailablity;
+    List<Product> shopProducts = ProductsHandler.ProductsByShopId(shop.ShopID).List;
+
+}
+@section title{
+ Shop Details
+}
+<div class="white-area-inner">
+
+    @Html.Partial("_BuyerLeftSideMenu")
+    @*<div class="white-area">
+        <div class="image-section">
+            @if (shopOwner.ProfilePicUrl != null)
+            {
+                <img src="@Url.Content("~/Images/ProfileImage/")@shopOwner.UserName/thumb_@shopOwner.ProfilePicUrl" alt="Shop Owner" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/Content/Images/user_img.png")" alt="Shop Owner" />
+            }
+        </div>
+        <div class="details">
+        
+        <h2 class="floatLeft">
+        @if (setting != null && setting.ShowUsername) { @Html.Raw(shopOwner.UserName)}
+        else{@Html.Raw(shopOwnerName)}  
+        </h2>
+            <div class="stars floatLeft">
+                <span>245</span>
+                <img src="@Url.Content("~/Content/images/stars.png")" alt="stars">
+            </div>
+            <div class="total floatRight">
+                <span>Total Earned:</span> <strong>@totalEarning</strong>
+            </div>
+            <div class="divClear">
+            </div>
+            <p>
+                Joined on @shopOwner.CreatedOn.ToLongDateString() 
+                @if(!String.IsNullOrEmpty(shopOwner.UserLocation))
+                {
+                    @Html.Raw("from ") @shopOwner.UserLocation
+                }
+                 </p>
+            <p class="pt10" style="overflow: hidden; height: 147px;">
+                <strong>Short Bio:</strong> @shopOwner.AboutUs</p>
+            
+        </div>
+        <div class="accolades">
+            <h3>
+                Accolades</h3>
+            <img src="@Url.Content("~/Content/images/accolades.gif")" alt="">
+            <p>
+                Hub Feedback: 2192 Useful / 384 Interesting / 638 Awesome / 280 Beautiful / 196
+                Funny</p>
+        </div>
+        <div class="divClear">
+        </div>
+    </div>*@
+    <div class="profile-right-bar">
+    <h3> Hubs</h3>
+		<div class="white-area floatLeft p10" style="width:99%">
+			@*<div class="disp-hub-banner row">
+				<img src="images/add-banner.png" alt="" class="row mb20"> 
+			</div>*@
+			<div class="disp-hub-main row">
+				@Html.Partial("_Hubs", Model)
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @*<div class="product-left">
+        
+        <div class="box fetured mt20">
+            <div class="box-inner product-outer-main">
+               
+                <div id="Result" class="product-out bg-white">
+                    @Html.Partial("_Hubs", Model)
+                </div>
+                
+            </div>
+        </div>
+    </div>*@
+    @*<aside class="product-right mt20">
+				<div class="white-area">
+					<h3 class="gray-arrow gray-border-bottom">User shop</h3>
+		            <div class="paging">
+			            <a href="javascript:void(0)">&nbsp;</a>
+			            <a href="javascript:void(0)" class="next">&nbsp;</a>
+		            </div>
+		            <ul class="images jcarousel-skin-tango" id="mycarousel">
+                    @foreach (var p in shopProducts)
+                    {
+			            <li>
+				            
+                            <a href="~/Products/@Utility.SpacesToHifen(shop.ShopName)/@shop.ShopID/@p.CategoryId/@p.ProductID">
+                            @if (p.PrimaryPicture != null)
+                            {
+					            <img height="78" src="@Url.Content("~/Images/ProductImages/" + shopOwner.UserName + "/thumb_" + p.PrimaryPicture)" alt="" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/Content/images/product_img1.png")" alt="product image">
+                            }
+					            <span>from $@p.UnitPrice</span>
+				            </a>
+			            </li>
+                    }
+		            </ul>
+		            <div class="divClear"></div>
+				</div>
+
+				<div class="white-area mt20">
+					<h3>Shop Owner</h3>
+					<div class="shop-owner">
+                  @if (shopOwner.ProfilePicUrl != null)
+                  {
+                <img src="@Url.Content("~/Images/ProfileImage/")@shopOwner.UserName/thumb_@shopOwner.ProfilePicUrl" class="floatLeft" height="100" width="100" alt="Shop Owner" />
+                  }
+                  else
+                  {
+                <img src="@Url.Content("~/Images/avatar.png")" alt="Shop Owner" height="100" width="100" class="floatLeft" />
+                  }
+                  @if (userId != shopOwner.UserID)
+                  {
+						<a href="@Url.Action("Compose", "Message", new { id = @shopOwner.UserName })" class="contact mb10">Contact</a>
+                      <a href="@Url.Action("SendCustomRequest", "Shops", new { id = @shop.ShopName })" class="contact">Custom Request</a>
+                  }
+					</div>
+				</div>
+
+				<div class="white-area mt20">
+					<h3>Shop Info</h3>
+					<ul>
+                    @if (!String.IsNullOrEmpty(shop.MessageForBuyers))
+                    {
+						<li><a href="javascript:void(0);" onclick="ShopInformation('MessageForBuyers',@shop.ShopID);">Message For Buyers</a></li>
+                    }
+					 @if (!String.IsNullOrEmpty(shop.SellerInformation))
+      {
+						<li><a href="javascript:void(0);" onclick="ShopInformation('SellerInfo',@shop.ShopID);">Seller Information</a></li>
+      }
+					<li><a href="javascript:void(0);" onclick="ShopInformation('Policy',@shop.ShopID);">Shop Policies</a></li>
+                   
+					</ul>
+				</div>
+                 @if (userId != shopOwner.UserID)
+                 {
+				<div class="white-area mt20">
+					<h3>Actions</h3>
+					<a href="javascript:void(0)" class="add-to-favs">Add to favorites</a>
+				</div>
+                 }
+
+				<div class="white-area mt20">
+					<h3 class="orange-left-arrow gray-border-bottom">Followed by</h3>
+					<a href="javascript:void(0)" class="view-all">View all</a>
+					<ul class="followed-by mt10">
+						<li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+						<li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+						<li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+						<li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+						<li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        <li><a href="javascript:void(0)"><img src="@Url.Content("~/Images/img2.jpg")" alt=""></a></li>
+                        
+					</ul>
+					<div class="divClear"></div>
+					<a href="javascript:void(0)" class="followe">Followe "Username"</a>
+					<div class="divClear"></div>
+				</div>
+
+				<a href="javascript:void(0)" class="white-area tabs mt20">@shopOwner.FirstName's Content &amp; Activity</a>
+				<a href="javascript:void(0)" class="white-area tabs mt20">Followers</a>
+				<a href="javascript:void(0)" class="white-area tabs mt20">Reviews</a>
+				<a href="javascript:void(0)" class="white-area tabs mt20">Contests</a>
+
+				<div class="orange-area p20 mt20">
+					<h3>Licences & Copywrite</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sit amet turpis eu diam tristique feugiat. Cras ornare rutrum turpis, ac vehicula ligula varius id. Ut lacus dolor, auctor eu vehicula vitae, scelerisque vel nisl.</p>
+					<a href="javascript:void(0)" class="read-more">Read More</a>
+				</div>
+			</aside>*@
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/system/jquery.jcarousel.min.js")"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#mycarousel,#mycarousel1,#productImages').jcarousel();
+        });
+    </script>
+}

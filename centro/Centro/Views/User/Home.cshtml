@@ -1,0 +1,129 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+Home
+}
+<div class="contentcenter clearfix">
+    @Html.Partial("_LeftMenu")
+    <div class="rightCntr">
+        @*<div class="menubox">
+            <ul>
+                <li><a href="#">My Account</a></li>
+                <li><a href="#">Wishlist</a></li>
+                <li><a href="#">Top 10 Products </a></li>
+                <li><a href="#">Top 10 Users</a></li>
+            </ul>
+           </div>*@
+        <div class="bannerBox">
+            <div class="slider">
+                <div class="flexslider">
+                    <ul class="slides">
+                        <li>
+                            <div class="left">
+                                <h2>
+                                    Deals of the week
+                                </h2>
+                                <p>
+                                    3/6/9/12 of months EMI Available</p>
+                                <a class="gobtn" href="#">Go</a>
+                            </div>
+                            <div class="right">
+                                <ul>
+                                    <li>
+                                        <h3>
+                                            Up to 50% 0ff</h3>
+                                        <img src="~/Content/images/mobile1.png" alt="" />
+                                        <p>
+                                            Smart Phones</p>
+                                    </li>
+                                    <li>
+                                        <h3>
+                                            Up to 45% 0ff</h3>
+                                        <img src="~/Content/images/mobile2.png" alt="" />
+                                        <p>
+                                            Cameras</p>
+                                    </li>
+                                    <li class="ipad">
+                                        <h3>
+                                            Up to 41% 0ff</h3>
+                                        <img src="~/Content/images/mobile3.png" alt="" />
+                                        <p>
+                                            Tablets</p>
+                                    </li>
+                                    <li>
+                                        <h3>
+                                            Up to 59% 0ff</h3>
+                                        <img src="~/Content/images/mobile4.png" alt="" />
+                                        <p>
+                                            memory</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="left">
+                                <h2>
+                                    Deals of the week
+                                </h2>
+                                <p>
+                                    3/6/9/12 of months EMI Available</p>
+                                <a class="gobtn" href="#">Go</a>
+                            </div>
+                            <div class="right">
+                                <ul>
+                                    <li>
+                                        <h3>
+                                            Up to 50% 0ff</h3>
+                                        <img src="~/Content/images/mobile1.png" alt="" />
+                                        <p>
+                                            Smart Phones</p>
+                                    </li>
+                                    <li>
+                                        <h3>
+                                            Up to 45% 0ff</h3>
+                                        <img src="~/Content/images/mobile2.png" alt="" />
+                                        <p>
+                                            Cameras</p>
+                                    </li>
+                                    <li class="ipad">
+                                        <h3>
+                                            Up to 41% 0ff</h3>
+                                        <img src="~/Content/images/mobile3.png" alt="" />
+                                        <p>
+                                            Tablets</p>
+                                    </li>
+                                    <li>
+                                        <h3>
+                                            Up to 59% 0ff</h3>
+                                        <img src="~/Content/images/mobile4.png" alt="" />
+                                        <p>
+                                            memory</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="add">
+                <img src="~/Content/images/banner_img.png" alt="" />
+            </div>
+        </div>
+        <div class="productBox">
+            @Html.Partial("_Products", Model)
+            <a class="view" href="@Url.Action("Index", "Products")">View all</a>
+        </div>
+    </div>
+</div>
+@section script{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Status"]' != null && '@TempData["Status"]' != undefined && '@TempData["Status"]' != '') {
+                Message('@TempData["Message"]', parseInt('@TempData["Status"]'));
+            }
+        });
+    </script>
+}

@@ -1,0 +1,76 @@
+﻿@model DealViewModel
+@{
+    ViewBag.Title = "Manage Users";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayOut.cshtml";
+    var categories = BusinessLayer.Handler.SellersHandler.CategoriesGetAll().List;
+
+    Model.DealItemsList = Model.DealItems != null ? Model.DealItems.ToList() : new List<DealItemViewModel>();
+    if(Model.DealItemsList.Count()<4)
+    {
+        for (int i = 0; i < 4; i++){
+            Model.DealItemsList.Add(new DealItemViewModel());
+        }
+    }
+}
+<div class="row">
+    <div class="floatleft mtop10">
+        <h1>Add/Update Deal</h1>
+    </div>
+    <div class="floatright">
+        <a href="@Url.Action("ManageDeals", "Home")" class="black_btn"><span>Back To Manage Deals</span></a></div>
+</div>
+
+@using (Html.BeginForm("SaveDeal", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.DealID)
+    
+    <div align="center" class="whitebox mtop15">
+        <div class="bannerBox">
+           <div class="slider">
+                <div class="flexslider">
+                    <ul class="slides">
+                        <li>
+                            <div class="left">
+                                <h2>@Html.ValidationMessageFor(m => m.Title)
+                                    @Html.TextAreaFor(m => m.Title)
+                                </h2>
+                                <p>
+                                @Html.ValidationMessageFor(m => m.SubTitle)
+                                @Html.TextBoxFor(m => m.SubTitle)
+                                
+                                </p>
+                                <a class="gobtn" href="#">Go</a>
+                            </div>
+                            <div class="right">
+                                <ul>
+                                @for (int i = 0; i < 4; i++)
+                                {
+                                    @Html.HiddenFor(m=>m.DealItemsList[i].DealID)
+                                    @Html.HiddenFor(m=>m.DealItemsList[i].DealItemID)
+                                    <li>
+                                        <h3>
+                                        @Html.ValidationMessageFor(m=>m.DealItemsList[i].Title)
+                                        @Html.TextBoxFor(m=>m.DealItemsList[i].Title , new { @style = "width:100%" })
+                                            
+                                        </h3>
+                                        <img src="~/Deals/default_product.png" alt="" />
+                                        <input type="file" style="" name="DealItemsList[@i].Picture" />
+                                        <p><select name="DealItemsList[@i].CategoryID" style="width:85px;">
+                                            @foreach (var item in categories)
+                                            {
+                                                <option value="@item.CategoryID">@item.Name</option>
+                                            }
+                                            </select>
+                                        </p></li>
+                                }
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="button1-blk floatRight" />
+        </div>
+        
+    </div>
+}

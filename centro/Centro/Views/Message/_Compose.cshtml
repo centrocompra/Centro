@@ -1,0 +1,22 @@
+﻿@model Message
+@using (Ajax.BeginForm("Compose", "Message", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnComposeComplete" }))
+{
+    @Html.HiddenFor(m=>m.SenderID)
+<div class="message-box row">
+    <div class="message-box-inner">
+    <h3>Recipients</h3>
+    <textarea name="Receivers" id="Receivers" class="receivers"></textarea>
+    (comma separated usernames allowed.)
+    <input type="hidden" name="ReceiverIDs" />
+    <h3>Subject</h3>
+    @Html.TextBoxFor(m => m.Subject)
+    <h3>Body</h3>
+    @Html.TextAreaFor(m => m.Message1)
+    <div class="attachments"> <span>car-shoe-grey.jpg <a href="#" class="close2">X</a></span> <span>car-shoe-grey.jpg <a href="#" class="close2">X</a></span> <span>car-shoe-grey.jpg <a href="#" class="close2">X</a></span> </div>
+    <div class="row"> <a class="add" href="#"><span>+</span> Add Atachment</a>
+        <input type="submit" name="" class="button1 floatRight" value="Post Message">
+    </div>
+    </div>
+</div>
+}
+

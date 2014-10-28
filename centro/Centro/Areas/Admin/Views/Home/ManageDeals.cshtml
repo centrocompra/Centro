@@ -1,0 +1,65 @@
+﻿@model List<Deal>
+@{
+    ViewBag.Title = "Manage Users";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayOut.cshtml";
+}
+<h1>Manage Deals</h1>
+<!--Body Start from Here-->
+       <div class="row mtop15">
+       <a href="@Url.Action("SaveDeal","Home")" class="button1 floatRight mb10">Add New Deal</a>
+        <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" class="listing">
+            <thead>
+                <tr>
+                    <th>Deal Title</th>
+                    <th>Deal Sub-Title</th>
+                    <th>Is Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="Result">
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr><td>@item.Title</td><td>@item.SubTitle</td><td>@Html.Raw(item.IsActive?"Yes":"No")</td><td>
+                        <a href="@Url.Action("ActivateDeactivateDeal", "Home", new { id = item.DealID })">@Html.Raw(item.IsActive?"Deactivate":"Activate")</a>&nbsp;|&nbsp;
+                        <a href="@Url.Action("MergeDealProducts", "Home", new { id = item.DealID })">Manage Products</a>&nbsp;|&nbsp;
+                        <a href="@Url.Action("DeleteDeal", "Home", new { id=item.DealID })">delete</a>
+                    
+                    </td></tr>
+                }
+            }
+            else
+            {
+                <tr><td style=" text-align:center" colspan="3">No Deal Found</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+<!--Body end Here-->
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<style type="text/css">
+    th
+    {
+        font-size: 13px;
+        font-weight: bold;
+        background-color: #ddd;
+    }
+    th, td
+    {
+        padding: 2px 5px;
+    }
+    select
+    {
+        margin-bottom: 0px !important;
+    }
+    .sort
+    {
+        vertical-align: middle;
+        cursor: pointer;
+    }
+</style>

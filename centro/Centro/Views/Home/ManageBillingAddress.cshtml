@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Manage Billing Address";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+Manage Billing Address
+}
+
+@{
+    var user = (SiteUserDetails)ViewBag.CentroUsers;
+    List<BillingAddress> addressList = (List<BillingAddress>)ViewBag.BillingAddress;
+}
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Custom/stateCountry.js")" type="text/javascript"></script>
+ <script src="@Url.Content("~/Scripts/Custom/address.js")" type="text/javascript"></script>
+}
+<div class="white-area-inner">
+    @Html.Partial("_BuyerLeftSideMenu", user)
+    <div class="profile-right-bar">
+        <div class="primary profile-edit">
+            <div class="top-head row">
+                <h2>
+                    Billing Address</h2>
+            </div>
+            <div id="Result">
+            @if (addressList.Count > 0)
+            {
+                <div class="products">
+                  <table width="100%" cellspacing="0" cellpadding="0" border="0" class="product-grid">
+            <tbody>
+                <tr>
+                    
+                    <th width="100">
+                        First Name
+                    </th>
+                    <th>
+                        Last Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                   <th>
+                   Primary
+                   </th>
+                    
+                    <th width="60">
+                        Action
+                    </th>
+                </tr>
+                @foreach (var address in addressList)
+                {
+                     <tr>
+                        
+                        <td>
+                            @address.FirstName
+                        </td>
+                        <td>
+                            @address.LastName
+                        </td>
+                        <td>
+                            @address.Email
+                        </td>
+                        <td>
+                        @if(address.IsPrimary)
+                        {
+                        <input type="checkbox" disabled="disabled" checked="checked" />
+                        }else
+                        {
+                            <input type="checkbox" disabled="disabled"  />
+                        }
+                        </td>
+                        <td>
+                        @Ajax.ActionLink("Edit", "_BillingAddress", "Home", new { billingAddressId = address.BillingAddressID }, new AjaxOptions { UpdateTargetId = "Result" })
+                         
+                        </td>
+                    </tr>
+                } 
+                </table>
+                </div>
+            }
+            <div>
+            <span style="float:right;">
+            @Ajax.ActionLink("Add Billing Address", "_BillingAddress", "Home", new AjaxOptions { UpdateTargetId = "Result" })
+            </span>
+            </div>
+            </div>
+          
+        </div>
+    </div>
+</div>

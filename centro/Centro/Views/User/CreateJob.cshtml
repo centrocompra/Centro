@@ -1,0 +1,231 @@
+﻿@model BuyerJob
+@{
+    ViewBag.Title = "CustomRequest";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+     Create a Job
+}
+@{
+    var CategoryList = (List<SelectListItem>)ViewBag.CategoryList;
+}
+
+<div class="white-area-inner">
+    <div class="right-panel one-column">
+        <div class="row">
+            <div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="ui-tabs-1">
+                <div class="right-panel one-column">
+                    <h3 class="main-heading">
+                        Create a Job</h3>
+                    @using (Ajax.BeginForm("SaveOrUpdateJob", "User", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnJobComplete" }, new { @name = "job" }))
+                    {
+                        @Html.HiddenFor(m => m.JobID);
+                        @Html.Hidden("From", (string)ViewBag.From);
+                        <div class="box-out">
+                            <div class=" box-in">
+                                <div class="row custom_prototype_request_form">
+                                @if (ViewBag.From == "Recruit1")
+                                {
+                                    <dl>
+                                        <dt class="bold">Is Active</dt>
+                                        <dd>
+                                            @Html.CheckBoxFor(m => m.IsActive)
+                                        </dd>
+                                    </dl>
+                                }
+                                @if (Model.JobID > 0)
+                                {
+                                    <dl>
+                                        <dt class="bold">Private Job</dt>
+                                        <dd>
+                                            @Html.CheckBoxFor(m => m.IsPrivate, new { @onclick = "IsPrivateJob(this)", @disabled = "disabled" })
+                                        </dd>
+                                    </dl>
+                                }
+                                else
+                                {
+                                    <dl>
+                                        <dt class="bold">Private Job</dt>
+                                        <dd>
+                                            @Html.CheckBoxFor(m => m.IsPrivate, new { @onclick = "IsPrivateJob(this)" })
+                                        </dd>
+                                    </dl>
+                                }    
+                                @if (Model.IsPrivate)
+                                {   
+                                    <dl class="seller">
+                                        <dt class="bold">Seller</dt>
+                                        <dd>
+                                            @Html.TextBoxFor(m => m.Seller, new { @class = "input-box", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.Seller)
+                                        </dd>
+                                    </dl>
+                                }
+                                else
+                                {   
+                                    <dl class="seller" style="display:none;">
+                                        <dt class="bold">Seller</dt>
+                                        <dd>
+                                            @Html.TextBoxFor(m => m.Seller, new { @class = "input-box", @onchange = "SellerChange(this)" })
+                                            @Html.ValidationMessageFor(m => m.Seller)
+                                        </dd>
+                                    </dl>
+                                }
+                                    <dl>
+                                        <dt class="bold">Title</dt>
+                                        <dd>
+                                            @Html.TextBoxFor(m => m.JobTitle, new { @class = "input-box" })
+                                            @Html.ValidationMessageFor(m => m.JobTitle)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Specialty</dt>
+                                        <dd>
+                                            @Html.DropDownListFor(m => m.CategoryId, CategoryList, new { @class = "input-box" })
+                                            @Html.ValidationMessageFor(m => m.CategoryId)
+                                        </dd>
+                                    </dl>                                    
+                                    <dl>
+                                        <dt class="bold">Description</dt>
+                                        <dd>
+                                            @Html.TextAreaFor(m => m.JobDescription, 3, 50, new { @class = "input-box", @maxlength="2000" })
+                                            @Html.ValidationMessageFor(m => m.JobDescription)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Requirements</dt>
+                                        <dd>
+                                            @Html.TextAreaFor(m => m.Requirements, 3, 50, new { @class = "input-box", @maxlength = "2000" })
+                                            @Html.ValidationMessageFor(m => m.Requirements)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Specialties</dt>
+                                        <dd>
+                                            @Html.TextBoxFor(m => m.Specialties, new { @class = "input-box" })
+                                            @Html.ValidationMessageFor(m => m.Specialties)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Ideal Start Date</dt>
+                                        <dd>
+                                            @Html.TextBoxFor(m => m.IdealStartDate, new { @class = "input-box", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.IdealStartDate)
+                                        </dd>
+                                    </dl>
+                                    @*<dl>
+                                        <dt class="bold">&nbsp;</dt>
+                                        <dd class="multi-box">
+                                            <div class="col">
+                                                <label>
+                                                    @Html.LabelFor(m => m.Dimensions)
+                                                </label>
+                                                <span class="innerError">
+                                                    @Html.TextBoxFor(m => m.Dimensions, new { @class = "input-box" })
+                                                    @Html.ValidationMessageFor(m => m.Dimensions)
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <label>
+                                                    @Html.LabelFor(m => m.Material)
+                                                </label>
+                                                <span class="innerError">
+                                                    @Html.TextBoxFor(m => m.Material, new { @class = "input-box" })
+                                                    @Html.ValidationMessageFor(m => m.Material)
+                                                </span>
+                                            </div>
+                                        </dd>
+                                    </dl>*@
+                                    <dl>
+                                        <dt class="bold">Estimated Budget</dt>
+                                        <dd>
+                                            @Html.TextBoxFor(m => m.MinBudget, new { @class = "input-box" })
+                                            @Html.Hidden("MaxBudget","999999")
+                                            @Html.ValidationMessageFor(m => m.MinBudget)
+                                        </dd>
+                                        @*<dd class="multi-box">
+                                            <div class="col">
+                                                <label>
+                                                    Min ($)
+                                                </label>
+                                                <span class="innerError">
+                                                    @Html.TextBoxFor(m => m.MinBudget, new { @class = "input-box" })
+                                                    @Html.ValidationMessageFor(m => m.MinBudget)
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <label>
+                                                    Max ($)
+                                                </label>
+                                                <span class="innerError">
+                                                    @Html.TextBoxFor(m => m.MaxBudget, new { @class = "input-box" })
+                                                    @Html.ValidationMessageFor(m => m.MaxBudget)
+                                                </span>
+                                            </div>
+                                        </dd>*@
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Attachments</dt>
+                                        <dd>
+                                            <input type="file" id="requestAttachment" class="input-box " name="requestAttachment"
+                                                onchange="UploadRequestAttachment(this, 'request-attachment-form');" />
+                                            <span class="field-validation-error" data-valmsg-replace="true" id="request_attachment_msg"
+                                                data-valmsg-for="requestAttachment"></span><span class="field-validation-error shopBanner">
+                                                </span>
+                                            <div class="uploaded-files line">
+                                            @if (ViewBag.RequestAttachments != null)
+                                            {
+                                                foreach (var item in (List<FileAttachmentViewModel>)ViewBag.RequestAttachments)
+                                                {
+                                                    <div class="image-box">@item.DisplayName<label class="close" onclick="DeleteFile(this,'@item.SavedName');">x</label></div>
+                                                }
+                                            }
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                    @Html.HiddenFor(m => m.RequestStatus)                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input type="submit" value="Submit" class="button1 floatRight"/>                            
+                        </div>
+               
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form style="display: none;" id="request-attachment-form" action="" enctype="multipart/form-data"
+method="post">
+</form>
+
+<style>
+.ui-autocomplete-loading {
+	background: white url('/content/images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+#city { width: 25em; }
+</style>
+@section scripts{
+@*<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.core.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.widget.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.position.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.menu.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/search.js")"></script>*@
+<script src="@Url.Content("~/Scripts/System/jquery-ui-1.8.20.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Custom/job.js")" type="text/javascript"></script>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+        if ($('#JobID').val() != '0')
+            $('#IdealStartDate').val($('#IdealStartDate').val().substring(0, $('#IdealStartDate').val().indexOf(' ')));
+        else {
+            $('#IdealStartDate').val('');
+            $('#MinBudget').val('10');
+        }
+        //alert($("#DateOfBirth").length);
+        $("#IdealStartDate").datepicker({ minDate: new Date() });
+    });
+</script>

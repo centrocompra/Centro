@@ -1,0 +1,44 @@
+﻿@model BusinessLayer.Models.DataModel.SiteFee
+@{
+    ViewBag.Title = "Add User";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayOut.cshtml";
+}
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Custom/admin/_addUser.js")" type="text/javascript"></script>
+}
+
+@using (Ajax.BeginForm("SiteFeeAddOrUpdate", "Home", FormMethod.Post, new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnFeeComplete" }))
+{
+    @Html.HiddenFor(m=>m.SiteFeeID)
+    @Html.HiddenFor(m => m.IsPercentage, new { @value="true" })
+    <div align="center" class="whitebox mtop15">
+        <table cellspacing="0" cellpadding="7" border="0" align="center">
+            <tr>
+                <td align="left">
+                    <strong>Site Fee&nbsp;</strong>
+                </td>
+                <td align="left">
+                    @Html.TextBoxFor(m => m.SiteFee1, new { @class = "input", @style = "width:450px;" })                   
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    &nbsp;
+                </td>
+                <td align="left">
+                    <br />
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    &nbsp;
+                </td>
+                <td align="left">
+                    <div class="black_btn2">
+                        <span class="upper">
+                            <input type="submit" value="SUBMIT" name=""></span></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+}

@@ -1,0 +1,66 @@
+﻿@model List<HubContent>
+<div class="input-group-wb location-city hub-create-list">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        if (i == 0)
+        {
+
+            string text = Model[i].ContentText;
+            int c = 0;
+            string pattern = ViewBag.Username;
+            string sentence = Model[i].ContentText;
+            IList<int> indeces = new List<int>();
+            foreach (System.Text.RegularExpressions.Match match in System.Text.RegularExpressions.Regex.Matches(sentence, pattern))
+            {
+                indeces.Add(match.Index);
+                string a = text.Substring(match.Index, (ViewBag.Username + "/Hubs").Length);
+                string b = ViewBag.Username + "/Hubs";
+                if (a != b)
+                {
+                    text = text.Insert(match.Index + ViewBag.Username.Length + c, "/Hubs");
+                    c += "/Hubs".Length;
+                }
+            }
+           
+            text = text.Replace("Temp", "Images").Replace("<div></div>", "</br>");
+        <div class="autosuggest-wrapper1">
+            <input type="hidden" id="hdnContentID_@i" name="hdnContentID_@i" value="@Model[i].HubContentID" />
+            <input type="hidden" id="hdnImageName_@i" name="hdnImageName_@i" value="@Model[i].SavedName" />
+            <textarea class="template2" name="Count[@i]" rows="15" cols="70" style="width: 100%">
+                @text
+	        </textarea>
+            <label class="add-photo-btn">
+                <strong>upload</strong><span>
+                    <input type="file" id="picture" name="file" onchange="UploadPicture2(this, 'picture-form',@i);" /></span></label>
+            <div class="submit mt0">
+                @*<input type="button" onclick="AddTemplateEdit2(this)" class="button-plus" value="Add" />*@
+            </div>
+        </div>
+        }
+        else
+        {
+        <div class="autosuggest-wrapper1 template2_@i">
+            <input type="hidden" id="hdnContentID_@i" name="hdnContentID_@i" value="@Model[i].HubContentID" />
+            <input type="hidden" id="hdnImageName_@i" name="hdnImageName_@i" value="@Model[i].SavedName" />
+            <textarea class="template2" id="Count_@i" name="Count[@i]" rows="15" cols="70" style="width: 100%">
+                @Model[i].ContentText.Insert(Model[i].ContentText.IndexOf(ViewBag.Username) + ViewBag.Username.Length, "/Hubs").Replace("Temp", "Images").Replace("<div></div>", "</br>")
+            </textarea>
+            <label class="add-photo-btn">
+                <strong>upload</strong><span>
+                    <input type="file" id="picture" name="file" onchange="UploadPicture2(this, 'picture-form',@i);"/></span></label>
+            <div class="submit mt10">
+                <input type="button" onclick="RemoveTemplateEdit2(this,@i)" class="button-minus" value="Remove" />
+            </div>
+        </div>
+        }
+    }
+</div>
+<script type="text/javascript">
+    $("textarea.template2").jqte();
+    //    count = 1;
+    //    $('#Rows').val('0');
+    //    $('#Except').val('');
+    //    rows.length = 0;
+    //    except.length = 0;
+    //    rows.push(0);
+</script>

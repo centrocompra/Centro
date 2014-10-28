@@ -1,0 +1,51 @@
+﻿@*@model BusinessLayer.Models.DataModel.User*@
+@model List<SalesTax>
+@{
+    ViewBag.Title = "GetPaid";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+ Payments
+}
+@{
+    SelectedTabs selectedTabs = ViewBag.SelectedTabs;
+    var shopId = ViewBag.ShopId;
+    Shop shop = SellersHandler.ShopByShopId(shopId).Object;
+}
+<div class="create-shop-steps-area">
+    @Html.Partial("_SellerSubMenu", selectedTabs)
+</div>
+<div class="white-area-inner p20">
+    <div class="right-panel one-column">
+        <div class="row">
+            @*<a href="javascript:;" class="button2 fRight"><span class="fwd">List Items</span></a>*@
+            <div>
+                <div class="tabs-outer">
+                    <ul class="tabs">
+                   @* @if (!shop.ShipToUSOnly)
+                    {*@
+                        <li class="active">@Ajax.ActionLink("Sales Tax", "_SalesTax", "User", new { shop_id = ViewBag.ShopId }, new AjaxOptions { UpdateTargetId = "ui-tabs" }, new { @onclick = "SetTab(this)" })</li>
+                    @*}*@
+                        <li>@Ajax.ActionLink("Payments", "_Payments", "User", null, new AjaxOptions { UpdateTargetId = "ui-tabs" }, new { @onclick = "SetTab(this)" })</li>
+                    </ul>
+                </div>
+                <div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="ui-tabs">
+                    @Html.Partial("_SalesTax", Model)
+                </div>
+                @*<div class="user-register-msg-box">
+                    <div class="fwd top-msg">@ViewBag.UserRegDetail
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/StepsCompleted.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/GetPaid.js")"></script>
+}
+<script type="text/javascript">
+    var shop_id = '@shopId';
+    salesTaxCount = parseInt('@Model.Count()')
+    console.log(salesTaxCount);
+</script>

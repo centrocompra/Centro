@@ -1,0 +1,75 @@
+﻿@model User
+@{
+    Dictionary<int, string> SpentOver = new Dictionary<int, string>();
+    SpentOver.Add(100, "Over $100.00 USD");
+    SpentOver.Add(1000, "Over $1000.00 USD");
+    SpentOver.Add(10000, "Over $10000.00 USD");
+    SpentOver.Add(15000, "Over $15000.00 USD");
+    SpentOver.Add(20000, "Over $20000.00 USD");
+    SpentOver.Add(30000, "Over $30000.00 USD");
+    SpentOver.Add(40000, "Over $40000.00 USD");
+    SpentOver.Add(50000, "Over $50000.00 USD");
+    SpentOver.Add(60000, "Over $60000.00 USD");
+    SpentOver.Add(70000, "Over $70000.00 USD");
+    SpentOver.Add(80000, "Over $80000.00 USD");
+    SpentOver.Add(90000, "Over $90000.00 USD");
+    SpentOver.Add(100000, "Over $100000.00 USD");
+    SpentOver.Add(110000, "Over $110000.00 USD");
+    SpentOver.Add(120000, "Over $120000.00 USD");
+
+    User shopOwner = Model;
+    Shop shop = (Shop)ViewBag.Shop;
+    Int32 userId = ViewBag.UserId;
+    string TotalHub = HubHandler.GetTotalHubOfUser(shopOwner.UserID).Results[0];
+    string TotalContest = ContestHandler.GetTotalContestByUser(shopOwner.UserID).Results[0];
+    int TotalFollowers = AccountActivityHandler.GetUserTotalFollowers(shop != null ? shop.UserId : 0).ID;
+    string totalEarning = shopOwner.TotalEarning.HasValue ? "$" + shopOwner.TotalEarning.Value : "0";
+    var services = SellersHandler.ShopServicesByShopId(shop != null ? shop.ShopID : 0).List;
+    string[] servicesArray = services.Where(m => m.IsChecked).Select(m => m.ServiceName).OrderByDescending(m => m.Length).ToArray();
+    string AcceptingJob = shop != null && shop.AcceptJob && (!string.IsNullOrEmpty(shopOwner.PaypalID)) ? "Yes" : "No";
+    decimal TotalSpent = SellersHandler.TotalSpent(shopOwner.UserID).Object ?? 0;
+    string SpentOverText = SpentOver.OrderByDescending(m => m.Key).Where(m => TotalSpent > m.Key).FirstOrDefault().Value;
+    SpentOverText = string.IsNullOrEmpty(SpentOverText) ? "0.00" : SpentOverText;
+}
+<div class="white-area floatRight w30-row5 mb10 service-offered">
+    @*<div class="row follwed-sec-rt">
+        <p class="follwed-sec-rt-1">
+            <a href="@Url.Action("UserHub", "Hub", new { UserName = shopOwner.UserName })"><strong>@TotalHub</strong></a>
+            <span>Hubs </span>
+        </p>        
+        /
+        <p class="follwed-sec-rt-1">
+            <strong>@TotalFollowers</strong> <span>Followers </span>
+        </p>
+        /
+        <p class="follwed-sec-rt-1">
+            <strong>@totalEarning</strong> <span>Earned </span>
+        </p>
+    </div>
+    <div class="clearIt">
+    </div>*@
+    <div class="p10">
+        <strong class="floatLeft">Total Earned: </strong><strong class="floatRight">$@totalEarning USD</strong>
+    </div>
+    <div class="row mt10">
+        <a href="@Url.Action("Compose", "Message", new { id = @shopOwner.UserName })" class="button1">
+            Contact Seller </a>
+        @if (shop != null && userId != shop.UserId && AcceptingJob == "Yes")
+        {
+            @*<a href="@Url.Action("CreateJob", "User", new { id = 0, from = "Recruit", username = shopOwner.UserName })" class="button3 ml10">Hire </a>*@
+        }
+    </div>
+    <div class="row mt10">
+        <strong class="row uppercase">Services Offered:</strong>
+        <ul class="services-list">
+            @foreach (var item in servicesArray)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    </div>
+</div>
+@*<div class="white-area floatRight w30-row5 mb10 bg-black-gray uppercase wht bold current-job">
+    Currently Accepting Jobs?&nbsp;&nbsp;&nbsp;&nbsp;@AcceptingJob
+</div>
+*@

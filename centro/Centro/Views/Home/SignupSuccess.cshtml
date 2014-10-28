@@ -1,0 +1,16 @@
+﻿@model int
+@{
+    ViewBag.Title = "SignupSuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+     Signup successful
+}
+<div class="white-area-inner" style="height:400px;">
+<h2>Please check your email for a verification link </h2><br />
+<br />
+<span>Please click <a href="javascript:;" onclick="Resend(@Model, this)">here</a> to resend the verification email. </span>
+</div>
+@section scripts{
+<script src="@Url.Content("~/Scripts/Custom/signUp.js")" type="text/javascript"></script>
+}

@@ -1,0 +1,54 @@
+﻿@model ContestRequest
+@using (Ajax.BeginForm("RequestChallenge", "Contest", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnRequestComplete" }))
+{   
+    <div class="request-form">
+        <div class="input-col">
+            <label>
+                Email Address:
+            </label>
+            <div class="input-text">
+                @*<input type="text" name="Email" autofocus="autofocus" class="text email">*@
+                @Html.TextBoxFor(m => m.Email, new { @autofocus = "autofocus", @class = "text email" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+            <div class="floatRight row mb10 mt5">
+                <label>
+                    @Html.CheckBoxFor(m => m.IsAccepted)
+                    I would like to be notified if my Challenge Request is accepted</label>
+            </div>
+            <div class="input-col">
+                <label>
+                    Title:</label><div class="input-text">
+                        @Html.TextBoxFor(m => m.Title, new { @class = "text" })
+                        @Html.ValidationMessageFor(m => m.Title)
+                        @*<input type="text" name="Title" class="text">*@
+                    </div>
+                <div class="input-col">
+                    <label>Synosis:</label>
+                    <div class="input-text">
+                        @Html.TextAreaFor(m => m.Synosis, new { @class = "text" })
+                        @Html.ValidationMessageFor(m => m.Synosis)
+                        @*<textarea name="Synosis" class="text"></textarea>*@
+                    </div>
+                </div>
+                <div class="input-col">
+                    <label>
+                        Challenge Creteria:</label>
+                        <div class="input-text">
+                            @Html.TextAreaFor(m => m.Criteria, new { @class = "text" })
+                            @Html.ValidationMessageFor(m => m.Criteria)
+                            @*<textarea name="Criteria" class="text"></textarea>*@
+                        </div>
+                        <div class="floatRight"><button class="button1" type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+    });
+</script>

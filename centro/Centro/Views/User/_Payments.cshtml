@@ -1,0 +1,90 @@
+﻿@model BusinessLayer.Models.DataModel.User
+@{
+    Shop shop = SellersHandler.ShopByUserId(Model.UserID).Object;
+    
+    List<Country> Countries = ViewBag.Countries;
+    var userCountries = new SelectList(Countries, "CountryID", "CountryName");
+
+    List<StateProvince> States = ViewBag.States;
+    var userStates = new SelectList(States, "StateID", "StateName");
+
+    List<City> Cities = ViewBag.Cities;
+    var userCity = new SelectList(Cities, "CityID", "CityName");
+}
+
+@*<div class="right-panel one-column">*@
+<div class="main-heading">Select the payment methods<span class="orng"> you accept</span>. </div>
+@using (Ajax.BeginForm("Payments", "User", new AjaxOptions { OnBegin="OnBegin", OnComplete="OnPaymentComplete" }))
+{
+    @Html.HiddenFor(m=>m.UserID)
+    <div class="box-out">
+        <div class="box-in">
+            <div class="row f13 bold pb5">
+                <div class="input checkbox-row">
+                <input type="checkbox" id="UserPaymentPaypal" value="1" checked="checked" disabled="disabled" class="vmid mr5 paymentChoice" />
+                <label for="UserPaymentPaypal"> Paypal </label>
+                </div>
+            </div>
+            <div style="" class="paypal">
+                <dl>
+                <dt class="bold">Paypal Account Email </dt>
+                <dd class="pt5"> Payments are sent to this email </dd>
+                </dl>
+                <dl class="botline1">
+                <dt class="bold">Email</dt>
+                <dd>
+                @if (string.IsNullOrEmpty(Model.PaypalID))
+                {
+                    @Html.TextBoxFor(m => m.PaypalID, new { @maxlength = "100", @style = "width:400px;", @class = "input-box email required" })
+                    @Html.ValidationMessageFor(m => m.PaypalID)
+                }
+                else
+                {
+                    <div class="mt5">@Html.DisplayFor(m=>m.PaypalID)</div>
+                }
+                </dd> 
+                </dl>
+                <div class="note botline1 pb20">
+                    *Note: For security, you
+will NOT be able to edit your Paypal
+Payment destination once you save the
+information. Therefore, please make sure
+your paypal email is valid, otherwise you
+will not be able to receive any payments.
+                </div> 
+            </div>
+            
+            @if (shop.IsClosed)
+            {
+            <div>
+                <strong>By clicking "Save" I agree that:</strong><br />
+                • &nbsp; I have read and accepted the <a href="javascript:;">User Agreement</a> and <a href="javascript:;">Privacy Policy</a>.<br />
+                • &nbsp; I may receive communications from Centro and change my notification preferences.<br />
+                • &nbsp; I am at-least 18 years old.<br />
+            </div>
+            }
+        </div>
+    </div>
+    <div class="row text-right">
+    @if (shop.IsClosed)
+    {
+        <input type="submit" value="Save" class="button1" id="Save" />
+    }
+    @if (!shop.ShipToUSOnly)
+    {
+        @*<input type="button" value="Next" class="button1" onclick="SaveNNextSalesTax(this);" />*@
+    }
+    @if (shop.IsClosed && !string.IsNullOrEmpty(Model.PaypalID))
+    {
+        <button class="button1-blk list" onclick="window.location.href='@Url.Action("ListItems", "User")'" id="Submit2" type="button">Next</button>
+    }
+        <span id="submitPaymentMethod"></span> </div>
+}
+@*</div>*@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+    });
+</script>
+<script src="@Url.Content("~/Scripts/Custom/stateCountry.js")" type="text/javascript"></script>

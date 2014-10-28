@@ -1,0 +1,120 @@
+﻿@model Contest
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+     Create a Contest
+}
+@{
+    List<Product> LastViewedProducts = (List<Product>)ViewBag.LastViewedProducts;
+}
+<aside class="floatLeft left-side">
+    @Html.Partial("_ContestLeftMenu")
+</aside>
+<div class="create-contest">
+    <div class="right-bar">
+        <div class="top-head row">
+            @*<a href="@Url.Action("Profile", "User")" class="button1 fRight"><span>View Profile</span></a>*@
+            <h2>
+                Create a Contest <span></span></h2>
+        </div>
+        @using (Ajax.BeginForm("Save", "Contest", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnComplete" }, new { @class = "section-inner" }))
+        {
+            @Html.HiddenFor(m => m.UserID);
+            
+            <div class="edit-from-profile floatLeft">
+                <div class="section-inner contest-o-main">
+                    <div class="input-group">
+                        <label for="avatar" class="label">
+                            Contest Picture</label>
+                        <div class="change-avatar-content">
+                            <div class="image-wrapper">
+                                <a class="avatar">
+                                    @if (!String.IsNullOrEmpty(Model.ContestImage))
+                                    {
+                                        <img width="175" height="175"  alt="Profile Image" id="contest_img" src="@Url.Content("~/Images/Contest/"+Model.ContestImage)" />
+                                    }
+                                    else
+                                    {
+                                        <img width="175" height="175"  alt="Profile Image" id="contest_img" src="@Url.Content("~/Content/images/contest.png")"/>
+                                    }
+                                </a>
+                                    
+                            </div>
+                            <input type="file" size="15" name="file" onchange="UploadPicture(this, 'user-picture-form');" class="upload-new-avatar"/>
+                            <p class="floatLeft w50pc" style="font-style:italic; font-size:11px; color:#999;"> Only GIF, JPG, PNG, BMP formats are allowed and Image must be between 200x200 to 600x600 pixel. </p>
+                            <div class="loading_ind line"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Category</label>
+                        <p class="full-name">
+                            @Html.DropDownListFor(m => m.CategoryID, new SelectList(Model.Categories, "CategoryID", "Name"), new { @class = "input-box", @style = "width:500px !important;" })
+                            @Html.ValidationMessageFor(m => m.CategoryID)
+                        </p>
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Title</label>
+                        <p class="full-name">
+                            @Html.TextBoxFor(m => m.Title, new { @class = "input-box", @style = "width:500px !important;" })
+                            @Html.ValidationMessageFor(m => m.Title)
+                        </p>
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Description</label>
+                        <p class="full-name">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "input-box", @style = "width:500px !important; height:150px;" })
+                            @Html.ValidationMessageFor(m => m.Description)
+                        </p>
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Start Date</label>
+                        <p class="full-name">
+                            @Html.TextBoxFor(m => m.StartDate, new { @class = "input-box", @readonly = "readonly", @style = "width:150px !important;" })
+                            @Html.ValidationMessageFor(m => m.StartDate)&nbsp;&nbsp;<strong>End Date </strong>
+                            @Html.TextBoxFor(m => m.EndDate, new { @class = "input-box date-control", @readonly = "readonly", @style = "width:150px !important;" })
+                            @Html.ValidationMessageFor(m => m.EndDate)
+                        </p>
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Terms & Conditions</label>
+                        <p class="full-name">
+                            @Html.TextAreaFor(m => m.TermsAndCondition, new { @class = "input-box", @style = "width:500px !important;height:150px;" })
+                            @Html.ValidationMessageFor(m => m.TermsAndCondition)
+                        </p>
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            Attachments</label>
+                        <p class="full-name">
+                            <input type="file" id="Attachments" name="Attachments" onchange="UploadAttachments(this, 'attachments-form');" />
+                        </p>
+                        
+                    </div>
+                    <div class="input-group">
+                        <label for="full-name" class="label">
+                            &nbsp;</label>
+                        <p class="full-name">
+                            <div class="attachments line" style="display: none;"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="submit row mt12 mb10">
+                <input type="submit" class="button1 floatRight login-signin" value="Save" />                
+            </div>
+            
+        }
+    </div>
+</div>
+@section scripts{
+     <script src="@Url.Content("~/Scripts/System/jquery-ui-1.8.20.js")" type="text/javascript"></script>
+}
+
+<script src="@Url.Content("~/Scripts/Custom/contest.js")" type="text/javascript"></script>

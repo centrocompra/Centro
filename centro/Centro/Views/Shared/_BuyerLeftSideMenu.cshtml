@@ -1,0 +1,79 @@
+﻿@{
+    SiteUserDetails CentroUsers;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+    CentroUsers = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+    var shop = SellersHandler.ShopByUserId(CentroUsers.LoggedInUser.Id).Object;
+    //string url = shop != null && !shop.IsClosed ? Url.Action("Shop", "Shops", new { id = Utility.SpacesToHifen(shop.ShopName) }) : Url.Action("Profile","User");
+    string url = "javascript:;";
+    var fav_products = UsersHandler.GetFavoriteProductsByUserId(CentroUsers.LoggedInUser.Id).List;
+    var user = UsersHandler.GetUserByID(CentroUsers.LoggedInUser.Id).Object;
+}
+<div class="leftCntr">
+    <span class="shadow"></span>
+    <div class="profile_head"></div>
+<div class="profile_links shopBarLeft buyers">
+    
+    <div class="profile-left pb5">
+        <a href="@url">
+        @if (!String.IsNullOrEmpty(CentroUsers.LoggedInUser.ProfilePicture))
+        {
+            <img width="75" height="75" class="mr10" alt="Profile Image" src="@CentroUsers.LoggedInUser.ProfilePicture"/>
+        }
+        else
+        {
+            <img width="75" height="75" class="mr10" alt="Profile Image" src="@Url.Content("~/images/avatar.png")"/>
+        }
+        </a>
+    </div>
+    
+    <div class="row pb10 f11 address">@CentroUsers.LoggedInUser.UserLocation</div>
+    <div class="divClear"></div>
+    <div class="profile-links purple-links">
+        <div class="section">
+			<h2>Settings</h2>
+			<ul>
+            @if(user.AuthenticatedVia==(int)AuthenticationFrom.Website){
+				<li><a href="@Url.Action("ChangePassword", "User")">Edit Password</a></li>
+            }
+				<li><a href="@Url.Action("EditProfile", "User")">Edit Profile</a></li>
+                @*<li><a href="@Url.Action("EditProfile", "User")#Paypal">Edit Payments / Taxes</a></li>*@
+                <li><a href="@Url.Action("Shop", "User")">Edit Shop Details</a></li>
+			</ul>
+		</div>        
+        <div class="section">
+			<h2>Product Transactions</h2>
+			<ul>
+			@if (shop != null)
+            {
+                <li><a href="@Url.Action("ManageOrders", "Shops", new { id = "S" })">Manage Orders (As a Seller)</a></li>
+                <li><a href="@Url.Action("ManageOrders", "Shops", new { id = "B" })">Manage Orders (As a Buyer)</a></li>                
+            }
+            else
+            {
+                <li><a href="@Url.Action("ManageOrders", "Shops", new { id = "B" })">Manage Orders</a></li>
+            }
+			</ul>
+		</div>
+        @*<div class="section">
+			<h2>Service Transactions</h2>
+			<ul>
+				<li><a href="@Url.Action("Recruit", "User")">Recruting</a></li>
+				<li><a href="@Url.Action("Index", "Invoice")">Contracts & Invoices</a></li>
+			</ul>
+		</div>
+        <div class="section">
+			<h2>Miscellaneous</h2>
+            <ul>
+                <li><a href="@Url.Action("Index", "Hub")">Manage Hubs</a></li>            
+                <li><a href="@Url.Action("Recruit", "User")">Manage Jobs</a></li>
+                <li><a href="@Url.Action("FavoriteProducts", "User")">My Favorites</a></li>
+            </ul>
+        </div>
+        <div class="section">
+			<h2>Favorite Items</h2>
+            @Html.Partial("_FavProductsSmall", fav_products)
+        </div>*@
+    </div>
+</div>
+</div>

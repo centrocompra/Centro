@@ -1,0 +1,88 @@
+﻿@model PagingResult<ProductsListingAdmin_Result>
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayOut.cshtml";
+    List<Category> Categories = ViewBag.Categories;
+}
+@section title{
+ Category wise Products
+}
+<!--Body Start from Here-->
+<h1>
+    Manage Products</h1>
+<div class="row mtop15">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" class="searchbox">
+        <tr valign="top">
+            <td align="left" class="searchbox">
+                <div class="floatleft">
+                    <table cellspacing="0" cellpadding="4" border="0">
+                        <tr valign="top">
+                            <td valign="middle">
+                                Search By Category
+                            </td>
+                            <td valign="middle" align="left">
+                                <select id="ddlCategory">
+                                    @*<option value="">--Select--</option>*@
+                                    @foreach (var item in Categories)
+                                    {
+                                        <option value="@item.CategoryID">@item.Name</option>
+                                    }
+                                </select>
+                            </td>
+                            <td valign="middle" align="left">
+                                <div class="black_btn2">
+                                    <span class="upper">
+                                        <input type="button" onclick="SearchProducts(this);" value="Submit" /></span></div>
+                            </td>
+                            <td><input type="button" class="button1" onclick="MoveToCategory(this, $('#ddlCategory'));" value="Move to Category" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<br />
+<div class="row mtop15">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" class="listing">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" onclick="javascript:CheckAll(this);" />
+                </th>
+                <th>
+                    <span class="Title">Product Title</span><img src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="sort(this);" />
+                </th>
+                <th>
+                    <span class="">Picture</span>
+                </th>
+                <th>
+                    <span class="UnitPrice">Unit Price</span><img src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="sort(this);" />
+                </th>
+                <th>
+                    <span class="Manufacturer">Manufacturer</span><img src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="sort(this);" />
+                </th>
+                <th style="text-align: center">
+                    <span class="IsFeatured">Featured</span><img src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="sort(this);" />
+                </th>
+            </tr>
+        </thead>
+        <tbody id="Result">
+            @Html.Partial("_Products", Model)
+        </tbody>
+    </table>
+    <div class="black_btn2 mtop15">
+        <input type="button" value="Set as Featured" onclick="SetAsFeatured(this);" />
+    </div>
+     @Html.Partial("_Paging")
+</div>
+<!--Body end Here-->
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var category = '@ViewBag.Category';
+</script>
+<script src="@Url.Content("~/Scripts/Custom/admin/productsPaging.js")" type="text/javascript"></script>

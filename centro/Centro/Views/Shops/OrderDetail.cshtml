@@ -1,0 +1,210 @@
+﻿@model Order
+@{
+    ViewBag.Title = "ViewRequest";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title
+{
+     Order Details
+}
+@{
+    var orderStatus = (List<SelectListItem>)ViewBag.OrderStatusList;
+    var orderStatusList = new SelectList(orderStatus, "Value", "Text", orderStatus.ToList());
+
+    var shippingStatus = (List<SelectListItem>)ViewBag.ShippingStatusList;
+    var shippingStatusList = new SelectList(shippingStatus, "Value", "Text", shippingStatus);
+
+    decimal finalShipping = 0;
+
+    Shop seller = SellersHandler.ShopByUserId(Model.SellerId).Object;
+}
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Custom/orderdetails.js")" type="text/javascript"></script>
+}
+<div class="white-area-inner">
+    @Html.Partial("_BuyerLeftSideMenu")
+    <div class="profile-right-bar primary">
+        <div class="right-panel one-column">
+            <div class="row">
+                <div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="ui-tabs-1">
+                    <div class="right-panel one-column">
+                        <h3 class="main-heading">
+                            Order Detail (As a @(ViewBag.Type=="S"?"Seller": "User" ) )</h3>
+                            <div class="req-detail-main">
+                                <div class="req-detail-main1">
+                                    <h3>
+                                        <strong>Order ID:@Model.OrderID
+                                            @Html.HiddenFor(m=>m.OrderID)
+                                        </strong></h3>
+                                    <h4>
+                                        Buyer: @Model.BuyerName
+                                    </h4>
+                                    <div class="detail_taxt">
+                                       <strong> Note for shop:</strong> @Model.NotForShop
+                                    </div>
+                                </div>
+                                <div class="req-detail-main-cont">
+                                    <div class="req-detail-main-req">
+                                    @if (ViewBag.Type.ToLower() == "s")
+                                    {
+                                        <span>
+                                            <label>
+                                                Order Status:
+                                            </label>
+                                            @Html.DropDownListFor(m => m.OrderStatusId, orderStatus, new { @style = "min-width:110px ! important;" })
+                                            <label>
+                                                &nbsp;&nbsp;Shipping Status:
+                                            </label>
+                                            @Html.DropDownListFor(m => m.ShippingStatusId, shippingStatus, new { @style = "min-width:110px ! important;" })
+                                            <label>
+                                                &nbsp;&nbsp;Tracking #:
+                                            </label>
+                                            @Html.TextBoxFor(m => m.TrackingID, new { @style = "width:107px ! important;padding:3px 2px;" })&nbsp;
+                                            <input type="button" class="button1 floatRight" value="Update" onclick="UpdateOrder(this)" />
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <div style="color: #333;">
+                                            <strong>
+                                                Order Status:</strong>
+                                                @(((OrderStatus)Model.OrderStatusId).ToEnumWordify())
+                                            <strong>
+                                                &nbsp; &nbsp; &nbsp; &nbsp;Shipping Status:</strong>
+                                            @(((ShippingStatus)Model.ShippingStatusId).ToEnumWordify())
+                                        </div>
+                                    }
+                                    <div style="color: #333;">                                        
+                                        <div class="floatLeft mr10 mt10"><strong>Billing Address:</strong></div>
+                                        <div class="floatLeft mt10">                                                
+					                        @Model.BillingAddress.FirstName @Model.BillingAddress.LastName<br />
+					                        @Model.BillingAddress.Address<br />
+                                            @SellersHandler.GetCityById(Model.BillingAddress.CityId).Object.CityName, @SellersHandler.GetStateById(Model.BillingAddress.StateId).Object.StateName,<br />
+                                            @SellersHandler.GetCountryByID(Model.BillingAddress.CountryId).Object.CountryName - @Model.BillingAddress.PostCode
+				                        </div>
+                                        <div class="floatLeft ml20 mr10 mt10"><strong>Shipping Address:</strong></div>
+                                        <div class="floatLeft mt10">                                        
+					                        @Model.ShippingAddress.FirstName @Model.ShippingAddress.LastName<br />
+					                        @Model.ShippingAddress.Address<br />
+					                        @SellersHandler.GetCityById(Model.ShippingAddress.CityID).Object.CityName, @SellersHandler.GetStateById(Model.ShippingAddress.StateID).Object.StateName,<br />
+                                            @SellersHandler.GetCountryByID(Model.ShippingAddress.CountryID).Object.CountryName - @Model.ShippingAddress.PostCode
+                                        </div>
+                                    </div>
+                                    <div style="color: #333;" class="row">
+                                        <div class="floatLeft mr10 mt10"><strong>Seller's Address:</strong></div>
+                                        <div class="floatLeft mt10">                                                
+					                        @seller.ContactFirstName @seller.ContactLastName <br />
+					                        @seller.ContactAddress<br />
+                                            @SellersHandler.GetCityById(seller.ContactCity).Object.CityName, @SellersHandler.GetStateById(seller.ContactState).Object.StateName,<br />
+                                            @SellersHandler.GetCountryByID(seller.ContactCountry).Object.CountryName
+				                        </div>                                        
+                                    </div>
+                                        <span>
+                                            <label>
+                                                Payment Breakdown:
+                                            </label>
+                                        </span>
+                                        <div class="row table-listing">
+                                            <table id="table1" width="100%" class="tablesorter">
+                                                <thead>
+                                                    <tr class="tablehead">
+                                                        <th width="5%">
+                                                            <div align="center">
+                                                                #
+                                                            </div>
+                                                        </th>                                                        
+                                                        <th>
+                                                            <div align="center">
+                                                                Item Title</div>
+                                                        </th>
+                                                        <th>
+                                                            <div align="center">
+                                                               Image</div>
+                                                        </th>
+                                                        <th width="15%">
+                                                            <div align="center">
+                                                                Unit Price</div>
+                                                        </th>
+                                                        <th width="10%">
+                                                            <div align="center">
+                                                                Quantity</div>
+                                                        </th>
+                                                        <th width="15%">
+                                                            <div align="center">
+                                                                Total Price</div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.OrderList.Count() > 0)
+                                                    {
+                                                        int i = 1;
+                                                        foreach (var item in Model.OrderList)
+                                                        {
+                                                            finalShipping += item.TotalShippingPrice;
+                                                        <tr class="@(i % 2 != 0 ? "even" : "odd")">
+                                                            <td>
+                                                                <div align="center">
+                                                                    @(i++)
+                                                                </div>
+                                                            </td>                                                            
+                                                            <td>
+                                                                <div align="center">
+                                                                    @item.ProductTitle</div>
+                                                            </td>
+                                                            <td>
+                                                                <div align="center">
+                                                                    <img width="50" src="@Url.Content("~/Images/ProductImages/" + item.ShopOwnerName + "/thumb_" + item.PrimaryImage)" </div>
+                                                            </td> 
+                                                            <td>
+                                                                <div align="center">
+                                                                    $@Math.Round(item.UnitPrice,2) USD</div>
+                                                            </td>
+                                                            <td>
+                                                                <div align="center">
+                                                                    @item.Quantity
+                                                                    </div>
+                                                            </td>
+                                                            <td>
+                                                                <div align="center">
+                                                                    $@Math.Round((item.UnitPrice*item.Quantity),2) USD
+                                                                    </div>
+                                                            </td>                                                            
+                                                        </tr>                                                            
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr class="even">
+                                                            <td colspan="6">
+                                                                No Item found
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                            <table class="price_list" width="100%" >
+                                                <tr><td>Shipping </td><td>$@Math.Round(Model.ItemTotalShippingPrice,2) USD</td></tr>
+                                                <tr><td>Sales tax at @Math.Round(Model.Tax.HasValue ? Model.Tax.Value : 0, 2)%  </td><td>$@Math.Round((decimal)(Model.ItemTotalPrice * (Model.Tax.HasValue ? Model.Tax.Value : 0) / 100), 2) USD</td></tr>
+                                            @if (Model.IsPercentage)
+                                            {
+                                                <tr><td>Centro fees @Math.Round(Model.AdminCommission, 2)%</td><td>$@Math.Round((decimal)((Model.ItemTotalPrice) * Model.AdminCommission / 100), 2) USD</td></tr>
+                                            }
+                                            else
+                                            {
+                                                <tr><td>Centro fees </td><td>$@Math.Round(Model.AdminCommission, 2) USD</td></tr>
+                                            }
+                                                <tr><td>Grand Total </td><td><strong>$@Math.Round(Model.TotalAmountToBePaid, 2) USD</strong></td></tr>
+                                            </table>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

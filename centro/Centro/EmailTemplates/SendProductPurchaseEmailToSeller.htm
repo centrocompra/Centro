@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Mailer</title>
+</head>
+<body>
+
+<table width="600px" border="0" align="center" cellpadding="0" cellspacing="0" style="border: solid 1px #dad1b4;">
+  <tr>
+    <td>
+    <table width="100%" border="0" cellspacing="0" cellpadding="8">
+      <tr>
+        <td align="left" valign="middle" bgcolor="#aaa" style=" font-family: Arial, Helvetica, sans-serif;">Centro- Order Details</td>
+        <td align="center" valign="top" bgcolor="#aaa"><img src="http://Centro.ossmedia.com/content/images/logo.png" width="211" height="36" /></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+  	<td>
+    	<table width="100%" border="0" cellspacing="0" cellpadding="8" style=" color:#636363; font-family: Arial, Helvetica, sans-serif;">
+  <tr>
+    <td style=" font-size:15px; color:#636363;">Hi</td>
+  </tr>
+  <tr>
+    <td style=" font-size:13px;"><strong>{BuyerName}</strong> has purchased some items from your shop, 
+        kindly review and ship the items within 24 hours otherwise we&#39;ll cancel the 
+        order and refund the payment to buyer.<br>Order Number is {OrderID}</td>
+  </tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="5" style="font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#636363;">
+      <tr>
+        <th align="left" valign="middle">Title</th>
+        <th align="left" valign="middle">Image</th>
+        <th align="left" valign="middle">Quantity</th>
+        <th align="left" valign="middle">Unit Price</th>
+      </tr>      
+      <tr>
+        <td>{productDetails} </td>
+      </tr>
+      <tr>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle"><strong>Shipping</strong></td>
+        <td align="left" valign="middle"><strong>${Shipping} USD</strong></td>
+      </tr>      
+      <tr>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle"><strong>Sales Tax at {Tax}(%)</strong></td>
+        <td align="left" valign="middle"><strong>${TaxValue} USD</strong></td>
+      </tr>
+      <tr>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle"><strong>Centro fee {FeePercent}(%)</strong></td>
+        <td align="left" valign="middle"><strong>${FeeValue} USD</strong></td>
+      </tr>
+      <tr>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle"><strong>Grand Total</strong></td>
+        <td align="left" valign="middle"><strong>${TotalAmountToBePaid} USD</strong></td>
+      </tr>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle">&nbsp;</td>
+        <td align="left" valign="middle">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="left" valign="middle"><p><span>Regards,</span><br><strong>Team Centro</strong></td>
+        </tr>
+      <tr>
+        <td colspan="4" align="left" valign="middle">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+      </table>
+
+    </td>
+  </tr>
+
+</table>
+
+
+</body>
+</html>

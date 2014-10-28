@@ -1,0 +1,119 @@
+﻿@model Shop
+@{
+    ViewBag.Title = "PreviewShop";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+
+@section title{  Preview your shop }
+@{
+    SelectedTabs selectedTabs = ViewBag.SelectedTabs;
+    int shopId = Model == null ? 0 : Model.ShopID;
+    List<ShopSection> Sections = ViewBag.ShopSections;
+    List<Product> Products = ViewBag.Products;
+    BusinessLayer.Models.DataModel.User user = ViewBag.User;
+}
+<div class="create-shop-steps-area">
+@Html.Partial("_SellerSubMenu", selectedTabs)
+</div>
+<div class="white-area-inner">
+    <div class="one-column">
+    <div class="success-msg">
+        Please select the appropriate tab above if you wish to edit any details before opening the shop    
+        <a class="flash-close-btn" href="javascript:;" onclick="$(this).parent().remove();">
+        <img width="15" height="15" alt="" src="@Url.Content("~/Content/Images/close-btn.png")"> </a>
+    </div>
+    <div class="main-heading"><a class="button2 floatRight" href="javascript:;" onclick="OpenShop(this, @Model.ShopID)">Open Shop</a> <span class="orng f20"> @Model.ShopName </span> </div>
+        
+    <div class="profile-left-bar shopBarLeft">
+        <div class="previewsections">
+        <h2><span>Shop Owner</span></h2>
+        </div>
+        <div class="row pb5"> <img width="75" height="75" class="mr10" alt="Profile Image" src="@(user.ProfilePicId!=null?user.ProfilePicUrl:"/Content/images/user.jpg")"></div>
+        <div class="row pb5 il bold"><a href="@Url.Action("Profile","User")">@user.UserName </a></div>
+        <div class="row pb10 f11 address"> @user.UserLocation</div>
+        <div class="previewsections">
+        <h2><span>Sections</span></h2>
+        <ul class="left-link-bar">
+        @foreach (var item in Sections.OrderBy(m=>m.DisplayOrder))
+        {
+            <li style="word-wrap: break-word;"><a href="javascript:;">@item.SectionName</a></li>
+        }
+        </ul>
+        </div>
+        @*<div class="previewshopinfo">
+        <h2><span>Shop Info</span></h2>
+        <ul class="left-link-bar">
+            <li> <a class="fwn ajax cboxElement" href="javascript:;" onclick="ShopInformation('SellerInfo', @Model.ShopID)">Seller Information</a> </li>
+            <li> <a class="fwn ajax cboxElement" href="javascript:;" onclick="ShopInformation('Policy', @Model.ShopID)">Shop Policies</a> </li>
+        </ul>
+        </div>*@
+        @*<div class="previewsections ">
+        <h2><span>Shop</span></h2>
+        <ul class="left-link-bar shop-now">
+            <li> <a href="javascript:void(0);" rel="19" class="favorite unfav"></a> </li>
+            <li> <a href="#;" class="flag">Report</a> </li>
+        </ul>
+        </div>*@
+    </div>
+    <div class="profile-right-bar editProfile productList">
+        @*<div class="row settings-box" style="padding:2px;"> <a href="@Url.Action("Shop","User")">
+            <img alt="" src="~/Images/ShopImages/@ViewBag.Username/Banner/@Model.ShopBanner"></a></div>*@
+        <div class="shopName"> <span class="f20"> @Model.ShopName </span><span class="f20 orange">// @Model.ContactFirstName @Model.ContactLastName</span> <br>
+        <span class="orng f15"> @Model.ShopTitle </span> </div>        
+        <div class="products mb10">
+            <div class="mb10 row">
+                <input type="checkbox" class="agree floatLeft mr10" />
+                <span class="floatLeft w95pc">I am legally liable for any of the products, content, or information that I share, post, or sell on the site.</span>
+            </div>
+            <div class="mb10 row">
+                <input type="checkbox" class="agree floatLeft mr10" />
+                <span class="floatLeft w95pc">I accept that Centro is a venue and does not screen its users, the content provided, or any of the information listed on the site. I will hold Centro completely harmless should there be any coflict between Users.</span>
+            </div>
+            <div class="mb10 row">
+                <input type="checkbox" class="agree floatLeft mr10" />
+                <span class="floatLeft w95pc">I have read both the User Agreement and Privacy Policy and acknowledge that all terms are fair, legally binding, and that I consent to use this site at my own risk.</span>
+            </div>
+            <ul>
+                
+       @* @foreach (var item in Products.OrderByDescending(m=>m.CreatedOn).ToList())
+        {
+            <li class="item"> <a class="img" href="~/Products/@Utility.SpacesToHifen(Model.ShopName)/@Model.ShopID/@item.CategoryId/@item.ProductID">
+            @if (item.PrimaryPicture != null)
+            {
+                <img width="206" height="156" alt="" src="~/Images/ProductImages/@user.UserName/@item.PrimaryPicture">
+            }
+            else
+            {
+                <img width="206" height="156" alt="" src="@Url.Content("~/Content/images/product_img1.png")">
+            }
+            </a>
+                <div class="detail prev">
+                <h3><a href="javascript:;" onclick="editProduct(this, @item.ProductID)">@item.Title</a> <br>
+                    by @item.Manufacturer</h3>
+                <div class="price"> from $@item.UnitPrice </div>
+                </div>
+            </li>
+        }*@
+            </ul>
+        </div>
+
+        <div class="settings-box">
+        <!-- <h2><span>Shop Announcments</span></h2>-->
+        <div class="content-area">
+            <div class="row pt20 pb20"> @Model.ShopAnnouncement </div>
+        </div>
+        </div>
+    </div>
+
+        </div>
+    </div>
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+    });
+</script>

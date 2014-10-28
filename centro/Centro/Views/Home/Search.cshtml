@@ -1,0 +1,52 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = ViewBag.CentroUsers.LoggedInUser != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+     Search Results for @ViewBag.Search
+}
+@{
+    List<Product> LastViewedProducts = (List<Product>)ViewBag.LastViewedProducts;
+    List<Hub> random_hubs = (List<Hub>)ViewBag.HubList;
+}
+<aside class="floatLeft left-side">
+    @Html.Partial("_LeftMenu")
+</aside>
+<div class="right-side floatRight">
+    <div class="box fetured">
+        <div class="">
+            <h2>Search Results</h2>
+            <div id="Result">
+                @if (Model.List.Count > 0)
+                {
+                    @Html.Partial("_Paging")
+                    @Html.Partial("_Products", Model)
+                    @Html.Partial("_Paging")
+                }
+                else
+                {
+                    <div class="no-result">
+                        <br />
+                    <h3>No matching result.</h3>
+                    </div>
+                    
+                }
+            </div>
+        </div>
+    </div>
+       
+    
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var search = '@ViewBag.Search';
+    var type = '@ViewBag.Type';
+    $('div.search input[type=text]').val(search);
+    $('div.search select').val(type);
+</script>
+<script src="@Url.Content("~/Scripts/Custom/searchproductsPaging.js")" type="text/javascript"></script>

@@ -1,0 +1,120 @@
+﻿@model BusinessLayer.Models.DataModel.User
+@{
+    Shop shop = SellersHandler.ShopByUserId(Model.UserID).Object;
+    
+    List<Country> Countries = ViewBag.Countries;
+    var userCountries = new SelectList(Countries, "CountryID", "CountryName");
+
+    List<StateProvince> States = ViewBag.States;
+    var userStates = new SelectList(States, "StateID", "StateName");
+
+    List<City> Cities = ViewBag.Cities;
+    var userCity = new SelectList(Cities, "CityID", "CityName");
+}
+
+<div class="right-panel one-column">
+<div class="main-heading">Select the payment methods<span class="orng"> you accept</span>. </div>
+@using (Ajax.BeginForm("Payments", "User", new AjaxOptions { OnBegin="OnBegin", OnComplete="OnPaymentComplete" }))
+{
+    @Html.HiddenFor(m=>m.UserID)
+    <div class="box-out">
+        <div class="box-in">
+            <div class="row f13 bold pb5">
+                <div class="input checkbox-row">
+                <input type="checkbox" id="UserPaymentPaypal" value="1" checked="checked" disabled="disabled" class="vmid mr5 paymentChoice" />
+                <label for="UserPaymentPaypal"> Paypal </label>
+                </div>
+            </div>
+            <div style="" class="paypal">
+                <dl>
+                <dt class="bold">Paypal Account Email </dt>
+                <dd class="pt5"> Payments are sent to this email </dd>
+                </dl>
+                <dl class="botline1">
+                <dt class="bold">Email</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.PaypalID, new { @maxlength = "100", @style = "width:400px;", @class = "input-box email required" })
+                    @Html.ValidationMessageFor(m=>m.PaypalID)
+                    
+                </dd> 
+                </dl>
+                <div class="note botline1 pb20">
+                    *Note: Please make sure that your paypal email is valid, otherwise you won't be able to receive payments.
+                </div> 
+            </div>
+            <div class="row f13 bold pb5">
+                <div class="input checkbox-row">                
+                <h2><label for="UserPaymentPaypal"> Tell us about yourself. </label></h2>
+                </div>
+            </div>
+            <div style="" class="paypal">                
+                <dl class="botline1">
+                <dt class="bold">Your Name</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "input-box", @style = "width:250px !important;" })
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "input-box", @style = "width:250px !important;" })
+                    @Html.ValidationMessageFor(m => m.FirstName) @Html.ValidationMessageFor(m => m.LastName)
+                </dd>
+                </dl>
+                <dl class="botline1">
+                <dt class="bold">Country</dt>
+                <dd>
+                    @Html.DropDownListFor(m => m.CountryId, userCountries, "Select a country...", new { @style = "width:170px;", @class = "input-box", onchange = "OnCountryChange(this);" })
+                    @Html.DropDownListFor(m => m.StateId, userStates, "Select a state...", new { @style = "width:170px;", @class = "input-box", onchange = "OnStateChange(this);" })
+                    @Html.DropDownListFor(m => m.CityId, userCity, "Select a city...", new { @style = "width:170px;", @class = "input-box" })
+                </dd>
+                </dl>
+                <dl class="botline1">
+                <dt class="bold">Postal Code</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.PostalCode, new { @class = "input-box", @style = "width:250px !important;" })
+                    @Html.ValidationMessageFor(m => m.PostalCode)
+                </dd>
+                </dl>
+                <dl class="botline1">
+                <dt class="bold">Email</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.EmailId , new { @class = "input-box", @style = "width:250px !important;" })
+                    @Html.ValidationMessageFor(m => m.EmailId)
+                </dd>
+                </dl>                
+                <dl class="botline1">
+                <dt class="bold">Street Address</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.StreetAddress1, new { @class = "input-box", @style = "width:250px !important;" })
+                    @Html.ValidationMessageFor(m => m.StreetAddress1)
+                    <br />
+                    @Html.TextBoxFor(m => m.StreetAddress2, new { @class = "input-box", @style = "width:250px !important;" })
+                    @Html.ValidationMessageFor(m => m.StreetAddress2)
+                </dd>
+                </dl>                
+            </div>
+            <div>
+            <strong>By clicking "Save" I agree that:</strong><br />
+            • &nbsp; I have read and accepted the <a href="javascript:;">User Agreement</a> and <a href="javascript:;">Privacy Policy</a>.<br />
+            • &nbsp; I may receive communications from Centro and change my notification preferences.<br />
+            • &nbsp; I am at-least 18 years old.<br />
+            </div>
+                            
+        </div>
+    </div>
+    <div class="row">
+        <input type="submit" value="Save" class="button1" id="Save" />
+    @if (!shop.ShipToUSOnly)
+    {
+        @*<input type="button" value="Next" class="button1" onclick="SaveNNextSalesTax(this);" />*@
+    }
+    else if (shop.IsClosed && !string.IsNullOrEmpty(Model.PaypalID))
+    {
+        <button class="button1 list" onclick="window.location.href='@Url.Action("PreviewShop", "User")'" id="Submit2" type="button">Next</button>
+    }
+        <span id="submitPaymentMethod"></span> </div>
+}
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+    });
+</script>
+<script src="@Url.Content("~/Scripts/Custom/stateCountry.js")" type="text/javascript"></script>

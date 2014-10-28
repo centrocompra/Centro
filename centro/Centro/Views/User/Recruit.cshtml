@@ -1,0 +1,92 @@
+﻿@model PagingResult<JobsViewModel>
+@{
+    //ViewBag.Title = "Recruit";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+     Recruit
+}
+@{
+    var JobSentToMe = (PagingResult<JobsViewModel>)ViewBag.JobSentToMe;
+    var JobsApplied = (PagingResult<JobsViewModel>)ViewBag.JobsApplied;
+    var todaysApplicants = SellersHandler.GetJobApplicants(DateTime.Now.AddDays(-1), DateTime.Now, (int)ViewBag.LoggedInUserID).List;
+}
+
+@Html.Partial("_ContratorMenuLeft")
+
+<div class="page-center ml20 job-listing">
+    <div class="job-left floatLeft">
+        <div class="floatLeft w100pc">        
+            <h2 class=""><span class="title-start uppercase icon-headngs"><span> <span class="ico-hammer"> <img src="@Url.Content("~/content/images/ico-speaker.png")" /> </span>BOSS - ADVERTISING /</span><span class="">/ JOB LISTINGS</span>
+            <a href="/User/CreateJob" class="button-orng floatRight">Post a Job Listing</a></h2>
+            <div class="tabs-outer m0">
+                <ul class="tabs pl0">
+                    <li class="active">@Ajax.ActionLink("Advertising: Job Listing", "_MyJobs", "User", new { page_no = 1, per_page_result = 10, sortColumn = "CreatedOn", sortOrder = "Desc", IsAwarded = false }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)", @class = "job-applied" })</li>
+                    <li class="">@Ajax.ActionLink("Awarded/Hired Ads", "_MyJobs", "User", new { page_no = 1, per_page_result = 10, sortColumn = "CreatedOn", sortOrder = "Desc", IsAwarded = true }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)", @class = "job-applied" })</li>
+                    <div class="floatLeft ml5 mt5"> <span class="counter mr5">@todaysApplicants.Count()</span><span class="black">Get Ready to Hire! You have @todaysApplicants.Count() New Applicants today!</span></div>
+                </ul>            
+            </div>
+            @Html.Partial("_Paging")        
+            <table class="tablesorter grey-border">
+                <thead><tr><th>Status</th><th>Manage</th><th>Title</th><th>Estimated Budget</th><th>#&nbsp;Applicants</th><th>Posted&nbsp;On</th><th>Type</th><th>ID</th></tr></thead>
+                <tbody id="Result">
+                    @Html.Partial("_MyJobsListing", Model)
+                </tbody>
+            </table>
+            @Html.Partial("_Paging")
+        </div>
+        <div class="clearIt mt10">&nbsp;</div>  
+        <h2><span class="title-start uppercase icon-headngs"> <span> <img src="@Url.Content("~/content/images/ico-job.png")" /> </span> <span>CONTRACTOR /</span><span><span class="">/ POTENTIAL JOBS</span></span>: <span class="title-rest">Looking for work? This section will give
+                        you all the information you need to
+                        stay up to date on all the jobs you
+                        apply for and any jobs you are invited
+                        to bid and make a fixed price offer on.</span>        
+        </h2>
+        <div class="job-listing row pb20">
+            <div class="tabs-outer m0">
+                <ul class="tabs pl0">
+                    <li class="active">@Ajax.ActionLink("INTERVIEW ", "_JobSentToMe", "User", new { page_no = 1, per_page_result = 6, sortOrder = "Desc", sortColumn = "CreatedOn" }, new AjaxOptions { UpdateTargetId = "jobs-listing-Invited" }, new { @onclick = "SetTab(this)" })</li>
+                </ul>            
+            </div>
+            <div class="white-background row contracts-border">
+                <div class="row invited">
+                    <span class="move-to-past-bottom pl40">Invited</span>                        
+                </div>
+                <div class="" id="jobs-listing-Invited">
+                    @Html.Partial("_JobListing", JobSentToMe.List)
+                </div>
+            </div>	            
+        </div>
+        <div class="job-listing row pb20">
+            <div class="tabs-outer m0">
+                <ul class="tabs pl0">
+                    <li class="active">@Ajax.ActionLink("JOBS Applied", "_JobsApplied", "User", new { page_no = 1, per_page_result = 6 }, new AjaxOptions { UpdateTargetId = "jobs-listing-Applied" }, new { @onclick = "SetTab(this)", @class = "job-applied" })</li>
+                </ul>            
+            </div>
+            <div class="white-background row contracts-border">
+                <div class="row invited">
+                    <span class="move-to-past-bottom pl40"></span>                        
+                </div>                
+                <div class="" id="jobs-listing-Applied">
+                    @Html.Partial("_JobListing", JobsApplied.List)
+                </div>
+            </div>	            
+        </div>
+              
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var totalCount = 0, UserID;
+        $(document).ready(function () {
+            totalCount = parseInt('@Model.TotalCount');
+            UserID = '@ViewBag.UserID';
+            paging.PagingFunction = 'RecruitePaging';
+            paging.pageSize = 10;
+        });
+    </script>
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>    
+    <script src="@Url.Content("~/Scripts/Custom/job.js")" type="text/javascript"></script>
+}

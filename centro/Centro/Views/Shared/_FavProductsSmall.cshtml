@@ -1,0 +1,28 @@
+﻿@model List<ProductViewModel>
+@{
+    var user = (SiteUserDetails)ViewBag.CentroUsers;
+}
+@if (Model.Count() > 0)
+{
+    <ul class="fav-products-small">
+    @foreach (var item in Model.Take(9))
+    {
+        <li>
+            <a title="@item.Title" href="~/Products/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId/@item.CategoryId/@item.ProductID" class="img">
+                @if (item.PrimaryPicture != null)
+                {
+                   <img width="50" src="@Url.Content("~/Images/ProductImages/" + item.ShopOwnerName + "/thumb_" + item.PrimaryPicture)" />
+                }
+                else
+                {
+                    <img width="50" src="@Url.Content("~/Content/images/default_product.png")" />
+                }
+            </a>
+        </li>
+    }
+    </ul>
+}
+else
+{
+    <div>No product found</div>
+}

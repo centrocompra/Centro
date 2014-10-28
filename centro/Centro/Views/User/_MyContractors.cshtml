@@ -1,0 +1,121 @@
+﻿@model string
+@{
+    SiteUserDetails CentroUsers;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+    CentroUsers = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+    
+    PagingResult<ServiceContracts_Result> AsBuyer, AsSeller;
+    if(Model=="Past")
+    {
+        AsBuyer = SellersHandler.GetPastServiceContracts(1, 12, "CreatedOn", "Desc", "BuyerID", CentroUsers.LoggedInUser.Id);
+       // AsSeller = SellersHandler.GetPastServiceContracts(1, 12, "CreatedOn", "Desc", "SellerID", CentroUsers.LoggedInUser.Id);
+    }
+    else{
+       // AsSeller= SellersHandler.GetServiceContracts(1, 12, "CreatedOn", "Desc", "SellerID", CentroUsers.LoggedInUser.Id);
+        AsBuyer = SellersHandler.GetServiceContracts(1, 12, "CreatedOn", "Desc", "BuyerID", CentroUsers.LoggedInUser.Id);
+    }
+    var ContractSteps=Enum.GetValues(typeof(ContractNextStep)).Cast<ContractNextStep>().Select(v => new SelectListItem
+                                                                                                    {
+                                                                                                        Text = v.ToEnumDescription(),
+                                                                                                        Value = ((int)v).ToString()
+                                                                                                    }).ToList();
+}
+@*<h2>My Contractors</h2>*@
+@if (AsBuyer.TotalCount > 0)
+{
+    <table width="100%" border="0" cellspacing="0" cellpadding="5" class="floatLeft">
+        @foreach (var item in AsBuyer.List)
+    {
+        string nextStep = "";
+        if (item.TotalInvoices == 0) { nextStep = "Contractor to create invoice"; }
+        else if (item.TotalEarning == 0 && item.TotalInvoices > 0) { nextStep = "Buyer to Release Escrow"; }
+        else if (item.TotalEarning > 0) { nextStep = "Contractor to Start work"; }
+            <tr align="center" class="select" onclick="GotoInvoices('@Url.Action("BuyerCustomOrder", "Message", new { id = item.RequestID, from = "MyContracts" })')">
+                @*@if (item.RequestStatus != (int)CustomRequestStatus.Completed)
+                {*@
+                    <td>
+                        <input type="checkbox" id="@item.RequestID" class="contract-checkbox" onclick="event.cancelBubble = true;if(event.stopPropagation) event.stopPropagation();" />
+                    </td>
+                @*}*@
+                <td>
+                    @if (string.IsNullOrEmpty(item.Username) || string.IsNullOrEmpty(item.PrimaryPicture))
+                    {
+                        <img src="@Url.Content("~/Images/avatar.png")" width="50" alt="" />
+                    }
+                    else
+                    {
+                    <img src="@Url.Content("~/Images/ProfileImage/" + item.Username + "/thumb_" + item.PrimaryPicture)" width="50" alt="" />
+                    }
+                </td>
+                <td align="left">
+                    <h4>
+                        @item.Username
+                    </h4>
+                    <p>
+                    @if (string.IsNullOrEmpty(item.Username))
+                    {@Html.Raw("User Deleted"); }
+                    else
+                    {@Html.Raw(item.FirstName + " " + item.LastName);
+                    }</p>
+                </td>
+                <td>
+                    <h4>@item.CreatedOn.Value.ToShortDateString()</h4>
+                    <p>
+                        Contract Started</p>
+                </td>
+                <td>
+                    <h4>
+                        $@item.TotalEarning USD
+                    </h4>
+                    <p>
+                        Amount Earned
+                    </p>
+                </td>
+                <td>
+                    <h4>@item.TotalInvoices
+                    </h4>
+                    <p>
+                        Total # invoices
+                    </p>
+                </td>
+                <td>
+                    <h4><select class="contract-select-list" onclick="stopEvents(event)">
+                        @foreach (var step in ContractSteps)
+                        {
+                            if (Convert.ToInt32(step.Value) == (item.NextStep.HasValue ? item.NextStep.Value : 0))
+                            {
+                                <option value="@step.Value" selected="selected">@step.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@step.Value">@step.Text</option>
+                            }
+                        }
+                        </select>&nbsp;<a href="javascript:;" class="contract-save" onclick="UpdateNextStep(this, event,'contract-select-list', @item.RequestID)">Save</a>
+                    </h4>
+                    <p>
+                        Next Step
+                    </p>
+                </td>
+            </tr>
+    }
+    </table>
+}
+else
+{
+    <div class="m20">
+        No record Found</div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Model' == "Past") {
+            $('.movetopastcontrators').hide();
+            $('.movetoactivecontrators').show();
+        }
+        else {
+            $('.movetopastcontrators').show();
+            $('.movetoactivecontrators').hide();
+        }
+    });
+</script>

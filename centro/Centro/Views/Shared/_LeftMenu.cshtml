@@ -1,0 +1,51 @@
+﻿@{
+    var Categories = CategoriesHandler.GetCategories().List;
+    var id = Request.RequestContext.RouteData.Values["id"];
+    
+}
+<div class="leftCntr">
+    <span class="shadow"></span>
+    <div class="linkBox">
+        <h2>
+            All Categories
+        </h2>
+        <ul>
+            @foreach (var item in Categories)
+            {
+                <li><a class="@((id != null && id.ToString().ToLower() == Utility.SpacesToHifen(item.Name).ToLower()) ? "active" : "")" href="@Url.Action("category", "products", new { id = Utility.SpacesToHifen(item.Name) })">@item.Name</a></li>
+                @*<li><a class="@((id != null && id.ToString() == item.CategoryID.ToString()) ? "active" : "")" href="javascript:;">@item.Name</a></li>*@
+            }
+        </ul>
+    </div>
+    @*<div class="searchBox">
+        <h2>
+            Advance Search</h2>
+        <form action="#">
+        <div class="selectarea">
+            <label>
+                Collection Points:</label>
+            <select>
+                <option>Select -</option>
+            </select>
+        </div>
+        <div class="selectarea">
+            <label>
+                State:</label>
+            <select>
+                <option>Select -</option>
+            </select>
+        </div>
+        <div class="selectarea">
+            <label>
+                City:</label>
+            <select>
+                <option>Select -</option>
+            </select>
+        </div>
+        <div class="selectarea">
+            <button type="submit">
+                Search</button>
+        </div>
+        </form>
+    </div>*@
+</div>

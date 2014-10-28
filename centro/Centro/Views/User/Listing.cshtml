@@ -1,0 +1,43 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    var shopId = ViewBag.ShopID;
+    SelectedProductListingTab tab = (SelectedProductListingTab)ViewBag.SelectedTab;
+}
+<div id="ui-tabs-2">
+    <div class="box-out">
+        <div class="box-in">
+            <div class="tabs-outer">
+                <ul class="tabs">
+                    <li class="@(tab == SelectedProductListingTab.Active ? "active" : "")">@Ajax.ActionLink("Active", "_ManageListing", "User", new { shop_id = shopId }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                    <li class="@(tab == SelectedProductListingTab.Inactive ? "active" : "")">@Ajax.ActionLink("Inactive", "_InactiveListing", "User", new { shop_id = shopId }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                    @*<li class="@(tab == SelectedProductListingTab.SoldOut ? "active" : "")">@Ajax.ActionLink("SoldOut", "_SoldOutListing", "User", new { shop_id = shopId }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>*@
+                </ul>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div id="Result">
+                        @Html.Partial("_Products", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <a href="javascript:;" class="button1-blk floatRight" onclick="gotoSection();">Next</a>
+</div>
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var ShopId = '@shopId';
+    var show_productTemplate = false;
+    var InactiveListing = 0;
+
+
+    function gotoSection() {
+        $('.section').trigger('click');
+    }
+</script>
+<script src="@Url.Content("~/Scripts/Custom/productByShopPaging.js")" type="text/javascript"></script>

@@ -1,0 +1,31 @@
+﻿@{
+    var Categories = CategoriesHandler.GetCategories();
+}
+<div class="header">
+    <div class="Message_DIV">
+        <span></span>
+    </div>
+    <div class="headercenter clearfix">
+        <a class="logo" href="@Url.Action("Index", "Home")">
+            <img src="~/Content/images/logo.png" alt="" /></a>
+        <div class="formBox">
+            @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+            {
+                 @*<div class="select_area search">
+                   <select name="searchType">
+                        <option value="All">All Categories</option>
+                        @foreach (var item in Categories.List)
+                        {
+                            <option value="@item.CategoryID">@item.Name</option>
+                        }
+                    </select>
+                </div>*@
+                <div class="inputtype">
+                    <input type="text" placeholder="Search" name="search" style="width: 635px;" />
+                </div>
+                <button type="submit">
+                </button>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿@model int
+@{
+    decimal MinBudget=(decimal)ViewBag.MinBudget;
+}
+@using (Ajax.BeginForm("ApplyForJob", "User", new AjaxOptions { OnComplete="OnApplyJobComplete" }))
+{
+    <input type="hidden" name="JobID" value="@Model" />
+    <div class="floatLeft wd45 job-pop-mn">
+        <h2>
+            Apply for the Job</h2>
+        <span>It will be a good idea to message the job poster so that they can get more details.</span>
+        <div>
+        </div>
+        <ul id="">
+            <li>
+                <div class="floatLeft"> <span>Fixed Bid Price</span> </div>
+                <div class="floatLeft ml10 mt-2">
+                    <input type="text" value="" name="BidAmount" id="BidAmount" data-val-required="*Required." data-val-range-min="10" 
+                        data-val-range="Minimum Bid Amount is 10$." data-val-number="Invalid Amount." data-val="true" class="input-box">
+                    <span data-valmsg-replace="true" data-valmsg-for="BidAmount" class="field-validation-error">
+                        <span for="BidAmount" generated="true" class=""></span>
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div style="clear: both;">
+    </div>
+    <div class="mt20 mb-10 floatLeft row job-pop-mn-btm">
+        <input type="submit" value="Submit" class="button1 floatRight mr10" onclick="ApplyForJob(this, @Model)"/>
+        <input type="button" value="Close" class="button2 floatRight mr10" onclick="ClosePopupWindow()" />
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+    });
+</script>

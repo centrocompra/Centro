@@ -1,0 +1,69 @@
+﻿@model BusinessLayer.Models.DataModel.Type
+@{
+    ViewBag.Title = "Add Category";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayOut.cshtml";
+    var subcategories = BusinessLayer.Handler.CategoriesHandler.GetSubCategory();
+}
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Custom/admin/addCategory.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        url = '@Url.Action("Types","Categories", new{Area="Admin"})';
+    </script>
+}
+<div class="row">
+    <div class="floatleft mtop10">
+        <h1>
+            Add/Edit New Type</h1>
+    </div>
+    <div class="floatright">
+        <a href="@Url.Action("ManageCategories", "Categories")" class="black_btn"><span>Back
+            To Manage Categories</span></a></div>
+</div>
+@using (Ajax.BeginForm("AddEditType", "Categories", FormMethod.Post, new AjaxOptions { OnBegin = "OnBegin", OnComplete = "AddCategory.OnAddSubCategoryComplete" }, new { @name = "addCategory" }))
+{
+    @Html.HiddenFor(m => m.TypeID)
+    
+    <div align="center" class="whitebox mtop15">
+        <table cellspacing="0" cellpadding="7" border="0" align="center">
+            <tr>
+                <td align="left">
+                    <strong>Category</strong>
+                </td>
+                <td align="left">
+                    <select name="SubCategoryID" class="select" style = "width:450px;">
+                    @foreach (var item in subcategories)
+                    {
+                        if (Model.SubCategoryID == item.SubCategoryID){
+                            <option value="@item.SubCategoryID" selected="selected">@item.Name</option>
+                        }else {
+                            <option value="@item.SubCategoryID">@item.Name</option>
+                        }
+                    }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <strong>Name</strong>
+                </td>
+                <td align="left">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "input", @style = "width:450px;" })
+                    @Html.ValidationMessageFor(m=>m.Name)
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2">
+                    &nbsp;
+                </td>                
+            </tr>
+            <tr>
+                <td align="center">
+                    &nbsp;
+                </td>
+                <td align="left">
+                    <input type="submit" value="SUBMIT" class="button1" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}

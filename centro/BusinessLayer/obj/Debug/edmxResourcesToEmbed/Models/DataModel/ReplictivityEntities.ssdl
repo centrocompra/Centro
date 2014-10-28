@@ -1,0 +1,2159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ReplictivityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ReplictivityModelStoreContainer">
+    <EntitySet Name="AccountActivity" EntityType="ReplictivityModel.Store.AccountActivity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Address" EntityType="ReplictivityModel.Store.Address" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Alerts" EntityType="ReplictivityModel.Store.Alerts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Attachments" EntityType="ReplictivityModel.Store.Attachments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BillingAddress" EntityType="ReplictivityModel.Store.BillingAddress" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BlockedIPAddress" EntityType="ReplictivityModel.Store.BlockedIPAddress" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BuyerJobAttachments" EntityType="ReplictivityModel.Store.BuyerJobAttachments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BuyerJobs" EntityType="ReplictivityModel.Store.BuyerJobs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Categories" EntityType="ReplictivityModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Cities" EntityType="ReplictivityModel.Store.Cities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Contest" EntityType="ReplictivityModel.Store.Contest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContestAttachments" EntityType="ReplictivityModel.Store.ContestAttachments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContestComments" EntityType="ReplictivityModel.Store.ContestComments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContestParticipant" EntityType="ReplictivityModel.Store.ContestParticipant" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContestParticipantVotes" EntityType="ReplictivityModel.Store.ContestParticipantVotes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContestRequest" EntityType="ReplictivityModel.Store.ContestRequest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContestVotes" EntityType="ReplictivityModel.Store.ContestVotes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Country" EntityType="ReplictivityModel.Store.Country" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DonationTransactions" EntityType="ReplictivityModel.Store.DonationTransactions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ErrorLog" EntityType="ReplictivityModel.Store.ErrorLog" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Favorites" EntityType="ReplictivityModel.Store.Favorites" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Feedback" EntityType="ReplictivityModel.Store.Feedback" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Followers" EntityType="ReplictivityModel.Store.Followers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GlobalCodes" EntityType="ReplictivityModel.Store.GlobalCodes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HubComments" EntityType="ReplictivityModel.Store.HubComments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HubContents" EntityType="ReplictivityModel.Store.HubContents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Hubs" EntityType="ReplictivityModel.Store.Hubs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HubTopics" EntityType="ReplictivityModel.Store.HubTopics" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InvoiceItems" EntityType="ReplictivityModel.Store.InvoiceItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Invoices" EntityType="ReplictivityModel.Store.Invoices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="JobApplications" EntityType="ReplictivityModel.Store.JobApplications" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Messages" EntityType="ReplictivityModel.Store.Messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderItems" EntityType="ReplictivityModel.Store.OrderItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="ReplictivityModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pictures" EntityType="ReplictivityModel.Store.Pictures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductFiles" EntityType="ReplictivityModel.Store.ProductFiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductPictures" EntityType="ReplictivityModel.Store.ProductPictures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductReviews" EntityType="ReplictivityModel.Store.ProductReviews" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Products" EntityType="ReplictivityModel.Store.Products" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductTags" EntityType="ReplictivityModel.Store.ProductTags" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PrototypeRequest" EntityType="ReplictivityModel.Store.PrototypeRequest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Reports" EntityType="ReplictivityModel.Store.Reports" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RequestAttachments" EntityType="ReplictivityModel.Store.RequestAttachments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="ReplictivityModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SalesTax" EntityType="ReplictivityModel.Store.SalesTax" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShipingCountries" EntityType="ReplictivityModel.Store.ShipingCountries" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShippingAddress" EntityType="ReplictivityModel.Store.ShippingAddress" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Shop" EntityType="ReplictivityModel.Store.Shop" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShopAvailablity" EntityType="ReplictivityModel.Store.ShopAvailablity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShopMaterials" EntityType="ReplictivityModel.Store.ShopMaterials" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShopPictures" EntityType="ReplictivityModel.Store.ShopPictures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShopSections" EntityType="ReplictivityModel.Store.ShopSections" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShopServices" EntityType="ReplictivityModel.Store.ShopServices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShopSignUpStepCompleted" EntityType="ReplictivityModel.Store.ShopSignUpStepCompleted" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SiteFees" EntityType="ReplictivityModel.Store.SiteFees" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StateProvince" EntityType="ReplictivityModel.Store.StateProvince" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SubCategory" EntityType="ReplictivityModel.Store.SubCategory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags" EntityType="ReplictivityModel.Store.Tags" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TransactionDetail" EntityType="ReplictivityModel.Store.TransactionDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Type" EntityType="ReplictivityModel.Store.Type" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserCart" EntityType="ReplictivityModel.Store.UserCart" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserLoginHistory" EntityType="ReplictivityModel.Store.UserLoginHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="ReplictivityModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserSettings" EntityType="ReplictivityModel.Store.UserSettings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UsersMessages" EntityType="ReplictivityModel.Store.UsersMessages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserTags" EntityType="ReplictivityModel.Store.UserTags" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserTransactions" EntityType="ReplictivityModel.Store.UserTransactions" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__ContestPa__UserI__18B6AB08" Association="ReplictivityModel.Store.FK__ContestPa__UserI__18B6AB08">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ContestParticipantVotes" EntitySet="ContestParticipantVotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubCatego__Categ__5BAD9CC8" Association="ReplictivityModel.Store.FK__SubCatego__Categ__5BAD9CC8">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="SubCategory" EntitySet="SubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Type__SubCategor__6FB49575" Association="ReplictivityModel.Store.FK__Type__SubCategor__6FB49575">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="Type" EntitySet="Type" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__Attachmen__7A3223E8" Association="ReplictivityModel.Store.FK__Users__Attachmen__7A3223E8">
+      <End Role="Attachments" EntitySet="Attachments" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AccountActivity_Users" Association="ReplictivityModel.Store.FK_AccountActivity_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="AccountActivity" EntitySet="AccountActivity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Attachments_Messages" Association="ReplictivityModel.Store.FK_Attachments_Messages">
+      <End Role="Messages" EntitySet="Messages" />
+      <End Role="Attachments" EntitySet="Attachments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BlockedIPAddress_Users_DeletedBy" Association="ReplictivityModel.Store.FK_BlockedIPAddress_Users_DeletedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="BlockedIPAddress" EntitySet="BlockedIPAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BlockedIPAddress_Users_UpdatedBy" Association="ReplictivityModel.Store.FK_BlockedIPAddress_Users_UpdatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="BlockedIPAddress" EntitySet="BlockedIPAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BuyerJobAttachments_BuyerJobs" Association="ReplictivityModel.Store.FK_BuyerJobAttachments_BuyerJobs">
+      <End Role="BuyerJobs" EntitySet="BuyerJobs" />
+      <End Role="BuyerJobAttachments" EntitySet="BuyerJobAttachments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BuyerJobs_Users" Association="ReplictivityModel.Store.FK_BuyerJobs_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="BuyerJobs" EntitySet="BuyerJobs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categories_Users_CreatedBy" Association="ReplictivityModel.Store.FK_Categories_Users_CreatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Categories" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Categories_Users_UpdatedBy" Association="ReplictivityModel.Store.FK_Categories_Users_UpdatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Categories" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContestComments_ContestParticipant" Association="ReplictivityModel.Store.FK_ContestComments_ContestParticipant">
+      <End Role="ContestParticipant" EntitySet="ContestParticipant" />
+      <End Role="ContestComments" EntitySet="ContestComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Favorites_Products" Association="ReplictivityModel.Store.FK_Favorites_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Favorites" EntitySet="Favorites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Favorites_Shop" Association="ReplictivityModel.Store.FK_Favorites_Shop">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="Favorites" EntitySet="Favorites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Feedback_OrderID" Association="ReplictivityModel.Store.FK_Feedback_OrderID">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Feedback" EntitySet="Feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Feedback_ProductID" Association="ReplictivityModel.Store.FK_Feedback_ProductID">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Feedback" EntitySet="Feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Feedback_RequestID" Association="ReplictivityModel.Store.FK_Feedback_RequestID">
+      <End Role="PrototypeRequest" EntitySet="PrototypeRequest" />
+      <End Role="Feedback" EntitySet="Feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoiceItems_Invoices" Association="ReplictivityModel.Store.FK_InvoiceItems_Invoices">
+      <End Role="Invoices" EntitySet="Invoices" />
+      <End Role="InvoiceItems" EntitySet="InvoiceItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoices_PrototypeRequest" Association="ReplictivityModel.Store.FK_Invoices_PrototypeRequest">
+      <End Role="PrototypeRequest" EntitySet="PrototypeRequest" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoices_Users_Buyer" Association="ReplictivityModel.Store.FK_Invoices_Users_Buyer">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoices_Users_Seller" Association="ReplictivityModel.Store.FK_Invoices_Users_Seller">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobApplications_BuyerJobs" Association="ReplictivityModel.Store.FK_JobApplications_BuyerJobs">
+      <End Role="BuyerJobs" EntitySet="BuyerJobs" />
+      <End Role="JobApplications" EntitySet="JobApplications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Messages_Users_UserID" Association="ReplictivityModel.Store.FK_Messages_Users_UserID">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Messages" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pictures_Users_CreatedBy" Association="ReplictivityModel.Store.FK_Pictures_Users_CreatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Pictures" EntitySet="Pictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pictures_Users_DeletedBy" Association="ReplictivityModel.Store.FK_Pictures_Users_DeletedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Pictures" EntitySet="Pictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pictures_Users_UpdatedBy" Association="ReplictivityModel.Store.FK_Pictures_Users_UpdatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Pictures" EntitySet="Pictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductFiles_Products" Association="ReplictivityModel.Store.FK_ProductFiles_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductFiles" EntitySet="ProductFiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductPictures_Pictures_PictureId" Association="ReplictivityModel.Store.FK_ProductPictures_Pictures_PictureId">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="ProductPictures" EntitySet="ProductPictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductPictures_Products_ProductId" Association="ReplictivityModel.Store.FK_ProductPictures_Products_ProductId">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductPictures" EntitySet="ProductPictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductReviews_Products_ProductId" Association="ReplictivityModel.Store.FK_ProductReviews_Products_ProductId">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductReviews" EntitySet="ProductReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductReviews_Users_CreatedBy" Association="ReplictivityModel.Store.FK_ProductReviews_Users_CreatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ProductReviews" EntitySet="ProductReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductReviews_Users_DeletedBy" Association="ReplictivityModel.Store.FK_ProductReviews_Users_DeletedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ProductReviews" EntitySet="ProductReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductReviews_Users_UpdatedBy" Association="ReplictivityModel.Store.FK_ProductReviews_Users_UpdatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ProductReviews" EntitySet="ProductReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Categories_CategoryId" Association="ReplictivityModel.Store.FK_Products_Categories_CategoryId">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PrototypeRequest_Shop_ShopId" Association="ReplictivityModel.Store.FK_PrototypeRequest_Shop_ShopId">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="PrototypeRequest" EntitySet="PrototypeRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PrototypeRequest_Users_Buyer" Association="ReplictivityModel.Store.FK_PrototypeRequest_Users_Buyer">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="PrototypeRequest" EntitySet="PrototypeRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PrototypeRequest_Users_Seller" Association="ReplictivityModel.Store.FK_PrototypeRequest_Users_Seller">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="PrototypeRequest" EntitySet="PrototypeRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Report_UserID" Association="ReplictivityModel.Store.FK_Report_UserID">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Reports" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestAttachments_PrototypeRequest_RequestId" Association="ReplictivityModel.Store.FK_RequestAttachments_PrototypeRequest_RequestId">
+      <End Role="PrototypeRequest" EntitySet="PrototypeRequest" />
+      <End Role="RequestAttachments" EntitySet="RequestAttachments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Users_CreatedBy" Association="ReplictivityModel.Store.FK_Shop_Users_CreatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Shop" EntitySet="Shop" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Users_DeletedBy" Association="ReplictivityModel.Store.FK_Shop_Users_DeletedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Shop" EntitySet="Shop" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Users_UpdatedBy" Association="ReplictivityModel.Store.FK_Shop_Users_UpdatedBy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Shop" EntitySet="Shop" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shop_Users_UserId" Association="ReplictivityModel.Store.FK_Shop_Users_UserId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Shop" EntitySet="Shop" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopAvailablity_Shop" Association="ReplictivityModel.Store.FK_ShopAvailablity_Shop">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="ShopAvailablity" EntitySet="ShopAvailablity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopPictures_Shop_ShopId" Association="ReplictivityModel.Store.FK_ShopPictures_Shop_ShopId">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="ShopPictures" EntitySet="ShopPictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopSections_Shop_ShopId" Association="ReplictivityModel.Store.FK_ShopSections_Shop_ShopId">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="ShopSections" EntitySet="ShopSections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopServices_Shop" Association="ReplictivityModel.Store.FK_ShopServices_Shop">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="ShopServices" EntitySet="ShopServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopSignUpCurrentStep_Shop" Association="ReplictivityModel.Store.FK_ShopSignUpCurrentStep_Shop">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="ShopSignUpStepCompleted" EntitySet="ShopSignUpStepCompleted" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TransactionDetail_Users" Association="ReplictivityModel.Store.FK_TransactionDetail_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="TransactionDetail" EntitySet="TransactionDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserLoginHistory_Users_UserId" Association="ReplictivityModel.Store.FK_UserLoginHistory_Users_UserId">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserLoginHistory" EntitySet="UserLoginHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Address_BillingAddressId" Association="ReplictivityModel.Store.FK_Users_Address_BillingAddressId">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Address_ShippingAddressId" Association="ReplictivityModel.Store.FK_Users_Address_ShippingAddressId">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Cities_CityId" Association="ReplictivityModel.Store.FK_Users_Cities_CityId">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Country_CountryId" Association="ReplictivityModel.Store.FK_Users_Country_CountryId">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Pictures_ProfilePicId" Association="ReplictivityModel.Store.FK_Users_Pictures_ProfilePicId">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles_RoleId" Association="ReplictivityModel.Store.FK_Users_Roles_RoleId">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_StateProvince_StateId" Association="ReplictivityModel.Store.FK_Users_StateProvince_StateId">
+      <End Role="StateProvince" EntitySet="StateProvince" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersMessages_Messages_MessageID" Association="ReplictivityModel.Store.FK_UsersMessages_Messages_MessageID">
+      <End Role="Messages" EntitySet="Messages" />
+      <End Role="UsersMessages" EntitySet="UsersMessages" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AccountActivity">
+    <Key>
+      <PropertyRef Name="AccountActivityID" />
+    </Key>
+    <Property Name="AccountActivityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ActivityID" Type="int" Nullable="false" />
+    <Property Name="ActivityType" Type="int" Nullable="false" />
+    <Property Name="ActivityText" Type="varchar" />
+    <Property Name="ActivityLink" Type="varchar" MaxLength="500" />
+    <Property Name="ActivityImage" Type="varchar" MaxLength="500" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CountryId" Type="int" Nullable="false" />
+    <Property Name="StateId" Type="int" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="Address1" Type="varchar(max)" />
+    <Property Name="Address2" Type="varchar(max)" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="20" />
+    <Property Name="PhoneNumber1" Type="varchar" MaxLength="20" />
+    <Property Name="PhoneNumber2" Type="varchar" MaxLength="20" />
+    <Property Name="FaxNumber" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Alerts">
+    <Key>
+      <PropertyRef Name="AlertID" />
+    </Key>
+    <Property Name="AlertID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="AlertForID" Type="int" Nullable="false" />
+    <Property Name="AlertText" Type="varchar" />
+    <Property Name="AlertLink" Type="varchar" MaxLength="2000" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Attachments">
+    <Key>
+      <PropertyRef Name="AttachmentID" />
+    </Key>
+    <Property Name="AttachmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MessageID" Type="int" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="SavedName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="MimeType" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="SizeInBytes" Type="int" Nullable="false" />
+    <Property Name="SizeInKB" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="SizeInMB" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BillingAddress">
+    <Key>
+      <PropertyRef Name="BillingAddressID" />
+    </Key>
+    <Property Name="BillingAddressID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="CountryId" Type="int" Nullable="false" />
+    <Property Name="StateId" Type="int" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="Address" Type="varchar" Nullable="false" MaxLength="1000" />
+    <Property Name="PostCode" Type="int" Nullable="false" />
+    <Property Name="IsPrimary" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BlockedIPAddress">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="IPAddress" Type="varchar" MaxLength="50" />
+    <Property Name="BlockedDescription" Type="varchar" MaxLength="1000" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BuyerJobAttachments">
+    <Key>
+      <PropertyRef Name="AttachmentID" />
+    </Key>
+    <Property Name="AttachmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="JobId" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="SavedName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="MimeType" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="SizeInBytes" Type="int" Nullable="false" />
+    <Property Name="SizeInKb" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="SizeInMb" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BuyerJobs">
+    <Key>
+      <PropertyRef Name="JobID" />
+    </Key>
+    <Property Name="JobID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BuyerID" Type="int" Nullable="false" />
+    <Property Name="JobTitle" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="JobDescription" Type="varchar(max)" Nullable="false" />
+    <Property Name="MinBudget" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="MaxBudget" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="Dimensions" Type="varchar" MaxLength="200" />
+    <Property Name="Material" Type="varchar" MaxLength="200" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="RequestStatus" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="AwardedTo" Type="int" />
+    <Property Name="IsRead" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsFavorite" Type="bit" Nullable="false" />
+    <Property Name="Specialties" Type="varchar" MaxLength="2000" />
+    <Property Name="IsPrivate" Type="bit" Nullable="false" />
+    <Property Name="JobSentTo" Type="int" />
+    <Property Name="IsApplied" Type="bit" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="Requirements" Type="varchar" />
+    <Property Name="IdealStartDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="200" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="Published" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="ParentCategoryId" Type="int" />
+  </EntityType>
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="StateId" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Contest">
+    <Key>
+      <PropertyRef Name="ContestID" />
+    </Key>
+    <Property Name="ContestID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Username" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="2000" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="ContestImage" Type="varchar" MaxLength="100" />
+    <Property Name="TermsAndCondition" Type="varchar(max)" Nullable="false" />
+    <Property Name="Fund" Type="decimal" Scale="2" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="TotalViews" Type="int" />
+    <Property Name="WinnerID" Type="int" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="Votes" Type="int" />
+    <Property Name="Criteria" Type="varchar" />
+    <Property Name="Rules" Type="varchar" />
+    <Property Name="WhyBotherJoining" Type="varchar" />
+    <Property Name="FirstRunnerUp" Type="int" />
+    <Property Name="SecondRunnerUp" Type="int" />
+  </EntityType>
+  <EntityType Name="ContestAttachments">
+    <Key>
+      <PropertyRef Name="AttachmentID" />
+    </Key>
+    <Property Name="AttachmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ContestID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="SavedName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="MimeType" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="SizeInBytes" Type="int" Nullable="false" />
+    <Property Name="SizeInKB" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="SizeInMB" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContestComments">
+    <Key>
+      <PropertyRef Name="ContestCommentID" />
+    </Key>
+    <Property Name="ContestCommentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ContestParticipantID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="varchar(max)" Nullable="false" />
+    <Property Name="Username" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContestParticipant">
+    <Key>
+      <PropertyRef Name="ContestparticipantID" />
+    </Key>
+    <Property Name="ContestparticipantID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ContestID" Type="int" Nullable="false" />
+    <Property Name="ShopID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="Votes" Type="int" />
+  </EntityType>
+  <EntityType Name="ContestParticipantVotes">
+    <Key>
+      <PropertyRef Name="VoteId" />
+    </Key>
+    <Property Name="VoteId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ContestparticipantID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="VoteUP" Type="int" />
+    <Property Name="VoteDown" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContestRequest">
+    <Key>
+      <PropertyRef Name="ContestRequestId" />
+    </Key>
+    <Property Name="ContestRequestId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Synosis" Type="nvarchar(max)" />
+    <Property Name="Criteria" Type="nvarchar(max)" />
+    <Property Name="IsAccepted" Type="bit" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContestVotes">
+    <Key>
+      <PropertyRef Name="VoteId" />
+    </Key>
+    <Property Name="VoteId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ContestID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="VoteUP" Type="int" />
+    <Property Name="VoteDown" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="CountryShortCode" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="DonationTransactions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="ContestID" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="Paykey" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="TransactionID" Type="varchar" MaxLength="100" />
+    <Property Name="Status" Type="varchar" MaxLength="100" />
+    <Property Name="Message" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ErrorMessage" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="ErrorLogID" />
+    </Key>
+    <Property Name="ErrorLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Message" Type="varchar" MaxLength="500" />
+    <Property Name="StackTrace" Type="varchar(max)" />
+    <Property Name="InnerException" Type="varchar(max)" />
+    <Property Name="LoggedInDetails" Type="varchar(max)" />
+    <Property Name="QueryData" Type="varchar(max)" />
+    <Property Name="FormData" Type="varchar(max)" />
+    <Property Name="RouteData" Type="varchar(max)" />
+    <Property Name="LoggedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Favorites">
+    <Key>
+      <PropertyRef Name="FavoriteID" />
+    </Key>
+    <Property Name="FavoriteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ShopId" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ForProduct" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="FeedBackID" />
+    </Key>
+    <Property Name="FeedBackID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="RequestID" Type="bigint" />
+    <Property Name="OrderID" Type="int" />
+    <Property Name="ShopID" Type="int" />
+    <Property Name="FeedBackType" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Review" Type="varchar(max)" Nullable="false" />
+    <Property Name="Rating" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Followers">
+    <Key>
+      <PropertyRef Name="FollowerID" />
+    </Key>
+    <Property Name="FollowerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="FollowedByID" Type="int" Nullable="false" />
+    <Property Name="FollowType" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GlobalCodes">
+    <Key>
+      <PropertyRef Name="GlobalCodeID" />
+    </Key>
+    <Property Name="GlobalCodeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GroupName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Lable" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="HubComments">
+    <Key>
+      <PropertyRef Name="CommentID" />
+    </Key>
+    <Property Name="CommentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="HubID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HubContents">
+    <Key>
+      <PropertyRef Name="HubContentID" />
+    </Key>
+    <Property Name="HubContentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="HubID" Type="int" Nullable="false" />
+    <Property Name="ContentText" Type="varchar(max)" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" MaxLength="300" />
+    <Property Name="SavedName" Type="varchar" MaxLength="300" />
+    <Property Name="Thumbnail" Type="varchar" MaxLength="300" />
+    <Property Name="MimeType" Type="varchar" MaxLength="50" />
+    <Property Name="SizeInBytes" Type="int" />
+    <Property Name="SizeInKB" Type="decimal" Scale="2" />
+    <Property Name="SizeInMB" Type="decimal" Scale="2" />
+  </EntityType>
+  <EntityType Name="Hubs">
+    <Key>
+      <PropertyRef Name="HubID" />
+    </Key>
+    <Property Name="HubID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="HubTopicID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="HubTemplateID" Type="int" Nullable="false" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="2000" />
+    <Property Name="HubURL" Type="varchar" MaxLength="3000" />
+    <Property Name="HubStatus" Type="int" Nullable="false" />
+    <Property Name="HubPicture" Type="varchar" MaxLength="100" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="IsPublished" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="TotalView" Type="int" Nullable="false" />
+    <Property Name="Keywords" Type="varchar" MaxLength="5000" />
+  </EntityType>
+  <EntityType Name="HubTopics">
+    <Key>
+      <PropertyRef Name="HubTopicID" />
+    </Key>
+    <Property Name="HubTopicID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="HubTopic" Type="varchar" Nullable="false" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="InvoiceItems">
+    <Key>
+      <PropertyRef Name="InvoiceItemID" />
+    </Key>
+    <Property Name="InvoiceItemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceID" Type="int" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="100" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="Amount" Type="decimal" Scale="2" />
+  </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="InvoiceID" />
+    </Key>
+    <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RequestID" Type="bigint" Nullable="false" />
+    <Property Name="SellerID" Type="int" />
+    <Property Name="BuyerID" Type="int" />
+    <Property Name="Title" Type="varchar" MaxLength="100" />
+    <Property Name="InvoiceNumber" Type="varchar" MaxLength="100" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="InvoiceAmount" Type="decimal" Scale="2" />
+    <Property Name="TermsAndConditions" Type="varchar(max)" />
+    <Property Name="NoteForBuyer" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="JobApplications">
+    <Key>
+      <PropertyRef Name="JobApplicationID" />
+    </Key>
+    <Property Name="JobApplicationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="JobID" Type="int" Nullable="false" />
+    <Property Name="JobOwnerID" Type="int" Nullable="false" />
+    <Property Name="SellerID" Type="int" Nullable="false" />
+    <Property Name="BidAmount" Type="decimal" Scale="2" />
+    <Property Name="RequestSent" Type="bit" />
+    <Property Name="RequestAccepted" Type="bit" />
+    <Property Name="ShowIn" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="MessageID" />
+    </Key>
+    <Property Name="MessageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Subject" Type="nvarchar(max)" />
+    <Property Name="Body" Type="nvarchar(max)" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="AuthorID" Type="int" Nullable="false" />
+    <Property Name="ReplyMessageID" Type="int" />
+  </EntityType>
+  <EntityType Name="OrderItems">
+    <Key>
+      <PropertyRef Name="OrderItemsID" />
+    </Key>
+    <Property Name="OrderItemsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
+    <Property Name="ShopID" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="UnitPrice" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="UnitShippingPrice" Type="decimal" Scale="2" />
+    <Property Name="UnitShippingAfterFirst" Type="decimal" Scale="2" />
+    <Property Name="TotalShippingPrice" Type="decimal" Scale="2" />
+    <Property Name="IsShippingAvailable" Type="bit" Nullable="false" />
+    <Property Name="IsDownloabale" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ProductTitle" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="NotForShop" Type="varchar" MaxLength="2000" />
+    <Property Name="ItemTotalPrice" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="ItemTotalShippingPrice" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="ShipToCountryId" Type="int" />
+    <Property Name="BillingAddressId" Type="int" Nullable="false" />
+    <Property Name="ShippingAddressId" Type="int" />
+    <Property Name="OrderStatusId" Type="int" Nullable="false" />
+    <Property Name="ShippingStatusId" Type="int" Nullable="false" />
+    <Property Name="DiscountRate" Type="decimal" Scale="2" />
+    <Property Name="AdminCommission" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="TotalAmountToBePaid" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="Tax" Type="decimal" Scale="2" />
+    <Property Name="SellerId" Type="int" Nullable="false" />
+    <Property Name="TrackingID" Type="varchar" MaxLength="100" />
+    <Property Name="IsPercentage" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pictures">
+    <Key>
+      <PropertyRef Name="PictureID" />
+    </Key>
+    <Property Name="PictureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="SavedName" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="Thumbnail" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="MimeType" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="SizeInBytes" Type="int" Nullable="false" />
+    <Property Name="SizeInKB" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="SizeInMB" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductFiles">
+    <Key>
+      <PropertyRef Name="ProductFileID" />
+    </Key>
+    <Property Name="ProductFileID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="SavedName" Type="varchar" Nullable="false" MaxLength="300" />
+    <Property Name="MimeType" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="SizeInBytes" Type="int" Nullable="false" />
+    <Property Name="SizeInKB" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="SizeInMB" Type="decimal" Nullable="false" Scale="2" />
+  </EntityType>
+  <EntityType Name="ProductPictures">
+    <Key>
+      <PropertyRef Name="ProductPictureID" />
+    </Key>
+    <Property Name="ProductPictureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="PictureId" Type="int" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" />
+  </EntityType>
+  <EntityType Name="ProductReviews">
+    <Key>
+      <PropertyRef Name="ProductReviewID" />
+    </Key>
+    <Property Name="ProductReviewID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="Title" Type="varchar" MaxLength="250" />
+    <Property Name="ReviewText" Type="varchar(max)" />
+    <Property Name="Rating" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ShopId" Type="int" Nullable="false" />
+    <Property Name="Manufacturer" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="Condition" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="ShipFromId" Type="int" Nullable="false" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="ShopSectionId" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="Tags" Type="varchar" MaxLength="2000" />
+    <Property Name="Materials" Type="varchar" MaxLength="2000" />
+    <Property Name="PrimaryPicture" Type="varchar" MaxLength="100" />
+    <Property Name="Description" Type="varchar" />
+    <Property Name="UnitPrice" Type="decimal" Scale="2" />
+    <Property Name="LastViewedOn" Type="datetime" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="IsFeatured" Type="bit" />
+    <Property Name="IsDownloadable" Type="bit" Nullable="false" />
+    <Property Name="IsDownloadViaShip" Type="bit" />
+    <Property Name="SendDownloadVia" Type="int" />
+    <Property Name="ProductNumberID" Type="varchar" MaxLength="100" />
+    <Property Name="DownlodableShippingPolicy" Type="varchar" />
+    <Property Name="OtherKeywords" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="ProductTags">
+    <Key>
+      <PropertyRef Name="ProductTagID" />
+    </Key>
+    <Property Name="ProductTagID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TagId" Type="int" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PrototypeRequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RequestTitle" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="Dimensions" Type="varchar" MaxLength="200" />
+    <Property Name="Material" Type="varchar" MaxLength="200" />
+    <Property Name="MinBudget" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="MaxBudget" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="BuyerId" Type="int" />
+    <Property Name="SellerId" Type="int" />
+    <Property Name="ShopId" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="RequestStatus" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsRead" Type="bit" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="Requirements" Type="varchar" />
+    <Property Name="IdealStartDate" Type="datetime" Nullable="false" />
+    <Property Name="NextStep" Type="int" />
+  </EntityType>
+  <EntityType Name="Reports">
+    <Key>
+      <PropertyRef Name="ReportID" />
+    </Key>
+    <Property Name="ReportID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="FirstName" Type="varchar" MaxLength="200" />
+    <Property Name="LastName" Type="varchar" MaxLength="200" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+    <Property Name="EmailID" Type="varchar" MaxLength="200" />
+    <Property Name="ReportType" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Message" Type="varchar(max)" Nullable="false" />
+    <Property Name="IsRead" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="RequestSentFromURL" Type="varchar" Nullable="false" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="RequestAttachments">
+    <Key>
+      <PropertyRef Name="AttachmentID" />
+    </Key>
+    <Property Name="AttachmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RequestId" Type="bigint" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="SavedName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="MimeType" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="SizeInBytes" Type="int" Nullable="false" />
+    <Property Name="SizeInKb" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="SizeInMb" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="IsClientApproved" Type="bit" />
+    <Property Name="IsContractorApproved" Type="bit" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SalesTax">
+    <Key>
+      <PropertyRef Name="SalesTaxID" />
+    </Key>
+    <Property Name="SalesTaxID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ToCountryID" Type="int" Nullable="false" />
+    <Property Name="ToStateID" Type="int" />
+    <Property Name="Tax" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="ShopID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShipingCountries">
+    <Key>
+      <PropertyRef Name="ShipingCountryId" />
+    </Key>
+    <Property Name="ShipingCountryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="ShipsFromId" Type="int" Nullable="false" />
+    <Property Name="ShipsTo" Type="int" />
+    <Property Name="ShopId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Cost" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="CostAfterFirstProduct" Type="decimal" Nullable="false" Scale="2" />
+  </EntityType>
+  <EntityType Name="ShippingAddress">
+    <Key>
+      <PropertyRef Name="ShippingAddressID" />
+    </Key>
+    <Property Name="ShippingAddressID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="25" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="StateID" Type="int" Nullable="false" />
+    <Property Name="CityID" Type="int" Nullable="false" />
+    <Property Name="Address" Type="varchar" Nullable="false" MaxLength="1000" />
+    <Property Name="PostCode" Type="int" Nullable="false" />
+    <Property Name="IsPrimary" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Shop">
+    <Key>
+      <PropertyRef Name="ShopID" />
+    </Key>
+    <Property Name="ShopID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ShopName" Type="varchar" Nullable="false" MaxLength="500" />
+    <Property Name="ShopTitle" Type="varchar" MaxLength="500" />
+    <Property Name="ShopAnnouncement" Type="varchar" MaxLength="200" />
+    <Property Name="MessageForBuyers" Type="varchar" MaxLength="2000" />
+    <Property Name="ShopBanner" Type="varchar" MaxLength="1000" />
+    <Property Name="IsClosed" Type="bit" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="WelcomeMessage" Type="varchar(max)" />
+    <Property Name="PaymentPolicy" Type="varchar(max)" />
+    <Property Name="RefundPolicy" Type="varchar(max)" />
+    <Property Name="SellerInformation" Type="varchar(max)" />
+    <Property Name="AdditionalInformation" Type="varchar(max)" />
+    <Property Name="DeliveryInformation" Type="varchar(max)" />
+    <Property Name="PrinterType" Type="varchar" MaxLength="500" />
+    <Property Name="Dimensions" Type="varchar" MaxLength="500" />
+    <Property Name="Materials" Type="varchar" MaxLength="800" />
+    <Property Name="ShopSpecialties" Type="varchar" MaxLength="200" />
+    <Property Name="ShipToUSOnly" Type="bit" Nullable="false" />
+    <Property Name="TimeZone" Type="varchar" MaxLength="100" />
+    <Property Name="AcceptJob" Type="bit" Nullable="false" />
+    <Property Name="Skills" Type="varchar" MaxLength="1000" />
+    <Property Name="ContactFirstName" Type="varchar" MaxLength="50" />
+    <Property Name="ContactLastName" Type="varchar" MaxLength="50" />
+    <Property Name="ContactEmail" Type="varchar" MaxLength="50" />
+    <Property Name="ContactAddress" Type="varchar" MaxLength="500" />
+    <Property Name="ContactCity" Type="int" Nullable="false" />
+    <Property Name="ContactState" Type="int" Nullable="false" />
+    <Property Name="ContactCountry" Type="int" Nullable="false" />
+    <Property Name="ShopNumberID" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ShopAvailablity">
+    <Key>
+      <PropertyRef Name="ShopAvailablityID" />
+    </Key>
+    <Property Name="ShopAvailablityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ShopID" Type="int" Nullable="false" />
+    <Property Name="RowNum" Type="int" Nullable="false" />
+    <Property Name="ColumnNum" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShopMaterials">
+    <Key>
+      <PropertyRef Name="ShopMaterialID" />
+    </Key>
+    <Property Name="ShopMaterialID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TagId" Type="int" Nullable="false" />
+    <Property Name="ShopId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShopPictures">
+    <Key>
+      <PropertyRef Name="ShopPictureID" />
+    </Key>
+    <Property Name="ShopPictureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ShopId" Type="int" Nullable="false" />
+    <Property Name="PictureId" Type="int" Nullable="false" />
+    <Property Name="DisplayOrder" Type="int" />
+  </EntityType>
+  <EntityType Name="ShopSections">
+    <Key>
+      <PropertyRef Name="ShopSectionID" />
+    </Key>
+    <Property Name="ShopSectionID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ShopId" Type="int" Nullable="false" />
+    <Property Name="SectionName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="DisplayOrder" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShopServices">
+    <Key>
+      <PropertyRef Name="ShopServiceID" />
+    </Key>
+    <Property Name="ShopServiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceID" Type="int" Nullable="false" />
+    <Property Name="ShopID" Type="int" Nullable="false" />
+    <Property Name="ServiceType" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShopSignUpStepCompleted">
+    <Key>
+      <PropertyRef Name="ShopSignUpStepCompletedId" />
+    </Key>
+    <Property Name="ShopSignUpStepCompletedId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ShopId" Type="int" Nullable="false" />
+    <Property Name="StepCompleted" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SiteFees">
+    <Key>
+      <PropertyRef Name="SiteFeeID" />
+    </Key>
+    <Property Name="SiteFeeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SiteFee" Type="decimal" Nullable="false" />
+    <Property Name="IsPercentage" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StateProvince">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="StateName" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="StateShortCode" Type="varchar" MaxLength="20" />
+    <Property Name="PostalCode" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubCategory">
+    <Key>
+      <PropertyRef Name="SubCategoryID" />
+    </Key>
+    <Property Name="SubCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="CategoryID" Type="int" />
+  </EntityType>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="TagID" />
+    </Key>
+    <Property Name="TagID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TagText" Type="varchar(max)" Nullable="false" />
+    <Property Name="TagType" Type="int" />
+  </EntityType>
+  <EntityType Name="TransactionDetail">
+    <Key>
+      <PropertyRef Name="TransactionDetailsID" />
+    </Key>
+    <Property Name="TransactionDetailsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TransactionID" Type="varchar" MaxLength="50" />
+    <Property Name="Message" Type="varchar" MaxLength="200" />
+    <Property Name="ResponseCode" Type="varchar" MaxLength="10" />
+    <Property Name="AuthorizationCode" Type="varchar" MaxLength="50" />
+    <Property Name="CustomerID" Type="varchar" MaxLength="50" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="SubCategoryID" Type="int" />
+  </EntityType>
+  <EntityType Name="UserCart">
+    <Key>
+      <PropertyRef Name="UserCartID" />
+    </Key>
+    <Property Name="UserCartID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="CartData" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserLoginHistory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="LastLoginOn" Type="datetime" />
+    <Property Name="LastLoginIP" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserGUID" Type="uniqueidentifier" />
+    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="EmailId" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="AuthenticatedVia" Type="int" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="100" />
+    <Property Name="Gender" Type="int" Nullable="false" />
+    <Property Name="IsVerified" Type="bit" Nullable="false" />
+    <Property Name="VerifiedOn" Type="datetime" />
+    <Property Name="RegistrationIP" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="IsFeatured" Type="bit" Nullable="false" />
+    <Property Name="NewsLetterEnabled" Type="bit" Nullable="false" />
+    <Property Name="BillingAddressId" Type="int" />
+    <Property Name="ShippingAddressId" Type="int" />
+    <Property Name="PaypalID" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="DeletedOn" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="AuthenticationID" Type="varchar" MaxLength="100" />
+    <Property Name="IsPasswordReset" Type="bit" />
+    <Property Name="InValidLoginAttempt" Type="int" Nullable="false" />
+    <Property Name="AcountBlockedTill" Type="datetime" />
+    <Property Name="IsAccountBlocked" Type="bit" Nullable="false" />
+    <Property Name="AlterateEmailId" Type="varchar" MaxLength="200" />
+    <Property Name="DateofBirth" Type="datetime" />
+    <Property Name="AboutUs" Type="varchar(max)" />
+    <Property Name="ProfilePicId" Type="int" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="StateId" Type="int" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="TotalEarning" Type="decimal" Scale="2" />
+    <Property Name="LastLoginOn" Type="datetime" Nullable="false" />
+    <Property Name="PostalCode" Type="varchar" MaxLength="10" />
+    <Property Name="StreetAddress1" Type="varchar" MaxLength="500" />
+    <Property Name="StreetAddress2" Type="varchar" MaxLength="500" />
+    <Property Name="Industry" Type="varchar" MaxLength="200" />
+    <Property Name="Licence" Type="varchar(max)" />
+    <Property Name="LinkedIn" Type="varchar" MaxLength="200" />
+    <Property Name="Backlinked" Type="bit" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="250" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+    <Property Name="AttachmentID" Type="int" />
+    <Property Name="VerificationCode" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="UserSettings">
+    <Key>
+      <PropertyRef Name="UserSettingID" />
+    </Key>
+    <Property Name="UserSettingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="ShowFullname" Type="bit" Nullable="false" />
+    <Property Name="ShowLocation" Type="bit" Nullable="false" />
+    <Property Name="ShowSkills" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersMessages">
+    <Key>
+      <PropertyRef Name="UsersMessagesID" />
+    </Key>
+    <Property Name="UsersMessagesID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MessageID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="PlaceHolderID" Type="int" Nullable="false" />
+    <Property Name="IsRead" Type="bit" Nullable="false" />
+    <Property Name="IsArchived" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserTags">
+    <Key>
+      <PropertyRef Name="UserTagID" />
+    </Key>
+    <Property Name="UserTagID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TagId" Type="int" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserTransactions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BuyerID" Type="int" Nullable="false" />
+    <Property Name="ShopID" Type="int" Nullable="false" />
+    <Property Name="OrderID" Type="int" />
+    <Property Name="InvoiceID" Type="int" />
+    <Property Name="Paykey" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="TransactionID" Type="varchar" MaxLength="100" />
+    <Property Name="Status" Type="varchar" MaxLength="100" />
+    <Property Name="Message" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="EscrowedOn" Type="datetime" />
+    <Property Name="ReleasedOn" Type="datetime" />
+    <Property Name="RefundStatus" Type="varchar" MaxLength="100" />
+    <Property Name="RefundCorrelationId" Type="varchar" MaxLength="100" />
+    <Property Name="RefundDate" Type="datetime" />
+    <Property Name="ErrorMessage" Type="varchar(max)" />
+  </EntityType>
+  <Association Name="FK__ContestPa__UserI__18B6AB08">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ContestParticipantVotes" Type="ReplictivityModel.Store.ContestParticipantVotes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ContestParticipantVotes">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubCatego__Categ__5BAD9CC8">
+    <End Role="Categories" Type="ReplictivityModel.Store.Categories" Multiplicity="0..1" />
+    <End Role="SubCategory" Type="ReplictivityModel.Store.SubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="SubCategory">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Type__SubCategor__6FB49575">
+    <End Role="SubCategory" Type="ReplictivityModel.Store.SubCategory" Multiplicity="0..1" />
+    <End Role="Type" Type="ReplictivityModel.Store.Type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="SubCategoryID" />
+      </Principal>
+      <Dependent Role="Type">
+        <PropertyRef Name="SubCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__Attachmen__7A3223E8">
+    <End Role="Attachments" Type="ReplictivityModel.Store.Attachments" Multiplicity="0..1" />
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Attachments">
+        <PropertyRef Name="AttachmentID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="AttachmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AccountActivity_Users">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AccountActivity" Type="ReplictivityModel.Store.AccountActivity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="AccountActivity">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Attachments_Messages">
+    <End Role="Messages" Type="ReplictivityModel.Store.Messages" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Attachments" Type="ReplictivityModel.Store.Attachments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Messages">
+        <PropertyRef Name="MessageID" />
+      </Principal>
+      <Dependent Role="Attachments">
+        <PropertyRef Name="MessageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BlockedIPAddress_Users_DeletedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="BlockedIPAddress" Type="ReplictivityModel.Store.BlockedIPAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="BlockedIPAddress">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BlockedIPAddress_Users_UpdatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="BlockedIPAddress" Type="ReplictivityModel.Store.BlockedIPAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="BlockedIPAddress">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BuyerJobAttachments_BuyerJobs">
+    <End Role="BuyerJobs" Type="ReplictivityModel.Store.BuyerJobs" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BuyerJobAttachments" Type="ReplictivityModel.Store.BuyerJobAttachments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BuyerJobs">
+        <PropertyRef Name="JobID" />
+      </Principal>
+      <Dependent Role="BuyerJobAttachments">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BuyerJobs_Users">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BuyerJobs" Type="ReplictivityModel.Store.BuyerJobs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="BuyerJobs">
+        <PropertyRef Name="BuyerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Categories_Users_CreatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Categories" Type="ReplictivityModel.Store.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Categories">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Categories_Users_UpdatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="Categories" Type="ReplictivityModel.Store.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Categories">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContestComments_ContestParticipant">
+    <End Role="ContestParticipant" Type="ReplictivityModel.Store.ContestParticipant" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ContestComments" Type="ReplictivityModel.Store.ContestComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContestParticipant">
+        <PropertyRef Name="ContestparticipantID" />
+      </Principal>
+      <Dependent Role="ContestComments">
+        <PropertyRef Name="ContestParticipantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Favorites_Products">
+    <End Role="Products" Type="ReplictivityModel.Store.Products" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Favorites" Type="ReplictivityModel.Store.Favorites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Favorites">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Favorites_Shop">
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Favorites" Type="ReplictivityModel.Store.Favorites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ShopID" />
+      </Principal>
+      <Dependent Role="Favorites">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Feedback_OrderID">
+    <End Role="Orders" Type="ReplictivityModel.Store.Orders" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Feedback" Type="ReplictivityModel.Store.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Feedback_ProductID">
+    <End Role="Products" Type="ReplictivityModel.Store.Products" Multiplicity="0..1" />
+    <End Role="Feedback" Type="ReplictivityModel.Store.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Feedback_RequestID">
+    <End Role="PrototypeRequest" Type="ReplictivityModel.Store.PrototypeRequest" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Feedback" Type="ReplictivityModel.Store.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PrototypeRequest">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoiceItems_Invoices">
+    <End Role="Invoices" Type="ReplictivityModel.Store.Invoices" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="InvoiceItems" Type="ReplictivityModel.Store.InvoiceItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoices">
+        <PropertyRef Name="InvoiceID" />
+      </Principal>
+      <Dependent Role="InvoiceItems">
+        <PropertyRef Name="InvoiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoices_PrototypeRequest">
+    <End Role="PrototypeRequest" Type="ReplictivityModel.Store.PrototypeRequest" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Invoices" Type="ReplictivityModel.Store.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PrototypeRequest">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoices_Users_Buyer">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ReplictivityModel.Store.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="BuyerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoices_Users_Seller">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="Invoices" Type="ReplictivityModel.Store.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="SellerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobApplications_BuyerJobs">
+    <End Role="BuyerJobs" Type="ReplictivityModel.Store.BuyerJobs" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JobApplications" Type="ReplictivityModel.Store.JobApplications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BuyerJobs">
+        <PropertyRef Name="JobID" />
+      </Principal>
+      <Dependent Role="JobApplications">
+        <PropertyRef Name="JobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Messages_Users_UserID">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Messages" Type="ReplictivityModel.Store.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Messages">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pictures_Users_CreatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Pictures" Type="ReplictivityModel.Store.Pictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Pictures">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pictures_Users_DeletedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="Pictures" Type="ReplictivityModel.Store.Pictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Pictures">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pictures_Users_UpdatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="Pictures" Type="ReplictivityModel.Store.Pictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Pictures">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductFiles_Products">
+    <End Role="Products" Type="ReplictivityModel.Store.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductFiles" Type="ReplictivityModel.Store.ProductFiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductFiles">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductPictures_Pictures_PictureId">
+    <End Role="Pictures" Type="ReplictivityModel.Store.Pictures" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductPictures" Type="ReplictivityModel.Store.ProductPictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="PictureID" />
+      </Principal>
+      <Dependent Role="ProductPictures">
+        <PropertyRef Name="PictureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductPictures_Products_ProductId">
+    <End Role="Products" Type="ReplictivityModel.Store.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductPictures" Type="ReplictivityModel.Store.ProductPictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductPictures">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductReviews_Products_ProductId">
+    <End Role="Products" Type="ReplictivityModel.Store.Products" Multiplicity="0..1" />
+    <End Role="ProductReviews" Type="ReplictivityModel.Store.ProductReviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductReviews">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductReviews_Users_CreatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="ProductReviews" Type="ReplictivityModel.Store.ProductReviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ProductReviews">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductReviews_Users_DeletedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="ProductReviews" Type="ReplictivityModel.Store.ProductReviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ProductReviews">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductReviews_Users_UpdatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="ProductReviews" Type="ReplictivityModel.Store.ProductReviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ProductReviews">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Categories_CategoryId">
+    <End Role="Categories" Type="ReplictivityModel.Store.Categories" Multiplicity="1" />
+    <End Role="Products" Type="ReplictivityModel.Store.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PrototypeRequest_Shop_ShopId">
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PrototypeRequest" Type="ReplictivityModel.Store.PrototypeRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ShopID" />
+      </Principal>
+      <Dependent Role="PrototypeRequest">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PrototypeRequest_Users_Buyer">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="PrototypeRequest" Type="ReplictivityModel.Store.PrototypeRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="PrototypeRequest">
+        <PropertyRef Name="BuyerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PrototypeRequest_Users_Seller">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="PrototypeRequest" Type="ReplictivityModel.Store.PrototypeRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="PrototypeRequest">
+        <PropertyRef Name="SellerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Report_UserID">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Reports" Type="ReplictivityModel.Store.Reports" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Reports">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestAttachments_PrototypeRequest_RequestId">
+    <End Role="PrototypeRequest" Type="ReplictivityModel.Store.PrototypeRequest" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RequestAttachments" Type="ReplictivityModel.Store.RequestAttachments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PrototypeRequest">
+        <PropertyRef Name="RequestID" />
+      </Principal>
+      <Dependent Role="RequestAttachments">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Users_CreatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1" />
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Shop">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Users_DeletedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Shop">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Users_UpdatedBy">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="0..1" />
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Shop">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shop_Users_UserId">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Shop">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopAvailablity_Shop">
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ShopAvailablity" Type="ReplictivityModel.Store.ShopAvailablity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ShopID" />
+      </Principal>
+      <Dependent Role="ShopAvailablity">
+        <PropertyRef Name="ShopID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopPictures_Shop_ShopId">
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ShopPictures" Type="ReplictivityModel.Store.ShopPictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ShopID" />
+      </Principal>
+      <Dependent Role="ShopPictures">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopSections_Shop_ShopId">
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ShopSections" Type="ReplictivityModel.Store.ShopSections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ShopID" />
+      </Principal>
+      <Dependent Role="ShopSections">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopServices_Shop">
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ShopServices" Type="ReplictivityModel.Store.ShopServices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ShopID" />
+      </Principal>
+      <Dependent Role="ShopServices">
+        <PropertyRef Name="ShopID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopSignUpCurrentStep_Shop">
+    <End Role="Shop" Type="ReplictivityModel.Store.Shop" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ShopSignUpStepCompleted" Type="ReplictivityModel.Store.ShopSignUpStepCompleted" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ShopID" />
+      </Principal>
+      <Dependent Role="ShopSignUpStepCompleted">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TransactionDetail_Users">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1" />
+    <End Role="TransactionDetail" Type="ReplictivityModel.Store.TransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="TransactionDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserLoginHistory_Users_UserId">
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserLoginHistory" Type="ReplictivityModel.Store.UserLoginHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserLoginHistory">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Address_BillingAddressId">
+    <End Role="Address" Type="ReplictivityModel.Store.Address" Multiplicity="0..1" />
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="BillingAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Address_ShippingAddressId">
+    <End Role="Address" Type="ReplictivityModel.Store.Address" Multiplicity="0..1" />
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="ShippingAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Cities_CityId">
+    <End Role="Cities" Type="ReplictivityModel.Store.Cities" Multiplicity="0..1" />
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Country_CountryId">
+    <End Role="Country" Type="ReplictivityModel.Store.Country" Multiplicity="0..1" />
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Pictures_ProfilePicId">
+    <End Role="Pictures" Type="ReplictivityModel.Store.Pictures" Multiplicity="0..1" />
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="PictureID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="ProfilePicId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles_RoleId">
+    <End Role="Roles" Type="ReplictivityModel.Store.Roles" Multiplicity="1" />
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_StateProvince_StateId">
+    <End Role="StateProvince" Type="ReplictivityModel.Store.StateProvince" Multiplicity="0..1" />
+    <End Role="Users" Type="ReplictivityModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StateProvince">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersMessages_Messages_MessageID">
+    <End Role="Messages" Type="ReplictivityModel.Store.Messages" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UsersMessages" Type="ReplictivityModel.Store.UsersMessages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Messages">
+        <PropertyRef Name="MessageID" />
+      </Principal>
+      <Dependent Role="UsersMessages">
+        <PropertyRef Name="MessageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="CategoryListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="CategoryListingAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="FeaturedProductsListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="search" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="FeedBackListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="search" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+    <Parameter Name="ShopID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetProductsByShopListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ShopId" Type="int" Mode="In" />
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="ShopSectionId" Type="int" Mode="In" />
+    <Parameter Name="IsDeleted" Type="int" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="GetRequestByRequestId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RequestId" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="GetRequestListingByBuyerOrSellerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BuyerId" Type="int" Mode="In" />
+    <Parameter Name="SellerId" Type="int" Mode="In" />
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="Draft" Type="bit" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="GetShopListingByShopService" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ServiceId" Type="int" Mode="In" />
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="MessagesListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="search" Type="varchar" Mode="In" />
+    <Parameter Name="UserID" Type="int" Mode="In" />
+    <Parameter Name="PlaceHolderID" Type="int" Mode="In" />
+    <Parameter Name="IsRead" Type="bit" Mode="In" />
+    <Parameter Name="IsArchived" Type="bit" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+    <Parameter Name="TotalUnread" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="PastServiceContracts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="Type" Type="varchar" Mode="In" />
+    <Parameter Name="Id" Type="int" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="ProductSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="search" Type="varchar" Mode="In" />
+    <Parameter Name="type" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="ProductsListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="search" Type="varchar" Mode="In" />
+    <Parameter Name="category" Type="varchar" Mode="In" />
+    <Parameter Name="subcate" Type="varchar" Mode="In" />
+    <Parameter Name="type" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="ProductsListingAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="search" Type="varchar" Mode="In" />
+    <Parameter Name="category" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="ServiceContracts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="Type" Type="varchar" Mode="In" />
+    <Parameter Name="Id" Type="int" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="UserListing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageNum" Type="int" Mode="In" />
+    <Parameter Name="PerPageResult" Type="int" Mode="In" />
+    <Parameter Name="UserName" Type="nvarchar" Mode="In" />
+    <Parameter Name="sortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="sortOrder" Type="varchar" Mode="In" />
+    <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+  </Function>
+</Schema>

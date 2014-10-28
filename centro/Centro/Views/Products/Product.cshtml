@@ -1,0 +1,358 @@
+﻿@{
+    ViewBag.Title = "Product";
+    Layout = ViewBag.CentroUsers != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Shop shop = (Shop)ViewBag.Shop;
+    Product product = (Product)ViewBag.Product;
+    User shopOwner = (User)ViewBag.ShopOwner;
+    List<Product> shopProducts = (List<Product>)ViewBag.ShopProducts;
+    List<ProductViewModel> similarProducts = (List<ProductViewModel>)ViewBag.SimilarProducts;
+    string totalEarning = shopOwner.TotalEarning.HasValue ? "$" + shopOwner.TotalEarning.Value : "0";
+    string tags = product.Tags != null ? string.Join(", ", product.Tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) : "";
+    string materials = product.Materials != null ? string.Join(", ", product.Materials.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) : "";
+    string name = (shopOwner.FirstName + " " + shopOwner.LastName.Substring(0, 1));
+    name = name.Length > 10 ? name.Substring(0, 10) : name;
+    string username = shopOwner.UserName.Length > 10 ? shopOwner.UserName.Substring(0, 10) : shopOwner.UserName;
+    Int32 userId = ViewBag.UserId;
+    Category category = ProductsHandler.CategoryByProduct(product.ProductID).Object;
+
+    string product_type = product.IsDownloadViaShip.HasValue && product.IsDownloadViaShip.Value ? "Downloadable" : "Physical";
+
+
+    bool is_fav_shop = (bool)ViewBag.IsShopFavorite;
+    string TotalHub = HubHandler.GetTotalHubOfUser(shopOwner.UserID).Results[0];
+    string TotalContest = ContestHandler.GetTotalContestByUser(shopOwner.UserID).Results[1];
+    int TotalFollowers = AccountActivityHandler.GetUserTotalFollowers(shop.UserId).ID;
+    List<Country> shipTo_countries = SellersHandler.GetShipToCountriesByProductID(product.ProductID).List;
+    //List<Country> shipFrom_countries = SellersHandler.GetShipFromCountriesByProductID(product.ProductID).List;
+    List<string> list_rating_feedback = FeedBackHandler.GetShopTotalFeedBackAndAverageRating(shop.ShopID).Results;
+
+    var services = SellersHandler.ShopServicesByShopId(shop.ShopID).List;
+    string[] servicesArray = services.Where(m => m.IsChecked).Select(m => m.ServiceName).OrderByDescending(m => m.Length).ToArray();
+    string AcceptingJob = shop.AcceptJob && (!string.IsNullOrEmpty(shopOwner.PaypalID)) ? "Yes" : "No";
+    List<User> followers = AccountActivityHandler.GetUserFollowers(shopOwner.UserID).List;
+    string url = Url.Encode(Request.Url.AbsoluteUri);
+
+    SiteUserDetails CentroUsers;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    List<Favorite> favorites = new List<Favorite>();
+    if (auth_cookie != null)
+    {
+        FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+        CentroUsers = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+        favorites = UsersHandler.GetFavoritesByUserId(CentroUsers.LoggedInUser.Id).List;
+    }
+}
+@section title{
+    @product.Title
+}
+<p style="display: none;">@product.Description</p>
+<div class="product-details">
+    <div class="floatLeft w68pc">
+        @Html.Partial("_ShopInfoDetailTop", shopOwner)
+        <div class="product-left mt5 mb10">
+            <div class="white-area">
+                <div class="breadcrumb">
+                    <a href="@Url.Action("Category", "Products", new { id = Utility.SpacesToHifen(category.Name) })">@category.Name</a>
+                    > @product_type
+                    <a href="javascript:void(0)" onclick="SaveReportMessage(event, '@url')" class="underline-none floatRight report">
+                        <img src="@Url.Content("~/Content/images/flag.png")" width="14" class="mb-3 mr10" />Report</a>
+                    <div class="likes floatRight mr10" style="width:141px;">
+                        <div class="addthis_toolbox addthis_default_style addthis_16x16_style" addthis:title="@product.Title" addthis:description="@product.Description">
+                            <a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_linkedin">
+                            </a><a class="addthis_button_pinterest_share"></a><a class="addthis_button_google_plusone_share">
+                            </a><a class="addthis_button_stumbleupon"></a><a class="addthis_button_tumblr"></a>
+                        </div>
+                        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+                    </div>
+                </div>
+                <h3 class="product-title2">
+                    <div class="orange-dark floatLeft">@product_type /</div>
+                    / @product.Title
+                    </h3>
+                <div class="main-image">
+                    @if (product.PrimaryPicture != null)
+                    {
+                        <img id="primary-image" style="height: 440px;" src="@Url.Content("~/Images/ProductImages/" + @shopOwner.UserName + "/" + product.PrimaryPicture)" alt="product image">
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/images/default_product.png")" alt="product image">
+                    }
+                </div>
+                @if (product.ProductImages.Count > 0)
+                {
+                    <div class="images jcarousel-skin-tango" id="productImages">
+                        <ul>
+                            @foreach (Picture pic in product.ProductImages)
+                            {
+                                if (pic.SavedName != null)
+                                {
+                                <li><a href="javascript:;" onclick="ShowProductPicture(this,'@pic.SavedName')">
+                                    <img src="@Url.Content("~/Images/ProductImages/" + @shopOwner.UserName + "/" + pic.SavedName)" alt=""></a></li>
+                                }
+                                else
+                                {
+                                <li><a href="javascript:;">
+                                    <img src="@Url.Content("~/Content/images/product_img1.png")" alt="product image"></a></li>
+                                }
+                            }
+                        </ul>
+                        <div class="divClear">
+                        </div>
+                    </div>
+                }
+                <div class="sections mt20">
+                    <h3>
+                        Product Description</h3>
+                    <div class="add-to-favorite">
+                        @if (favorites.Where(m => m.ProductId == product.ProductID).Any())
+                        {
+                            <a href="javascript:;" onclick="RemoveFromFavorite(this, @product.ProductID, true)" class="" title="Remove from favorites">
+                                <img src="@Url.Content("~/Content/Images/heart1-min.png")" />
+                                <span>Remove from favorites</span></a>
+                        }
+                        else
+                        {
+                            <a href="javascript:;" onclick="AddToFavorite(this, @product.ProductID, true)" class="" title="Add item to favorites">
+                                <img src="@Url.Content("~/Content/Images/heart1-plus.png")" />
+                                <span>Add to favorites</span></a>
+                        }
+                    </div>
+                    <p>
+                        @Html.Raw(product.Description.Replace("\r\n", "<br/>"))
+                    </p>
+                </div>
+                @if (product.ProductShippingDetails.Count > 0)
+                {
+                    <div class="gray-border p20 mt20">
+                        <h4>
+                            Ships from @product.ProductShippingDetails.FirstOrDefault().ShipFromCountryName</h4>
+                        <ul class="shiping heading">
+                            <li>SHIP TO</li>
+                            <li>SHIPPING COST</li>
+                            <li>WITH ANOTHER ITEM</li>
+                        </ul>
+                        @foreach (ProductShippingDetails ship in product.ProductShippingDetails)
+                        {
+                            string shipfrom = ship.ShipToCountryName != null ? ship.ShipToCountryName : "Everywhere Else";
+                            <ul class="shiping">
+                                <li>@shipfrom</li>
+                                <li>$@ship.ShippingCost USD</li>
+                                <li>$@ship.ShippingCostAfterFirst USD</li>
+                            </ul>
+                        }
+                        <div class="divClear">
+                        </div>
+                    </div>
+                }
+                @if (product_type == "Downloadable")
+                {
+                    <div class="gray-border p10 mt20">
+                        <ul class="shipping-downloable">
+                            <h2>
+                                Shipping Details: <span class="orange-dark">Downloadable Products</span></h2>
+                            <li>
+                                @product.DownlodableShippingPolicy
+                            </li>
+                        </ul>
+                        <div class="divClear">
+                        </div>
+                    </div>
+                    <div class="order-circle mt10">
+                        <a href="#" class="order-circle-info">
+                            <img height="78" src="@Url.Content("~/Content/images/order-crc-infoi.png")" alt="" />
+                        </a>Centro currently does not offer downloadable file storage and transfer. All
+                        downloadable products purchased on our platform must be transferred off-site at
+                        a venue agreed upon by both the buyer and seller. Please message and confirm with
+                        the seller before making a purchase...
+                        <br />
+                        <a href="#" class="orange-dark">Got more questions? Go to the Help Center</a></div>
+                }
+            </div>
+            <div class="divClear">
+            </div>
+            @if (similarProducts.Where(m => m.ProductID != product.ProductID).ToList().Count > 0)
+            {
+                <div class="white-area mt20 prod">
+                    <h3 class="gray-border-bottom">
+                        Other Similar Products</h3>
+                    <ul class="images jcarousel-skin-tango" id="mycarousel1">
+                        @foreach (var prod in similarProducts.Where(m => m.ProductID != product.ProductID).ToList())
+                        {
+                            <li><a href="~/Products/@Utility.SpacesToHifen(prod.ShopName)/@shop.ShopID/@prod.CategoryId/@prod.ProductID">
+                                @if (prod.PrimaryPicture != null)
+                                {
+                                    <img height="78" src="@Url.Content("~/Images/ProductImages/" + @prod.ShopOwnerName + "/thumb_" + prod.PrimaryPicture)" alt="" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/images/product_img1.png")" alt="product image">
+                                }
+                                <span>$@prod.UnitPrice</span> </a></li>
+                        }
+                    </ul>
+                    <div class="divClear">
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="floatRight width30">
+        @Html.Partial("_UserProfileRightBox", shopOwner)
+        <aside class="product-right mb10">
+            <a href="@Url.Action("ShopAvailability", "Shops", new { ShopName = Utility.SpacesToHifen(shop.ShopName), ShopID = shop.ShopID })" class="mb10 white-area tabs ">
+                Availability</a>
+            <div class="white-area mb10">
+                <ul>
+                    <li class="price"><strong>$@product.UnitPrice</strong> <span>USD</span>
+                        @if (!product.IsDownloadable)
+                        {
+                            <em class="available">@product.Quantity available</em>
+                        }
+                    </li>
+                </ul>
+                @if (userId != shopOwner.UserID)
+                {
+                    <a href="javascript:;" onclick="addToCart(this,@product.ShopId,@product.ProductID,1)" class="add-to-cart">
+                        Add to cart</a>
+                }
+            </div>
+            <div class="white-area mb10">
+                <h3 class="orange-left-arrow gray-border-bottom">
+                    Shipping Only to</h3>
+                <ul class="mt10">
+                    <li>
+                        @if (shipTo_countries.Count() > 0)
+                        {
+                            int j = 1;
+                            foreach (var item in shipTo_countries)
+                            {
+                            <span>@item.CountryName</span>
+                                if (j < shipTo_countries.Count())
+                                {
+                            <span>,</span>
+                                }
+                                j++;
+                            }
+                        }
+                        else
+                        {
+                            <span>No Shipping Countries Available</span>
+                        }
+                    </li>
+                </ul>
+            </div>
+            <div class="white-area mb10">
+                <h3 class="gray-arrow gray-border-bottom">
+                    <a class="read-more" href="~/Shop/@Utility.SpacesToHifen(shop.ShopName)/@shop.ShopID">@shopOwner.UserName's
+                        shop</a></h3>
+                <div class="paging">
+                    <a href="javascript:void(0)">&nbsp;</a> <a href="javascript:void(0)" class="next">&nbsp;</a>
+                </div>
+                <ul class="images jcarousel-skin-tango" id="mycarousel">
+                    @foreach (var p in shopProducts)
+                    {
+                        <li><a href="~/Products/@Utility.SpacesToHifen(shop.ShopName)/@shop.ShopID/@p.CategoryId/@p.ProductID">
+                            @if (p.PrimaryPicture != null)
+                            {
+                                <img height="78" src="@Url.Content("~/Images/ProductImages/" + shopOwner.UserName + "/thumb_" + p.PrimaryPicture)" alt="" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/Content/images/product_img1.png")" alt="product image">
+                            }
+                            <span>$@p.UnitPrice</span> </a></li>
+                    }
+                </ul>
+                <div class="divClear">
+                </div>
+            </div>
+            @*<div class="white-area mb10 followed-by-top" id="followers">
+                <h3 class="orange-left-arrow gray-border-bottom">@followers.Count() Followers
+                </h3>
+                <ul class="followed-by mt10  jcarousel-skin-tango" id="MyFollowers">
+                    @if (followers.Count() > 0)
+                    {
+                        foreach (var item in followers)
+                        {
+                            string action = item.ShopID > 0 ? Url.Action("Shop", "Shops", new { id = item.ShopName, shopid = item.ShopID }) : "javascript:;";
+                            string title = item.ShopID > 0 ? item.FirstName + " " + item.LastName : item.FirstName + " " + item.LastName + " (No Shop)";
+                        <li class="abc"><a title="@title" href="@action">
+                            @if (item.ProfilePicUrl != null)
+                            {
+                                <img height="50" src="@Url.Content(item.ProfilePicUrl)" alt="" />
+                            }
+                            else
+                            {
+                                <img height="50" src="@Url.Content("~/Content/images/avatar.png")" alt="" />
+                            }
+                        </a></li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="width50">No follower yet.</li>
+                    }
+                </ul>
+                <div class="divClear">
+                </div>
+            </div>*@
+            @{
+                List<string> keywords = tags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList().Concat(materials.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList()).ToList();
+                if (!string.IsNullOrWhiteSpace(product.OtherKeywords))
+                {
+                    keywords.AddRange(product.OtherKeywords.Split(new string[] { "$$" }, StringSplitOptions.RemoveEmptyEntries)[0].Split(','));
+                }
+            }
+            @if (keywords.Count() > 0)
+            {
+                <div class="keywords-outer">
+                    <h2>
+                        Keywords</h2>
+                    @foreach (var item in keywords.Where(m=> !string.IsNullOrWhiteSpace(m)).ToList())
+                    {
+                        <div class="keyword">@item</div>
+                    }
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(shopOwner.Licence))
+            {
+                <div class="orange-area p20 mb10 ac mt10 floatLeft">
+                    @Html.Raw(shopOwner.Licence.Replace("\r\n", "<br/>"))
+                </div>
+            }
+        </aside>
+    </div>
+</div>
+<link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" />
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/system/jquery.jcarousel.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/cart.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/reports.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#mycarousel').jcarousel({
+                scroll: 3,
+                moduleWidth: 85,
+                rows: 2
+            });
+
+            jQuery('#MyFollowers').jcarousel({
+                rows: 1
+            });
+
+            jQuery('#mycarousel1,#productImages').jcarousel({
+                rows: 1
+            });
+
+            $('#star').raty({
+                readOnly: true,
+                score: "@list_rating_feedback[1]"
+            });
+        });
+    </script>
+}

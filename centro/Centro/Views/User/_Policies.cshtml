@@ -1,0 +1,149 @@
+﻿@model Shop
+@{
+    List<ShopServices> service = SellersHandler.ShopServicesByShopId(Model.ShopID).List;
+    string ServiceId = "";
+    if(service!=null && service.Count()>0){
+        ServiceId = string.Join(",", service.Where(m=>m.IsChecked).Select(m => (int)m.ServiceId).ToArray());
+    }
+}
+
+@using (Ajax.BeginForm("ShopPolicy", "User", FormMethod.Post, new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnPolicyComplete" }))
+{
+    @Html.HiddenFor(s => s.ShopID)
+    @Html.HiddenFor(s => s.UserId)
+    @Html.HiddenFor(s => s.ShopName)
+    @Html.HiddenFor(s => s.ShopTitle)
+    @Html.HiddenFor(s => s.ShopAnnouncement)
+    @Html.HiddenFor(s => s.MessageForBuyers)
+    @Html.HiddenFor(s => s.ShopBanner)
+    @Html.HiddenFor(s => s.IsClosed)
+    @Html.HiddenFor(s => s.Dimensions)
+    @Html.HiddenFor(s => s.PrinterType)
+    @Html.HiddenFor(s => s.Materials)
+    @Html.HiddenFor(s => s.ShipToUSOnly)
+
+    @Html.HiddenFor(s => s.ContactAddress)
+    @Html.HiddenFor(s => s.ContactCity)
+    @Html.HiddenFor(s => s.ContactCountry)
+    @Html.HiddenFor(s => s.ContactEmail)
+    @Html.HiddenFor(s => s.ContactFirstName)
+    @Html.HiddenFor(s => s.ContactLastName)
+    @Html.HiddenFor(s => s.ContactState)
+    @Html.Hidden("ServiceId", ServiceId)
+
+    <div class="main-heading">
+        Shop Policies - Responsibilities and Requirements<span class="orng f20"></span>.
+    </div>
+    <div class="box-out">
+        <div class="box-in">
+            <ul class="shop-pol-b1">
+                <li><span> 1. </span> <p><strong> Quality </strong> It is your responsibility to maintain your brand and produce high quality, safe, user-friendly products.</p></li>
+                <li><span> 2. </span> <p><strong> Communication </strong> Keep your customers fully up-to-date after they purchase  a product to get good reviews! </p></li>
+                <li><span> 3. </span> <p><strong> Escrow Payments </strong> The buyer's payment is held in escrow until you ship the product. Once you confirm shipment, the payment will be released and deposited into your account. </p></li>
+                <li><span> 4. </span> <p><strong> Shipping </strong> You must provide the buyer with an active tracking # whenever you ship an item. Else the order will be canceled and the escrowed funds will be refunded back to the buyer. </p></li>
+            </ul>
+        </div>
+        @*<div class="box-in">
+            <dl>
+                <dt class="bold">Welcome Message</dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.WelcomeMessage, new { @style = "width: 400px;overflow: hidden; word-wrap: break-word; resize: horizontal; height: 97px;", @class = "input-box required", @maxlength = 8000 })
+                    @Html.ValidationMessageFor(m => m.WelcomeMessage)
+                    <div class="row pt5 hintTxt">
+                        General information, philosophy, etc.
+                    </div>
+                </dd>
+            </dl>
+        </div>*@
+        <div class="box-in">
+            <dl>
+                <dt class="bold">Product Quality & Guarantee Policy</dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.PaymentPolicy, new { @style = "width: 400px;overflow: hidden; word-wrap: break-word; resize: horizontal; height: 97px;", @class = "input-box required", @maxlength = 8000 })
+                    @Html.ValidationMessageFor(m => m.PaymentPolicy)
+                    <div class="row pt5 hintTxt">
+                        Payment methods, terms, deadlines, taxes, cancellation policy, etc.
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div class="box-in">
+            <dl>
+                <dt class="bold">Refund Policy</dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.RefundPolicy, new { @style = "width: 400px;overflow: hidden; word-wrap: break-word; resize: horizontal; height: 97px;", @class = "input-box required", @maxlength = 8000 })
+                    @Html.ValidationMessageFor(m => m.RefundPolicy)
+                    <div class="row pt5 hintTxt">
+                        Terms, eligible items, damages, losses, etc.
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        @*<div class="box-in">
+            <dl>
+                <dt class="bold">Seller Information</dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.SellerInformation, new { @style = "width: 400px;overflow: hidden; word-wrap: break-word; resize: horizontal; height: 97px;", @class = "input-box required", @maxlength = 8000 })
+                    @Html.ValidationMessageFor(m => m.SellerInformation)
+                    <div class="row pt5 hintTxt">
+                        Some countries require seller information such as your name, physical address, contact
+                        email address and, where applicable, tax identification number. See this FAQ for
+                        more information.
+                    </div>
+                </dd>
+            </dl>
+        </div>*@
+        <div class="box-in">
+            <dl>
+                <dt class="bold">Additional Information</dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.AdditionalInformation, new { @style = "width: 400px;overflow: hidden; word-wrap: break-word; resize: horizontal; height: 97px;", @class = "input-box required", @maxlength = 8000 })
+                    @Html.ValidationMessageFor(m => m.AdditionalInformation)
+                    <div class="row pt5 hintTxt">
+                        Additional policies, FAQs, custom orders, wholesale &amp; consignment, guarantees,
+                        etc.
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        @*<div class="box-in">
+            <dl>
+                <dt class="bold">Delivery Policy </dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.DeliveryInformation, new { @style = "width: 400px;overflow: hidden; word-wrap: break-word; resize: horizontal; height: 97px;", @class = "input-box required", @maxlength = 8000 })
+                    @Html.ValidationMessageFor(m => m.DeliveryInformation)
+                    <div class="row pt5 hintTxt">
+                        Delivery methods, upgrades, deadlines, insurance, confirmation, international customs,
+                        etc.
+                    </div>
+                </dd>
+            </dl>
+        </div>*@
+        @*<div class="box-in">
+        <dl>
+            <dt class="bold">Products Ships to US only </dt>
+            <dd>
+                @Html.CheckBoxFor(m=>m.ShipToUSOnly)
+                <div class="row pt5 hintTxt">
+                    All products will be ship to USA only.
+                </div>
+            </dd>
+        </dl>
+    </div>*@
+    </div>
+    <div class="row text-right">
+        <div class="submit floatRight">
+            <input type="submit" value="Save Changes" class="button1" id="submit" />
+            <button type="button" id="Submit1" onclick="savenNextPolicy();" class="button1-blk">
+                Next</button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+        $('.Policies').parent().parent().find('li').removeClass('active');
+        $('.Policies').parent().addClass('active');
+       
+    });
+</script>

@@ -1,0 +1,68 @@
+﻿@model List<BuyerJob>
+@{
+    var list = (from i in Model
+                group i by new { y = i.CreatedOn.Value.Year, m = i.CreatedOn.Value.Month, d = i.CreatedOn.Value.Day, data = i } into g
+                select new Jobs
+                        {
+                            Date = new GroupByDate { CreatedOn = new DateTime(g.Key.y, g.Key.m, g.Key.d) },
+                            BuyerJobView = g.Key.data
+                        }).ToList();
+    var grp = list.GroupBy(m => m.Date.CreatedOn).Select(m => new { CreatedOn = m.Key, List = m.Select(a => a.BuyerJobView).ToList() }).ToList();
+    var MyJobApplications = SellersHandler.GetMyJobApplicantions((int)ViewBag.LoggedInUserID).List;
+}
+@if (Model.Count() > 0)
+{
+    <h2>@ViewBag.Title</h2>
+    foreach (var items in grp)
+    {
+    <h3 class="white-area mt20 uppercase">@items.CreatedOn.ToLongDateString() </h3>
+    <div class="sections p0 mt20">
+    @foreach (var item in items.List)
+    {
+        string action = string.Empty;
+        if (ViewBag.LoggedInUsername == item.User.UserName) { action = "MyJob"; } else { action = "Job"; }    
+	    <div class="section pos-rel job-@item.JobID">
+		    <img src="/content/images/red-heart.png" alt="" class="pos-abs red-heart" />					
+		    <ul class="heading">
+			    <li><a href="@Url.Action(action, "User", new { id = @item.JobID, @title = Utility.SpacesToHifen(item.JobTitle) })" onclick="ViewJob(this, @item.JobID)">@item.JobTitle</a></li>
+			    <li class="grey">By: @item.User.UserName</li>
+			    <li class="colorOrange">$ @item.MinBudget - $ @item.MaxBudget USD</li>           
+		    </ul>
+		    <p class="job-description">
+			    <strong class="grey pr10">Description:</strong> @item.JobDescription
+		    </p>
+		    <div class="job-footer mt15">
+			    <dl class="floatLeft">
+				    <dt>Specialties:</dt>
+				    <dd class="ml10 colorOrange">@item.Specialties</dd>
+			    </dl>
+                <div class="buttons floatRight">
+                @if (action == "Job")
+                {
+			        <a href="@Url.Action("Compose", "Message", new { id = item.UserName})" class="gray-btn floatLeft mr10">Send Message</a>
+                    if (MyJobApplications.Select(m => m.JobID).ToList().Contains(item.JobID))
+                    {
+                    <a href="javascript:void(0)" onclick="WithdrawApplication(this, @item.JobID)" class="orange-btn floatLeft">Withdraw Application</a>
+                    }
+                    else
+                    {
+			        <a href="javascript:void(0)" onclick="ApplyForJob(this, @item.JobID)" class="orange-btn floatLeft">Apply for job</a>
+                    }
+                }
+                else
+                {
+                    <a href="@Url.Action("CreateJob", "User", new { id = item.JobID })" class="orange-btn floatLeft mr10">Edit </a>
+                    <a href="javascript:void(0)" onclick="DeleteJob(this, @item.JobID)" class="orange-btn floatLeft">Delete</a>
+                }
+                </div>
+			    <div class="divClear"></div>
+		    </div>
+	    </div>
+    }
+    </div>
+    }
+}
+else
+{
+    <div class="sections p0 mt20">No Record Found</div>
+}

@@ -1,0 +1,78 @@
+﻿@model List<InvoiceViewModel>
+@{
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+    SiteUserDetails CentroUsers = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+}
+<div class="row table-listing">
+    @if (Model.Count() > 0)
+    {
+        <table id="table1" class="tablesorter">
+            <tbody>
+                <tr class="tablehead">
+                    <th>Invoice ID
+                    </th>
+                    <th>Request ID
+                    </th>
+                    <th>Title
+                    </th>
+                    <th>
+                        @(Model[0].Seller != null ? "Seller" : "User")
+                    </th>
+                    <th>Created On
+                    </th>
+                    <th>Total Amount
+                    </th>
+                    <th>Status
+                    </th>
+                    <th width="15%">Actions
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr class="trInvoice" id="tr_@item.InvoiceID">
+                        <td>
+                            @item.InvoiceID
+                        </td>
+                        <td>
+                            @item.RequestID
+                        </td>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @(item.Seller != null ? item.Seller : item.Buyer)
+                        </td>
+                        <td>
+                            @item.CreatedOn.ToString()
+                        </td>
+                        <td>$@item.InvoiceAmount USD
+                        </td>
+                        <td>
+                            @if (item.InvoiceStatus == InvoiceStatus.ReleasePayment)
+                            {<span>Payment Released</span> }
+                            else
+                            {@item.InvoiceStatus.ToEnumWordify()}
+                        </td>
+                        <td>
+                            <a class="icons" href="@Url.Action("View", "Invoice", new { id = @item.InvoiceID })">
+                                <img src="@Url.Content("~/Content/Images/cards-icon.png")" title="View Invoice"/></a>
+                            <a class="icons" href="@Url.Action("Compose", "Message", new { id = (item.Seller != null ? item.Seller : item.Buyer) })">
+                                <img src="@Url.Content("~/Content/Images/mail.png")" title="Send Message"/></a>
+                            @if (CentroUsers.LoggedInUser.Id == item.SellerID && item.InvoiceStatus == InvoiceStatus.Pending)
+                            {
+                                <a class="icons" href="javascript:{}" onclick="DeleteInvoice(@item.InvoiceID)">
+                                    <img src="@Url.Content("~/Content/Images/delete.png")" title="Delete Invoice"/></a>
+                            }
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        @Html.Raw("No Invoice Found");
+    }
+</div>

@@ -1,0 +1,70 @@
+﻿@model BusinessLayer.Models.ViewModel.SiteUserDetails
+<div id="header">
+    <div id="head_lt">
+        <!--Logo Start from Here-->
+        <span class="floatleft admin-logo"><a href="@Url.Action("Dashboard", "Home")">
+            <img src="@Url.Content("~/Content/images/logo.png")" alt="" /></a></span><span class="slogan">administration
+                suite</span>
+        <!--Logo end  Here-->
+    </div>
+    <div id="head_rt">
+        Welcome <span>@Model.LoginText</span>&nbsp;&nbsp;|&nbsp;&nbsp; @DateTime.Now.ToShortDateString()</div>
+    <!--15 Apr, 2011 12:46 PM -->
+</div>
+<div class="menubg">
+    <div class="nav">
+        <ul id="navigation">
+            <li onmouseout="this.className=''" onmouseover="this.className='hov'"><a href="@Url.Action("Dashboard", "Home")">
+                Dashboard</a></li>
+            <li onmouseout="this.className=''" onmouseover="this.className='hov'"><a href="@Url.Action("ManageUser", "User")">
+                User Management</a>
+                <div class="sub">
+                    <ul>
+                        <li><a href="@Url.Action("AddEditUser", "User")">Add User</a> </li>
+                    </ul>
+                </div>
+            </li>
+            <li onmouseout="this.className=''" onmouseover="this.className='hov'"><a href="/admin/home/cms">Content Management</a></li>
+            <li onmouseout="this.className=''" onmouseover="this.className='hov'"><a href="#">Catalog
+                Management</a>
+                <div class="sub">
+                    <ul>
+                        <li><a href="@Url.Action("ManageCategories", "Categories")">Manage Categories</a></li>
+                        <li><a href="@Url.Action("SubCategories", "Categories")">Manage Sub-Categories</a></li>
+                        <li><a href="@Url.Action("Types", "Categories")">Manage Types</a></li>
+                        <li><a href="@Url.Action("Category", "Product")">Manage Products</a> </li>
+                    </ul>
+                </div>
+            </li>
+            <li onmouseout="this.className=''" onmouseover="this.className='hov'"><a href="#">Deals</a>
+                <div class="sub">
+                    <ul>
+                        <li><a href="@Url.Action("ManageDeals", "Home")">Manage Deals</a> </li>
+                    </ul>
+                </div>
+            </li>
+            <li onmouseout="this.className=''" onmouseover="this.className='hov'"><a href="#">Orders</a>
+                <div class="sub">
+                    <ul>
+                        <li><a href="@Url.Action("NormalOrders", "Orders")">Manage Orders</a> </li>
+                        @*<li><a href="@Url.Action("CustomRequests", "Orders")">Manage Custom Requests</a>*@
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li onmouseout="this.className=''" onmouseover="this.className='hov'"><a href="@Url.Action("SiteFee", "Home")">
+                Site Fee</a></li>
+            <li onmouseout="this.className=''" onmouseover="this.className='hov'"><a href="#">Admin</a>
+                <div class="sub">
+                    <ul>
+                        <li><a href="@Url.Action("ChangePassword", "Home")">Change Administration Password</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="logout">
+        <a href="@Url.Action("Logout", "Home")">
+            <img src="@Url.Content("~/images/logout.gif")" /></a></div>
+</div>

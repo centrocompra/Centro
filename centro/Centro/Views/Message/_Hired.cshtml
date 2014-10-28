@@ -1,0 +1,121 @@
+﻿@{
+    var Seller = (PagingResult<ServiceContracts_Result>)ViewBag.AsSeller;
+    var Buyer = (PagingResult<ServiceContracts_Result>)ViewBag.AsBuyer;
+}
+<div class="search-msg">
+    <input type="text" placeholder="Search Messages" id="Search" onkeypress="searching(this, event);" />
+    <input type="submit" value="search" onclick="searchMessage(this);" />
+</div>
+<div class="clearIt"></div>
+<br />
+<div class="row pt10">
+    <div class="actv-contrat-main">
+        <div class="actv-contrat-bnr row mb20">
+            <h2>Hired : My Clients</h2>
+            <a href="#" class="floatRight button1">View My Reviews </a>
+            <p>Improve your shop's reputation and earn more money by engaging your clients, keeping your contracts & invoices up to date and providing excemplary, efficient design services. </p>
+        </div>
+        <div class="actv-contrat-tbl mb20">
+            <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                @foreach (var item in Seller.List)
+                {
+                    <tr align="center">
+                        <td>
+                        @if (item.PrimaryPicture != null)
+                        {
+                            <img src="@Url.Content("~/Images/ProfileImage/" + item.Username + "/thumb_" + item.PrimaryPicture)" width="50" alt="">
+                        }
+                        else
+                        {
+                             <img src="@Url.Content("~/Content/images/user.jpg")" width="50" alt="">
+                        } 
+                        </td>
+                        <td align="left">
+                            <h4>@item.Username </h4>
+                            <p>@item.FirstName @item.LastName</p>
+                        </td>
+                        <td>
+                            <h4>@item.CreatedOn.Value.ToShortDateString()</h4>
+                            <p>Date Started</p>
+                        </td>
+                        <td>
+                            <h4>$@item.TotalEarning USD </h4>
+                            <p>Total Amount Earned </p>
+                        </td>
+                        <td>
+                            <h4>@item.TotalInvoices (@item.PendingInvoices Pending) </h4>
+                            <p>Total no. of invoices </p>
+                        </td>
+                        <td>
+                            <a class="icons" title="View Invoices" href="@Url.Action("Invoices", "Message", new { ID = item.RequestID, MessageType = (int)MessagePlaceHolder.Sent })">
+                                <img src="@Url.Content("~/Content/Images/view.gif")"></a>
+
+                            @if (item.RequestStatus == (int)CustomRequestStatus.Accepted || item.RequestStatus == (int)CustomRequestStatus.Working || item.RequestStatus == (int)CustomRequestStatus.OnHold || item.RequestStatus == (int)CustomRequestStatus.WaitingToStart)
+                            {
+                                <a class="icons" title="Edit" href="@Url.Action("MyCustomOrder", "Message", new { id = item.RequestID })">
+                                    <img src="@Url.Content("~/Content/Images/edit.png")"></a> 
+                            }
+                            else
+                            {
+                                <a class="icons" title="View" href="@Url.Action("ViewRequest", "Message", new { id = item.RequestID })">
+                                    <img src="@Url.Content("~/Content/Images/edit.png")"></a> 
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="actv-contrat-bnr row mb20">
+            <h2>Hired : My Contractors</h2>
+            <a href="#" class="floatRight button1">Find New Contractors</a>
+            <p>Keep track on your active contracts,
+                <br>
+                projects and designs.</p>
+        </div>
+        <div class="actv-contrat-tbl">
+            <table width="100%" border="0" cellspacing="0" cellpadding="5">
+                @foreach (var item in Buyer.List)
+                {
+                    <tr align="center">
+                        <td>
+                            <img src="@Url.Content("~/Images/ProfileImage/" + item.Username + "/thumb_" + item.PrimaryPicture)" width="50" alt=""></td>
+                        <td align="left">
+                            <h4>@item.Username </h4>
+                            <p>@item.FirstName @item.LastName</p>
+                        </td>
+                        <td>
+                            <h4>@item.CreatedOn.Value.ToShortDateString()</h4>
+                            <p>Date Started</p>
+                        </td>
+                        <td>
+                            <h4>$@item.TotalEarning USD </h4>
+                            <p>Total Amount Earned </p>
+                        </td>
+                        <td>
+                            <h4>@item.TotalInvoices (@item.PendingInvoices Pending) </h4>
+                            <p>Total no. of invoices </p>
+                        </td>
+                        <td>
+                            <a class="icons" title="View Invoices" href="@Url.Action("Invoices", "Message", new { ID = item.RequestID, MessageType = (int)MessagePlaceHolder.Inbox })">
+                                <img src="@Url.Content("~/Content/Images/view.gif")"></a>
+                            @if (item.RequestStatus == (int)CustomRequestStatus.Accepted || item.RequestStatus == (int)CustomRequestStatus.Working || item.RequestStatus == (int)CustomRequestStatus.OnHold || item.RequestStatus == (int)CustomRequestStatus.WaitingToStart)
+                            {
+                                <a class="icons" title="View" href="@Url.Action("BuyerCustomOrder", "Message", new { id = item.RequestID })">
+                                    <img src="@Url.Content("~/Content/Images/edit.png")"></a> 
+                            }
+                            else
+                            {
+                                <a class="icons" title="View" href="@Url.Action("ViewRequest", "Message", new { id = item.RequestID })">
+                                    <img src="@Url.Content("~/Content/Images/edit.png")"></a> 
+                            }
+                            <a class="icons" title="Leave Feedback" href="javascript:{}" onclick="LeaveFeedBack(@item.RequestID,2,'ByRequest')">
+                                <img src="@Url.Content("~/Content/Images/feedback.png")" width="16"></a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+     <script src="@Url.Content("~/Scripts/System/jquery.raty.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Custom/feedback.js")" type="text/javascript"></script>

@@ -1,0 +1,383 @@
+﻿@model List<ContestParticipantsViewModel>
+@{
+    ViewBag.Title = "Entries";
+    Layout = (int)ViewBag.LoggedInUserId > 0 ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Contest contest = ViewBag.Contest;
+    var daysLeft = Math.Round((contest.EndDate.Date - DateTime.Now.Date).TotalDays) + 1;
+    int LoggedInUserId = (int)ViewBag.LoggedInUserId;
+    string lessDesc = contest.Description.Length > 200 ? contest.Description.Substring(0, 200) : contest.Description;
+    string lessTC = contest.TermsAndCondition.Length > 200 ? contest.TermsAndCondition.Substring(0, 200) : contest.TermsAndCondition;
+    string url = Url.Encode(Request.Url.AbsoluteUri);
+
+    Shop shop = SellersHandler.ShopByUserId(contest.UserID).Object;
+}
+@section title{
+ Contest Entries
+}
+<div class="page-center product-details entries-contest">
+    <div class="white-area">
+        <div class="product-left black ffamily-Arial">
+            <div class="breadcrums mt-10 mb10">
+                <a href="@Url.Action("ViewContest", "Contest")">Contests</a> > @contest.Title
+                <a href="javascript:void(0)" onclick="SaveReportMessage(event, '@url')" class="underline-none floatRight report">
+                    <img src="@Url.Content("~/Content/images/flag.png")" width="14" class="mb-3 mr10" />Report</a>
+                <div class="likes floatRight mr10">
+                    <div class="addthis_toolbox addthis_default_style addthis_16x16_style" addthis:title="@contest.Title" addthis:description="via &#064; Centro">
+                        <a class="addthis_button_facebook"></a><a class="addthis_button_twitter"></a><a class="addthis_button_linkedin">
+                        </a><a class="addthis_button_pinterest_share"></a><a class="addthis_button_google_plusone_share">
+                        </a><a class="addthis_button_stumbleupon"></a><a class="addthis_button_tumblr"></a>
+                    </div>
+                    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+                </div>
+                <div class="floatRight pr10">
+                </div>
+            </div>
+            <div class="sections">
+                <h3 class="breakword row">
+                    <span class="row">
+                        @contest.Title
+                        @*@if (contest.UserID != ViewBag.LoggedInUserId)
+                        {
+                            <a href="javascript:void(0);" onclick="VoteUp(this, @contest.ContestID);" class="ml10" title="Like this contest"><img src="@Url.Content("~/Content/images/like.png")" width="15" /></a>
+                        }*@ </span>@*<span class="grey f12 row black">By: <strong class="colorOrange">@contest.Username</strong></span>*@
+                </h3>
+                <p id="lessDesc" class="pb5 row black">
+                    <strong>Synopsis: &nbsp;</strong>@Html.Raw(lessDesc.Replace("\r\n", "<br/>"))
+                    @if (contest.Description.Length > 200)
+                    {
+                        <a class="mt10" href="javascript:;" onclick="$('#fullDesc').removeClass('hide');$('#lessDesc').addClass('hide')">
+                            See More</a>
+                    }
+                </p>
+                <p id="fullDesc" class="hide pb5 row black"><strong>Synopsis: &nbsp;</strong>@Html.Raw(contest.Description.Replace("\r\n", "<br/>"))
+                    <a class="mt10" href="javascript:;" onclick="$('#lessDesc').removeClass('hide');$('#fullDesc').addClass('hide')">
+                        View Less</a>
+                </p>
+                <h4 class="f14 black mt10 row">
+                    <b class="mr5">Started: <span class="">@contest.StartDate.ToLongDateString()</span></b>
+                    <b class="ml20">End <span class="">@contest.EndDate.ToLongDateString()</span></b>
+                </h4>
+            </div>
+            <div class="sections tabs mt20 w100pc">
+                <ul class="tabs-head">
+                    @if (contest.WinnerID.HasValue && contest.WinnerID.Value > 0)
+                    {
+                        <li class="active"><a href="javascript:void(0)">WINNER</a></li>
+                    }
+                    else
+                    {
+                        <li class="active"><a href="javascript:void(0)">VIEW ENTRIES</a></li>
+                    }
+                    @*<li><a href="javascript:void(0)">HOW IT WORKS</a></li>*@
+                </ul>
+                <div class="divClear">
+                </div>
+                @if (contest.WinnerID.HasValue && contest.WinnerID.Value > 0)
+                {
+                    var winner = Model.Where(m => m.ContestParticipant.UserID == contest.WinnerID.Value).FirstOrDefault();
+                    var first = contest.FirstRunnerUp.HasValue ? Model.Where(m => m.ContestParticipant.UserID == contest.FirstRunnerUp.Value).FirstOrDefault() : null;
+                    var second = contest.SecondRunnerUp.HasValue ? Model.Where(m => m.ContestParticipant.UserID == contest.SecondRunnerUp.Value).FirstOrDefault() : null;
+                    //List<string> list_rating_feedback = FeedBackHandler.GetShopTotalFeedBackAndAverageRating(winner.ShopID).Results;
+                    <div class="tabs-body dark-gray-border">
+                        @foreach (var item in Model)
+                        {
+                            List<string> list_rating_feedback_in = FeedBackHandler.GetShopTotalFeedBackAndAverageRating(item.ShopID).Results;
+                            var votedParticipants = ContestHandler.MyVotedContestParticipants(LoggedInUserId).List;
+                            string borderCls = votedParticipants.Where(m => m.ContestparticipantID == item.ContestParticipant.ContestparticipantID).Any() ? "yellow-border" : "gray-border";
+@*<div class="items @borderCls @(winner.ShopID == item.ShopID ? "winner" : "")">*@
+                            <div class="items gray-border">
+                                @*@if (winner.ShopID == item.ShopID)
+                                {<h3 class="orange-bg"> Winner </h3>}*@
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#star_in_@item.ShopID').raty({
+                                            readOnly: true,
+                                            score: "@list_rating_feedback_in[1]"
+                                        });
+                                    });
+                                </script>
+                                <div class="image p10">
+                                    <a href="@Url.Action("Entry", "Contest", new { id = item.ContestParticipant.ContestparticipantID })">
+                                        <img class="floatLeft" src="/Images/ProductImages/@item.Username/thumb_@item.ProductImage" alt=""></a>
+                                </div>
+                                <div class="p10 orangeBackground posted-by prod-cont-cust">
+                                    <a href="@Url.Action("Entry", "Contest", new { id = item.ContestParticipant.ContestparticipantID })" class="gray mb5">@item.ProductTitle</a>
+                                    <span class="gray">by @item.Username</span> @*<span class="floatRight"><img src="images/f-share.jpg" alt=""></span>*@
+                                    @if (winner.UserID == item.UserID)
+                                    {
+                                        <span class="floatRight winner-place">1st Place </span>
+                                    }
+                                    else if (first != null && first.UserID == item.UserID)
+                                    {
+                                        <span class="floatRight winner-place">2nd Place </span>
+                                    }
+                                    else if (second != null && second.UserID == item.UserID)
+                                    {
+                                        <span class="floatRight winner-place">3rd Place </span>
+                                    }
+                                    <br />
+                                    <div class="floatLeft mt5">
+                                        @*(@list_rating_feedback[0])*@<div id="star_in_@item.ShopID" class="floatRight">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vote-here textCenter">
+                                    @if (LoggedInUserId != item.ContestParticipant.UserID && LoggedInUserId > 0)
+                                    {
+                                        <a href="javascript:;" onclick="VoteUpParticipant(this, @item.ContestParticipant.ContestparticipantID, @item.ContestParticipant.ContestID)" class="vote floatLeft">
+                                            <img src="@Url.Content("~/Content/images/like.png")" class="floatLeft" width="20" />
+                                            <strong class="floatLeft ml10 mt2">@Html.Raw(item.VoteUp.HasValue ? item.VoteUp.Value : 0)
+                                            </strong></a>
+                                        <a href="javascript:;" onclick="VoteDownParticipant(this, @item.ContestParticipant.ContestparticipantID, @item.ContestParticipant.ContestID)" class="vote floatLeft">
+                                            <img src="@Url.Content("~/Content/images/dislike.png")" class="floatLeft" width="20" />
+                                            <strong class="floatLeft ml10 mt2">@Html.Raw(item.VoteDown.HasValue ? item.VoteDown.Value : 0)
+                                            </strong></a>
+                                    }
+                                    else if (LoggedInUserId > 0)
+                                    {
+                                        <a href="javascript:;" class="mine">Mine</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="javascript:;" class="vote floatLeft">
+                                            <img src="@Url.Content("~/Content/images/like.png")" class="floatLeft" width="20" />
+                                            <strong class="floatLeft ml10 mt2">1 </strong></a>
+                                        <a href="javascript:;" class="vote floatLeft">
+                                            <img src="@Url.Content("~/Content/images/dislike.png")" class="floatLeft" width="20" />
+                                            <strong class="floatLeft ml10 mt2">1 </strong></a>
+                                    }
+                                    @if (item.ContestParticipant.Votes.HasValue)
+                                    {
+                                        if (item.ContestParticipant.Votes > 1)
+                                        {
+                                        <span class="votes">
+                                            <img src="@Url.Content("~/Content/images/heart1.png")" class="" />
+                                            <strong>@item.ContestParticipant.Votes.Value</strong></span>    
+                                        }
+                                        else
+                                        {
+                                        <span class="votes">
+                                            <img src="@Url.Content("~/Content/images/heart1.png")" class="" />
+                                            <strong>@item.ContestParticipant.Votes.Value</strong></span>    
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="votes">
+                                            <img src="@Url.Content("~/Content/images/heart1.png")" class="" />
+                                            <strong>0</strong></span>    
+                                    }
+                                </div>
+                            </div>
+					
+                        }<div class="divClear">
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    if (Model.Count() > 0)
+                    {
+                    <div class="tabs-body dark-gray-border">
+                        @foreach (var item in Model)
+                        {
+                            List<string> list_rating_feedback1 = FeedBackHandler.GetShopTotalFeedBackAndAverageRating(item.ShopID).Results;
+                            
+                            <div class="items gray-border">
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#star_@item.ShopID').raty({
+                                            readOnly: true,
+                                            score: "@list_rating_feedback1[1]"
+                                        });
+                                    });
+                                </script>
+                                <div class="image p10">
+                                    <a href="@Url.Action("Entry", "Contest", new { id = item.ContestParticipant.ContestparticipantID })">
+                                        <img class="floatLeft" src="/Images/ProductImages/@item.Username/thumb_@item.ProductImage" alt=""></a>
+                                </div>
+                                <div class="p10 orangeBackground posted-by prod-cont-cust">
+                                    <a href="@Url.Action("Entry", "Contest", new { id = item.ContestParticipant.ContestparticipantID })" class="gray mb5">@item.ProductTitle</a>
+                                    <span class="gray">by @item.Username</span> @*<span class="floatRight"><img src="images/f-share.jpg" alt=""></span>*@
+                                    <br />
+                                    <div class="floatLeft mt5">
+                                        @*(@list_rating_feedback[0])*@<div id="star_@item.ShopID" class="floatRight">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vote-here textCenter">
+                                    @if (LoggedInUserId != item.ContestParticipant.UserID && LoggedInUserId > 0)
+                                    {
+                                        <a href="javascript:;" onclick="VoteUpParticipant(this, @item.ContestParticipant.ContestparticipantID, @item.ContestParticipant.ContestID)" class="vote floatLeft">
+                                            <img src="@Url.Content("~/Content/images/like.png")" class="floatLeft" width="20" />
+                                            <strong class="floatLeft ml10 mt2">@Html.Raw(item.VoteUp.HasValue ? item.VoteUp.Value : 0)
+                                            </strong></a>
+                                        <a href="javascript:;" onclick="VoteDownParticipant(this, @item.ContestParticipant.ContestparticipantID, @item.ContestParticipant.ContestID)" class="vote floatLeft">
+                                            <img src="@Url.Content("~/Content/images/dislike.png")" class="floatLeft" width="20" />
+                                            <strong class="floatLeft ml10 mt2">@Html.Raw(item.VoteDown.HasValue ? item.VoteDown.Value : 0)
+                                            </strong></a>
+                                    }
+                                    else if (LoggedInUserId > 0)
+                                    {
+                                        <a href="javascript:;" class="mine">Mine</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="javascript:;" class="vote floatLeft">
+                                            <img src="@Url.Content("~/Content/images/like.png")" class="floatLeft" width="20" />
+                                            <strong class="floatLeft ml10 mt2">1 </strong></a>
+                                        <a href="javascript:;" class="vote floatLeft">
+                                            <img src="@Url.Content("~/Content/images/dislike.png")" class="floatLeft" width="20" />
+                                            <strong class="floatLeft ml10 mt2">1 </strong></a>
+                                    }
+                                    @if (item.ContestParticipant.Votes.HasValue)
+                                    {
+                                        if (item.ContestParticipant.Votes > 1)
+                                        {
+                                        <span class="votes">
+                                            <img src="@Url.Content("~/Content/images/heart1.png")" class="" />
+                                            <strong>@item.ContestParticipant.Votes.Value</strong></span>    
+                                        }
+                                        else
+                                        {
+                                        <span class="votes">
+                                            <img src="@Url.Content("~/Content/images/heart1.png")" class="" />
+                                            <strong>@item.ContestParticipant.Votes.Value</strong></span>    
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="votes">
+                                            <img src="@Url.Content("~/Content/images/heart1.png")" class="" />
+                                            <strong>0</strong></span>    
+                                    }
+                                </div>
+                            </div>
+					
+                        }<div class="divClear">
+                        </div>
+                    </div>
+                    }
+                    else
+                    {
+                    <div style="padding: 10px; border: 1px solid #D0D0D0;">
+                        No entry found for this contest.</div>
+                    }
+                }
+            </div>
+            <div class="divClear">
+            </div>
+        </div>
+        <aside class="product-right contest-entries">
+            <div class="fund-contest">
+                @*<a href="javascript:void(0)" onclick="Donate(this, 'fund')" class="orange-button add-to-cart">Fund Contest +</a>
+                <div class="fund">
+                    <div class="first">Amount: </div><div class="second"><input type="text" name="Amount" id="Amount" /> <br />
+                        <span class="field-validation-error" generated="true"></span></div>
+                        <div class="last"><input type="button" class="button1" value="Donate" onclick="MakeDonation(this, @contest.ContestID)" />                     
+                    </div>
+                </div>*@
+                @if ((bool)ViewBag.HasShop && ViewBag.LoggedInUser != null && ViewBag.LoggedInUser.Id != contest.UserID && contest.EndDate >= DateTime.Now)
+                {
+                    <a  href="@Url.Action("Participate", "Contest", new { id = @contest.ContestID })" class="button1 atcrt1 m0">+ Enter Contest</a>
+                    <a  href="javascript:;" class="button1-blk atcrt2 m0" onclick="Follow(@(shop != null ? shop.ShopID : 0))">Follow/Favorite</a>                }
+                <ul class="list floatLeft mt10">
+                    @if (Model.Count() > 1)
+                    {
+                        <li><strong>@Model.Count()</strong>entries</li>
+                    }
+                    else
+                    {
+                        <li><strong>@Model.Count()</strong>entry</li>
+                    }
+                    @if (daysLeft > 1)
+                    {
+                        <li><strong>@daysLeft</strong> days left</li>
+                    }
+                    else if (daysLeft == 1)
+                    {
+                        <li><strong>@daysLeft</strong> day left</li>
+                    }
+                    else
+                    {
+                        <li><strong>0</strong> day left</li>                    
+                    }
+                    <li class="blk"><strong>@Html.Raw(contest.Votes.HasValue ? contest.Votes.Value : 0)</strong>Votes</li>
+                    @*<li class="blk"><strong>$@Html.Raw(contest.Fund.HasValue ? contest.Fund : 0)</strong>Raised</li>*@
+                </ul>
+                <div class="divClear"></div>
+            </div>
+            
+            <div class="orange-area mt10 noline ffamily-Arial bg-white">
+                <h4 class="textCenter bg-black rad3 wht p5 mb10"> <strong>Challenge Critera </strong> </h4>
+                    <div class="challengeCri"> 
+                        <ul>
+                        @if (!string.IsNullOrEmpty(contest.Criteria))
+                        {
+                            foreach (var item in contest.Criteria.Split(new string[] { "$$$" }, StringSplitOptions.RemoveEmptyEntries))
+                            {
+                            <li class="row"> <span> &nbsp;</span> @item</li>
+                            }
+                        }
+                        </ul>
+                    
+                    </div>
+
+                <h4 class="textCenter bg-black rad3 wht p5">Voting Rules </h4>
+                    
+                @*<p class="pt10 f15 black"> <strong>You have 4 vote. Use them wisely </strong> </p>*@
+                <div class="entries-ryt-rules">
+                    @*<table width="100%" cellpadding="10" border="0">
+                        <tbody>
+                            <tr>
+                                <td width="25%" align="center"> <img src="@Url.Content("~/Content/images/like.png")" /> </td>
+                                <td> Thumbs Up = 1 Vote </td>
+                            </tr>
+                            <tr>
+                                <td align="center"> <img src="@Url.Content("~/Content/images/dislike.png")" /> </td>
+                                <td> Thumbs Down = 1 Vote </td>
+                            </tr>
+                            <tr>
+                                <td align="center"> <img src="@Url.Content("~/Content/images/heart1.png")" /> </td>
+                                <td> Total Love = <br />Thumbs Up - Thumbs Down </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> ***Winners will have a product of thier choice featured on the front page and will have their product retweeted @Html.Raw("@") Centro. We want to show the world how awesome you are!</td>
+                            </tr>
+                        </tbody>
+                    </table>*@
+                    <p class="pt10">
+                        Support your fellow entrepreneurs and give
+                        your favorite entries a thumbs up! If you
+                        find any entries that are violating the
+                        contest rules, please give it a thumbs down
+                        and report it to Centro.
+                    </p>
+                    <h4 class="textCenter bg-black rad3 wht p5 mb10"> <strong>Why Bother Competiting?. </strong> </h4>
+                    <p> @contest.WhyBotherJoining</p>
+                </div>
+               @* <p id="lessTC">@Html.Raw(lessTC.Replace("\r\n", "<br/>"))
+                    @if (contest.TermsAndCondition.Length > 200)
+                    {
+                        <a class="read-more" href="javascript:void(0);" onclick="$('#fullTC').removeClass('hide');$('#lessTC').addClass('hide')">See More</a>
+                    }
+                </p>
+                <p id="fullTC" class="hide">@Html.Raw(contest.TermsAndCondition.Replace("\r\n", "<br/>"))
+                    <a class="read-more" href="javascript:void(0);" onclick="$('#lessTC').removeClass('hide');$('#fullTC').addClass('hide')">View Less</a>
+                </p>
+                <h4>How It Works : Contests</h4>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                <h4>Important Note</h4>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>*@
+            </div>
+        </aside>
+        <div class="divClear">
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/Custom/contestParticitae.js")" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/custom/reports.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>

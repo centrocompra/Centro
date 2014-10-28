@@ -1,0 +1,49 @@
+﻿@model PagingResult<GetRequestListingByBuyerOrSellerID_Result>
+@{
+    ViewBag.Title = "ManageRequests";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+ Manage Requests
+}
+<div class="white-area-inner custom-request">
+    @Html.Partial("_BuyerLeftSideMenu")
+    <div class="profile-right-bar primary">
+        <h3 class="main-heading">
+            Custom Product Requests</h3>
+        <div class="tabs-outer">
+            <ul class="tabs">
+                @if (ViewBag.MyRequest)
+                {
+                    <li class="active">@Ajax.ActionLink("Request Received", "_RequestRecieved", "Shops", new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                    <li>@Ajax.ActionLink("Request Sent", "_RequestSent", "Shops", new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                }
+                else
+                {
+                    <li class="active">@Ajax.ActionLink("Request Sent", "_RequestSent", "Shops", new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                }
+                <li>@Ajax.ActionLink("Draft Request", "_RequestSent", "Shops", new { draft = true }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+            </ul>
+        </div>
+        <div id="Result">
+            @if (ViewBag.MyRequest)
+            {
+                @Html.Partial("_RequestRecieved", Model)
+            }
+            else
+            { 
+                @Html.Partial("_RequestSent", Model)
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var buyerValue = '@ViewBag.Buyer';
+    var draftValue = '@ViewBag.Draft';
+</script>
+<script src="@Url.Content("~/Scripts/Custom/RequestPaging.js")" type="text/javascript"></script>

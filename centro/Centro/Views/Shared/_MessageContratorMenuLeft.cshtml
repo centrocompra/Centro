@@ -1,0 +1,25 @@
+﻿@{
+    SiteUserDetails CentroUsers;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+    CentroUsers = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+
+    Shop shop = SellersHandler.ShopByUserId(CentroUsers.LoggedInUser.Id).Object;
+}
+
+
+<div class="box2">
+    <div class="sections bor-bot">
+    <a href="/User/CreateJob" class="button-orng floatLeft">Post a Job Listing</a> 
+	    <ul class="links pt10 custom-requests">
+		    <li><a href="@Url.Action("Recruit","User")""><span>&raquo;</span> Recruit: Leads & Advertising</a></li>
+            <li><a href="@Url.Action("MyContracts", "User")""><span>&raquo;</span> Active Contracts</a></li>
+		    <li><a href="@Url.Action("Index", "Message")"><span>&raquo;</span> Messages</a></li>
+        @if (shop != null)
+        {
+            <li><a href="@Url.Action("ShopFeedBack", "FeedBack", new { ShopName = Utility.SpacesToHifen(shop.ShopName), ShopId = shop.ShopID })"><span>&raquo;</span> Reviews/Feedbacks</a></li>
+        }
+		    @*<li><a href="@Url.Action("Profile", "User")"><span>&raquo;</span> My Profiles</a></li>*@
+	    </ul>
+    </div>
+</div>

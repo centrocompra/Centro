@@ -1,0 +1,129 @@
+﻿@model InvoiceViewModel
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+ Invoice Details
+}
+@{
+    User seller = Model.SellerID.HasValue ? UsersHandler.GetUserByID(Model.SellerID.Value).Object : null;
+    User buyer = Model.BuyerID.HasValue ? UsersHandler.GetUserByID(Model.BuyerID.Value).Object : null;
+    string css = "odd";
+    UserDetails LoggedInUser = (UserDetails)ViewBag.LoggedInUser;
+    string backUrl = "";
+    if(((string)ViewBag.Type).ToLower() =="b"){
+        backUrl = Url.Action("BuyerCustomOrder", "Message", new { id = Model.RequestID, from = "MyContracts" });
+    }else{
+        backUrl = Url.Action("MyCustomOrder", "Message", new { id = Model.RequestID, from = "MyContracts" });
+    }
+}
+
+<div class="page-center">
+   <aside class="floatLeft left-side">
+       @*@Html.Partial("_LeftMenu") <br />*@
+       @Html.Partial("_MessageContratorMenuLeft")
+    </aside>
+    <div class="right-side floatRight message">
+        <div class="box">
+            <div class="box-inner pb20">
+                <div class="breadcrums"><a href="@Url.Action("Jobs","User")">Jobs</a> > <a href="@Url.Action("MyContracts", "User")">Manage My Team</a> > 
+                    <a href="@backUrl">Contract</a> > Invoice # @Model.InvoiceID</div>
+
+            <div class="box-inner pb20">
+                <div class="row invoices" id="Result">
+                    <h3 class="main-heading"> Invoice Details </h3>
+
+                    <div class="col1 mr10">
+                    <h4>Client: "Buyer"</h4>
+                    @if (buyer != null)
+                    {
+                    <p><strong>Name: </strong> @buyer.FirstName @buyer.LastName <br>
+                    <strong>Username: </strong> @buyer.UserName <br>
+                    <strong>Email: </strong> @buyer.EmailId <br>
+                    <strong>Location: </strong> @buyer.UserLocation<br></p>
+                    }
+                    else
+                    {
+                        <p>User Deleted</p>
+                    }
+                </div>
+                <div class="col1 mr10">
+                    <h4>Contractor: "Seller"</h4>
+                    @if (seller != null)
+                    {
+                    <p><strong>Name: </strong> @seller.FirstName @seller.LastName <br>
+                    <strong>Username: </strong> @seller.UserName <br>
+                    <strong>Email: </strong> @seller.EmailId <br>
+                    <strong>Location: </strong> @seller.UserLocation<br></p>
+                    }
+                    else
+                    {
+                        <p>User Deleted</p>
+                    }
+                </div>
+                <div class="col1">                    
+                    <p><strong>Invoice #: </strong> @Model.InvoiceID <br>
+                    <strong>Date Posted: </strong> @DateTime.Now.ToShortDateString() <br>
+                    <strong>Invoice Total Amount: </strong> $@Model.InvoiceAmount USD <br>
+                    </p>
+                </div>
+        <div class="row table-listing mt15">
+            <table id="table1" class="tablesorter">
+            <tbody>
+                <tr class="tablehead">
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price </th>
+                </tr>
+            @foreach (var item in @Model.InvoiceViewItems)
+            {
+                if (css == "odd") { css = "even"; }
+                else { css = "odd"; }
+                <tr class="@css">
+                    <td>@item.Title </td>
+                    <td> @item.Description </td>
+                    <td> $@item.Amount USD</td>
+                </tr>
+            }
+            </tbody>
+            </table>
+        </div>                
+   
+    @if (Model.NoteForBuyer != null)
+    { 
+        <div class="row nots-for-buyer w48pc floatLeft mr10 mt20" >
+            <h4>Notes for Buyer:</h4>
+            <p style="word-wrap: break-word;">@Html.Raw(Model.NoteForBuyer.Replace("\r\n", "<br/>"))</p>
+        </div>
+    }
+    @if (Model.TermsAndCondition != null)
+    {
+        <div class="row nots-for-buyer w48pc floatLeft mt20">
+            <h4>Terms and Conditions:</h4>
+            <p style="word-wrap: break-word;">@Html.Raw(Model.TermsAndCondition.Replace("\r\n", "<br/>"))</p>
+        </div>
+    }
+    @{
+        SiteFee fee = Config.SiteFee;
+        decimal sum = Model.InvoiceViewItems.Sum(m => m.Amount.Value);
+    }
+    <div class="botline floatLeft w100pc mt20 mb20"></div>
+        <div class="col2">
+            <h4>Payment Breakdown</h4>
+            <p class="ml20"><span class="floatLeft  ar">$@Math.Round(sum, 2) USD</span>Total Paid to Contractor:</p>
+            <p class="ml20"><span class="pl5 floatLeft  ar">$
+            @(fee.IsPercentage?Math.Round((sum * (fee.SiteFee1) / 100), 2): fee.SiteFee1) USD</span>Centro @fee.SiteFee1 @(fee.IsPercentage?"%":"USD") fee:</p>
+            <strong class="floatLeft mt-18 f20 mb5">+</strong>
+            <div class="row botline"></div>
+            <p class="ml20"> <span class="floatLeft  ar f13">$@Math.Round(Model.InvoiceAmount.Value,2) USD</span><label class="floatLeft"> Invoice Amount </label></p>
+
+        </div>
+
+                </div>
+                <div class="row"><a href="@backUrl" class="button1-blk floatRight">Back</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

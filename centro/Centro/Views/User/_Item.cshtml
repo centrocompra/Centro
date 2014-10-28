@@ -1,0 +1,483 @@
+﻿@model Product
+@{
+    List<Country> Countries = ViewBag.Countries;
+    Countries = Countries.Where(m => m.CountryShortCode == "VE").ToList();
+   // var ShipCountries = Countries.Where(m => m.CountryID != 1).ToList();
+    //var itemsCountries = new SelectList(ShipCountries, "CountryID", "CountryName");
+    var allCountries= new SelectList(Countries, "CountryID", "CountryName");
+
+    List<Category> Categories = ViewBag.Categories;
+    var itemsCategory = new SelectList(Categories, "CategoryID", "Name");
+
+    List<ShopSection> ShopSections = ViewBag.ShopSections;
+    var itemsShopSection = new SelectList(ShopSections, "ShopSectionID", "SectionName");
+
+    //var Manufacturers = ViewBag.Manufacturers;    
+    var Manufacturers = new List<SelectListItem>();
+    Manufacturers.Add(new SelectListItem { Text = "Yes", Value = "1" });
+    Manufacturers.Add(new SelectListItem { Text = "No", Value = "" });
+    var itemsManufacturer = new SelectList(Manufacturers, "Value", "Text");
+
+    var ProductCondition = ViewBag.ProductCondition;
+    var itemsProductCondition = new SelectList(ProductCondition, "Value", "Text");
+
+    List<SelectListItem> sendDownloadVia = ViewBag.SendDownloadVia;
+    SelectList itemsSendDownloadVia = new SelectList(sendDownloadVia, "Value", "Text");
+
+    List<string> tempIds = !string.IsNullOrWhiteSpace(Model.OtherKeywords) && !Model.OtherKeywords.StartsWith("$$$") ? Model.OtherKeywords.Split(new string[] { "$$$" },StringSplitOptions.RemoveEmptyEntries)[1].Split(new string[]{","}, StringSplitOptions.RemoveEmptyEntries).Select(m => m).ToList() : null;
+    int[] Ids = new int[2];
+    Ids[0] = tempIds != null && tempIds.Count() > 0 ? int.Parse(!string.IsNullOrWhiteSpace(tempIds[0]) ? tempIds[0] : "0") : 0;
+    Ids[1] = tempIds != null && tempIds.Count() > 1 ? int.Parse(!string.IsNullOrWhiteSpace(tempIds[1]) ? tempIds[1] : "0") : 0;
+    
+    SelectList subCategories = new SelectList(SellersHandler.SubCategoriesGet(Model != null ? Model.CategoryId : 0).List, "SubCategoryID", "Name", (Ids != null ? Ids[0] : 0));
+
+    SelectList types = new SelectList(SellersHandler.TypesGet(Ids != null ? Ids[0] : 0).List, "TypeID", "Name", (Ids != null  && Ids.Count()>1? Ids[1] : 0));
+
+    int shop_id = ViewBag.ShopId;
+    var shipping_counter = 1;
+
+    Shop shop = SellersHandler.ShopByShopId(shop_id).Object;
+
+    string disable = shop.ShipToUSOnly ? "disabled" : "";
+}
+@*@if (Model.ProductID > 0)
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/ListItems.js")"></script> 
+}*@
+<div class="main-heading">
+    List an <span class="orng">Item</span>
+    @if (shop.IsClosed)
+    {
+    @*<a href="@Url.Action("PreviewShop", "User")" class="inlineBlock floatRight button1-blk">Skip</a>*@
+    }
+</div>
+@using (Ajax.BeginForm("CreateProduct", "User", new AjaxOptions { OnBegin = "OnProductBegin", OnComplete = "OnComplete" }))
+{
+    @Html.Hidden("ShopId", shop_id);
+    @Html.HiddenFor(m => m.ProductID);
+    <div class="box-out">
+        <div class="box-in plane-error">
+            <dl class="botline1">
+                <dt class="bold">About this Item</dt>
+                <dd class="pt5">
+                    <div class="fl">
+                        Do you own and possess the legal, commercial right to market and distribute this
+                        product?
+                        <br />
+                        @*@Html.CheckBoxFor(m=>m.ItemOwner) &nbsp;@Html.ValidationMessageFor(m=>m.ItemOwner)
+                        <br /><br /><br /><br />*@
+                        @Html.Hidden("ManufacturerID", "1")
+                        @*@Html.DropDownListFor(m => m.ManufacturerID, itemsManufacturer, "Select a maker...", new { @onclick="ChangeManufacture(this)", @style = "width:170px;", @class = "input-box" })*@
+                        @Html.DropDownListFor(m => m.ManufacturerID, itemsManufacturer, new { @style = "width:170px;", @class = "input-box", @onchange = "CheckManufacturer(this);" })
+                        @Html.ValidationMessageFor(m => m.ManufacturerID)
+                    </div>
+                    <div id="div-Manufacturer" class="fl ml10"  style="@(Model.ManufacturerID == 2 ? "display:none;" : "display:none;")">
+                        Name
+                        <br />
+                        @Html.TextBoxFor(m => m.Manufacturer, new { @class = "required input-box" })
+                        @Html.ValidationMessageFor(m => m.Manufacturer)
+                    </div>  
+                </dd>
+            </dl>
+            <dl class="botline1">
+                <dt class="bold">Item Type </dt>
+                <dd class="pt5">
+                    <div id="Item-Type" class="fl">
+                        <select style="width:170px;", class = "input-box" onchange="SetIsDownloadViaShip(this)">
+                        @if (Model.IsDownloadViaShip.HasValue && Model.IsDownloadViaShip.Value)
+                        {
+                            <option value="false">Physical</option>
+                            <option selected="selected" value="true">Downloadable</option>
+                        }
+                        else
+                        {
+                            <option value="false">Physical</option>
+                            <option value="true">Downloadable</option>
+                        }
+                        </select>
+                    </div>
+                </dd>
+            </dl>
+            <dl class="botline1 IsDownloadViaShip" style="@(Model.IsDownloadViaShip.HasValue && Model.IsDownloadViaShip.Value ? "display:block;" : "display:none;")">
+                <dt class="bold">Transfer Type </dt>
+                <dd class="pt5">
+                    <div id="category-Transfer-Type" class="fl">
+                        @Html.DropDownListFor(m => m.SendDownloadViaProp, itemsSendDownloadVia, "Transfer Type", new { @style = "width:170px;", @class = "input-box" })
+                        <div class="">
+                        (Centro does not offer any file transfer services. The buyer and seller can agree upon and utilize any off-site file transfer service)
+                        </div>
+                        @Html.ValidationMessageFor(m => m.SendDownloadViaProp)
+                    </div>
+                </dd>
+            </dl>
+            <dl class="botline1 IsDownloadViaShip" style="@(Model.IsDownloadViaShip.HasValue && Model.IsDownloadViaShip.Value ? "display:block;" : "display:none;")">
+                <dt class="bold">Shipping Details<br /><span class="orange-dark">Downloadable</span> </dt>
+                <dd class="pt5">
+                    <div id="category-Transfer-Type1" class="fl">
+                        @Html.TextAreaFor(m => m.DownlodableShippingPolicy, new { @class = "input-box", @style = "width:400px;" })
+                        @Html.ValidationMessageFor(m => m.DownlodableShippingPolicy)
+                    </div>
+                </dd>
+            </dl>
+            <dl class="botline1">
+                <dt class="bold">Categories </dt>
+                <dd class="pt5">
+                    <div id="category-what-is" class="fl">
+                        What is it?
+                        <br />
+                        @Html.DropDownListFor(m => m.CategoryId, itemsCategory, "Select a category...", new { @style = "width:170px;", @class = "input-box", @onchange = "OnCategoryChange(this, 'SubCategory', 'Type')" })
+                        @Html.ValidationMessageFor(m => m.CategoryId)&nbsp;
+                        @Html.DropDownList("SubCategory", subCategories, "Select a sub category...", new { @style = "width:170px;", @class = "input-box", @onchange = "OnSubCategoryChange(this, 'Type')" })&nbsp;
+                        @Html.DropDownList("Type", types, "Select a type...", new { @style = "width:170px;", @class = "input-box", @onchange = "OnTypeChange(this, 'SubCategory')" })
+                        @Html.Hidden("Keywords")
+                    </div>
+                </dd>
+            </dl>
+         @if (!Model.IsDownloadViaShip.HasValue)
+         {
+            @*<dl class="Condition">
+                <dt class="bold">Condition </dt>
+                <dd class="pt5">
+                    <div id="category-what" class="fl">
+                        @Html.DropDownListFor(m => m.Condition, itemsProductCondition, "Select condition...", new { @style = "width:170px;", @class = "input-box" })
+                        @Html.ValidationMessageFor(m => m.Condition)
+                    </div>
+                </dd>
+            </dl>*@
+        }
+        </div>
+    </div>
+    <div class="box-out">
+        <div class="box-in plane-error">
+            <dl>
+                <dt class="bold">Photos</dt>
+                <dd>
+                    <div id="file_upload" class="uploadify row">
+                        <div id="file_upload-button" class="uploadify-button " style="height: 30px; line-height: 30px; width: 120px;">
+                            <input type="file" name="file" message="Only GIF, JPG, PNG, BMP formats are allowed"
+                                allowed-formats=".gif.jpg.jpeg.png.bmp" required-message="Please select a photo"
+                                onchange="UploadProductPicture(this, 'product-picture-form');">
+                        </div>
+                            <p class="floatLeft" style="font-style:italic; font-size:11px; color:#999;"> Only GIF, JPG, PNG, BMP formats are allowed and Image must be between 200x200 to 1024x1024 pixel. </p>
+                    </div>
+                    <div id="div-photos" class=" row pt10">
+                        @if (ViewBag.Pictures != null)
+                        {
+                            foreach (var picture in (List<UserProductPicture>)ViewBag.Pictures)
+                            {
+                            <div class="image-box">
+                                <img src="@Url.Content("~/Images/ProductImages/" + picture.Username + "/" + picture.Thumbnail)" /><label onclick="DeletePic(this,@picture.PictureId)" class="close" >x</label>
+                            </div> 
+                            }
+                        }
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="box-out">
+        <div class="box-in plane-error">
+            <dl class="botline1 ">
+                <dt class="bold">Item Title</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.Title, new { @class = "input-box", @style = "width:400px;" })
+                    @Html.ValidationMessageFor(m => m.Title)
+                </dd>
+            </dl>
+            <dl>
+                <dt class="bold">Description </dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.Description, new { @style = "width: 400px; height: 100px; overflow: hidden; word-wrap: break-word; resize: horizontal;", @rows = "5", @class = "input-box" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                    <div class="row pt5 pb10 botline1 hintTxt">
+                        Try to answer the questions shoppers will have. Tell the item's story and explain
+                        why it's special.
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="bold">Shop section</dt>
+                <dd>
+                    @Html.DropDownListFor(m => m.ShopSectionId, itemsShopSection, "Select Shop Section...", new { @style = "width:170px;", @class = "input-box floatLeft" })
+                    @Html.ValidationMessageFor(m => m.ShopSectionId)
+                    <span class="floatLeft" id="add-new-section" style="display: none;">
+                        <input type="text" id="SectionTitle" maxlength="255" style="width: 200px; margin-left: 10px; float: left"
+                            class="input-box" name="data[Section][title]">
+                    </span><span class="dinBlock mt5 ml10" id="add-new-section-help" style="display: none;">Shop section will help organise your items (optional) </span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="box-out">
+        <div class="box-in plane-error">
+            <dl class="botline1">
+                <dt class="bold">Keywords</dt>
+                <dd class="pt5">Add keywords.
+                    <br />
+                    <input type="text" id="Tag" class="input-box" style="width: 160px;" />
+                    @Html.HiddenFor(m => m.Tags)
+                    <button id="ListitemTagsButton" onclick="Addtag2(this)" class="button2 ml10" type="button">
+                        Add</button>
+                    <span id="error_Tag" class="field-validation-error" data-valmsg-replace="true" data-valmsg-for="UnitPrice" style="display:none;">
+                        <span class="" for="UnitPrice" generated="true">HTML tags not allowed.</span>
+                    </span>
+                    <div class="row">
+                        <ul id="tags-add" class="taglist-edit">
+                            @if (ViewBag.Tags != null)
+                            {
+                                foreach (var item in (string[])ViewBag.Tags)
+                                {
+                                <div class="tag">
+                                    <span>@item.Trim()</span><label class="close" onclick="removetags(this)">x</label>
+                                </div> 
+                                }
+                            }
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="bold">Materials</dt>
+                <dd class="pt5">Add materials.
+                    <br />
+                    <input type="text" id="Material" class="input-box" style="width: 160px;" />
+                    <span id="error_material" class="field-validation-error" data-valmsg-replace="true" data-valmsg-for="UnitPrice" style="display:none;">
+                        <span class="" for="UnitPrice" generated="true">HTML tags not allowed.</span>
+                    </span>
+                    @Html.HiddenFor(m => m.Materials)
+                    <button class="button2 ml10" id="add-material" onclick="AddMaterial2(this)" type="button">
+                        Add</button>
+                    <div class="row">
+                        <ul id="material-add" class="taglist-edit">
+                            @if (ViewBag.Materials != null)
+                            {
+                                foreach (var item in (string[])ViewBag.Materials)
+                                {
+                                <div class="material">
+                                    <span>@item.Trim()</span><label class="close" onclick="removetags(this)">x</label>
+                                </div>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="box-out">
+        <div class="box-in plane-error">
+            <dl>
+                <dt class="bold">Price</dt>
+                <dd>
+                    <div id="starting_price" class="fl">
+                        <!--currency-->
+                        <span class="currency_code">$</span>
+                        @Html.TextBoxFor(m => m.UnitPrice, new { @class = "input-box mt5", @style = "width:140px;" })
+                        @Html.ValidationMessageFor(m => m.UnitPrice)
+                    </div>
+                </dd>
+            </dl>
+            @if (Model.IsDownloadViaShip.HasValue && Model.IsDownloadViaShip.Value)
+            {
+                @Html.HiddenFor(m => m.Quantity)
+            }
+            else
+            {
+                <dl id="item_quantity_typeI">
+                    <dt class="bold">Quantity</dt>
+                    <dd>
+                        @Html.TextBoxFor(m => m.Quantity, new { @Value = Model.Quantity == 0 ? 1 : Model.Quantity, @class = "input-box mt5", @style = "width:160px;" })
+                        @Html.ValidationMessageFor(m => m.Quantity)
+                    </dd>
+                </dl>
+            }
+            @*<dl id="item_is_downloadable">
+                <dt class="bold">Is Downloadable file</dt>
+                <dd>
+                    @Html.CheckBoxFor(m => m.IsDownloadable, new { @onclick = "javascript:IsDownloadableCheck(this);" })
+                </dd>
+            </dl>
+            <dl id="item_download_url" style="">
+                <dt class="bold">Upload File</dt>
+                <dd>
+                    <input type="file" id="productfile" class="input-box " name="productfile" onchange="UploadProductFile(this, 'product-picture-form');" />
+                    <span class="field-validation-error" data-valmsg-replace="true" id="product_file_msg"
+                        data-valmsg-for="productfile"></span>
+                    @Html.HiddenFor(m => m.DownloadURL)
+                    @Html.ValidationMessageFor(m => m.DownloadURL)
+                    <span class="field-validation-error shopBanner"></span>
+                    <div class="uploaded-files">
+                        @if (ViewBag.ProductFiles != null)
+                        {
+                            foreach (var file in (List<ProductFileViewModel>)ViewBag.ProductFiles)
+                            {
+                            <div class="image-box">@file.DisplayName<label class="close" onclick="DeleteFile(this,'@file.SavedName');">x</label></div> 
+                            }
+                        }
+                    </div>
+                </dd>
+            </dl>*@
+            <dl id="dl_shipping_details" style="">
+                <dt class="bold">Shipping</dt>
+                <dd>
+                    <!-- ========== Shipping Locations ============ -->
+                    <div class="fl">
+                        Ship From
+                        <br />
+                        @Html.DropDownListFor(m => m.ShipFromId, allCountries, "Select a country...", new { @style = "width:170px;", @class = "input-box" })
+                        @Html.ValidationMessageFor(m => m.ShipFromId)
+                    </div>
+                    <div style="display: block;" class="row divClear showshippingingo mt10">
+                        <div style="width: 650px !important;" class="add-locations-column">
+                            <ul class="locationheading">
+                                <li class="col1 no-border">Delivers to</li>
+                                <li class="col2">Shipping Cost w/Tracking # 
+                                    <div class="tool">
+                                        <img alt="" src="/images/question.gif">
+                                        <div class="tip">
+                                            <img alt="" class="baloon" src="/images/tip.png">
+                                            All shop owners will be required to get a tracking # for any products shipped.
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="col3">With another item
+                                    <div class="tool">
+                                        <img alt="" src="/images/question.gif">
+                                        <div class="tip">
+                                            <img alt="" class="baloon" src="/images/tip.png">
+                                            If an order includes multiple items, this is the postage cost for each item after
+                                            the first.
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="col4">&nbsp;</li>
+                            </ul>
+                        </div>
+                    </div>
+                    @if (ViewBag.ShippingTo != null && ((List<ShipingCountry>)ViewBag.ShippingTo).Count() > 0)
+                    { 
+                        <div style="display: block;" id="shipping_info" class="row showshippingingo">
+                            <div style="width: 650px !important;" class="add-locations-column ship-to">
+                                @foreach (var shippingItem in (List<ShipingCountry>)ViewBag.ShippingTo)
+                                {
+                                    if (shippingItem.ShipsTo == null) { }
+                                    else
+                                    {
+                                    <ul class="formRow">
+                                        <li class="col1 no-border">
+                                            @if (shop.ShipToUSOnly)
+                                            { 
+                                                @Html.DropDownList("ShipTo_" + shipping_counter, new SelectList(allCountries, "Value", "Text", shippingItem.ShipsTo.Value), "Select a country...", new { @disabled = "disabled", @style = "width:170px;", @class = "input-box required shipTo", data_val_required = "Required.", data_val = "true" })
+                                                <input type="hidden" name="ShipTo_@shipping_counter" value="@shippingItem.ShipsTo.Value" />
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownList("ShipTo_" + shipping_counter, new SelectList(allCountries, "Value", "Text", shippingItem.ShipsTo.Value), "Select a country...", new { @style = "width:170px;", @class = "input-box required shipTo", data_val_required = "Required.", data_val = "true" })
+                                            }
+                                            <span data-valmsg-replace="true" data-valmsg-for="ShipTo_@shipping_counter"  class="field-validation-error">
+                                                <span for="ShipTo_@shipping_counter"  generated="true" class=""></span></span>
+                                        </li>
+                                        <li class="col2"><span class="currency_code">$</span>
+                                            <input data-val-required="Required." data-val-number="The field must be a number." value="@shippingItem.Cost" data-val-range-min="0" data-val-range-max="100000" data-val-range="Invalid price." data-val="true" type="text" name="Cost_@shipping_counter"  class="input-box required number ml5" style="width:50px;" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="Cost_@shipping_counter" class="field-validation-error">
+                                                <span for="Cost_@shipping_counter" generated="true" class=""></span></span>
+                                        </li>
+                                        <li class="col3"><span class="currency_code">$</span>
+                                            <input data-val-required="Required." data-val-number="The field must be a number." value="@shippingItem.CostAfterFirstProduct" data-val-range-min="0" data-val-range-max="100000" data-val-range="Invalid price." data-val="true"  name="CostWithOther_@shipping_counter" class="input-box required number ml5" type="text" style="width:50px;" />
+                                            <span data-valmsg-replace="true" data-valmsg-for="CostWithOther_@shipping_counter" class="field-validation-error">
+                                                <span for="CostWithOther_@shipping_counter" generated="true" class=""></span>
+                                            </span></li>
+                                        <li class="col4">
+                                            @if (shipping_counter > 1)
+                                            {
+                                                <img src="/images/close-btn.png" alt="Remove" onclick="removeShipTo(this, @shipping_counter );">
+                                            }
+                                        </li>
+                                    </ul>
+                                            shipping_counter++;
+                                    }
+                                }
+                            </div>
+                            <input type="hidden" name="Shipping_Count" id="Shipping_Count" value="@(shipping_counter - 1)" />
+                            <input type="hidden" name="Skip_Shipping_Rownum" id="Skip_Shipping_Rownum" value="0" />
+                            @if (!shop.ShipToUSOnly)
+                            {
+                                <div style="width: 650px !important;" class="add-locations-column">
+                                    <div class="row mt15">
+
+                                        <button id="addMoreShippingLocation" onclick="AddMoreShippingLocation(this)" class="button1"
+                                            type="button">
+                                            Add Locations</button>
+                                        <span style="display: none;" id="addShipingLocationErrorMessage"></span>
+                                    </div>
+                                </div>
+                            }
+                        </div> 
+                    }
+                    else
+                    {
+                        <div style="display: block;" id="shipping_info" class="row showshippingingo">
+                            <div style="width: 650px !important;" class="add-locations-column ship-to">
+                                <ul class="formRow">
+                                    <li class="col1 no-border">
+                                        @if (shop.ShipToUSOnly)
+                                        { 
+                                            <input type="hidden" name="ShipTo_1" value="1" />
+                                            <select style="width: 170px;" name="ShipTo_1" id="ShipTo_1" disabled="disabled" class="input-box required shipTo">
+                                                <option value="1">United States</option>
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            @Html.DropDownList("ShipTo_1", allCountries, "Select a country...", new { @style = "width:170px;", @class = "input-box required shipTo", data_val_required = "Required.", data_val = "true" })
+                                        }
+                                        <span class="field-validation-valid" data-valmsg-replace="true" data-valmsg-for="ShipTo_1"></span></li>
+                                    <li class="col2"><span class="currency_code">$</span>
+                                        <input type="text" id="Cost_1" style="width: 50px;" data-val-range-min="0" data-val-range-max="100000" data-val-range="Invalid price." data-val="true" class="input-box required number ml5"
+                                            name="Cost_1" />
+                                        <span data-valmsg-replace="true" data-valmsg-for="Cost_1" class="field-validation-error">
+                                            <span for="Cost_1" generated="true" class=""></span></span></li>
+                                    <li class="col3"><span class="currency_code">$</span>
+                                        <input type="text" id="CostWithOther_1" style="width: 50px;" class="input-box required number ml5" data-val-range-min="0" data-val-range-max="100000" data-val-range="Invalid price." data-val="true"
+                                            name="CostWithOther_1" />
+                                        <span data-valmsg-replace="true" data-valmsg-for="CostWithOther_1" class="field-validation-error">
+                                            <span for="CostWithOther_1" generated="true" class=""></span></span></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="Shipping_Count" id="Shipping_Count" value="1" />
+                            <input type="hidden" name="Skip_Shipping_Rownum" id="Skip_Shipping_Rownum" value="0" />
+                            @if (!shop.ShipToUSOnly)
+                            {
+                                <div style="width: 650px !important;" class="add-locations-column">
+                                    <div class="row mt15 pt10">
+
+                                        <button id="addMoreShippingLocation" onclick="AddMoreShippingLocation(this);" class="button1"
+                                            type="button">
+                                            Add Locations</button>
+                                        <span style="display: none;" id="addShipingLocationErrorMessage"></span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div id="submitFormDiv" class="row text-right">
+        <button id="addListingFormBtn" class="button1" type="submit">
+            Save</button>
+        <button id="SavenNext" onclick="SaveNNext(this);" class="button1-blk" type="button">
+            Next</button>
+        <span id="submitFormDivErrorMessage"></span>
+    </div>
+}
+<form style="display: none;" id="product-picture-form" action="" enctype="multipart/form-data"
+    method="post">
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+        skip_shipping_ids = '';
+    });
+</script>

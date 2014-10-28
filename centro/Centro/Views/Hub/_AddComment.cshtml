@@ -1,0 +1,25 @@
+﻿@model HubComment
+@using (Ajax.BeginForm("SaveHubComment", "Hub", FormMethod.Post, new AjaxOptions { OnComplete = "HubSaved" }))
+{
+    <input type="hidden" value="@ViewBag.HubTitle" name="HubTitle" id="HubTitle"/>
+    <h3 class="row">Leave Comment</h3>
+    @Html.HiddenFor(m => m.HubID)
+    @Html.HiddenFor(m => m.UserID)
+    @Html.HiddenFor(m => m.HubPicture)
+    @Html.HiddenFor(m => m.HubOwnerUserName)
+    @Html.HiddenFor(m => m.HubTopicText)
+    <label>Comment : </label>
+    <div class="mt12 row">
+        
+        @Html.TextAreaFor(m => m.Comment, new { @style = "border: 1px solid #CCCCCC;height: 100px;padding: 5px;width: 98%;" })
+        @Html.ValidationMessageFor(m => m.Comment)
+    </div>
+    <div class="mt12 row">
+        <input class="button1" type="submit" name="save" value="Save" />
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+    });
+</script>

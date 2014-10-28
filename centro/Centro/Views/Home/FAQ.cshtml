@@ -1,0 +1,15 @@
+﻿@model CM
+@{
+    ViewBag.Title = "FAQ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+Centro- FAQ's
+}
+<div class="contentCntr">
+    <div class="contentcenter clearfix">
+        <div class="faqPage clearfix">
+            @Html.Raw(Model.PageContent)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿@model User
+<div id="status-division" class="messages" style="display: none; margin-bottom: 10px;">
+</div>
+<div class="registration">
+    <div class="popup form-container signup">
+       <div class="selection-pannel">
+        @if (Model.UserID == 0)
+        {
+            <label>
+                <input name="RegisterAs" type="radio" value="2"  onclick="LoginRegister.Registration(this)"/>Personal</label>
+            <span>or</span>
+            <label>
+                <input type="radio" name="RegisterAs" value="1" checked="checked" onclick="RegistrationAsCompany(this)" />Company</label>
+        }
+        </div>
+        @using (Ajax.BeginForm("AddUpdateUser", "Home", null, new AjaxOptions { OnBegin = "OnLoginBegin", OnComplete = "OnComplete" }, new { Area = "" }))
+        {
+            @Html.HiddenFor(m => m.UserID)
+            @Html.Hidden("RoleId", (int)UserRole.Buyer)
+            if (Model.UserID > 0)
+            {
+                @Html.HiddenFor(m => m.Password)
+                @Html.HiddenFor(m => m.ConfirmPassword)
+                @Html.HiddenFor(m => m.UserName)
+                @Html.Hidden("Email","testtesttest@testtest.tes")
+            }
+        <ul>
+            <li>
+                <label>
+                    @Html.DisplayNameFor(o => o.CompanyName):</label>
+                    @Html.TextBoxFor(o => o.CompanyName)<br />
+                    @Html.ValidationMessageFor(o => o.CompanyName)
+            </li>
+            <li>
+                <label>
+                    @Html.DisplayNameFor(o => o.FirstName):</label>
+                    @Html.TextBoxFor(o => o.FirstName)<br />
+                    @Html.ValidationMessageFor(o => o.FirstName)
+            </li>
+            <li>
+                <label>
+                    @Html.DisplayNameFor(o => o.LastName):</label>
+                  @Html.TextBoxFor(o => o.LastName)<br />
+                  @Html.ValidationMessageFor(o => o.LastName)
+            </li>
+        @if (Model.UserID == 0)
+        {
+            <li>
+                <label>
+                   @Html.DisplayNameFor(o => o.UserName):</label>
+                  @Html.TextBoxFor(o => o.UserName)<br />
+                  @Html.ValidationMessageFor(o => o.UserName)
+            </li>        
+            <li>
+                <label>
+                    @Html.DisplayNameFor(o => o.EmailId):</label>
+                  @Html.TextBoxFor(o => o.EmailId)<br />
+                  @Html.ValidationMessageFor(o => o.EmailId)
+            </li>
+        }
+            <li>
+                <label>
+                    @Html.DisplayNameFor(o => o.PhoneNumber):</label>
+                  @Html.TextBoxFor(o => o.PhoneNumber)<br />
+                  @Html.ValidationMessageFor(o => o.PhoneNumber)
+            </li>
+        @if (Model.UserID == 0)
+        {
+            <li>
+                <label>
+                    @Html.DisplayNameFor(o => o.Password):</label>
+                  @Html.PasswordFor(o => o.Password)<br />
+                    @Html.ValidationMessageFor(o => o.Password)
+            </li>
+            <li>
+                <label>
+                   @Html.DisplayNameFor(o => o.ConfirmPassword):</label>
+                  @Html.PasswordFor(o => o.ConfirmPassword)<br />
+                    @Html.ValidationMessageFor(o => o.ConfirmPassword)
+            </li>
+        }
+           <li class="gender">
+                <label>
+                   @Html.DisplayNameFor(o => o.Gender):</label>
+                   @Html.RadioButtonFor(o => o.Gender, (Int32)Gender.Male)
+                                <label class="gender_option"  for="male">
+                                    Male</label>
+                                @Html.RadioButtonFor(o => o.Gender, (Int32)Gender.Female)
+                                <label class="gender_option"  for="female">
+                                    Female</label>
+                                <br />
+                                @Html.ValidationMessageFor(o => o.Gender)
+            </li>
+        @if (Model.UserID == 0)
+        {
+            <li>
+                <label>
+                    Verify</label>
+                <div class="custom_file_upload">
+                    <div class="file_upload">
+                        <input type="file" id="loginfile" class="input-box mco-cus1 p0 m0"  name="loginfile" onchange="UploadLoginFile(this);" />                            
+                    </div><input type="hidden" id="FileName" />
+                    <div id="fileName" class="file" >&nbsp;</div>
+                </div>
+                <span class="field-validation-error" id="FileNameError"></span>
+            </li>
+        }
+            <li>
+                <input name="Create" type="submit" class="submitButton" value="Create" />
+                <a href="#" onclick="ClosePopupWindow()">Cancel</a> </li>
+        </ul>
+        }
+        
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        UserID = parseInt('@Model.UserID');
+        ResetUnobtrusiveValidation($('form'));
+    });   
+</script>

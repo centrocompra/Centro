@@ -1,0 +1,106 @@
+﻿@model ContestParticipant
+@{
+    ViewBag.Title = "Participate";
+    Layout = (bool)ViewBag.IsLoggedIn ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+     Contest
+}
+@{
+    List<ProductViewModel> Products = ViewBag.Products;
+}
+<aside class="floatLeft left-side">
+    @Html.Partial("_LeftSideBuyerCategoryMenuLayout")
+</aside>
+<div class="create-contest">
+<div class="right-bar">
+<div class="top-head row">
+    @*<a href="@Url.Action("Profile", "User")" class="button1 fRight"><span>View Profile</span></a>*@
+    <h2>
+        Submit your entry<span></span></h2>
+</div>
+@using (Ajax.BeginForm("SaveParticipate", "Contest", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnComplete" }, new { @class = "section-inner" }))
+{
+    @Html.HiddenFor(m => m.UserID)
+    @Html.HiddenFor(m => m.ShopID)
+    @Html.HiddenFor(m => m.ContestID)
+    <div class="edit-from-profile floatLeft">
+        <div class="section-inner contest-o-main">
+            <div class="input-group">
+                <label for="avatar" class="label">
+                    Contest Picture</label>
+                <div class="change-avatar-content">
+                    <div class="image-wrapper">
+                        @if (!String.IsNullOrEmpty(Model.Contest.ContestImage))
+                        {
+                            <img width="175" height="175"  alt="Profile Image" id="contest_img" src="@Url.Content("~/Images/Contest/"+ Model.Contest.Username+"/thumb_" +Model.Contest.ContestImage)" />
+                        }
+                        else
+                        {
+                            <img width="175" height="175"  alt="Profile Image" id="contest_img" src="@Url.Content("~/Content/images/contest.png")"/>
+                        }          
+                    </div>                    
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    Title</label>
+                <p class="full-name breakword floatLeft">
+                    @Model.Contest.Title
+                </p>
+            </div>
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    My Items</label>
+                <p class="full-name">
+                    @*@Html.DropDownList("Product", list as SelectList)*@
+                    <select name="ProductID" id="ProductID" onchange="SelectProduct(this)" class="input-box input-validation-error" data-val-required="*Required." data-val-number="Required." data-val="true">
+                        <option value="">Select a Product</option>
+                    @foreach (var item in Products)
+                    {
+                        <option desc="@item.Description" img="/Images/ProductImages/@ViewBag.Username/thumb_@item.PrimaryPicture" value="@item.ProductID">@item.Title</option>
+                    }
+                    </select>&nbsp;
+                    <span data-valmsg-replace="true" data-valmsg-for="ProductID" class="field-validation-error">
+                        <span for="ProductID" generated="true" class=""></span>
+                    </span>
+                </p>
+            </div>
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    Item Image</label>
+                <p class="full-name">
+                    <img src="" id="img" />
+                </p>
+            </div>
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    Item Description</label>
+                <p class="desc-pro">
+                    <span id="Desc"></span>
+                </p>
+            </div>
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    Notes</label>
+                <p class="full-name">
+                    @Html.TextAreaFor(m => m.Description, new { @class = "input-box valid", @style="width: 500px; height: 150px;" })
+                </p>
+            </div>
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    &nbsp;</label>
+                <p class="full-name">
+                    <div class="attachments line" style="display: none;"></div>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="submit row mt12 mb10">
+        <input type="submit" class="button1 floatRight login-signin" value="Submit My Item" />                
+    </div>  
+}
+</div>
+</div>
+
+<script src="@Url.Content("~/Scripts/Custom/contestParticitae.js")" type="text/javascript"></script>

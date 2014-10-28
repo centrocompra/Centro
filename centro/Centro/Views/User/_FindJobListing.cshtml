@@ -1,0 +1,167 @@
+﻿@model List<JobsViewModel>
+@{
+    var list = (from i in Model
+                group i by new { y = i.CreatedOn.Value.Year, m = i.CreatedOn.Value.Month, d = i.CreatedOn.Value.Day, data = i } into g
+                select new Jobs
+                        {
+                            Date = new GroupByDate { CreatedOn = new DateTime(g.Key.y, g.Key.m, g.Key.d) },
+                            BuyerJobView = g.Key.data
+                        }).ToList();
+    var grp = list.GroupBy(m => m.Date.CreatedOn).Select(m => new { CreatedOn = m.Key, List = m.Select(a => a.BuyerJobView).ToList() }).ToList();
+    var MyJobApplications = SellersHandler.GetMyJobApplicantions((int)ViewBag.LoggedInUserID).List;
+    int count = 1;
+}
+@if (Model.Count() > 0)
+{
+    foreach (var items in grp)
+    {
+        int num = 1;
+<h3 class="white-area row-force uppercase @(count > 1 ? "mt10" : "")">>> @String.Format("{0:ddd, MMMM d, yyyy}", items.CreatedOn) << </h3>
+        count++;
+        foreach (var item in items.List)
+        {
+            string jobtype = item.IsPrivate ? "Private" : "Public";
+            string action = string.Empty;
+            if (ViewBag.LoggedInUsername == item.UserName) { action = "MyJob"; } else { action = "Job"; }
+            string lessDesc = item.JobDescription.Length > 210 ? item.JobDescription.Substring(0, 210) : item.JobDescription;
+            string lessReq = item.Requirements.Length > 210 ? item.Requirements.Substring(0, 210) : item.Requirements;
+<div class="sections row-force job-sec-mn p0 mt10" onclick="ViewJob(this, '@Url.Action(action, "User", new { id = @item.JobID, @title = Utility.SpacesToHifen(item.JobTitle) })');">
+    <div class="section job-sec-inr pos-rel job-54 select pb0">
+        <span class="pos-abs red-heart">@(num++).</span>
+        <ul class="heading">
+            <li><a href="@Url.Action(action, "User", new { id = @item.JobID, @title = Utility.SpacesToHifen(item.JobTitle) })"><strong>@item.JobTitle</strong></a>
+            
+            <a href="javascript:void(0)" onclick="SaveReportMessage(event, '@Url.Action(action, "User", new { id = @item.JobID, @title = Utility.SpacesToHifen(item.JobTitle) })')" class="underline-none floatRight report">
+                        <img src="@Url.Content("~/Content/images/flag.png")" width="14" class="mb-3 mr10" />Report</a>
+
+            </li>
+        </ul>
+        <div class="row">
+            <div class="job-list-lMost">
+                <p id="lessDesc-@item.JobID" class="job-description">
+                    <span class="displayBlock">@lessDesc</span>
+                    @if (item.JobDescription.Length > 210)
+                    {
+                        <a class="floatLeft" href="javascript:;" onclick="event.cancelBubble = true;if (event.stopPropagation)event.stopPropagation();$('#fullDesc-@item.JobID').removeClass('hide');$('#lessDesc-@item.JobID').addClass('hide')">
+                            See More</a>
+                    }
+                </p>
+                <p class="job-description hide" id="fullDesc-@item.JobID">
+                    @Html.Raw(item.JobDescription.Replace("\r\n", "<br/>"))
+                    <a class="display-inline" href="javascript:;" onclick="event.cancelBubble = true;if (event.stopPropagation)event.stopPropagation();$('#lessDesc-@item.JobID').removeClass('hide');$('#fullDesc-@item.JobID').addClass('hide')">
+                        View Less</a>
+                </p>
+                <p class="job-description" id="lessReq-@item.JobID">
+                    <strong class="dark-grey pr10">Requirements:</strong> @lessReq
+                    @if (item.Requirements.Length > 210)
+                    {
+                        <a class="display-inline" href="javascript:;" onclick="event.cancelBubble = true;if (event.stopPropagation)event.stopPropagation();$('#fullReq-@item.JobID').removeClass('hide');$('#lessReq-@item.JobID').addClass('hide')">
+                            See More</a>
+                    }
+                </p>
+                <p class="job-description hide" id="fullReq-@item.JobID">
+                    <strong class="dark-grey pr10">Requirements:</strong> @Html.Raw(item.Requirements.Replace("\r\n", "<br/>"))
+                    <a class="display-inline" href="javascript:;" onclick="event.cancelBubble = true;if (event.stopPropagation)event.stopPropagation();$('#lessReq-@item.JobID').removeClass('hide');$('#fullReq-@item.JobID').addClass('hide')">
+                        View Less</a>
+                </p>
+            </div>
+            <div class="job-list-lmMost">
+                <strong class="colorOrange">Estimated Budget : $@item.MinBudget USD</strong>
+                <p class="job-description"> <strong class="dark-grey pr10">Employer</strong> <a href="javascript:;" class="display-inline">@item.UserName</a> </p>
+                <p class="job-description"><strong class="dark-grey pr10">Category</strong> @(((Services)item.CategoryID).ToEnumDescription())</p>
+            </div>
+            <div class="job-list-lmMost">
+                <strong class="colorOrange">Posted : <span class="dark-grey">@item.CreatedOn.Value.ToShortTimeString() @item.CreatedOn.Value.ToShortDateString()</span></strong>
+                <p class="job-description"> <strong class="dark-grey pr10">ID</strong> <a href="javascript:;" class="display-inline"> @item.JobID</a> </p>
+                <p class="job-description"><strong class="dark-grey pr10">Specialties</strong> @item.Specialties</p>
+                @if(MyJobApplications.Select(m=>m.JobID).Contains(item.JobID)){
+                    <img src="@Url.Content("~/Content/images/aplied.png")" width="85" alt="">
+                }
+                else
+                {
+                    <p></p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+        }
+    }
+}
+else
+{
+    <div class="sections p20 white-background">
+        No Record Found</div>
+}
+@*<div class="m20 all-jobs-overwrite-m20">
+    @if (Model.Count() > 0)
+    {
+        <h2 id="a">@ViewBag.Title</h2>
+        foreach (var items in grp)
+        {
+            int num = 1;
+        <h3 class="dark-grey-background mt10 uppercase">@items.CreatedOn.ToLongDateString()
+        </h3>
+        <div class="sections p0 mt10 select">
+            @foreach (var item in items.List)
+            {
+                string jobtype = item.IsPrivate ? "Private" : "Public";
+                string action = string.Empty;
+                if (ViewBag.LoggedInUsername == item.UserName) { action = "MyJob"; } else { action = "Job"; }
+                string lessDesc = item.JobDescription.Length > 210 ? item.JobDescription.Substring(0, 210) : item.JobDescription;
+                string lessReq = item.Requirements.Length > 210 ? item.Requirements.Substring(0, 210) : item.Requirements;
+                <div class="section pos-rel job-@item.JobID select" onclick="ViewJob(this, '@Url.Action(action, "User", new { id = @item.JobID, @title = Utility.SpacesToHifen(item.JobTitle) })');">
+                    <span class="pos-abs red-heart"># @(num++)</span>
+                    <ul class="heading">
+                        <li><a href="@Url.Action(action, "User", new { id = @item.JobID, @title = Utility.SpacesToHifen(item.JobTitle) })" onclick="ViewJob(this, @item.JobID)">@item.JobTitle</a></li>
+                        <li class="grey">By: @item.UserName</li>
+                        <li class="grey">Posted at: @item.CreatedOn.Value.ToLongTimeString()</li>
+                        <li class="colorOrange">$ @item.MinBudget - $ @item.MaxBudget USD</li>
+                    </ul>
+                    <p class="job-description" id="lessDesc-@item.JobID">
+                        <strong class="dark-grey pr10">Description:</strong> @lessDesc
+                        @if (item.JobDescription.Length > 210)
+                        {
+                            <a class="display-inline" href="javascript:;" onclick="event.cancelBubble = true;if (event.stopPropagation)event.stopPropagation();$('#fullDesc-@item.JobID').removeClass('hide');$('#lessDesc-@item.JobID').addClass('hide')">
+                                See More</a>
+                        }
+                    </p>
+                    <p class="job-description hide" id="fullDesc-@item.JobID">
+                        <strong class="dark-grey pr10">Description:</strong> @Html.Raw(item.JobDescription.Replace("\r\n", "<br/>"))
+                        <a class="display-inline" href="javascript:;" onclick="event.cancelBubble = true;if (event.stopPropagation)event.stopPropagation();$('#lessDesc-@item.JobID').removeClass('hide');$('#fullDesc-@item.JobID').addClass('hide')">
+                            View Less</a>
+                    </p>
+                    <p class="job-description" id="lessReq-@item.JobID">
+                        <strong class="dark-grey pr10">Requirements:</strong> @lessDesc
+                        @if (item.JobDescription.Length > 210)
+                        {
+                            <a class="display-inline" href="javascript:;" onclick="event.cancelBubble = true;if (event.stopPropagation)event.stopPropagation();$('#fullReq-@item.JobID').removeClass('hide');$('#lessReq-@item.JobID').addClass('hide')">
+                                See More</a>
+                        }
+                    </p>
+                    <p class="job-description hide" id="fullReq-@item.JobID">
+                        <strong class="dark-grey pr10">Requirements:</strong> @Html.Raw(item.JobDescription.Replace("\r\n", "<br/>"))
+                        <a class="display-inline" href="javascript:;" onclick="event.cancelBubble = true;if (event.stopPropagation)event.stopPropagation();$('#lessReq-@item.JobID').removeClass('hide');$('#fullReq-@item.JobID').addClass('hide')">
+                            View Less</a>
+                    </p>
+                    <p class="job-description">
+                        <strong class="dark-grey pr10">Category:</strong> @(((Services)item.CategoryID).ToEnumDescription())</p>
+                    <div class="job-footer mt15">
+                        <dl class="floatLeft">
+                            <dt class="dark-grey">Specialties:</dt>
+                            <dd class="ml10 colorOrange">@item.Specialties</dd>
+                        </dl>
+                        <div class="divClear">
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        }
+    }
+    else
+    {
+        <div class="sections p0 mt20">
+            No Record Found</div>
+    }
+</div>*@

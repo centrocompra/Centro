@@ -1,0 +1,36 @@
+﻿@model Feedback
+
+<script>
+    $(document).ready(function () {
+        $('#star').raty();
+        ResetUnobtrusiveValidation($('form'));
+    });
+</script>
+@using (Ajax.BeginForm("LeaveFeedBack", "FeedBack", FormMethod.Post, new AjaxOptions { OnComplete="feedbackSaved"}))
+{
+    <div class="autofeedback">
+        <span name="StatusMessagePopup" class="errormessage" style="display: none; width: 478px; margin-bottom: 15px"></span>
+    </div>
+    
+    <div class="mt12 row"><label class="floatLeft">Rating: </label>    <div id="star" onclick="SaveRating(this)" class="floatLeft mt3"></div></div>
+    
+    <div class="mt12 row">
+     <label>Message: </label>
+    @Html.HiddenFor(f => Model.ProductID, new { value = Convert.ToInt32(Model.ProductID) })
+    @Html.HiddenFor(f => Model.ShopID, new { value = Convert.ToInt32(Model.ShopID) })
+    @Html.HiddenFor(f => Model.RequestID, new { value = Convert.ToInt32(Model.RequestID) })
+    @Html.HiddenFor(f => Model.OrderID, new { value = Convert.ToInt32(Model.OrderID) })
+    @Html.HiddenFor(f => Model.Rating)
+    @Html.TextAreaFor(f => Model.Review, new { @class="row mt12 no-resize"})
+    @Html.ValidationMessageFor(f => Model.Review)
+    </div>
+    
+   
+    
+    
+     <div class="mt12 row">
+        <input type="submit" value="Submit" class="button1"/>
+    </div>
+}
+
+

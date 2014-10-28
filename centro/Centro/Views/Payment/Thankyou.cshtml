@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Thankyou";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+ Thankyou
+}
+
+<div class="checkout_breadcrumbs checkout_breadcrumb_6">
+    <div id="breadcrumb-cart" class="checkout_breadcrumb checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div style="height: 50px" class="checkout_breadcrumb_title">
+                Cart</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_w">
+            </div>
+        </div>
+    </div>    
+    <div id="breadcrumb-address" class="checkout_breadcrumb  checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Address</div>
+            Billing &amp; Shipping
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_w">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-confirmation" class="checkout_breadcrumb  checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Review</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_w">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-payment" class="checkout_breadcrumb checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Payment</div>
+            PayPal or Credit Card
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_w">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-receipt" class="checkout_breadcrumb checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Receipt</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_w">
+            </div>
+        </div>
+        <div class="clearfixfix">
+        </div>
+    </div>
+    <div class="clearfixfix">
+    </div>
+</div>
+
+<div class="white-area-inner checkout">
+	<div class="columns gray-border">
+		<h3>Thank you</h3>
+					
+		<div class="p20 alignCenter">
+			<h4>Thanks for placing Order [@ViewBag.OrderID] with @ViewBag.ShopName.</h4>
+			<span>A receipt has been sent to billing email id.</span>
+		</div>
+		<div class="clearIt"></div>
+	</div>
+</div>
+<script type="text/javascript">
+    setTimeout(function () {
+        window.location.href = '/User/Home';
+    }, 5000);
+</script>

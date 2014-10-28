@@ -1,0 +1,42 @@
+﻿@{
+    var Categories = CategoriesHandler.GetCategories();
+}
+<div class="infoBox">
+    <div class="left">
+        <div class="col">
+            <ul>
+                <li><a href="/Home/help">Help </a></li>
+                <li><a href="/home/payments">Payments </a></li>
+                <li><a href="/home/shipping">Shipping </a></li>
+                <li><a href="/home/CancelReturns">Cancellation &amp; Returns </a></li>
+                <li><a href="/home/faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="col">
+            <ul>
+                <li><a href="/home/contactus">Contact Us</a></li>
+                <li><a href="/home/aboutus">About us</a></li>
+                <li><a href="/home/careerblogs">Careers Blog</a></li>
+                <li><a href="/home/press">Press</a></li>
+            </ul>
+        </div>
+        <div class="col last">
+            <ul>
+                <li><a href="/home/misc">Misc</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/home/affiliate">Affiliate</a></li>
+                <li><a href="/home/eGiftVoucher">e-Gift Voucher</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="right">
+        <h2>
+            All Items:</h2>
+        <ul>
+            @foreach (var cat in Categories.List)
+            {
+                <li><a href="/products/category/@cat.Name">@cat.Name</a></li>
+            }
+        </ul>
+    </div>
+</div>

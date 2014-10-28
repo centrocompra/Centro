@@ -1,0 +1,71 @@
+﻿@model FollowerFavoriteViewModel
+@{
+    string isHubFollow = "";
+    string isContestFollow = "";
+    string isProductFollow = "";
+    string isJobFollow = "";
+    string[] FollowTypesArray = Model.Followers.Select(m => m.FollowType.ToString()).ToArray(); ;
+    
+    foreach (var item in Model.Followers)
+    {
+        if (item.FollowType == (int)FollowType.Hub)
+        {
+            isHubFollow = "checked=\"checked\"";
+        }
+        if (item.FollowType == (int)FollowType.Contest)
+        {
+            isContestFollow = "checked=\"checked\"";
+        }
+        if (item.FollowType == (int)FollowType.Product)
+        {
+            isProductFollow = "checked=\"checked\"";
+        }
+        if (item.FollowType == (int)FollowType.Jobs)
+        {
+            isJobFollow = "checked=\"checked\"";
+        }
+    }    
+ }
+
+@using (Ajax.BeginForm("FollowUser", "Home", FormMethod.Post, new AjaxOptions { OnComplete = "FollowComplete" }))
+{
+    <div class="floatLeft ml20 wd45 follow-pop-mn">
+        <h2>+Follow</h2>
+        <ul id="follow">
+            <li>
+                <input type="checkbox" @isHubFollow value="@((int)FollowType.Hub)" onchange="UpdateFollowArr(this)"/>
+                <span>Hubs</span></li>
+            <li>
+                <input type="checkbox" @isContestFollow value="@((int)FollowType.Contest)" onchange="UpdateFollowArr(this)"/>
+                <span>Contests</span></li>
+            <li>
+                <input type="checkbox" @isProductFollow value="@((int)FollowType.Product)" onchange="UpdateFollowArr(this)"/>
+                <span>Products</span></li>
+            <li>
+                <input type="checkbox" @isProductFollow value="@((int)FollowType.Jobs)" onchange="UpdateFollowArr(this)"/>
+                <span>Jobs</span></li>
+        </ul>
+    </div>
+    @*<div class="floatRight mr20 wd45 follow-pop-mn">
+        <h2>+Favorite</h2>
+        <ul id="favorite">
+            <li>
+                <input type="checkbox" onchange="UpdateFavoriteArr(this,1)"/>
+                <span>Hubs</span></li>
+            <li>
+                <input type="checkbox" onchange="UpdateFavoriteArr(this,2)"/>
+                <span>Contests</span></li>
+            <li>
+                <input type="checkbox" onchange="UpdateFavoriteArr(this,3)"/>
+                <span>Products</span></li>
+        </ul>
+    </div>*@
+    <input type="hidden" value="@string.Join(",", FollowTypesArray)" name="FollowArr" id="FollowArr"/>
+    <input type="hidden" value="" name="FavoriteArr" id="FavoriteArr" />
+    <input type="hidden" value="@ViewBag.followedID" name="FollowedID" />
+    <div style="clear:both;"></div>
+    <div class="mt30 mb-10 floatLeft row follow-pop-mn-btm">
+        <input type="submit" value="Submit" class="button1 floatRight mr10"/>
+        <input type="button" value="Close" class="button2 floatRight mr10" onclick="ClosePopupWindow()"/>
+    </div>
+}

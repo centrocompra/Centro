@@ -1,0 +1,87 @@
+﻿@model User
+@{
+    ViewBag.Title = "Signin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+Centro Login
+}
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Custom/signIn.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Custom/signUp.js")" type="text/javascript"></script>
+}
+
+<div class="form-container">
+    <div class="form-container-inner clear">
+        <div class="heading">
+            <h1 class="summary">
+                Sign In
+            </h1>
+        </div>
+        <div class="pane" id="signin">
+        @if (@ViewBag.Status == "verified")
+        {
+            <div class="div-center green">Thank you for verifying your new account. Please sign in to get started.</div>
+        }
+            <div class="wrap clear">
+                @using (Ajax.BeginForm("Login", "Home", new AjaxOptions { HttpMethod = "Post", OnBegin = "OnBegin", OnComplete = "SignIn.OnSignInComplete" }))
+                {
+                    <div class="input-group">
+                        <label for="username-existing">
+                            Email or Username</label>
+                        <div class="input_text">
+                            @Html.TextBoxFor(u => u.EmailOrUsername, new { @class = "text" })@Html.ValidationMessageFor(u => u.EmailOrUsername)
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="password-existing">
+                            Password</label>
+                        <div class="input_text">
+                            @Html.PasswordFor(u => u.Password, new { @class = "text" })@Html.ValidationMessageFor(u => u.Password)
+                        </div>
+                    </div>
+                     <div class="input-group" name="captchaValidation" style="@( (ViewBag.ShowCaptcha == true) ? "" : "display:none")">
+                        @Html.Partial("_Captcha", new Centro.Models.Captcha())
+                        @Html.Partial("_InvisibleCaptcha", new Centro.Models.InvisibleCaptcha())
+					</div>
+                    <div class="keep-me-signin">
+                        <input type="checkbox" name="persistent" class="checkbox" id="persistent">
+                        <label for="persistent">
+                            Stay signed in</label>
+                             <a class="floatRight" href="@Url.Action("ForgotPassword", "Home")">Forgot your password?</a>
+                    </div>
+                    <p class="submit width53-5 last">
+                        <span class="button-large"><span>
+                            @*<input type="submit" value="Sign In" name="submit" class="button1 login-signin" id="signin_button"> *@
+                            <input type="submit" value="Sign in" name="submit" class="floatLeft mr10 button1-blk" id="signin_button">
+                         <span class="or-text floatLeft"> or </span>
+                            
+                        </span></span>
+                    </p>
+                    <div class="row signin-btm-n1">
+                        <div class="signin-page">    
+                            <a href="javascript:;" onclick="LoginRegister.Registration(this);" class="mr20 button1-register w250px" style="overflow:-moz-hidden-unscrollable;">Register</a>
+                        @Html.Action("LoginViaFB", "Home", new { @class = "fb-sigin"} )
+                        </div>
+                        @*<p> By using our site and logging in, you agree to our</p>
+                        <p> <a href="#"> Privacy Statement </a> and <a href="#"> Terms of Conditions </a></p>*@
+                    </div>
+                }
+                @*<div class="clear1221"></div>*@
+                <br />
+                
+                 @*@Html.Action("LoginViaFB", "Account", new {@class="fb-sigin" })
+                <hr />*@
+                @* <p class="forgot-password last"><a href="/help/article/18">Forgot your username or email?</a></p>*@
+            </div>
+        </div>
+    </div>
+</div>
+@section styles{
+<style>
+    .signin-page{width:250px;margin:0 auto;}
+    .button1-register {background: none repeat scroll 0 0 #F17530;border-bottom: 3px solid #FFFFFF;}
+    .button1-register {color: #FFFFFF;display: block;font-size: 17px;height: 48px;line-height: 48px;text-align: center;text-decoration: none;}
+    .signin-page div { width: 250px;}
+    </style>
+}

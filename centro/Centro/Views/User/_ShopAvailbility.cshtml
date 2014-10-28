@@ -1,0 +1,58 @@
+﻿@model Shop
+@{
+    List<ShopAvailablity> slots = SellersHandler.GetShopAvailablity(Model.ShopID).List;
+}
+@{
+        System.Collections.ObjectModel.ReadOnlyCollection<TimeZoneInfo> tz;
+        tz = TimeZoneInfo.GetSystemTimeZones();        
+    }
+<h4>Time Zone : 
+    <select id="TimeZone" name="TimeZone" class="input-box">
+        @foreach (var timezone in tz)
+        {
+            if (Model.TimeZone == timezone.DisplayName)
+            {
+            <option selected="selected" value="@timezone.DisplayName">@timezone.DisplayName</option>
+        }
+        else
+        {
+            <option value="@timezone.DisplayName">@timezone.DisplayName</option>
+        }
+    }
+    </select>
+</h4>
+<div class="row pt20">
+<table class="availablity-chart">
+    <tr class="availablity-chart-top"><td align="center"></td><td align="center">Mon</td><td align="center">Tue</td><td align="center">Wed</td><td align="center">Thu</td><td align="center">Fri</td><td align="center">Sat</td><td align="center">Sun</td></tr>
+    <tr class="availablity-chart-clkabl avl-chart-bl">
+        <td class="first-td">6AM-9AM</td>
+        <td colspan="8" rowspan="7">
+            <table class="main-chart">
+            @for (short row = 0; row < 7; row++)
+            {
+                <tr>
+                @for (short col = 0; col < 7; col++)
+                {
+                    if (slots.Where(m => m.RowNum == row && m.ColumnNum == col).Any())
+                    {
+                        <td align="center"><div class="slot available" row="@row" col="@col" onclick="selectslot(this)">@row @col</div></td>
+                    }
+                    else
+                    {
+                        <td align="center"><div class="slot" row="@row" col="@col" onclick="selectslot(this)">@row @col</div></td>
+                    }
+                }
+                </tr>
+            }
+            </table>
+        </td>
+    </tr>
+    <tr class="avl-chart-bl"><td class="first-td">9AM-12PM</td></tr>
+    <tr class="avl-chart-bl"><td class="first-td">12PM-3PM</td></tr>
+    <tr class="avl-chart-bl"><td class="first-td">3PM-6PM</td></tr>
+    <tr class="avl-chart-bl"><td class="first-td">6PM-9PM</td></tr>
+    <tr class="avl-chart-bl"><td class="first-td">9PM-12AM</td></tr>
+    <tr class="avl-chart-bl"><td class="first-td">12AM-6AM</td></tr>
+</table>
+
+</div>

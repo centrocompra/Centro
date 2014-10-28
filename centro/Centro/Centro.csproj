@@ -1,0 +1,1637 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5E7088AA-9BDA-4793-968E-C4B18E9793CF}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Replictivity</RootNamespace>
+    <AssemblyName>Centro</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPalAdaptiveAccountsSDK">
+      <HintPath>..\packages\PayPalAdaptiveAccountsSDK.2.4.100\lib\PayPalAdaptiveAccountsSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPalAdaptivePaymentsSDK">
+      <HintPath>..\packages\PayPalAdaptivePaymentsSDK.2.4.100\lib\PayPalAdaptivePaymentsSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPalCoreSDK">
+      <HintPath>..\packages\PayPalCoreSDK.1.2.0\lib\PayPalCoreSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Json">
+      <HintPath>C:\Users\pushpendra\Desktop\System.Net.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>C:\Users\pushpendra\Desktop\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>C:\Users\pushpendra\Desktop\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.2.0.20710.0\lib\net40\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.0.3.12153\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContestController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ContestController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
+    <Compile Include="Controllers\FeedBackController.cs" />
+    <Compile Include="Controllers\FrontEndBaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HubController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ShopsController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CaptchaModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\bootstrap\Models\JsonHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Query.sql" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\admin.css" />
+    <Content Include="Content\css\flexslider.css" />
+    <Content Include="Content\css\fonts.css" />
+    <Content Include="Content\css\form.css" />
+    <Content Include="Content\css\reset.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\-contest.png" />
+    <Content Include="Content\images\-default_product.png" />
+    <Content Include="Content\images\-list-style-disk.jpg" />
+    <Content Include="Content\images\.olcontest.png" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\banner_img.png" />
+    <Content Include="Content\images\bg.png" />
+    <Content Include="Content\images\blog-image.png" />
+    <Content Include="Content\images\btn-bg-blk.png" />
+    <Content Include="Content\images\btn-bg-orng.png" />
+    <Content Include="Content\images\act-contest.png" />
+    <Content Include="Content\images\act-create.png" />
+    <Content Include="Content\images\act-proj.png" />
+    <Content Include="Content\images\activate.png" />
+    <Content Include="Content\images\animated-overlay.gif" />
+    <Content Include="Content\images\archives.png" />
+    <Content Include="Content\images\arrow4.png" />
+    <Content Include="Content\images\arrow_shap.png" />
+    <Content Include="Content\images\arrow_shopmenu.png" />
+    <Content Include="Content\images\blank.gif" />
+    <Content Include="Content\images\blog-default.jpg" />
+    <Content Include="Content\images\blue-eye.jpg" />
+    <Content Include="Content\images\breadcrumb-points.gif" />
+    <Content Include="Content\images\button.png" />
+    <Content Include="Content\images\buttons - Copy.png" />
+    <Content Include="Content\images\buttons-black - Copy.png" />
+    <Content Include="Content\images\buttons-black.png" />
+    <Content Include="Content\images\buttons.png" />
+    <Content Include="Content\images\calender-icon.gif" />
+    <Content Include="Content\images\cart-product1.png" />
+    <Content Include="Content\images\clock.png" />
+    <Content Include="Content\images\close-small.png" />
+    <Content Include="Content\images\closed-eye.png" />
+    <Content Include="Content\images\closeIcon.png" />
+    <Content Include="Content\images\contest.png" />
+    <Content Include="Content\images\copy-data.gif" />
+    <Content Include="Content\images\dashboard-graphic.jpg" />
+    <Content Include="Content\images\deactivate.png" />
+    <Content Include="Content\images\default_pik.png" />
+    <Content Include="Content\images\default_product.old.png" />
+    <Content Include="Content\images\desh.png" />
+    <Content Include="Content\images\dislike.png" />
+    <Content Include="Content\images\dsic.png" />
+    <Content Include="Content\images\dwn.png" />
+    <Content Include="Content\images\edit_icon.gif" />
+    <Content Include="Content\images\eye-small-icon.png" />
+    <Content Include="Content\images\f-share.jpg" />
+    <Content Include="Content\images\face.png" />
+    <Content Include="Content\images\facebook.png" />
+    <Content Include="Content\images\facebook2.png" />
+    <Content Include="Content\images\fancybox-x.png" />
+    <Content Include="Content\images\fancybox-y.png" />
+    <Content Include="Content\images\fancybox.png" />
+    <Content Include="Content\images\fancy_close.png" />
+    <Content Include="Content\images\fancy_loading.png" />
+    <Content Include="Content\images\fancy_nav_left.png" />
+    <Content Include="Content\images\fancy_nav_right.png" />
+    <Content Include="Content\images\fancy_shadow_e.png" />
+    <Content Include="Content\images\fancy_shadow_n.png" />
+    <Content Include="Content\images\fancy_shadow_ne.png" />
+    <Content Include="Content\images\fancy_shadow_nw.png" />
+    <Content Include="Content\images\fancy_shadow_s.png" />
+    <Content Include="Content\images\fancy_shadow_se.png" />
+    <Content Include="Content\images\fancy_shadow_sw.png" />
+    <Content Include="Content\images\fancy_shadow_w.png" />
+    <Content Include="Content\images\fancy_title_left.png" />
+    <Content Include="Content\images\fancy_title_main.png" />
+    <Content Include="Content\images\fancy_title_over.png" />
+    <Content Include="Content\images\fancy_title_right.png" />
+    <Content Include="Content\images\fav-button.png" />
+    <Content Include="Content\images\feedback.png" />
+    <Content Include="Content\images\flag.png" />
+    <Content Include="Content\images\foot-bg.gif" />
+    <Content Include="Content\images\gird.png" />
+    <Content Include="Content\images\go_btn.png" />
+    <Content Include="Content\images\grey-star.png" />
+    <Content Include="Content\images\happy.png" />
+    <Content Include="Content\images\head.png" />
+    <Content Include="Content\images\heart1-min.png" />
+    <Content Include="Content\images\heart1-plus.png" />
+    <Content Include="Content\images\heart1.png" />
+    <Content Include="Content\images\ico-bag.png" />
+    <Content Include="Content\images\ico-hammer.png" />
+    <Content Include="Content\images\ico-job.png" />
+    <Content Include="Content\images\ico-speaker.png" />
+    <Content Include="Content\images\iew_btn.png" />
+    <Content Include="Content\images\image-icon.gif" />
+    <Content Include="Content\images\images.jpg" />
+    <Content Include="Content\images\img-att.png" />
+    <Content Include="Content\images\inbox.png" />
+    <Content Include="Content\images\input_bg.gif" />
+    <Content Include="Content\images\job-left.jpg" />
+    <Content Include="Content\images\job-udi1.png" />
+    <Content Include="Content\images\job-udi2.png" />
+    <Content Include="Content\images\job-udi3.png" />
+    <Content Include="Content\images\job-udi4.png" />
+    <Content Include="Content\images\license.jpg" />
+    <Content Include="Content\images\like.png" />
+    <Content Include="Content\images\linkdin.png" />
+    <Content Include="Content\images\list-style-disk.jpg" />
+    <Content Include="Content\images\logo - Copy.png" />
+    <Content Include="Content\images\logo1-bkp.png" />
+    <Content Include="Content\images\logobg.jpg" />
+    <Content Include="Content\images\logobg1.jpg" />
+    <Content Include="Content\images\main-crnr.gif" />
+    <Content Include="Content\images\main-lr.gif" />
+    <Content Include="Content\images\menu-sep.png" />
+    <Content Include="Content\images\message.png" />
+    <Content Include="Content\images\mobile-img1.png" />
+    <Content Include="Content\images\mobile1.png" />
+    <Content Include="Content\images\mobile2.png" />
+    <Content Include="Content\images\mobile3.png" />
+    <Content Include="Content\images\mobile4.png" />
+    <Content Include="Content\images\open-eye.png" />
+    <Content Include="Content\images\order-crc-infoi.png" />
+    <Content Include="Content\images\pagination-arrow.png" />
+    <Content Include="Content\images\pending.png" />
+    <Content Include="Content\images\pink-heart.jpg" />
+    <Content Include="Content\images\pinterest.png" />
+    <Content Include="Content\images\plus.png" />
+    <Content Include="Content\images\minus.png" />
+    <Content Include="Content\images\alert_icon.png" />
+    <Content Include="Content\images\accolades.gif" />
+    <Content Include="Content\images\active-arrow.png" />
+    <Content Include="Content\images\add-banner.png" />
+    <Content Include="Content\images\add-to-cart.gif" />
+    <Content Include="Content\images\add-to-favs.gif" />
+    <Content Include="Content\images\arrow.jpg" />
+    <Content Include="Content\images\arrow3.png" />
+    <Content Include="Content\images\arrow_header_shop.png" />
+    <Content Include="Content\images\asc.gif" />
+    <Content Include="Content\images\avatar.png" />
+    <Content Include="Content\images\banner.jpg" />
+    <Content Include="Content\images\banner.png" />
+    <Content Include="Content\images\cards-icon.png" />
+    <Content Include="Content\images\cards.png" />
+    <Content Include="Content\images\Chinese_Girl_Painting_4__24.jpg" />
+    <Content Include="Content\images\close-btn.png" />
+    <Content Include="Content\images\close.png" />
+    <Content Include="Content\images\connect_btn.png" />
+    <Content Include="Content\images\default_product.png" />
+    <Content Include="Content\images\delete.png" />
+    <Content Include="Content\images\desc.gif" />
+    <Content Include="Content\images\edit.png" />
+    <Content Include="Content\images\error404.png" />
+    <Content Include="Content\images\fav-hrt.png" />
+    <Content Include="Content\images\feture_icon.png" />
+    <Content Include="Content\images\flagFav.png" />
+    <Content Include="Content\images\gray-left-arrow.gif" />
+    <Content Include="Content\images\header_bg.png" />
+    <Content Include="Content\images\Hub-p1.png" />
+    <Content Include="Content\images\Hub-p2.png" />
+    <Content Include="Content\images\icon1.png" />
+    <Content Include="Content\images\image.png" />
+    <Content Include="Content\images\img.jpg" />
+    <Content Include="Content\images\img1.png" />
+    <Content Include="Content\images\img2.jpg" />
+    <Content Include="Content\images\img2.png" />
+    <Content Include="Content\images\likes.jpg" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\loading1.gif" />
+    <Content Include="Content\images\loading_order.gif" />
+    <Content Include="Content\images\login_fb.png" />
+    <Content Include="Content\images\logo1.png" />
+    <Content Include="Content\images\logo2.png" />
+    <Content Include="Content\images\mail.png" />
+    <Content Include="Content\images\main-image.jpg" />
+    <Content Include="Content\images\menu_sep.png" />
+    <Content Include="Content\images\msg-icon.gif" />
+    <Content Include="Content\images\next-pre-btn-2.png" />
+    <Content Include="Content\images\orange-left-arrow.gif" />
+    <Content Include="Content\images\order.png" />
+    <Content Include="Content\images\payment-methods.gif" />
+    <Content Include="Content\images\paymentoptions.gif" />
+    <Content Include="Content\images\product-image.jpg" />
+    <Content Include="Content\images\product-image1.jpg" />
+    <Content Include="Content\images\product1.png" />
+    <Content Include="Content\images\product_display1.png" />
+    <Content Include="Content\images\product_display2.png" />
+    <Content Include="Content\images\product_display3.png" />
+    <Content Include="Content\images\product_display4.png" />
+    <Content Include="Content\images\product_display5.png" />
+    <Content Include="Content\images\product_display6.png" />
+    <Content Include="Content\images\product_img1.old.png" />
+    <Content Include="Content\images\product_img1.png" />
+    <Content Include="Content\images\product_img2.png" />
+    <Content Include="Content\images\product_img3.png" />
+    <Content Include="Content\images\product_img4.png" />
+    <Content Include="Content\images\product_img5.png" />
+    <Content Include="Content\images\product_img6.png" />
+    <Content Include="Content\images\product_overlay.png" />
+    <Content Include="Content\images\prof-like.jpg" />
+    <Content Include="Content\images\prof.jpg" />
+    <Content Include="Content\images\question.gif" />
+    <Content Include="Content\images\question_bg.png" />
+    <Content Include="Content\images\quick-edit-icon.gif" />
+    <Content Include="Content\images\reating-img.png" />
+    <Content Include="Content\images\recomended_product.png" />
+    <Content Include="Content\images\recomended_product2.png" />
+    <Content Include="Content\images\recomended_product3.png" />
+    <Content Include="Content\images\recomended_product4.png" />
+    <Content Include="Content\images\red-heart.png" />
+    <Content Include="Content\images\related-products.gif" />
+    <Content Include="Content\images\sad.png" />
+    <Content Include="Content\images\search_btn.gif" />
+    <Content Include="Content\images\send.gif" />
+    <Content Include="Content\images\send_msg.png" />
+    <Content Include="Content\images\sent.png" />
+    <Content Include="Content\images\sep.png" />
+    <Content Include="Content\images\sep1.png" />
+    <Content Include="Content\images\shadow.png" />
+    <Content Include="Content\images\share.png" />
+    <Content Include="Content\images\spacer.gif" />
+    <Content Include="Content\images\squares.png" />
+    <Content Include="Content\images\sr-buy.png" />
+    <Content Include="Content\images\sr-draft.png" />
+    <Content Include="Content\images\sr-recv.png" />
+    <Content Include="Content\images\sr-sell.png" />
+    <Content Include="Content\images\sr-sent.png" />
+    <Content Include="Content\images\stars.png" />
+    <Content Include="Content\images\stars1.png" />
+    <Content Include="Content\images\step-active.old.png" />
+    <Content Include="Content\images\step-completed.old.png" />
+    <Content Include="Content\images\submit-btn.gif" />
+    <Content Include="Content\images\support_launch_sprite_flat.png" />
+    <Content Include="Content\images\text_bg.png" />
+    <Content Include="Content\images\tik.png" />
+    <Content Include="Content\images\tip.png" />
+    <Content Include="Content\images\top-menu-icons.png" />
+    <Content Include="Content\images\transparent_1x1.png" />
+    <Content Include="Content\images\twit.png" />
+    <Content Include="Content\images\twitter.png" />
+    <Content Include="Content\images\twitter2.png" />
+    <Content Include="Content\images\ui-anim_basic_16x16.gif" />
+    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\images\user-small-icon.png" />
+    <Content Include="Content\images\user.jpg" />
+    <Content Include="Content\images\user.png" />
+    <Content Include="Content\images\user_img.png" />
+    <Content Include="Content\images\utton_bg.png" />
+    <Content Include="Content\images\view.gif" />
+    <Content Include="Content\images\view.png" />
+    <Content Include="Content\images\watch-small-icon.png" />
+    <Content Include="Content\images\white-trans.png" />
+    <Content Include="Content\images\xperiaUL1-300x167.jpg" />
+    <Content Include="Content\images\youtube.png" />
+    <Content Include="Content\images\zoom.png" />
+    <Content Include="Content\paging\images\arrow-down.png" />
+    <Content Include="Content\paging\images\arrow-down1.png" />
+    <Content Include="Content\paging\images\arrow-up.png" />
+    <Content Include="Content\paging\images\arrow-up1.png" />
+    <Content Include="Content\paging\images\im.png" />
+    <Content Include="Content\paging\style.css" />
+    <Content Include="Deals\default_product.png" />
+    <Content Include="EmailTemplates\BuyerRefund.htm" />
+    <Content Include="EmailTemplates\PasswordResetTemplate.htm" />
+    <Content Include="EmailTemplates\SendContestRequest.htm" />
+    <Content Include="EmailTemplates\JobConfirmation.htm" />
+    <Content Include="EmailTemplates\customReleasePayment.htm" />
+    <Content Include="EmailTemplates\ReportMail.html" />
+    <Content Include="EmailTemplates\SendProductPurchaseEmailToSeller.htm" />
+    <Content Include="EmailTemplates\SendProductPurchaseEmail.htm" />
+    <Content Include="EmailTemplates\files.htm" />
+    <Content Include="EmailTemplates\SendDownloadFileLinks.htm" />
+    <Content Include="EmailTemplates\productDetails.htm" />
+    <Content Include="EmailTemplates\VerifyEmail.htm" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\active.png" />
+    <Content Include="Content\images\aplied.png" />
+    <Content Include="Images\avatar.png" />
+    <Content Include="Images\banner_img.png" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\blog-image.png" />
+    <Content Include="Images\border.png" />
+    <Content Include="Images\button.png" />
+    <Content Include="Images\cards.png" />
+    <Content Include="Images\cart-product1.png" />
+    <Content Include="Images\cart.png" />
+    <Content Include="Images\close-btn.png" />
+    <Content Include="EmailTemplates\VerifyEmailOnUpdate.htm" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\dashboard-graphic.png" />
+    <Content Include="Images\default_pik.png" />
+    <Content Include="Images\desh.png" />
+    <Content Include="Images\dsic.png" />
+    <Content Include="Images\edit.png" />
+    <Content Include="Images\face.png" />
+    <Content Include="Images\facebook.png" />
+    <Content Include="Images\facebook2.png" />
+    <Content Include="Images\gird.png" />
+    <Content Include="Images\go_btn.png" />
+    <Content Include="Images\head.png" />
+    <Content Include="Images\header_bg.png" />
+    <Content Include="Images\iew_btn.png" />
+    <Content Include="Images\image.png" />
+    <Content Include="Images\images.jpg" />
+    <Content Include="Images\img-att.png" />
+    <Content Include="Images\img2.jpg" />
+    <Content Include="Images\inactive.png" />
+    <Content Include="Images\linkdin.png" />
+    <Content Include="Images\login_fb.png" />
+    <Content Include="Images\logout.gif" />
+    <Content Include="Content\images\arrow.png" />
+    <Content Include="Content\images\arrow2.png" />
+    <Content Include="Content\images\arwBlk.png" />
+    <Content Include="Content\images\body-bg.jpg" />
+    <Content Include="Content\images\bor.png" />
+    <Content Include="Content\images\border.png" />
+    <Content Include="Content\images\btn-bg.png" />
+    <Content Include="Content\images\btn-bg2.png" />
+    <Content Include="Content\images\btn.png" />
+    <Content Include="Content\images\cancel-sec.png" />
+    <Content Include="Content\images\cart.png" />
+    <Content Include="Content\images\comment-ico.png" />
+    <Content Include="Content\images\edit-delete.png" />
+    <Content Include="Content\images\controls.png" />
+    <Content Include="Content\images\fb.png" />
+    <Content Include="Content\images\footer-bg.png" />
+    <Content Include="Content\images\fwd.png" />
+    <Content Include="Content\images\ico1.png" />
+    <Content Include="Content\images\ico2.png" />
+    <Content Include="Content\images\ico3.png" />
+    <Content Include="Content\images\ico4.png" />
+    <Content Include="Content\images\ico5.png" />
+    <Content Include="Content\images\icons.png" />
+    <Content Include="Content\images\img.gif" />
+    <Content Include="Content\images\img2.gif" />
+    <Content Include="Content\images\img3.gif" />
+    <Content Include="Content\images\img4.gif" />
+    <Content Include="Content\images\left-sign-up-background.png" />
+    <Content Include="Content\images\loadingAnimation.gif" />
+    <Content Include="Content\images\login_icon.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\move.png" />
+    <Content Include="Content\images\next-pre-btn.png" />
+    <Content Include="Content\images\orImg.png" />
+    <Content Include="Content\images\register.png" />
+    <Content Include="Content\images\save-sec.png" />
+    <Content Include="Content\images\overlay.png" />
+    <Content Include="Content\images\search.png" />
+    <Content Include="Content\images\step-active.png" />
+    <Content Include="Content\images\step-completed.png" />
+    <Content Include="Content\images\step-inactive1.png" />
+    <Content Include="Content\images\tab-bg.png" />
+    <Content Include="Content\images\tra-img.gif" />
+    <Content Include="Content\images\tra-img.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="EmailTemplates\ForgotPassword.htm" />
+    <Content Include="EmailTemplates\UserRegistration.htm" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\arrow.png" />
+    <Content Include="Images\arrow2.png" />
+    <Content Include="Images\arwBlk.png" />
+    <Content Include="Images\body-bg.jpg" />
+    <Content Include="Images\bor.png" />
+    <Content Include="Images\btn-bg.png" />
+    <Content Include="Images\btn-bg2.png" />
+    <Content Include="Images\btn.png" />
+    <Content Include="Images\comment-ico.png" />
+    <Content Include="Images\fb.png" />
+    <Content Include="Images\footer-bg.png" />
+    <Content Include="Images\fwd.png" />
+    <Content Include="Images\ico1.png" />
+    <Content Include="Images\ico2.png" />
+    <Content Include="Images\ico3.png" />
+    <Content Include="Images\ico4.png" />
+    <Content Include="Images\ico5.png" />
+    <Content Include="Images\icons.png" />
+    <Content Include="Images\img.gif" />
+    <Content Include="Images\img2.gif" />
+    <Content Include="Images\img3.gif" />
+    <Content Include="Images\img4.gif" />
+    <Content Include="Images\left-sign-up-background.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\menu-sep.png" />
+    <Content Include="Images\mobile-img1.png" />
+    <Content Include="Images\mobile1.png" />
+    <Content Include="Images\mobile2.png" />
+    <Content Include="Images\mobile3.png" />
+    <Content Include="Images\mobile4.png" />
+    <Content Include="Images\move.png" />
+    <Content Include="Images\next-pre-btn.png" />
+    <Content Include="Images\orImg.png" />
+    <Content Include="Images\overlay.png" />
+    <Content Include="Images\pagination-arrow.png" />
+    <Content Include="Images\pinterest.png" />
+    <Content Include="Images\product1.png" />
+    <Content Include="Images\product_display1.png" />
+    <Content Include="Images\product_display2.png" />
+    <Content Include="Images\product_display3.png" />
+    <Content Include="Images\product_display4.png" />
+    <Content Include="Images\product_display5.png" />
+    <Content Include="Images\product_display6.png" />
+    <Content Include="Images\product_img1.png" />
+    <Content Include="Images\product_img2.png" />
+    <Content Include="Images\product_img3.png" />
+    <Content Include="Images\product_img4.png" />
+    <Content Include="Images\product_img5.png" />
+    <Content Include="Images\product_img6.png" />
+    <Content Include="Images\product_overlay.png" />
+    <Content Include="Images\question.gif" />
+    <Content Include="Images\question_bg.png" />
+    <Content Include="Images\reating-img.png" />
+    <Content Include="Images\recomended_product.png" />
+    <Content Include="Images\recomended_product2.png" />
+    <Content Include="Images\recomended_product3.png" />
+    <Content Include="Images\recomended_product4.png" />
+    <Content Include="Images\search.png" />
+    <Content Include="Images\sep.png" />
+    <Content Include="Images\sep1.png" />
+    <Content Include="Images\shadow.png" />
+    <Content Include="Images\squares.png" />
+    <Content Include="Images\star-half.png" />
+    <Content Include="Images\star-off.png" />
+    <Content Include="Images\star-on.png" />
+    <Content Include="Images\step-active.png" />
+    <Content Include="Images\step-completed.png" />
+    <Content Include="Images\step-inactive1.png" />
+    <Content Include="Images\support_launch_sprite_flat.png" />
+    <Content Include="Images\tab-bg.png" />
+    <Content Include="Images\fbConnect.png" />
+    <Content Include="Images\throbber.gif" />
+    <Content Include="Images\tip.png" />
+    <Content Include="Images\tra-img.gif" />
+    <Content Include="Images\tra-img.png" />
+    <Content Include="Images\twit.png" />
+    <Content Include="Images\twitter.png" />
+    <Content Include="Images\twitter2.png" />
+    <Content Include="Images\user_img.png" />
+    <Content Include="Images\utton_bg.png" />
+    <Content Include="Images\youtube.png" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap\css\bootstrap-overrides.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap.css" />
+    <Content Include="Scripts\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Scripts\bootstrap\css\calendar.css" />
+    <Content Include="Scripts\bootstrap\css\chart-showcase.css" />
+    <Content Include="Scripts\bootstrap\css\code-editor.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\calendar.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\chart-showcase.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\elements.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\form-showcase.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\form-wizard.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\gallery.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\grids.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\index.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\layout.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\new-user.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\personal-info.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\signin.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\signup.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\tables.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\ui-elements.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\user-list.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\user-profile.css" />
+    <Content Include="Scripts\bootstrap\css\compiled\web-app-icons.css" />
+    <Content Include="Scripts\bootstrap\css\daterangePicker.css" />
+    <Content Include="Scripts\bootstrap\css\elements.css" />
+    <Content Include="Scripts\bootstrap\css\form-showcase.css" />
+    <Content Include="Scripts\bootstrap\css\form-wizard.css" />
+    <Content Include="Scripts\bootstrap\css\gallery.css" />
+    <Content Include="Scripts\bootstrap\css\grids.css" />
+    <Content Include="Scripts\bootstrap\css\icons.css" />
+    <Content Include="Scripts\bootstrap\css\index.css" />
+    <Content Include="Scripts\bootstrap\css\layout.css" />
+    <Content Include="Scripts\bootstrap\css\lib\bootstrap-wysihtml5.css" />
+    <Content Include="Scripts\bootstrap\css\lib\bootstrap.datepicker.css" />
+    <Content Include="Scripts\bootstrap\css\lib\font-awesome.css" />
+    <Content Include="Scripts\bootstrap\css\lib\fullcalendar.css" />
+    <Content Include="Scripts\bootstrap\css\lib\fullcalendar.print.css" />
+    <Content Include="Scripts\bootstrap\css\lib\jquery-ui-1.10.2.custom.css" />
+    <Content Include="Scripts\bootstrap\css\lib\morris.css" />
+    <Content Include="Scripts\bootstrap\css\lib\select2.css" />
+    <Content Include="Scripts\bootstrap\css\lib\uniform.default.css" />
+    <Content Include="Scripts\bootstrap\css\new-user.css" />
+    <Content Include="Scripts\bootstrap\css\personal-info.css" />
+    <Content Include="Scripts\bootstrap\css\signin.css" />
+    <Content Include="Scripts\bootstrap\css\signup.css" />
+    <Content Include="Scripts\bootstrap\css\skins\dark.css" />
+    <Content Include="Scripts\bootstrap\css\tables.css" />
+    <Content Include="Scripts\bootstrap\css\ui-elements.css" />
+    <Content Include="Scripts\bootstrap\css\user-list.css" />
+    <Content Include="Scripts\bootstrap\css\user-profile.css" />
+    <Content Include="Scripts\bootstrap\css\web-app-icons.css" />
+    <Content Include="Scripts\bootstrap\font\fontawesome-webfont.svg" />
+    <Content Include="Scripts\bootstrap\img\bgs\10.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\11.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\12.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\13.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\14.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\6.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\7.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\8.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\9.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\back-blue.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\back-green.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\back-orange.png" />
+    <Content Include="Scripts\bootstrap\img\bgs\blueish.jpg" />
+    <Content Include="Scripts\bootstrap\img\bgs\landscape.jpg" />
+    <Content Include="Scripts\bootstrap\img\btn-attach.png" />
+    <Content Include="Scripts\bootstrap\img\btn-setting.png" />
+    <Content Include="Scripts\bootstrap\img\btn-shuffle.png" />
+    <Content Include="Scripts\bootstrap\img\btn-tool.png" />
+    <Content Include="Scripts\bootstrap\img\contact-img.png" />
+    <Content Include="Scripts\bootstrap\img\contact-img2.png" />
+    <Content Include="Scripts\bootstrap\img\contact-profile.png" />
+    <Content Include="Scripts\bootstrap\img\gallery-preview.jpg" />
+    <Content Include="Scripts\bootstrap\img\gallery1.jpg" />
+    <Content Include="Scripts\bootstrap\img\gallery2.jpg" />
+    <Content Include="Scripts\bootstrap\img\gallery3.jpg" />
+    <Content Include="Scripts\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Scripts\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Scripts\bootstrap\img\ico-arrow-black.png" />
+    <Content Include="Scripts\bootstrap\img\ico-gallery-edit.png" />
+    <Content Include="Scripts\bootstrap\img\ico-gallery-trash.png" />
+    <Content Include="Scripts\bootstrap\img\ico-mail.png" />
+    <Content Include="Scripts\bootstrap\img\ico-phone.png" />
+    <Content Include="Scripts\bootstrap\img\ico-table-delete.png" />
+    <Content Include="Scripts\bootstrap\img\ico-table-edit.png" />
+    <Content Include="Scripts\bootstrap\img\ico-table-new.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\animated-overlay.gif" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\slider-handler.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\slider-handler2.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-icons_228ef1_256x240.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Scripts\bootstrap\img\jquery-ui\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\bootstrap\img\lens.png" />
+    <Content Include="Scripts\bootstrap\img\logo-white.png" />
+    <Content Include="Scripts\bootstrap\img\logo.png" />
+    <Content Include="Scripts\bootstrap\img\new-gallery-img.png" />
+    <Content Include="Scripts\bootstrap\img\no-img-gallery.png" />
+    <Content Include="Scripts\bootstrap\img\personal-info.png" />
+    <Content Include="Scripts\bootstrap\img\select-bg.png" />
+    <Content Include="Scripts\bootstrap\img\select2.png" />
+    <Content Include="Scripts\bootstrap\img\select2\select2.png" />
+    <Content Include="Scripts\bootstrap\img\select2\select2x2.png" />
+    <Content Include="Scripts\bootstrap\img\select2\spinner.gif" />
+    <Content Include="Scripts\bootstrap\img\skin-nav-bullets.png" />
+    <Content Include="Scripts\bootstrap\img\sprite_adminIcons.png" />
+    <Content Include="Scripts\bootstrap\img\table-icons.png" />
+    <Content Include="Scripts\bootstrap\img\table-img.png" />
+    <Content Include="Scripts\bootstrap\img\uniform\bg-input-focus.png" />
+    <Content Include="Scripts\bootstrap\img\uniform\bg-input.png" />
+    <Content Include="Scripts\bootstrap\img\uniform\sprite.png" />
+    <Content Include="Scripts\bootstrap\js\bootstrap-wysihtml5-0.0.2.js" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.datepicker.js" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.js" />
+    <Content Include="Scripts\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap\js\dateRangePicker.js" />
+    <Content Include="Scripts\bootstrap\js\fuelux.wizard.js" />
+    <Content Include="Scripts\bootstrap\js\fullcalendar.min.js" />
+    <Content Include="Scripts\bootstrap\js\gcal.js" />
+    <Content Include="Scripts\bootstrap\js\jquery-ui-1.10.2.custom.min.js" />
+    <Content Include="Scripts\bootstrap\js\jquery.flot.js" />
+    <Content Include="Scripts\bootstrap\js\jquery.flot.resize.js" />
+    <Content Include="Scripts\bootstrap\js\jquery.flot.stack.js" />
+    <Content Include="Scripts\bootstrap\js\jquery.knob.js" />
+    <Content Include="Scripts\bootstrap\js\jquery.tmpl.min.js" />
+    <Content Include="Scripts\bootstrap\js\jquery.uniform.min.js" />
+    <Content Include="Scripts\bootstrap\js\moment.js" />
+    <Content Include="Scripts\bootstrap\js\morris.min.js" />
+    <Content Include="Scripts\bootstrap\js\select2.min.js" />
+    <Content Include="Scripts\bootstrap\js\theme.js" />
+    <Content Include="Scripts\bootstrap\js\wysihtml5-0.3.0.js" />
+    <Content Include="Scripts\Custom\adapters\jquery.js" />
+    <Content Include="Scripts\Custom\address.js" />
+    <Content Include="Scripts\Custom\admin\addCategory.js" />
+    <Content Include="Scripts\Custom\admin\categoryPaging.js" />
+    <Content Include="Scripts\Custom\admin\ContestPaging.js" />
+    <Content Include="Scripts\Custom\admin\typesPaging.js" />
+    <Content Include="Scripts\Custom\admin\subcategoryPaging.js" />
+    <Content Include="Scripts\Custom\admin\productsPaging.js" />
+    <Content Include="Scripts\Custom\alerts.js" />
+    <Content Include="Scripts\Custom\build-config.js" />
+    <Content Include="Scripts\Custom\cart.js" />
+    <Content Include="Scripts\Custom\ckeditor.js" />
+    <Content Include="Scripts\Custom\config.js" />
+    <Content Include="Scripts\Custom\contents.css" />
+    <Content Include="Scripts\Custom\contest.js" />
+    <Content Include="Scripts\Custom\ContestPaging.js" />
+    <Content Include="Scripts\Custom\ContractPaging.js" />
+    <Content Include="Scripts\Custom\contestParticitae.js" />
+    <Content Include="Scripts\Custom\ActivitiesPaging.js" />
+    <Content Include="Scripts\Custom\AlertsPaging.js" />
+    <Content Include="Scripts\Custom\lang\af.js" />
+    <Content Include="Scripts\Custom\lang\ar.js" />
+    <Content Include="Scripts\Custom\lang\bg.js" />
+    <Content Include="Scripts\Custom\lang\bn.js" />
+    <Content Include="Scripts\Custom\lang\bs.js" />
+    <Content Include="Scripts\Custom\lang\ca.js" />
+    <Content Include="Scripts\Custom\lang\cs.js" />
+    <Content Include="Scripts\Custom\lang\cy.js" />
+    <Content Include="Scripts\Custom\lang\da.js" />
+    <Content Include="Scripts\Custom\lang\de.js" />
+    <Content Include="Scripts\Custom\lang\el.js" />
+    <Content Include="Scripts\Custom\lang\en-au.js" />
+    <Content Include="Scripts\Custom\lang\en-ca.js" />
+    <Content Include="Scripts\Custom\lang\en-gb.js" />
+    <Content Include="Scripts\Custom\lang\en.js" />
+    <Content Include="Scripts\Custom\lang\eo.js" />
+    <Content Include="Scripts\Custom\lang\es.js" />
+    <Content Include="Scripts\Custom\lang\et.js" />
+    <Content Include="Scripts\Custom\lang\eu.js" />
+    <Content Include="Scripts\Custom\lang\fa.js" />
+    <Content Include="Scripts\Custom\lang\fi.js" />
+    <Content Include="Scripts\Custom\lang\fo.js" />
+    <Content Include="Scripts\Custom\lang\fr-ca.js" />
+    <Content Include="Scripts\Custom\lang\fr.js" />
+    <Content Include="Scripts\Custom\lang\gl.js" />
+    <Content Include="Scripts\Custom\lang\gu.js" />
+    <Content Include="Scripts\Custom\lang\he.js" />
+    <Content Include="Scripts\Custom\lang\hi.js" />
+    <Content Include="Scripts\Custom\lang\hr.js" />
+    <Content Include="Scripts\Custom\lang\hu.js" />
+    <Content Include="Scripts\Custom\lang\id.js" />
+    <Content Include="Scripts\Custom\lang\is.js" />
+    <Content Include="Scripts\Custom\lang\it.js" />
+    <Content Include="Scripts\Custom\lang\ja.js" />
+    <Content Include="Scripts\Custom\lang\ka.js" />
+    <Content Include="Scripts\Custom\lang\km.js" />
+    <Content Include="Scripts\Custom\lang\ko.js" />
+    <Content Include="Scripts\Custom\lang\ku.js" />
+    <Content Include="Scripts\Custom\lang\lt.js" />
+    <Content Include="Scripts\Custom\lang\lv.js" />
+    <Content Include="Scripts\Custom\lang\mk.js" />
+    <Content Include="Scripts\Custom\lang\mn.js" />
+    <Content Include="Scripts\Custom\lang\ms.js" />
+    <Content Include="Scripts\Custom\lang\nb.js" />
+    <Content Include="Scripts\Custom\lang\nl.js" />
+    <Content Include="Scripts\Custom\lang\no.js" />
+    <Content Include="Scripts\Custom\lang\pl.js" />
+    <Content Include="Scripts\Custom\lang\pt-br.js" />
+    <Content Include="Scripts\Custom\lang\pt.js" />
+    <Content Include="Scripts\Custom\lang\ro.js" />
+    <Content Include="Scripts\Custom\lang\ru.js" />
+    <Content Include="Scripts\Custom\lang\si.js" />
+    <Content Include="Scripts\Custom\lang\sk.js" />
+    <Content Include="Scripts\Custom\lang\sl.js" />
+    <Content Include="Scripts\Custom\lang\sq.js" />
+    <Content Include="Scripts\Custom\lang\sr-latn.js" />
+    <Content Include="Scripts\Custom\lang\sr.js" />
+    <Content Include="Scripts\Custom\lang\sv.js" />
+    <Content Include="Scripts\Custom\lang\th.js" />
+    <Content Include="Scripts\Custom\lang\tr.js" />
+    <Content Include="Scripts\Custom\lang\ug.js" />
+    <Content Include="Scripts\Custom\lang\uk.js" />
+    <Content Include="Scripts\Custom\lang\vi.js" />
+    <Content Include="Scripts\Custom\lang\zh-cn.js" />
+    <Content Include="Scripts\Custom\lang\zh.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="Scripts\Custom\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\Custom\plugins\about\dialogs\about.js" />
+    <Content Include="Scripts\Custom\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Scripts\Custom\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Scripts\Custom\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Scripts\Custom\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Scripts\Custom\plugins\fakeobjects\images\spacer.gif" />
+    <Content Include="Scripts\Custom\plugins\icons.png" />
+    <Content Include="Scripts\Custom\plugins\icons_hidpi.png" />
+    <Content Include="Scripts\Custom\plugins\image\dialogs\image.js" />
+    <Content Include="Scripts\Custom\plugins\image\images\noimage.png" />
+    <Content Include="Scripts\Custom\plugins\link\dialogs\anchor.js" />
+    <Content Include="Scripts\Custom\plugins\link\dialogs\link.js" />
+    <Content Include="Scripts\Custom\plugins\link\images\anchor.png" />
+    <Content Include="Scripts\Custom\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Scripts\Custom\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Scripts\Custom\plugins\magicline\images\icon.png" />
+    <Content Include="Scripts\Custom\plugins\pastefromword\filter\default.js" />
+    <Content Include="Scripts\Custom\plugins\scayt\dialogs\options.js" />
+    <Content Include="Scripts\Custom\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\Custom\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Scripts\Custom\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Scripts\Custom\plugins\table\dialogs\table.js" />
+    <Content Include="Scripts\Custom\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Scripts\Custom\plugins\wsc\dialogs\tmp.html" />
+    <Content Include="Scripts\Custom\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Scripts\Custom\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Scripts\Custom\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Scripts\Custom\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Scripts\Custom\sample.css" />
+    <Content Include="Scripts\Custom\ShopContestPaging.js" />
+    <Content Include="Scripts\Custom\MyContracts.js" />
+    <Content Include="Scripts\Custom\job.js" />
+    <Content Include="Scripts\Custom\favorites.js" />
+    <Content Include="Scripts\Custom\hubs.js" />
+    <Content Include="Scripts\Custom\invoice.js" />
+    <Content Include="Scripts\Custom\orderdetails.js" />
+    <Content Include="Scripts\Custom\OrderListing.js" />
+    <Content Include="Scripts\Custom\feedback.js" />
+    <Content Include="Scripts\Custom\reports.js" />
+    <Content Include="Scripts\Custom\searchproductsPaging.js" />
+    <Content Include="Scripts\Custom\shopchart.js" />
+    <Content Include="Scripts\Custom\skins\moono\dialog.css" />
+    <Content Include="Scripts\Custom\skins\moono\dialog_ie.css" />
+    <Content Include="Scripts\Custom\skins\moono\dialog_ie7.css" />
+    <Content Include="Scripts\Custom\skins\moono\dialog_ie8.css" />
+    <Content Include="Scripts\Custom\skins\moono\dialog_iequirks.css" />
+    <Content Include="Scripts\Custom\skins\moono\dialog_opera.css" />
+    <Content Include="Scripts\Custom\skins\moono\editor.css" />
+    <Content Include="Scripts\Custom\skins\moono\editor_gecko.css" />
+    <Content Include="Scripts\Custom\skins\moono\editor_ie.css" />
+    <Content Include="Scripts\Custom\skins\moono\editor_ie7.css" />
+    <Content Include="Scripts\Custom\skins\moono\editor_ie8.css" />
+    <Content Include="Scripts\Custom\skins\moono\editor_iequirks.css" />
+    <Content Include="Scripts\Custom\skins\moono\icons.png" />
+    <Content Include="Scripts\Custom\skins\moono\icons_hidpi.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\arrow.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\close.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\hidpi\close.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\hidpi\lock.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\lock-open.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\lock.png" />
+    <Content Include="Scripts\Custom\skins\moono\images\refresh.png" />
+    <Content Include="Scripts\Custom\styles.js" />
+    <Content Include="Scripts\Custom\USAStates.js" />
+    <Content Include="Scripts\Custom\CustomRequest.js" />
+    <Content Include="Scripts\Custom\replymessage.js" />
+    <Content Include="Scripts\Custom\messagePaging.js" />
+    <Content Include="Scripts\Custom\messages.js" />
+    <Content Include="Scripts\Custom\payment.js" />
+    <Content Include="Scripts\Custom\featuredProductsPaging.js" />
+    <Content Include="Scripts\Custom\productByShopPaging.js" />
+    <Content Include="Scripts\Custom\productsPaging.js" />
+    <Content Include="Scripts\Custom\RequestPaging.js" />
+    <Content Include="Scripts\Custom\shopsByServices.js" />
+    <Content Include="Scripts\Custom\StepsCompleted.js" />
+    <Content Include="Scripts\Custom\preview.js" />
+    <Content Include="Scripts\Custom\GetPaid.js" />
+    <Content Include="Scripts\Custom\ListItems.js" />
+    <Content Include="Scripts\Custom\admin\userPaging.js" />
+    <Content Include="Scripts\Custom\admin\_addUser.js" />
+    <Content Include="Scripts\Custom\admin\_adminLayout.js" />
+    <Content Include="Scripts\Custom\paging\jquery.tmpl.min.js" />
+    <Content Include="Scripts\Custom\paging\json_eval.js" />
+    <Content Include="Scripts\Custom\paging\pagingMain.js" />
+    <Content Include="Scripts\Custom\signIn.js" />
+    <Content Include="Scripts\Custom\userProfile.js" />
+    <Content Include="Scripts\Custom\stateCountry.js" />
+    <Content Include="Scripts\jquery-1.9.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\System\AjaxCall.js" />
+    <Content Include="Scripts\System\ajaxform.js" />
+    <Content Include="Scripts\Custom\Common.js" />
+    <Content Include="Scripts\Custom\CreateShop.js" />
+    <Content Include="Scripts\Custom\forgotpassword.js" />
+    <Content Include="Scripts\Custom\paging.js" />
+    <Content Include="Scripts\Custom\resetPassword.js" />
+    <Content Include="Scripts\Custom\signUp.js" />
+    <Content Include="Scripts\Custom\_Layout.js" />
+    <Content Include="Scripts\System\html5.js" />
+    <Content Include="Scripts\System\jquery-1.7.1-vsdoc.js" />
+    <Content Include="Scripts\System\jquery-1.7.1.js" />
+    <Content Include="Scripts\System\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\System\jquery-te-1.3.6.js" />
+    <Content Include="Scripts\System\jquery-ui-1.8.11.js" />
+    <Content Include="Scripts\System\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\System\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\System\jquery-ui.custom.min.js" />
+    <Content Include="Scripts\System\jquery.fancybox-1.3.4.js" />
+    <Content Include="Scripts\System\jquery.flexslider.js" />
+    <Content Include="Scripts\System\jquery.jcarousel.min.js" />
+    <Content Include="Content\images\star-half.png" />
+    <Content Include="Content\images\star-off.png" />
+    <Content Include="Content\images\star-on.png" />
+    <Content Include="Scripts\System\jquery.raty.min.js" />
+    <Content Include="Scripts\System\search.js" />
+    <Content Include="Scripts\System\jquery.ui.core.js" />
+    <Content Include="Scripts\System\jquery.ui.core.min.js" />
+    <Content Include="Scripts\System\jquery.ui.datepicker.min.js" />
+    <Content Include="Scripts\System\jquery.ui.menu.js" />
+    <Content Include="Scripts\System\jquery.ui.mouse.min.js" />
+    <Content Include="Scripts\System\jquery.ui.position.js" />
+    <Content Include="Scripts\System\jquery.ui.position.min.js" />
+    <Content Include="Scripts\System\jquery.ui.sortable.min.js" />
+    <Content Include="Scripts\System\jquery.ui.widget.js" />
+    <Content Include="Scripts\System\jquery.ui.widget.min.js" />
+    <Content Include="Scripts\System\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\System\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\System\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\System\jquery.validate.js" />
+    <Content Include="Scripts\System\jquery.validate.min.js" />
+    <Content Include="Scripts\System\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\System\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\System\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\System\knockout-2.1.0.js" />
+    <Content Include="Scripts\System\modernizr-2.5.3.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\System\_references.js" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.old.cshtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Images\Attachments\" />
+    <Folder Include="Images\Contest\" />
+    <Folder Include="Images\DownloadableFiles\" />
+    <Folder Include="Images\ProductImages\" />
+    <Folder Include="Images\ProfileImage\" />
+    <Folder Include="Images\ShopImages\" />
+    <Folder Include="Logs\" />
+    <Folder Include="Temp\LoginFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
+      <Project>{0DE98EB9-15C2-4D13-9732-6605E78DB0EB}</Project>
+      <Name>BusinessLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Auth\auth.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_SellerLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_BuyerLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LeftSideMenuLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\SignUp.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Signin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Shop.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\_ShopInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\_Policies.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\_Sections.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\_ShopName.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_ExternalFacebookPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\ForgotPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ActivateAccount.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\ResetPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\AboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\ContactUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\FAQ.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_SellerSubMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\ListItems.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Home\Dashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\LogIn.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayOut.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminScripts.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Footer.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Header.cshtml" />
+    <Content Include="Areas\Admin\Views\User\AddUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ManageUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\_Users.cshtml" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="Areas\Admin\Views\Categories\ManageCategories.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\_Categories.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\AddCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Category.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\_Products.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ChangePassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\SiteFee.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\NormalOrders.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\_Orders.cshtml" />
+    <Content Include="Areas\Admin\Views\Contest\ManageContest.cshtml" />
+    <Content Include="Areas\Admin\Views\Contest\AddContest.cshtml" />
+    <Content Include="Areas\Admin\Views\Contest\ManageContestRequest.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Paging.cshtml" />
+    <Content Include="Areas\Admin\Views\Contest\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Contest\_Contests.cshtml" />
+    <Content Include="Views\Shared\_Captcha.cshtml" />
+    <Content Include="Views\Shared\_InvisibleCaptcha.cshtml" />
+    <Content Include="Views\Shared\_facebookLogin.cshtml" />
+    <Content Include="Views\User\_Item.cshtml" />
+    <Content Include="Views\Home\SignupSuccess.cshtml" />
+    <Content Include="Views\Shared\_BuyerLeftSideMenu.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\EditProfile.cshtml" />
+    <Content Include="Views\User\GetPaid.cshtml" />
+    <Content Include="Views\User\_Payments.cshtml" />
+    <Content Include="Views\User\_SalesTax.cshtml" />
+    <Content Include="Views\User\PreviewShop.cshtml" />
+    <Content Include="Views\User\_ShopInformation.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Category.cshtml" />
+    <Content Include="Views\Shared\_Products.cshtml" />
+    <Content Include="Views\User\Home.cshtml" />
+    <Content Include="Views\Shared\_LeftSideBuyerCategoryMenuLayout.cshtml" />
+    <Content Include="Views\User\Category.cshtml" />
+    <Content Include="Views\Products\Product.cshtml" />
+    <Content Include="Views\Shops\Shop.cshtml" />
+    <Content Include="Views\User\Cart.cshtml" />
+    <Content Include="Views\User\_ManageListing.cshtml" />
+    <Content Include="Views\User\_InactiveListing.cshtml" />
+    <Content Include="Views\User\Listing.cshtml" />
+    <Content Include="Views\Cart\MyCart.cshtml" />
+    <Content Include="Views\Cart\_Cart.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Payment\CheckOut.cshtml" />
+    <Content Include="Views\Payment\Summary.cshtml" />
+    <Content Include="Views\Home\ManageBillingAddress.cshtml" />
+    <Content Include="Views\Home\_BillingAddress.cshtml" />
+    <Content Include="Views\Payment\Thankyou.cshtml" />
+    <Content Include="Views\Errors\Index.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Message\_Messages.cshtml" />
+    <Content Include="Views\Message\_Compose.cshtml" />
+    <Content Include="Views\Message\Compose.cshtml" />
+    <Content Include="Views\Shared\_LeftMenu.cshtml" />
+    <Content Include="Views\Shops\ShopByServices.cshtml" />
+    <Content Include="Views\Shops\_ShopsListing.cshtml" />
+    <Content Include="Views\Message\MyMessage.cshtml" />
+    <Content Include="Views\Shops\CustomRequest.cshtml" />
+    <Content Include="Views\Shops\ManageRequests.cshtml" />
+    <Content Include="Views\Shops\_RequestSent.cshtml" />
+    <Content Include="Views\Shops\_RequestRecieved.cshtml" />
+    <Content Include="Views\Message\ViewRequest.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Test\IPN.cshtml" />
+    <Content Include="Views\Invoice\Create.cshtml" />
+    <Content Include="Views\Invoice\_Invoices.cshtml" />
+    <Content Include="Views\Invoice\View.cshtml" />
+    <Content Include="Views\Message\MyCustomOrder.cshtml" />
+    <Content Include="Views\Message\BuyerCustomOrder.cshtml" />
+    <Content Include="Views\Payment\PaypalReturn.cshtml" />
+    <Content Include="Views\Payment\CustomOrderReturn.cshtml" />
+    <Content Include="Views\Shops\ManageOrders.cshtml" />
+    <Content Include="Views\Shops\_OrderListing.cshtml" />
+    <Content Include="Views\Shops\OrderDetail.cshtml" />
+    <Content Include="Views\Shared\_LeftCustomRequestMenu.cshtml" />
+    <Content Include="Views\Hub\Index.cshtml" />
+    <Content Include="Views\Hub\Create.cshtml" />
+    <Content Include="Views\Hub\_Template1.cshtml" />
+    <Content Include="Views\Message\_Contract.cshtml" />
+    <Content Include="Views\Message\Invoices.cshtml" />
+    <Content Include="Views\Hub\View.cshtml" />
+    <Content Include="Views\Hub\_ViewTemplate1.cshtml" />
+    <Content Include="Views\Hub\_ViewTemplate2.cshtml" />
+    <Content Include="Views\Hub\_Template2.cshtml" />
+    <Content Include="Views\Message\_Invoices.cshtml" />
+    <Content Include="Views\User\FavoriteProducts.cshtml" />
+    <Content Include="Views\User\_FavProducts.cshtml" />
+    <Content Include="Views\Message\_Hired.cshtml" />
+    <Content Include="Views\Shops\Hubs.cshtml" />
+    <Content Include="Views\Shops\_Hubs.cshtml" />
+    <Content Include="Views\Hub\HubDetails.cshtml" />
+    <Content Include="Views\Hub\_View.cshtml" />
+    <Content Include="Views\FeedBack\LeaveFeedBackPartial.cshtml" />
+    <Content Include="Views\FeedBack\old.ShopFeedBack.cshtml" />
+    <Content Include="Views\Shared\_HubListForHome.cshtml" />
+    <Content Include="Views\Hub\AllHubs.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Hub\_HubList.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Hub\Reports.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Contest\Create.cshtml" />
+    <Content Include="Views\Contest\ViewContest.cshtml" />
+    <Content Include="Views\Contest\My.cshtml" />
+    <Content Include="Views\Contest\Details.cshtml" />
+    <Content Include="Views\User\_FavShops.cshtml" />
+    <Content Include="Views\Hub\EditHub.cshtml" />
+    <Content Include="Views\Hub\_EditTemplate1.cshtml" />
+    <Content Include="Views\Hub\_EditTemplate2.cshtml" />
+    <Content Include="Views\Hub\_AddComment.cshtml" />
+    <Content Include="Views\Hub\_ViewHubComments.cshtml" />
+    <Content Include="Views\Hub\HubCommentByCommentID.cshtml" />
+    <Content Include="Views\Contest\Participate.cshtml" />
+    <Content Include="Views\Contest\Entries.cshtml" />
+    <Content Include="Views\Contest\Entry.cshtml" />
+    <Content Include="Views\Contest\Winner.cshtml" />
+    <Content Include="Views\Hub\HubsByTopic.cshtml" />
+    <Content Include="Views\Shared\_ContestLeftMenu.cshtml" />
+    <Content Include="Views\Home\Follow.cshtml" />
+    <Content Include="Views\Contest\_ContestList.cshtml" />
+    <Content Include="Views\Hub\UserHub.cshtml" />
+    <Content Include="Views\Shops\ShopAvailability.cshtml" />
+    <Content Include="Views\User\Activities.cshtml" />
+    <Content Include="Views\User\_Activities.cshtml" />
+    <Content Include="Views\Shared\_ActivityNotifications.cshtml" />
+    <Content Include="Views\User\CreateJob.cshtml" />
+    <Content Include="Views\User\Jobs.cshtml" />
+    <Content Include="Views\User\_Jobs.cshtml" />
+    <Content Include="Views\User\Job.cshtml" />
+    <Content Include="Views\User\MyJob.cshtml" />
+    <Content Include="Views\User\_ShopAvailbility.cshtml" />
+    <Content Include="Views\User\MyContracts.cshtml" />
+    <Content Include="Views\User\_JobListing.cshtml" />
+    <Content Include="Views\User\_Contracts.cshtml" />
+    <Content Include="Views\User\Recruit.cshtml" />
+    <Content Include="Views\User\_MyJobsListing.cshtml" />
+    <Content Include="Views\User\_ApplyForJobPopup.cshtml" />
+    <Content Include="Views\User\_MyClients.cshtml" />
+    <Content Include="Views\User\_MyContractors.cshtml" />
+    <Content Include="Views\Shared\_ContratorMenuLeft.cshtml" />
+    <Content Include="Views\Shared\_MessageContratorMenuLeft.cshtml" />
+    <Content Include="Views\Shared\_Alerts.cshtml" />
+    <Content Include="Views\Shared\_AlertItems.cshtml" />
+    <Content Include="Views\User\_ProfilePayments.cshtml" />
+    <Content Include="Views\Shared\_ContestList.cshtml" />
+    <Content Include="Views\User\_FindJobListing.cshtml" />
+    <Content Include="Views\Shared\_FavProductsSmall.cshtml" />
+    <Content Include="Views\User\_ApplyForJobPopupNoShop.cshtml" />
+    <Content Include="Views\Shared\_Paging.cshtml" />
+    <Content Include="Views\Hub\_ManageHubsList.cshtml" />
+    <Content Include="Views\User\Alerts.cshtml" />
+    <Content Include="Views\User\_AlertsMain.cshtml" />
+    <Content Include="Views\Hub\_HubSearch.cshtml" />
+    <Content Include="Views\User\_NoShopPopup.cshtml" />
+    <Content Include="Views\Hub\_HubByTopic.cshtml" />
+    <Content Include="Views\Shared\_ShopProducts.cshtml" />
+    <Content Include="Views\Shared\_UserProfileRightBox.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_TopSearch.cshtml" />
+    <Content Include="Views\Shared\_ShopInfoDetailTop.cshtml" />
+    <Content Include="Views\FeedBack\ShopFeedBack.cshtml" />
+    <Content Include="Views\Products\Contests.cshtml" />
+    <Content Include="Views\Products\_ContestList.cshtml" />
+    <Content Include="Views\Contest\_OpenRequestChallenge.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Products\SubCategory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Products\Type.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Categories\SubCategories.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Categories\_SubCategories.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Categories\AddSubCategory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Categories\Types.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Categories\_Types.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Categories\AddType.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Contest\Entries.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Contest\_Entries.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_TermsAndConditions.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_InfoBox.cshtml" />
+    <Content Include="Views\Shared\_Registration.cshtml" />
+    <Content Include="Views\Shared\_RegistrationAsCompany.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\CommonLayOut\_Footer.cshtml" />
+    <Content Include="Views\Shared\CommonLayOut\_Header.cshtml" />
+    <Content Include="Views\Shared\CommonLayOut\_ModalPopUp.cshtml" />
+    <Content Include="Views\Shared\CommonLayOut\_TopHeader.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Home\CMS.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ManageDeals.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\SaveDeal.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\MergeDealProducts.cshtml" />
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Scripts\bootstrap\css\scss\calendar.scss" />
+    <None Include="Scripts\bootstrap\css\scss\chart-showcase.scss" />
+    <None Include="Scripts\bootstrap\css\scss\elements.scss" />
+    <None Include="Scripts\bootstrap\css\scss\form-showcase.scss" />
+    <None Include="Scripts\bootstrap\css\scss\form-wizard.scss" />
+    <None Include="Scripts\bootstrap\css\scss\gallery.scss" />
+    <None Include="Scripts\bootstrap\css\scss\grids.scss" />
+    <None Include="Scripts\bootstrap\css\scss\index.scss" />
+    <None Include="Scripts\bootstrap\css\scss\layout.scss" />
+    <None Include="Scripts\bootstrap\css\scss\new-user.scss" />
+    <None Include="Scripts\bootstrap\css\scss\personal-info.scss" />
+    <None Include="Scripts\bootstrap\css\scss\signin.scss" />
+    <None Include="Scripts\bootstrap\css\scss\signup.scss" />
+    <None Include="Scripts\bootstrap\css\scss\tables.scss" />
+    <None Include="Scripts\bootstrap\css\scss\ui-elements.scss" />
+    <None Include="Scripts\bootstrap\css\scss\user-list.scss" />
+    <None Include="Scripts\bootstrap\css\scss\user-profile.scss" />
+    <None Include="Scripts\bootstrap\css\scss\web-app-icons.scss" />
+    <None Include="Scripts\bootstrap\font\fontawesome-webfont.eot" />
+    <None Include="Scripts\bootstrap\font\fontawesome-webfont.ttf" />
+    <None Include="Scripts\bootstrap\font\fontawesome-webfont.woff" />
+    <None Include="Scripts\bootstrap\font\FontAwesome.otf" />
+    <None Include="Scripts\Custom\plugins\scayt\LICENSE.md" />
+    <None Include="Scripts\Custom\plugins\scayt\README.md" />
+    <None Include="Scripts\Custom\plugins\wsc\LICENSE.md" />
+    <None Include="Scripts\Custom\plugins\wsc\README.md" />
+    <None Include="Scripts\Custom\skins\moono\readme.md" />
+    <None Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Views\User\Home.rep.cshtml" />
+    <Content Include="Views\Account\SignUp.cshtml" />
+    <Content Include="Views\Shops\Copy of _ShopsListing.cshtml" />
+    <Content Include="Views\Home\help.cshtml" />
+    <Content Include="Views\Home\CareerBlogs.cshtml" />
+    <Content Include="Views\Home\CancelReturns.cshtml" />
+    <Content Include="Views\Home\Payments.cshtml" />
+    <Content Include="Views\Home\Shipping.cshtml" />
+    <Content Include="Views\Home\Press.cshtml" />
+    <Content Include="Views\Home\Misc.cshtml" />
+    <Content Include="Views\Home\Affiliate.cshtml" />
+    <Content Include="Views\Home\eGiftVoucher.cshtml" />
+    <Content Include="Views\Products\ExclusiveDeals.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>52155</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:52153/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

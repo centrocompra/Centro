@@ -1,0 +1,93 @@
+﻿@model BusinessLayer.Models.DataModel.User
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+Centro- User Registration
+}
+<script src="@Url.Content("~/Scripts/Custom/signUp.js")" type="text/javascript"></script>
+<div class="page-center">
+    <div class="form-container">
+        <div class="form-container-inner clear">
+            <div class="heading">
+                <h1>
+                    Create an account and start shopping</h1>
+                <a class="signin-link" href="#;">Sign In</a>
+            </div>
+            <div class="pane clear" id="register">
+             @Html.Action("ExternalLoginsList","Account")
+               
+                <div id="UpdateId">
+                @using (Ajax.BeginForm("SignUp", "Account", FormMethod.Post, new AjaxOptions { OnBegin = "OnBegin", OnComplete = "SignUp.OnSignUpComplete" }, new { @name = "signUp" }))
+                {
+
+                    <div class="or">
+                        or <span>sign up with your email</span>
+                    </div>
+                    @Html.ValidationSummary(true)
+                    <div class="wrap clear">
+                        <div class="input-group" id="first-name-group">
+                            @Html.LabelFor(m => m.FirstName)
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "text" })
+                            @Html.ValidationMessageFor(m => m.FirstName, Model.FirstName, new { @class = "inline-input-error-message" })
+                        </div>
+                        <div class="input-group" id="last-name-group">
+                            @Html.LabelFor(m => m.LastName)
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "text" })
+                            @Html.ValidationMessageFor(m => m.LastName, Model.LastName, new { @class = "inline-input-error-message" })
+                        </div>
+                        <div class="radio-group" id="gender-group">
+                        @Html.RadioButton("Gender", (Int32)Gender.Male, true) 
+                            
+                            <label for="female">
+                                Male</label>
+                        @Html.RadioButton("Gender", (Int32)Gender.Female, false) 
+                            <label for="male">
+                                Female</label>
+                            @Html.RadioButton("Gender", (Int32)Gender.Other, false) 
+                            <label for="private">
+                                Rather not say</label>
+                        </div>
+                        <hr>
+                        <div class="input-group" id="email-group">
+                            @Html.LabelFor(m => m.EmailId)
+                            @Html.TextBoxFor(m => m.EmailId, new { @class = "text" })
+                            @Html.ValidationMessageFor(m => m.EmailId, Model.EmailId, new { @class = "inline-input-error-message" })
+                        </div>
+                        <div class="input-group">
+                            @Html.LabelFor(m => m.Password)
+                            @Html.PasswordFor(m => m.Password, new { @class = "text" })
+                            @Html.ValidationMessageFor(m => m.Password, Model.Password, new { @class = "inline-input-error-message" })
+                        </div>
+                        <div class="input-group">
+                            @Html.LabelFor(m => m.ConfirmPassword)
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "text" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, Model.ConfirmPassword, new { @class = "inline-input-error-message" })
+                        </div>
+                        <hr>
+                        <div class="input-group input-group-username input-group-big-disclaimer" id="username-group">
+                            @Html.LabelFor(m => m.UserName)
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "text" })
+                            @Html.ValidationMessageFor(m => m.UserName, Model.UserName, new { @class = "inline-input-error-message" })
+                        </div>
+                        <hr>
+                        <p class="fineprint">
+                            By clicking Register, you confirm that you accept our <a href="#;" target="_blank">Terms
+                                of Use</a> and <a href="#;">Privacy Policy</a>.</p>
+                        <p class="submit">
+                            <span class="button-large"><span>
+                                <input type="submit" value="Register" class="button1"  id="register_button" />
+                            </span></span>
+                        </p>
+                        <div style="margin-bottom: 12px;" class="checkbox">
+                            @Html.CheckBoxFor(m => m.NewsLetterEnabled)
+                            <label for="etsy_finds">
+                                Sign up for the Centro Newsletter.</label>
+                        </div>
+                    </div>
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

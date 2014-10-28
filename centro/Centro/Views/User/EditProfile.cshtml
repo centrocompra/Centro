@@ -1,0 +1,391 @@
+﻿@model User
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@{
+    List<Country> Countries = ViewBag.Countries;
+    var userCountries = new SelectList(Countries, "CountryID", "CountryName");
+
+    List<StateProvince> States = ViewBag.States;
+    var userStates = new SelectList(States, "StateID", "StateName");
+
+    List<City> Cities = ViewBag.Cities;
+    var userCity = new SelectList(Cities, "CityID", "CityName");
+
+    UserSetting setting = ViewBag.Usersettings;
+    string showusername = setting == null ? "checked=checked" : (setting.ShowFullname ? "checked=checked" : "");
+    string showfullname = showusername.Length > 0 ? "checked=checked" : "";
+    string showlocation = setting == null ? "checked=checked" : (setting.ShowLocation ? "checked=checked" : "");
+    string showskills = setting == null ? "checked=checked" : (setting.ShowSkills ? "checked=checked" : "");
+}
+@section title{
+Edit Profile
+}
+@{
+    var user = (SiteUserDetails)ViewBag.CentroUsers;
+    var shop = SellersHandler.ShopByUserId(user.LoggedInUser.Id).Object;
+    List<ShopServices> services_offered = Enum.GetValues(typeof(Services)).Cast<Services>().Select(v => new ShopServices
+    {
+        ServiceName = v.ToEnumDescription(),
+        ServiceId = v
+    }).ToList();
+    List<ShopServices> ShopServices;
+    if (shop != null)
+    {
+        ShopServices = SellersHandler.ShopServicesByShopId(shop.ShopID).List.Where(m => m.IsChecked).ToList();// (List<ShopServices>)ViewBag.ShopServices;
+    }
+    else
+    {
+        ShopServices = null;
+    }
+}
+@section scripts{
+    <script src="@Url.Content("~/Scripts/System/jquery-ui-1.8.20.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // $('#DateofBirth').val($('#DateofBirth').val().substring(0, $('#DateofBirth').val().indexOf(' ')));
+            //alert($("#DateOfBirth").length);
+            $("span.date-class .date-control").datepicker({
+                dateFormat: 'mm/dd/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '-100y:c+nn',
+                maxDate: '-1d'
+            });
+        });
+    </script>
+    <script src="@Url.Content("~/Scripts/Custom/userProfile.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Custom/stateCountry.js")" type="text/javascript"></script>
+}
+<div class="white-area-inner">
+    @Html.Partial("_BuyerLeftSideMenu", user)
+    <div class="profile-right-bar ">
+        <div class="profile_right_head">
+            Who do you know on CentroCompra? Find your friends now.
+            <div class="pre_nxt">
+                <a onclick="EditProfile(24)" href="javascript:;">Edit Profile</a>
+            </div>
+        </div>
+        <div class="profile_info">
+            @*<div class="top-head row">
+                <a href="@Url.Action("Profile", "User")" class="button1 fRight"><span>View Profile</span></a>
+                <h2>
+                    Your Public Profile <span>Everything on this page can be seen by anyone</span></h2>
+            </div>*@
+            @using (Ajax.BeginForm("EditProfile", "User", new AjaxOptions { OnBegin = "OnEditBegin", OnComplete = "Profile.OnProfileComplete" }, new { @class = "section-inner" }))
+            {
+                @Html.HiddenFor(m => m.UserID);
+                @Html.HiddenFor(m => m.ShopID);
+                                              if (Model.ShopID > 0 && ShopServices != null)
+                                              {
+                @Html.Hidden("Services", string.Join(",", ShopServices.Select(m => ((int)m.ServiceId).ToString()).ToArray()));
+                                              }
+                @Html.Hidden("ShopAvailability");                        
+                <div class=" edit-from-profile">
+                    <div class="section-inner">
+                        <div class="input-group">
+                            <label for="avatar" class="label">
+                                Profile Picture</label>
+                            <div class="change-avatar-content">
+                                <div class="image-wrapper">
+                                    <a class="avatar">
+                                        @if (!String.IsNullOrEmpty(user.LoggedInUser.ProfilePicture))
+                                        {
+                                            <img width="75" height="75"  alt="Profile Image" id="avatar_img" src="@user.LoggedInUser.ProfilePicture"/>
+                                        }
+                                        else
+                                        {
+                                            <img width="75" height="75"  alt="Profile Image" id="avatar_img" src="@Url.Content("~/images/avatar.png")"/>
+                                        }
+                                    </a>
+                                </div>
+                                <input type="file" size="15" name="file" onchange="UploadProfilePicture(this, 'user-picture-form');"
+                                    class="upload-new-avatar" />
+                                <div class="loading_ind line">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="name" class="input-group">
+                            <label for="full-name" class="label">
+                                Your Name</label>
+                            <p id="full-name" class="full-name">
+                                <span class="floatLeft mr10">@Html.TextBoxFor(m => m.FirstName, new { @class = "input-box", @style = "width:232px !important;" })
+                                    @Html.ValidationMessageFor(m => m.FirstName) 
+                                </span>
+                                <span class="floatLeft"> @Html.TextBoxFor(m => m.LastName, new { @class = "input-box", @style = "width:232px !important;" })
+                                    @Html.ValidationMessageFor(m => m.LastName)
+                                </span>
+                                
+                            </p>
+                        </div>
+                        @*@Html.Hidden("FirstName", "ZZZZZZZZZZZZZZZZZ")
+                        @Html.Hidden("LastName", "ZZZZZZZZZZZZZ")*@
+                        @Html.Hidden("Industry", "Industry")
+                        @Html.Hidden("Gender", (Int32)Gender.Male)
+                        @*<div class="input-group gender registration-hidden">
+                            <label for="gender" class="label">
+                                Gender</label>
+                            <div id="gender" class="radio-group">
+                                @Html.RadioButton("Gender", (Int32)Gender.Female)
+                                <label for="female">
+                                    Female</label>
+                                @Html.RadioButton("Gender", (Int32)Gender.Male)
+                                <label for="male">
+                                    Male</label>
+                                @Html.RadioButton("Gender", (Int32)Gender.Other)
+                                <label for="private">
+                                    Rather not say</label>
+                            </div>
+                        </div>*@
+                        <hr class="registration-hidden">
+                        @*<div id="password" class="input-group">
+                            <label for="full-name" class="label">
+                                Password</label>
+                            <p id="full-name2" class="full-name">
+                                @Html.PasswordFor(m => m.Password, new { @class = "input-box", @style = "width:488px !important;" })
+                               
+                                @Html.ValidationMessageFor(m => m.Password) 
+                            </p>
+                        </div>
+                         <hr class="registration-hidden">
+                         <div id="confirmpassword" class="input-group">
+                            <label for="full-name" class="label">
+                                Confirm Password</label>
+                            <p id="full-name1" class="full-name">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "input-box", @style = "width:488px !important;" })
+                              
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                            </p>
+                        </div>*@
+                       @* <div class="input-group left-bar-orange">
+                            <label for="Industry" class="label">
+                                Linkedin Profile: </label>
+                            <p class="full-name">
+                                <input type="text" value="www.linkedin.com/in/" class = "input-box" readonly="readonly" style = "border-right: medium none;padding-right: 0;width: 116px !important;" />
+                                @Html.TextBoxFor(m => m.LinkedIn, new { @class = "input-box", @style = "width:330px !important;border-left: medium none;margin-left: -3px;padding-left: 0;" })
+                                @Html.ValidationMessageFor(m => m.LinkedIn)
+                            </p>
+                        </div>
+                        <div class="input-group left-bar-orange">
+                            <label for="Industry" class="label">
+                                Backlinked from Linkedin: </label>
+                            <p class="full-name">
+                                <select id="Backlinked" name="Backlinked" style="width: 170px;" class="input-box">
+                                    @if (Model.Backlinked)
+                                    {
+                                        <option selected="selected" value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="true">Yes</option>
+                                        <option selected="selected" value="false">No</option>
+                                    }
+                                </select>
+                            </p>
+                        </div>*@
+                        <div class="input-group left-bar-orange">
+                            <label for="Industry" class="label">
+                                Registration Date: </label>
+                            <label style="text-align:left;">
+                                @Model.CreatedOn.ToShortDateString()
+                            </label>
+                        </div>
+                        @*<div class="input-group">
+                            <label for="Industry" class="label">
+                                Industry</label>
+                            <p id="Industry" class="full-name">
+                                @Html.TextBoxFor(m => m.Industry, new { @class = "input-box", @style = "width:488px !important;" })
+                                @Html.ValidationMessageFor(m => m.Industry)
+                            </p>
+                        </div>*@
+                        @if (Model.ShopID > 0)
+                        {
+                            <div class="input-group">
+                                <label class="label">
+                                    Skills</label>
+                                <span>
+                                    <input class="input-box" type="text" style="width:488px !important;" name="Skills" value="@shop.Skills" />
+                                </span>
+                            </div>                    
+                            <div class="input-group location-city">
+                                <label for="city3" class="label">
+                                    Services Offered</label>
+                                <div class="service-space">
+                                    <select id="servicesOffered" name="servicesOffered" style="width: 170px;" class="input-box">
+                                        @foreach (var item in services_offered)
+                                        { 
+                                            <option value="@((int)item.ServiceId)">@item.ServiceName</option>
+                                        }
+                                    </select>
+                                    <button class="button2 ml5" id="add-material" onclick="AddServices(this)" type="button">
+                                        Add</button>
+                                    <div class="row">
+                                        <ul id="services-add" class="taglist-edit">
+                                            @foreach (var item in ShopServices)
+                                            {
+                                                <div class="material">
+                                                    <span id="@((int)item.ServiceId)">@item.ServiceName</span>
+                                                    <label onclick="removetag(this)" class="close">
+                                                    </label>
+                                                </div>
+                                            }
+                                            @* @if (((List<String>)ViewBag.ServicesOfferd).Count > 0)
+                                        {
+                                            foreach (var item in (List<String>)ViewBag.ServicesOfferd)
+                                            {
+                                            <div class="material">
+                                                <span>@item.Trim()</span><label class="close" onclick="removetag(this);">x</label>
+                                            </div>
+                                            }
+
+                                        }*@
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="AcceptProject" id="AcceptProject" value="1" />
+                            @*<div class="input-group location-city left-bar-orange">
+                                <label for="city3" class="label">
+                                    Currently Accepting Projects</label>
+                                <div class="autosuggest-wrapper ">
+                                    @{
+                                            string yes = shop.AcceptJob ? "selected=\"selected\"" : "";
+                                            string no = !shop.AcceptJob ? "selected=\"selected\"" : "";
+                                    }
+                                    <select id="AcceptProject" name="AcceptProject" style="width: 170px;" class="input-box">
+                                        <option @yes value="1">Yes</option>
+                                        <option @no value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>*@
+                        }
+                        <div class="input-group location-city">
+                            <label for="city3" class="label">
+                                Country</label>
+                            <div class="autosuggest-wrapper">
+                                @Html.DropDownListFor(m => m.CountryId, userCountries, "Select a country...", new { @style = "width:165px;", @class = "input-box", onchange = "OnCountryChange(this,'StateId','CityId');" })
+                                @Html.DropDownListFor(m => m.StateId, userStates, "Select a state...", new { @style = "width:165px;", @class = "input-box", onchange = "OnStateChange(this,'CityId');" })
+                                @Html.DropDownListFor(m => m.CityId, userCity, "Select a city...", new { @style = "width:165px;", @class = "input-box" })
+                            </div>
+                        </div>
+                        @*<div class="input-group">
+                            <label for="Industry" class="label">
+                                Street Address</label>
+                            <p class="full-name">
+                                @Html.TextBoxFor(m => m.StreetAddress1, new { @class = "input-box", @style = "width:488px !important;" })
+                                @Html.ValidationMessageFor(m => m.StreetAddress1)
+                                <br />
+                                @Html.TextBoxFor(m => m.StreetAddress2, new { @class = "input-box", @style = "width:488px !important;" })
+                                @Html.ValidationMessageFor(m => m.StreetAddress2)
+                            </p>
+                        </div>*@
+                        <div class="input-group">
+                            <label for="Industry" class="label">
+                                Postal Code</label>
+                            <p class="full-name">
+                                @Html.TextBoxFor(m => m.PostalCode, new { @class = "input-box", @style = "width:488px !important;" })
+                                @Html.ValidationMessageFor(m => m.PostalCode)
+                            </p>
+                        </div>
+                        @*<div class="input-group registration-hidden">
+                            <label for="birthday-group" class="label">
+                                Birthday</label>
+                            <span id="birthday-group" class="date-class">
+                                @Html.TextBoxFor(m => m.DateofBirth, new { @class = "input-box date-control", @style = "width:488px !important;", @name = "DateOfBirth", @readonly = "readonly" })
+                            </span>
+                        </div>
+                        <hr class="registration-hidden">*@
+                        <div class="input-group">
+                            <label for="bio" class="label">
+                                Bio</label>
+                                <p class="full-name">
+                            @Html.TextAreaFor(m => m.AboutUs, 3, 50, new { @class = "text text-wide", @maxlength = "375", @style="width:488px;" })
+                            @Html.ValidationMessageFor(mbox=>mbox.AboutUs)</p>
+                        </div>
+                        
+                        @*<div class="input-group">
+                            <label for="bio" class="label">
+                                Licence</label>
+                            @Html.TextAreaFor(m => m.Licence, 3, 50, new { @class = "text text-wide" })
+                        </div>*@
+                        @*<div class="input-group registration-hidden">
+                            <label for="materials" class="label">
+                                Favorite Materials</label>
+                            @Html.TextAreaFor(m => m.UserTagsList, 2, 50, new { @class = "text" })
+                            <span style="display: inline-block; float: left; font-size: 11px; margin-left: 170px; color: #333333;">Separate each material with a comma</span>
+                        </div>
+                        <hr class="registration-hidden">*@ @*<div class="input-group registration-hidden">
+                            <label for="materials" class="label">
+                                Shop Setting</label>
+                            <input type="radio" name="ShowUsername" value="true" @showusername />
+                            Show Username on Shop page&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="ShowUsername" value="false" @showfullname />
+                            Show Fullname on Shop page
+                        </div>*@
+                        @*<div class="input-group registration-hidden">
+                            <label for="materials" class="label">
+                                Shop Setting</label>
+                            <input type="checkbox" name="ShowFullname" @showfullname />
+                            Show Fullname on Shop page
+                        </div>*@
+                        @if (shop != null)
+                        {
+                            <div class="input-group registration-hidden">
+                                <label class="label">
+                                    Availability</label>
+                                <div class="autosuggest-wrapper">
+                                    @Html.Partial("_ShopAvailbility", shop)</div>
+                            </div>
+                        }
+                        @*<div class="input-group registration-hidden">
+                            <label for="materials" class="label">
+                                Privacy</label>
+                            @*<input type="checkbox" name="ShowUsername" disabled="disabled" checked="checked"  />
+                            Username&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" name="ShowFullname" @showfullname />
+                            First, Last Name&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" name="ShowLocation" @showlocation />
+                            Location&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" name="ShowSkills" @showskills />
+                            Skills&nbsp;&nbsp;&nbsp;
+                        </div>*@
+                        @*<div class="row eProfile-btm-n1">
+                            <a name="Paypal"></a>
+                            <p>
+                               
+                                All payments will be sent to the Paypal Account Email Address that you have listed below.
+                            </p>
+                        </div>*@
+                        
+                    </div>
+                </div>
+                <div class="submit mt12 pt20 floatRight">
+                    <input type="submit" class="button1 floatLeft mr10 login-signin" value="Save Changes" />
+                    <a href="@Url.Action("Profile", "User")" class="button1-blk floatLeft">Cancel</a>
+                </div>
+            
+            }
+        </div>
+    </div>
+</div>
+<form style="display: none;" id="user-picture-form" action="" enctype="multipart/form-data"
+method="post">
+</form>
+<script type="text/javascript">
+    function OnEditBegin() {
+        var go = true;
+        $('.conditions').each(function () {
+            if (!$(this).is(':checked')) {
+                go = false;
+                $(this).parent().find('span').html('*Required');
+            } else {
+                $(this).parent().find('span').html('');
+            }
+        });
+        if (!go)
+            return false;
+        return true;
+    }
+</script>

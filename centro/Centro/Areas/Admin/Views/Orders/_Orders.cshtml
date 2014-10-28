@@ -1,0 +1,27 @@
+﻿@model PagingResult<OrderViewModel>
+@if (Model.TotalCount>0)
+{
+    foreach (OrderViewModel item in Model.List)
+    {
+    <tr>
+        @*<td><input type="checkbox" id="@item.OrderId" />
+        </td>*@
+        <td>@item.OrderId
+        </td>
+        <td>@item.BuyerName
+        </td>
+        <td>@item.ShopName
+        </td>
+        <td>@item.OrderCreatedOn.ToShortDateString() @item.OrderCreatedOn.ToShortTimeString()
+        </td>
+        <td>@item.OrderStatus.ToEnumWordify()
+        </td>
+        <td>@item.ShippingStatus.ToEnumWordify()
+        </td>        
+        <td align="center">
+            <a href="@Url.Action("OrderDetail", "Order", new { id = item.OrderId })">
+                <img width="18" alt="View/Edit" src="@Url.Content("~/Images/edit.png")" title="View/Edit Order" /></a>
+        </td>
+    </tr>    
+    }
+}

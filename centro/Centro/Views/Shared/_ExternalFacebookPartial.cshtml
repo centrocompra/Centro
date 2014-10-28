@@ -1,0 +1,22 @@
+﻿@model ICollection<AuthenticationClientData>
+@using (Html.BeginForm("ExternalLogin", "Account"))
+{
+    <div id="ext-acct-connect" class="connect-wrap">
+        <div id="fb-register-container">
+            @foreach (AuthenticationClientData p in Model)
+            {
+                <button type="submit" class="fbConnect" name="provider" value="@p.AuthenticationClient.ProviderName" title="Log in using your @p.DisplayName account">
+                    Sign in using @p.DisplayName
+                </button>
+            }
+            @*<a href="#" class="button-large button-fb" id="facebook-register"><span>Sign Up Using
+                            Facebook </span></a>*@
+            <div style="display: none;" class="spinner-small">
+            </div>
+            <p>
+                Signing up will allow your friends to find you on Centro. We'll never post without
+                your permission.
+            </p>
+        </div>
+    </div>
+}

@@ -1,0 +1,185 @@
+﻿@model Cart
+@{
+    int items_in_cart = 0;
+    foreach (var shop in Model.ShopCart)
+    {
+        foreach (var item in shop.ShopCartItems)
+        {
+            items_in_cart += item.Quantity;
+        }
+    }
+    List<ProductShippingCountries> shipping_countries;
+    SiteFee siteFee = Config.SiteFee;
+}
+<h2 class="mb30">@items_in_cart Item in Your Cart <a href="@Url.Action("Home", "User")" class="greyBtnMed greyBtnMed2">Keep Shopping</a> </h2>
+@foreach (var shop in Model.ShopCart)
+{
+    shipping_countries = new List<ProductShippingCountries>();
+    var shop_details = SellersHandler.ShopByShopId(shop.ShopID).Object;
+    bool isDownloadable = true;
+    decimal totalPrice = shop.ItemTotalPrice + shop.ItemTotalShippingPrice;    
+    <div class="order-items">
+        <h3><span class="actions"><a href="javascript:;" onclick="RemoveShop(this,@shop.ShopID)" class="button-remove">X</a> </span>Order from <a href="~/Shop/@Utility.SpacesToHifen(shop_details.ShopName)/@shop.ShopID">@shop_details.ShopName </a></h3>
+        <div class="items-box">
+            @foreach (var item in shop.ShopCartItems.OrderByDescending(m=>m.CartOrder))
+            {
+                string css = "";
+                if (item.IsShippingAvailable || item.IsDownloadable)
+                {
+                    css = "";
+                }
+                else
+                {
+                    css = "<div class='no-shipping'><p>(Shipping not available)</p></div>";
+                }
+                Product prod = ProductsHandler.ProductById(item.ProductID).Object;
+                var countrieslist = item.ShipToCountries.Select(m => new ProductShippingCountries { CountryID = m.CountryID, CountryName = m.CountryName, ShippingCost = 0, ShippingCostAfterFirst = 0 }).ToList();
+                shipping_countries.AddRange(countrieslist);
+                if (prod != null)
+                {
+                    isDownloadable = prod.IsDownloadable;
+                <div class="item">
+                    <div class="img pos-rel">
+                        <a href="~/Products/@Utility.SpacesToHifen(shop_details.ShopName)/@shop_details.ShopID/@prod.CategoryId/@prod.ProductID">
+                            @if (prod.PrimaryPicture != null)
+                            {
+                                <img src="@Url.Content("~/Images/ProductImages/" + prod.ShopOwnerUsername + "/" + prod.PrimaryPicture)" width="156" height="125" alt="" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/Content/images/default_product.png")" width="156" height="125" alt="" />
+                            }                            
+                        </a>
+                        <span class="pos-abs">$@item.UnitPrice USD</span>
+                    </div>
+                    <div class="detail">
+                            
+                        <h4 class="heightAuto font14"><span class="orange">@Html.Raw(item.SendDownloadVia.HasValue ? "Downloadable // " : "Physical // ")</span> <a href="~/Products/@Utility.SpacesToHifen(shop_details.ShopName)/@shop_details.ShopID/@prod.CategoryId/@prod.ProductID">@prod.Title</a></h4>                        
+                        <p>@prod.Description</p>                       
+                        @if (!isDownloadable){
+                           <div class="quantity">
+                                <label>Quantity:</label>
+                                <select class="qty" onchange="ChageProductQuantity(this, @item.ShopID, @item.ProductID)">
+                            @for (short i = 1; i <= prod.Quantity; i++)
+                            {
+                                if (item.Quantity == i)
+                                {
+                                    <option value="@i" selected="selected">@i</option>
+                                }
+                                else
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            }
+                               </select>
+                               <div class="divClear"></div>
+                            </div>
+                        }
+                        @if (!isDownloadable){ 
+                            <p class="shipping font13 mt10"><strong>Shipping Charge:</strong> $@item.TotalShippingPrice USD</p>
+                        }
+                        else
+                        {<span>(Downloadable file)</span> }
+                        <div class="action">
+                            <a href="javascript:;" class="orangeButton" onclick="RemoveProduct(this, @shop.ShopID , @item.ProductID)">Remove</a> 
+                            <a class="shopCompose" href="@Url.Action("Compose", "Message", new { id = @shop.ShopOwnerName })">Contact Shop Owner</a>
+                        </div>
+                    </div>
+                    @Html.Raw(css)
+                </div>        
+                }
+            }
+            <div class="note">
+                <label>Note to @shop_details.ShopName <em>(optional)</em></label>
+                <textarea id="note_@shop.ShopID" placeholder="You can enter any info needed to complete your order or write a note to the shop" cols="30" rows="6"></textarea>
+            </div>
+        </div>
+        <div class="total-box">
+            <div class="order-summary">
+                <div class="order-shipping ">
+                    @if (shipping_countries.Count > 0)
+                    {
+                        var states = SellersHandler.GetSalesTaxStates(1, shop.ShopID).List;
+                        string stateids = states != null ? string.Join(",", states.Select(mbox => mbox.StateID).ToList()) : "";
+                        <h4>Ship to</h4>
+                        <div class="select">
+                            <select onchange="changeCountry(this, @shop.ShopID, '@stateids')" id="select_@shop.ShopID" class="Countries">
+                                <option value="">--Select Country--</option>
+                                @foreach (var country in shipping_countries.GroupBy(m => m.CountryID).Select(o => o.FirstOrDefault()).ToList())
+                                {
+                                    if (shop.ShipToCountryID.HasValue && shop.ShipToCountryID.Value == country.CountryID)
+                                    {
+                                        <option selected="selected" value="@country.CountryID">@country.CountryName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@country.CountryID">@country.CountryName</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>                       
+                            if (shop.ShipToCountryID.HasValue && shop.ShipToCountryID.Value == 1 && states!=null)
+                            {
+                                //var states=SellersHandler.GetStateByCountryId(1).List;
+                                
+                                <div class="select select_state_@shop.ShopID"> 
+                                    <select onchange="changeState(this,@shop.ShopID)" id="select_state_@shop.ShopID" class="States">                                         
+                                        <option value="">--Select State--</option>
+                                        @foreach (var state in states)
+                                        {
+                                            if (shop.ShipToStateID.HasValue && shop.ShipToStateID.Value == state.StateID)
+                                            {
+                                                @*<option selected="selected" value="@state.PostalCode">@state.StateName</option>*@
+                                                <option selected="selected" value="@state.StateID">@state.StateName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@state.StateID">@state.StateName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="select select_state_@shop.ShopID" style="display:none;"> <select onchange="changeState(this,
+                                @shop.ShopID)" id="select_state_@shop.ShopID"> <option value="">--Select State--</option>
+                            </select></div>
+                            }
+
+                    }
+                </div>
+                @*<div class="order-payment">
+            <h4>How You'll Pay</h4>
+            <img src="/content/images/paymentoptions.gif" alt=""> 
+            </div>*@
+                <div class="order-cost-summary">
+                    <ul class="summary">
+						<li class="parent">Paid to seller: <strong><span class="currency-value">$@Math.Round((decimal)(shop.ItemTotalPrice + shop.ItemTotalShippingPrice + (shop.ItemTotalPrice * (shop.Tax.HasValue ? shop.Tax.Value : 0) / 100)), 2) USD</span></strong></li>
+						<li>Item cost: <strong><span class="currency-value">$@Math.Round(shop.ItemTotalPrice, 2) USD</span></strong></li>
+						<li>Shipping: <strong><span class="currency-value">$@Math.Round(shop.ItemTotalShippingPrice) USD</span></strong></li>
+						<li>Sales tax at @shop.Tax%: <strong><span class="currency-value">$@Math.Round((decimal)(shop.ItemTotalPrice * (shop.Tax.HasValue ? shop.Tax.Value : 0) / 100), 2) USD</span></strong></li>
+                        @*<li>Sales tax: <strong><span class="currency-value">$@Math.Round(shop.Tax.Value, 2) USD</span></strong></li>*@
+	@if (siteFee.IsPercentage)
+     {
+                        <li class="parent">Centro Fees @siteFee.SiteFee1 %: <strong><span class="currency-value">$@Math.Round((decimal)((shop.ItemTotalPrice) * siteFee.SiteFee1 / 100), 2) USD</span></strong></li>
+     }
+     else
+     {
+                        <li class="parent">Centro Fees : <strong><span class="currency-value">$@Math.Round(siteFee.SiteFee1, 2) USD</span></strong></li>
+     }
+						<li class="order-total">Order Total<strong><span class="currency-value">$@shop.TotalAmountToBePaid USD</span></strong></li>
+					</ul>                   
+                </div>
+                <div class="order-submit">
+                    <a class="button1" href="javascript:;" onclick="checkout(this, @shop.ShopID, @Model.UserID)" class="orangeButton">Check Out</a> 
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (Model.ShopCart.Count == 0)
+{
+    <div>No Product added yet!!!</div>
+}

@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+       <title>CentroCompra | @RenderSection("title", required: false)</title>
+    
+    <link href="@Url.Content("~/Scripts/bootstrap/css/bootstrap.css")" rel="Stylesheet" />
+    <link href="@Url.Content("~/Scripts/bootstrap/css/bootstrap-responsive.css")" rel="Stylesheet" />
+    <link href="@Url.Content("~/scripts/bootstrap/css/bootstrap-overrides.css")" rel="Stylesheet" />
+
+    <link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/fonts.css")" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="@Url.Content("~/content/css/flexslider.css")" type="text/css"/>
+    @RenderSection("styles", required: false)
+
+    <script src="@Url.Content("~/Scripts/system/html5.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/system/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/system/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/system/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/system/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/System/jquery-ui-1.8.11.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/System/ajaxform.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/custom/common.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap/js/bootstrap.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/custom/_Layout.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/System/jquery.flexslider.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var UserID;
+        function OnLoginBegin() {
+            if (UserID > 0) {
+                return true;
+            }
+            if ($('#FileName').val() == '' || $('#FileName').val() == undefined) {
+                $('#FileNameError').text('Please attach a file.');
+                return false;
+            }
+        }
+        function OnLoginComplete(obj) {
+            var json = $.parseJSON(obj.responseText);
+            if (json.Status == ActionStatus.Successfull) {
+                Message(json.Message, ActionStatus.Successfull);
+                window.location.href = json.Results[0];
+            }
+            else {
+                Message(json.Message, ActionStatus.Error);
+            }
+        }
+
+        function ForgotPassword(sender) {
+            var email = $('#EmailOrUsername').val();
+            if (!$.IsEmailCustom(email)) {
+                $('#EmailOrUsername').parent().find('span').text('Please enter a valid email');
+                return false;
+            }
+            Message('Processing...');
+            AjaxFormSubmit({
+                url: '@Url.Action("ForgorPassword", "Home")',
+                type: 'POST',
+                validate: false,
+                showErrorMessage: false,
+                messageControl: null,
+                throbberPosition: { my: "left center", at: "right center", of: $(sender), offset: "25 0" },
+                data: { Email: email },
+                success: function (results, message) {
+                    Message(message, ActionStatus.Successfull);
+                }
+            });
+        }
+
+        function UploadLoginFile(sender) {
+            var newForm = $("<FORM>");
+            newForm.attr({ method: "POST", enctype: "multipart/form-data" }).hide();
+            newForm.appendTo($("body"));
+
+            var $this = $(sender), $clone = $this.clone();
+            $this.after($clone).appendTo($(newForm));
+            AjaxFormSubmit({
+                type: "POST",
+                validate: false,
+                parentControl: $(newForm),
+                form: $(newForm),
+                messageControl: $('#Message_DIV'),
+                throbberPosition: { my: "left center", at: "right center", of: sender, offset: "5 0" },
+                url: '/Home/UploadLoginFile',
+                containFiles: true,
+                formToPost: newForm,
+                success: function (data) {
+                    $('#fileName').html(data.Results[1]);
+                    $('#FileName').val(data.Results[0]);
+                }
+            });
+        }
+    </script>
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <div class="mainCntr">
+        <div class="headerCntr clearfix">
+            @Html.Partial("_Login", new User())
+            @Html.Partial("CommonLayOut/_TopHeader")
+            @Html.Partial("CommonLayOut/_Header")
+        </div>
+        <div class="contentCntr clearfix">
+            @RenderBody()
+            @Html.Partial("_InfoBox")
+        </div>
+        @Html.Partial("CommonLayOut/_Footer")
+    </div>
+</body>
+</html>
+<div id="lightbox_overlay" class="divOverlay" style="display: none" onclick="javascript:ClosePopupWindow()">
+</div>
+<div style="left: 0; top: 0; display: none" class="popUp" id="lightBox">
+    <div style="min-width: 100px; min-height: 100px;" class="popUpContent">
+        <div>
+            <h4 name="Title">Title</h4>
+            <a class="closePopUp" id='closePopUp' href="#;" onclick="ClosePopupWindow();"></a>
+        </div>
+        <div name="ActualContent">
+            <div class="autofeedback">
+                <span name="StatusMessagePopup" class="errormessage" style="display: none"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="MainThrobberImage" style="position: absolute; z-index: 50; display: none; height: 16px; width: 16px;">
+    <img alt="" src="@Url.Content("~/Images/throbber.gif")" height="16px" width="16px" />
+</div>

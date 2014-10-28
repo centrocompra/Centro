@@ -1,0 +1,55 @@
+﻿@model int[]
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> Custom Order processing</title>
+</head>
+<body>
+    <div>
+        <div style="text-align: center;margin: 50px 0 10px 0;">
+            <img src="@Url.Content("~/Content/Images/loading_order.gif")" />
+        </div>
+        <div id="msg" style="text-align:center;font-size: 16px;color: #666;font-weight: bold;">
+            Your Order is being processed. Please do not close this window or click back.
+            <br/>
+            It may take a while to complete, please have patient...
+        </div>
+    </div>
+</body>
+</html>
+<script src="@Url.Content("~/Scripts/system/jquery-1.7.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/system/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/system/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/custom/common.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var count = '@Model[0]';
+    var requestID = '@Model[1]';
+    console.log(count);
+    $(document).ready(function () {
+        if (count == '1' || count == 1) {
+            AjaxFormSubmit({
+                type: "POST",
+                validate: false,
+                parentControl: null,
+                data: {},
+                messageControl: null,
+                throbberPosition: { my: "left center", at: "right center", of: $(document), offset: "5 0" },
+                url: '/Payment/CustomOrderProcessing',
+                success: function (data) {
+                    if (data.Status == ActionStatus.Successfull) {
+                        $('#msg').html(data.Message);
+                        window.location.href = '/Message/BuyerCustomOrder/' + requestID;
+                    }
+                    else {
+                        
+                    }
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,40 @@
+﻿@model PagingResult<UserListing_Result>
+@{
+    List<UserListing_Result> list = Model.List;
+}
+@if (Model.Status == ActionStatus.Successfull)
+{
+    foreach (UserListing_Result item in list.Where(m=>m.RoleId!=(int)UserRole.Administrator).ToList())
+    {
+       
+    <tr>
+        <td>
+            <input type="checkbox" id="@item.UserID" />
+        </td>
+        <td>@item.UserName
+        </td>
+        <td>@item.FirstName
+        </td>
+        <td>@item.LastName
+        </td>
+        <td>@item.EmailId
+        </td>
+        <td>@item.CreatedOn
+        </td>
+        <td align="center">
+            @if (!item.IsAccountBlocked.Value)
+            {
+                <img width="18" alt="Edit" src="@Url.Content("~/Images/active.png")" title="Active" />
+            }
+            else
+            {
+                <img width="18" alt="Edit" src="@Url.Content("~/Images/inactive.png")" title="InActive" />
+            }
+        </td>
+        <td align="center">
+            <a href="@Url.Action("AddEditUser", "User", new { user_id = item.UserID })">
+                <img width="18" alt="Edit" src="@Url.Content("~/Images/edit.png")" title="Edit User Details" /></a>
+        </td>
+    </tr>    
+    }
+}

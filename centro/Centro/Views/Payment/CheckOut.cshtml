@@ -1,0 +1,251 @@
+﻿@model PaymentDetails
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+     Checkout
+}
+@{
+    short step_count = 2;
+    string ShippingCountry = ViewBag.ShippingCountry;
+    string ShippingState=ViewBag.ShippingState;
+    List<StateProvince> ShippingStates = ViewBag.ShippingStates;
+    List<City> ShippingCities = ViewBag.ShippingCities;
+
+    SelectList userStates = ShippingStates != null ? new SelectList(ShippingStates, "StateID", "StateName") : null;
+    SelectList userCity = ShippingCities != null ? new SelectList(ShippingCities, "CityID", "CityName") : null;
+
+    List<Country> Countries = ViewBag.ShippingCountries;    
+    SelectList userCountries = Countries != null ? new SelectList(Countries, "CountryID", "CountryName") : null;
+
+    List<Country> BillingCountries = ViewBag.BillingCountries;
+    SelectList billingCountries = new SelectList(BillingCountries, "CountryID", "CountryName");
+
+    List<StateProvince> BillingStates = ViewBag.BillingStates;
+    SelectList billingStates = new SelectList(BillingStates, "StateID", "StateName");
+
+    List<City> BillingCities = ViewBag.BillingCities;
+    SelectList billingCity = new SelectList(BillingCities, "CityID", "CityName");
+}
+<div class="checkout_breadcrumbs checkout_breadcrumb_6">
+    <div id="breadcrumb-cart" class="checkout_breadcrumb checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div style="height: 50px" class="checkout_breadcrumb_title">
+                Cart</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_w">
+            </div>
+        </div>
+    </div>    
+    <div id="breadcrumb-address" class="checkout_breadcrumb checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Address</div>
+            Billing &amp; Shipping
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_wb">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-confirmation" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Review</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_b">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-payment" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Payment</div>
+            PayPal or Credit Card
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_b">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-receipt" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Receipt</div>
+        </div>
+        <div class="clearfixfix">
+        </div>
+    </div>
+    <div class="clearfixfix">
+    </div>
+</div>
+<div class="white-area-inner checkout">
+	<h2>CHECKOUT: Address + Delivery + Payment</h2>
+@using (Html.BeginForm("Summary", "Payment", FormMethod.Post, new { @id="form" }))
+{
+    @Html.HiddenFor(m => m.ShopID)
+    @Html.HiddenFor(m => m.UserID)
+    @Html.HiddenFor(mbox => mbox.BillingAddress.IsPrimary)
+    @Html.HiddenFor(m => m.BillingAddress.UserID)
+	<div class="columns mt20">
+		<div class="column gray-border column-min-hight floatLeft">
+			<h3>Step 1: Billing Address &amp; Contact Information</h3>
+            @*<div class="mt20 ml20">
+            <input type="checkbox" onclick="javascript:SameAsShipping(this)" />&nbsp;Same as shipping 
+            </div>*@
+            @Html.HiddenFor(mbox => mbox.BillingAddress.BillingAddressID)            
+			<dl>
+                <dt>First Name: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.BillingAddress.FirstName)&nbsp;@Html.ValidationMessageFor(m=>m.BillingAddress.FirstName)</dd>
+				<dt>Last Name: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.BillingAddress.LastName)&nbsp;@Html.ValidationMessageFor(m => m.BillingAddress.LastName)</dd>
+				<dt>Email: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.BillingAddress.Email)&nbsp;@Html.ValidationMessageFor(m => m.BillingAddress.Email)</dd>
+				<dt>Country: <em>*</em></dt>
+				<dd>
+                    @Html.DropDownListFor(m => m.BillingAddress.CountryId, billingCountries, "Select a country...", new { @style = "width:170px;", @class = "input-box", onchange = "OnCountryChange(this,'BillingAddress_StateId');" })
+                    @Html.ValidationMessageFor(m => m.BillingAddress.CountryId)
+                </dd>
+                <dt>State: <em>*</em></dt>
+				<dd>
+                    @Html.DropDownListFor(m => m.BillingAddress.StateId, billingStates, "Select a state...", new { @style = "width:170px;", @class = "input-box", onchange = "OnStateChange(this,'BillingAddress_CityId');" })
+                    @Html.ValidationMessageFor(mbox => mbox.BillingAddress.StateId)
+                </dd>
+				<dt>City: <em>*</em></dt>
+				<dd>
+                    @Html.DropDownListFor(m => m.BillingAddress.CityId, billingCity, "Select a city...", new { @style = "width:170px;", @class = "input-box" })
+                    @Html.ValidationMessageFor(mbox => mbox.BillingAddress.CityId)
+                </dd>
+				<dt>Address: <em>*</em></dt>
+				<dd>@Html.TextAreaFor(m => m.BillingAddress.Address)&nbsp;@Html.ValidationMessageFor(m => m.BillingAddress.Address)</dd>
+				<dt>Postal Code: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.BillingAddress.PostCode)
+                    @Html.ValidationMessageFor(m => m.BillingAddress.PostCode)
+				</dd>
+
+                @*<dt>&nbsp;</dt>
+				<dd><input type="button" class="button1" style="width: auto;" onclick="SaveBillingAddress(this);" value="Save" /></dd>*@
+			</dl>
+		</div>
+    @if (ViewBag.ShowShipping == true)
+    {
+        step_count = 3;
+		<div class="column gray-border column-min-hight floatRight">
+			<h3>Step 2: Shipping Information
+			<span class="h3-inside-right"><input type="checkbox" onclick="SameAsBilling(this)" />Same as Billing Info</span></h3>
+			<dl>
+				<dt>First Name: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.ShippingAddress.FirstName)&nbsp;@Html.ValidationMessageFor(m => m.ShippingAddress.FirstName)</dd>
+				<dt>Last Name: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.ShippingAddress.LastName)&nbsp;@Html.ValidationMessageFor(m => m.ShippingAddress.LastName)</dd>
+				<dt>Email: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.ShippingAddress.Email)&nbsp;@Html.ValidationMessageFor(m => m.ShippingAddress.Email)</dd>
+                <dt>Country: <em>*</em></dt>
+				<dd>
+                @if (userCountries != null)
+                {
+                    @Html.DropDownListFor(m => m.ShippingAddress.CountryID, userCountries, "Select a country...", new { @style = "width:170px;", @class = "input-box", onchange = "OnCountryChange(this,'ShippingAddress_StateID');" })
+                    @Html.ValidationMessageFor(mbox => mbox.ShippingAddress.CountryID)
+                }
+                else
+                {
+                    <input type="text" value="@ViewBag.ShippingCountry" readonly="readonly" />
+                    @Html.HiddenFor(m => m.ShippingAddress.CountryID)
+                }
+                </dd>
+                <dt>State: <em>*</em></dt>
+				<dd>
+                @if (userStates != null)
+                {
+                    @Html.DropDownListFor(m => m.ShippingAddress.StateID, userStates, "Select a state...", new { @style = "width:170px;", @class = "input-box", onchange = "OnStateChange(this,'ShippingAddress_CityID');" })
+                    @Html.ValidationMessageFor(mbox => mbox.ShippingAddress.StateID)
+                }
+                else
+                {
+                    <input type="text" value="@ViewBag.ShippingState" readonly="readonly" />
+                    @Html.HiddenFor(m => m.ShippingAddress.StateID)
+                }
+                </dd>
+				<dt>City: <em>*</em></dt>
+				<dd>@Html.DropDownListFor(m => m.ShippingAddress.CityID, userCity, "Select a city...", new { @style = "width:170px;", @class = "input-box" })
+                    @Html.ValidationMessageFor(mbox => mbox.ShippingAddress.CityID)
+                </dd>
+				<dt>Address: <em>*</em></dt>
+				<dd>@Html.TextAreaFor(m => m.ShippingAddress.Address)&nbsp;@Html.ValidationMessageFor(m => m.ShippingAddress.Address)</dd>
+				<dt>Postal Code: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.ShippingAddress.PostCode)&nbsp;@Html.ValidationMessageFor(m => m.ShippingAddress.PostCode)</dd>
+			</dl>
+			<div class="clearIt"></div>
+		</div>
+    }
+		<div class="clearIt"></div>
+	</div>
+
+	@*<div class="columns gray-border">
+		<h3>Step @step_count: Enter Your Payment Information</h3>
+		<div class="column floatLeft">
+			<dl>
+				<dt>Credit Card Number: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.CardNumber)&nbsp;@Html.ValidationMessageFor(m => m.CardNumber)</dd>
+				<dt>Credit Name: <em>*</em></dt>
+				<dd>@Html.TextBoxFor(m => m.NameOnCard)&nbsp;@Html.ValidationMessageFor(m => m.NameOnCard)</dd>
+				<dt>Expiration Date: <em>*</em></dt>
+				<dd>
+                    <select name="ExpiryMonth" id="ExpiryMonth" data-val-required="Required." data-val-number="The field State must be a number." data-val="true" class="input-box input-validation-error floatLeft width40pc mr10">                        
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+					</select>
+					<select class="floatLeft width40pc" name="ExpiryYear">                        
+                    @for (short i = 2013; i <= 2025; i++)
+                    {
+						<option value="@(i - 2000)">@i</option>
+                    }
+					</select>
+				</dd>
+				<dt>Security Code: <em>*</em></dt>
+				<dd>@Html.PasswordFor(m => m.CVV, new { @maxlength = "3" })&nbsp;@Html.ValidationMessageFor(m => m.CVV)</dd>
+			</dl>
+			<div class="clearIt"></div>
+		</div>
+					
+		<div class="column floatLeft">
+			<div class="same">
+				<div class="clearIt"></div>
+				<img src="@Url.Content("~/Content/images/cards.png")" alt="cards" class="mt10" />
+			</div>
+		</div>
+		<div class="clearIt"></div>
+	</div>*@
+    <div class="note">
+        *Note: All billing and shipping information will be provided to the seller. Please verify the information is accurate before proceeding.
+    </div>
+	<div class="columns mt20">
+		@*<a href="javascript:void(0)" class="floatRight button2"><span class="fwd">Next</span></a>*@
+        <button class="button1 floatRight" id="Submit" type="submit">Next</button>
+	</div>
+}
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/custom/payment.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($("#ShippingAddress_PostCode").val() == "0") {
+            $("#ShippingAddress_PostCode").val("");
+        }
+        if ($("#BillingAddress_PostCode").val() == "0") {
+            $("#BillingAddress_PostCode").val("");
+        }
+    });
+</script>

@@ -1,0 +1,18 @@
+﻿@model List<Alert>
+@if (Model.Count() > 0)
+{
+<div class="activity-log-pop">
+    <ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="@item.AlertLink">
+                <div class="text"><strong>@Html.Raw(item.AlertText)</strong><br>
+                    <span class="date">@item.CreatedOn.ToShortDateString() @item.CreatedOn.ToShortTimeString()</span>
+                </div>
+            </a>
+        </li>
+    }
+    </ul>
+</div>
+}

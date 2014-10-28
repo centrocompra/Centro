@@ -1,0 +1,38 @@
+﻿@{
+    SiteUserDetails CentroUsers;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    if(auth_cookie!=null){
+    FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+    CentroUsers = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+    }else{
+        CentroUsers = null;
+    }
+    Shop shop = CentroUsers != null ? SellersHandler.ShopByUserId(CentroUsers.LoggedInUser.Id).Object : null;
+}
+
+<aside class="my-contracts-right mr20 floatLeft">
+    <div class="row">
+        @*<a href="/User/CreateJob" class="button-orng floatLeft mb10">Post a Job Listing</a> *@
+        <div class="row">
+	        <ul class="white-background p10 grey-border links">
+		        <li><a href="@Url.Action("Recruit","User")""><span>&raquo;</span> Recruit: Leads & Advertising</a></li>
+                <li><a href="@Url.Action("MyContracts", "User")""><span>&raquo;</span> Active Contracts</a></li>
+		        <li><a href="@Url.Action("Index", "Message")"><span>&raquo;</span> Messages</a></li>
+            @if (shop != null)
+            {
+                <li><a href="@Url.Action("ShopFeedBack", "FeedBack", new { ShopName = Utility.SpacesToHifen(shop.ShopName), ShopId = shop.ShopID })"><span>&raquo;</span> Reviews/Feedbacks</a></li>
+            }
+		        @*<li><a href="@Url.Action("Profile", "User")"><span>&raquo;</span> My Profiles</a></li>*@
+		        
+	        </ul>
+        </div>      
+    </div>
+
+
+
+    <div class="row">
+        <div class="white-background grey-border mt10 p10">
+	        <img src="@Url.Content("~/Content/IMages/job-left.jpg")" />
+        </div>      
+    </div>
+</aside>

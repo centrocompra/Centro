@@ -1,0 +1,35 @@
+﻿@{
+    List<HubTopic> topics = HubHandler.GetHubTopics().List;
+}
+<div class="search-job-mn row mb10">
+    <div class="search-job-inr">
+        <h3>
+            Search Hubs/Articles</h3>
+        <div class="row search-job-inr-form">
+            @using (Ajax.BeginForm("FilterHubs", "Hub", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnFilterComplete" }))
+            {
+                <dl>
+                    <dt>Keywords</dt>
+                    <dd>
+                        <input name="Job-Keyword" type="text" class="w180px" /></dd>
+                    <dt>Category</dt>
+                    <dd>
+                        <select name="searchType" class="searchType gray-select-box w186px">
+                            <option value="0">All</option>
+                            @foreach (var item in topics)
+                            {
+                                <option value="@item.HubTopicID">@item.HubTopic1</option>
+                            }
+                        </select>
+                    </dd>
+                    <dd style="text-align:right;">
+                        <button type="reset" class="button1-blk">
+                            Clear</button>
+                        <button type="submit" class="button1">
+                            Match</button>
+                    </dd>
+                </dl>
+            }
+        </div>
+    </div>
+</div>

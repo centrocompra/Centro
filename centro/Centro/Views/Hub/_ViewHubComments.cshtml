@@ -1,0 +1,47 @@
+﻿@model List<HubCommentViewModel>
+
+
+@if (Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+    <div class="detailBox info" id="Div_@item.CommentID">
+        @if (ViewBag.UserId == item.HubUserID)
+        {
+        <div class="floatRight">
+            <a href="javascript:{}" onclick="DeleteComment(@item.CommentID)">Delete</a>
+        </div>
+        }
+        <div class="left_img">
+        @if (!string.IsNullOrEmpty(item.UserImage))
+        {
+            <img src="@Url.Content("~/Images/ProfileImage/")@item.UserName/thumb_@item.UserImage" alt="Shop Owner" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/Content/images/user.jpg")" alt="Shop Owner" />
+        }
+        </div>
+        <div class="right_content">
+            <div class="hub-comments-listing">
+                <div class="head">
+                    <h2><a href="javascript:{}">@item.UserName</a></h2>
+                </div>
+                <div class="detail">
+                    <p class="breakword">
+                        <strong>Comment :</strong>
+                        @Html.Raw(item.Comment.Replace("\r\n", "<br/>"))
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+    }
+}
+else
+{ 
+    <span id="noComment">No Comments Available</span>
+}

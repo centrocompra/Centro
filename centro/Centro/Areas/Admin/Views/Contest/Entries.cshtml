@@ -1,0 +1,158 @@
+﻿@model PagingResult<ContestParticipantsViewModel>
+@{
+    ViewBag.Title = "Manage Challenges";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayOut.cshtml";
+}
+<h2>
+    Choose Winner for @Utility.HifenToSpace((string)ViewBag.ContestName)</h2>
+
+    <input type="button" value="Activate" onclick="SetWinners(this);" class="button1 floatLeft" />
+@*<div class="row mtop15">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" class="searchbox">
+        <tbody>
+            <tr valign="top">
+                <td align="left" class="searchbox">
+                    <div class="floatleft">
+                        <table cellspacing="0" cellpadding="4" border="0">
+                            <tbody>
+                                <tr valign="top">
+                                    <td valign="middle">
+                                        Search By Name
+                                    </td>
+                                    <td valign="middle" align="left">
+                                        <input type="text" value="" style="width: 300px;" name="contest" id="contest" class="input">
+                                    </td>
+                                    <td valign="middle" align="left">
+                                        <input type="button" class="button1-blk floatLeft" value="Submit" onclick="searchContest(this)">
+                                        <input type="button" value="Deactivate" onclick="Deactivate(this);" class="button1 floatLeft" />
+                                        <input type="button" value="Activate" onclick="Activate(this);" class="button1 floatLeft" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="floatright top5">
+                        <a href="@Url.Action("Create", "Contest")" class="black_btn"><span>Add New Challenge</span></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />*@
+<div class="row mtop15">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" class="listing">
+        <thead>
+            <tr>
+               @* <th>
+                    <input type="checkbox" onclick="javascript:CheckAll(this);" />
+                </th>*@
+                <th>
+                    <span>Product Title</span><img col="Title" src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="SortContest(this);" />
+                </th>
+                <th>
+                    <span class="">Picture</span>
+                </th>
+                @*<th>
+                    <span>Fund</span><img col="Fund" src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="SortContest(this);" />
+                </th>*@
+                <th>
+                    <span>Shop</span><img col="StartDate" src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="SortContest(this);" />
+                </th>
+                <th style="text-align: center">
+                    <span>Votes</span>
+                </th>                
+                <th style="text-align: center">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody id="Result">
+            @Html.Partial("_Entries", Model)
+        </tbody>
+    </table>
+    @*<div>
+        <input type="button" value="Set as Featured" onclick="SetAsFeatured(this);" />
+    </div>*@
+     @Html.Partial("_Paging")
+</div>
+<link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+    
+<script type="text/javascript">
+    var totalCount = 0;
+    var ContestID=0;
+    $(document).ready(function () {
+        totalCount = parseInt('@Model.TotalCount');
+        ContestID = '@ViewBag.ContestID'
+    });
+
+    function SetWinner(sender, cls) {
+        var name = $(sender).attr('name');
+        if(name=='First')
+            $('input[name=Second], input[name=Third]').removeAttr('disabled');
+        if (name == 'Second')
+            $('input[name=First], input[name=Third]').removeAttr('disabled');
+        if (name == 'Third')
+            $('input[name=Second], input[name=First]').removeAttr('disabled');
+
+        $('.'+cls).find('input[type=radio]').prop('checked', false).attr({ disabled: "disabled" });
+        $(sender).removeAttr('disabled').attr('checked','checked');
+    }
+
+    function SetWinners(sender) {
+        var first,second,third;
+        $('input[name=First]').each(function () {
+            if ($(this).is(':checked')) {
+                first = $(this).parent().attr('class');
+            }
+        });
+        $('input[name=Second]').each(function () {
+            if ($(this).is(':checked')) {
+                second = $(this).parent().attr('class');
+            }
+        });
+        $('input[name=Third]').each(function () {
+            if ($(this).is(':checked')) {
+                third = $(this).parent().attr('class');
+            }
+        });
+        var flag = true;
+        if ((third == undefined || third == '') && totalCount > 2) {
+            Message('Please choose 2nd runner up.', ActionStatus.Error);
+            flag = false;
+        }
+        if ((second == undefined || second == '') && totalCount > 1) {
+            Message('Please choose 1st runner up.', ActionStatus.Error);
+            flag = false;
+        }
+        if (first == undefined || first == '') {
+            Message('Please choose a winner.', ActionStatus.Error);
+            flag = false;
+        }
+        if (!flag)
+            return false;
+        Message('Processing...');
+        AjaxFormSubmit({
+            type: "POST",
+            validate: false,
+            parentControl: $(sender).parents("form:first"),
+            data: { ContestID: ContestID, First: first, Second: second, Third: third },
+            messageControl: null,
+            throbberPosition: { my: "left center", at: "right center", of: sender, offset: "5 0" },
+            url: '/Admin/Contest/SetWinners',
+            success: function (data) {
+                if (data.Status == ActionStatus.Successfull) {
+                    Message(data.Message, ActionStatus.Successfull);
+                    setTimeout(function () {
+                        window.location.href = window.location.href;
+                    }, 3000);
+                }
+                else {
+                    Message('Something went wrong', ActionStatus.Error);
+                }
+            }
+        });
+    }
+</script>
+<script src="@Url.Content("~/Scripts/Custom/admin/ContestPaging.js")" type="text/javascript"></script>

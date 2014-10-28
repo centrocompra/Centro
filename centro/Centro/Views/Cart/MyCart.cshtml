@@ -1,0 +1,68 @@
+﻿@model Cart
+@{
+    ViewBag.Title = "MyCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+     My Shopping Cart
+}
+<div class="checkout_breadcrumbs checkout_breadcrumb_6">
+    <div id="breadcrumb-cart" class="checkout_breadcrumb checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div style="height: 50px" class="checkout_breadcrumb_title">
+                Cart</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_wb">
+            </div>
+        </div>
+    </div>    
+    <div id="breadcrumb-address" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Address</div>
+            Billing &amp; Shipping
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_b">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-confirmation" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Review</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_b">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-payment" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Payment</div>
+            PayPal or Credit Card
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_b">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-receipt" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Receipt</div>
+        </div>
+
+        <div class="clearfixfix">
+        </div>
+    </div>
+    <div class="clearfixfix">
+    </div>
+</div>
+<div class="white-area-inner my-cart cart">
+@Html.Partial("_Cart", Model)
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/custom/cart.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/custom/USAStates.js")"></script>

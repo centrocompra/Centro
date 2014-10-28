@@ -1,0 +1,13 @@
+﻿@model Centro.Models.Captcha
+<label>
+    @Html.Raw("Type the Code")
+</label>
+<div class="editor-field capture_field">
+    <img src='@Url.Content("~/Captcha/Show")' alt="" class="captcha_img" /><br />
+      <div class="input_text">
+    @Html.TextBoxFor(m => m.CaptchaValue, new { @class = "text" })
+    @Html.ValidationMessageFor(model => model.CaptchaValue,Model.CaptchaValue, new { @class = "inline-input-error-message" })
+    </div>
+    <br class="clear" />
+</div>
+<br class="clear" />

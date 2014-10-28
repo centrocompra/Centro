@@ -1,0 +1,30 @@
+﻿@model PagingResult<ProductsListingAdmin_Result>
+@if (Model.Status == ActionStatus.Successfull && Model.TotalCount>0)
+{
+    foreach (ProductsListingAdmin_Result item in Model.List)
+    {
+    <tr>
+        <td>
+            <input type="checkbox" id="@item.ProductID" class="pro" />
+        </td>
+        <td>@item.Title
+        </td>
+        <td>
+            <img src="~/Images/ProductImages/@item.Username/@item.PrimaryPicture" width="45" />
+        </td>
+        <td>@item.UnitPrice
+        </td>
+        <td>
+            @item.Manufacturer
+        </td>
+        <td align="center">
+        @if(item.IsFeatured.HasValue && item.IsFeatured.Value){
+            <input type="checkbox" value="@item.ProductID" checked="checked" class="featured" />
+        }
+        else{
+            <input type="checkbox" value="@item.ProductID" class="featured"/>
+        }
+        </td>
+    </tr>    
+    }
+}

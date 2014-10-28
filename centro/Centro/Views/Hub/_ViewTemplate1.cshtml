@@ -1,0 +1,30 @@
+﻿@model List<HubContent>
+
+@foreach (HubContent item in Model)
+{
+    <script>
+        $(document).ready(function () {
+            $('#Image_@item.HubContentID').fancybox();
+        })
+
+    </script>
+<div class="row gray-border-bottom mb10">
+	<div class="input-group input-group-wb location-city hub-create-list hub-create-list-vw hub-create-list-vw1">
+		<div class="autosuggest-wrapper hub-btm-txt1 max-wth floatNone">
+			<p>@Html.Raw(item.ContentText.Replace("<div></div>","</br>")) </p>
+			<blockquote class="pos-rel"> 
+            @if (item.SavedName != null)
+            {
+                <img src="@Url.Content("~/Images/" + ViewBag.Username + "/Hubs/" + item.SavedName)" class="gray-border max-width-height displayBlock" alt=""> 
+                <a id="Image_@item.HubContentID" class="hub-prod-zoom" href="@Url.Content("~/Images/" + ViewBag.Username + "/Hubs/" + item.SavedName)"><img width="24" src="@Url.Content("~/Content/images/zoom.png")" /></a>
+            }
+            else
+            {
+                <img src="@Url.Content("~/Content/Images/blog-default.jpg")" class="gray-border max-width-height displayBlock" alt=""> 
+            }
+            </blockquote>
+            
+		</div>
+	</div>
+</div>
+}

@@ -1,0 +1,26 @@
+﻿@model PagingResult<SubCategory>
+@{
+    List<SubCategory> list = Model.List;
+}
+@if (Model.Status == ActionStatus.Successfull)
+{
+    foreach (SubCategory item in list)
+    {
+       
+    <tr>
+        <td class="@item.SubCategoryID">
+            <input type="checkbox" id="@item.SubCategoryID" />
+        </td>
+        <td class="@item.Name">
+        @item.Name
+        </td>
+        <td class="@item.Category.CategoryID">
+        @item.Category.Name
+        </td>        
+        <td class="@item.SubCategoryID" align="center">
+            <a href="@Url.Action("AddSubCategory", "Categories", new { id = item.SubCategoryID })">
+                <img width="18" alt="Edit" src="@Url.Content("~/Images/edit.png")" title="Edit Sub-Category" /></a>
+        </td>
+    </tr>    
+    }
+}

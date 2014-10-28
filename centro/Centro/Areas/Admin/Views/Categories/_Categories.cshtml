@@ -1,0 +1,37 @@
+﻿@model PagingResult<CategoryListingAdmin_Result>
+@{
+    List<CategoryListingAdmin_Result> list = Model.List;
+}
+@if (Model.Status == ActionStatus.Successfull)
+{
+    foreach (CategoryListingAdmin_Result item in list)
+    {
+       
+    <tr>
+        <td class="@item.CategoryID">
+            <input type="checkbox" id="@item.CategoryID" />
+        </td>
+        <td class="@item.CategoryID">
+        @item.Name
+        </td>
+        <td class="@item.CategoryID">
+        @item.Description
+        </td>
+        <td class="@item.CategoryID" align="center">
+        @if(item.Published.Value)
+        {
+             <img width="18" alt="Edit" src="@Url.Content("~/Images/active.png")" title="Active" />
+        }
+        else
+        {
+             <img width="18" alt="Edit" src="@Url.Content("~/Images/inactive.png")" title="InActive" /> 
+        }
+        
+        </td>
+        <td class="@item.CategoryID" align="center">
+            <a href="@Url.Action("EditCategory", "Categories", new { id = item.CategoryID })">
+                <img width="18" alt="Edit" src="@Url.Content("~/Images/edit.png")" title="Edit Category" /></a>
+        </td>
+    </tr>    
+    }
+}

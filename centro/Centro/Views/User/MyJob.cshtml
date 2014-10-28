@@ -1,0 +1,161 @@
+﻿@model BuyerJob
+@{
+    ViewBag.Title = "Job";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@{
+    List<ShopViewModel> Applicants = SellersHandler.GetJobApplicants(Model.JobID).List; //ViewBag.JobApplicants;
+    short i = 1;
+    var shop = SellersHandler.ShopByUserId(Model.BuyerID).Object;
+}
+@section title{
+ Job Details
+}
+<div class="page-center">
+    
+	<div class="white-area-inner custom-request pt10">
+        <div class="clearIt"></div>
+        <div class="header-section pos-rel gray-border-bottom mb10 job-add-c1">            
+			<div class="header-left">
+				<div class="main-heading m0">
+					<h3 class="inlineBlock p0" title="@Model.JobTitle">@Model.JobTitle</h3>
+                    <span class="job-add-usrnm">
+                        @if (shop != null)
+                        {
+					        <strong class="inlineBlock username">By: <a href="@Url.Action("Shop", "Shops", new { @id = Utility.SpacesToHifen(shop.ShopName), @shopid = shop.ShopID })">@Model.User1.UserName</a></strong>
+                        }
+                        else
+                        {
+                            <strong class="inlineBlock username">By: @Model.User1.UserName</strong>
+                        }
+                    </span>
+				</div>
+                <div class="row pb10"> 
+                    <div class="breadcrums"><a href="@Url.Action("Jobs","User")">Jobs</a> > <a href="@Url.Action("Jobs","User")">Ads</a> > @Model.JobTitle</div>
+                </div>
+
+			</div>
+            @if (!Model.IsDeleted)
+            {
+			<div class="header-right pos-abs">
+                @*<a href="@Url.Action("CreateJob", "User", new { @id = Model.JobID, @from = "MyJob" })" class="orange-btn inlineBlock">Edit My Ad</a>*@
+                @*<a href="#" class="button1-blk inlineBlock">Send Message</a>
+                <a href="#" class="button1 inlineBlock">Apply for job</a>*@
+			</div>
+            }
+			<div class="divClear"></div>
+		</div>
+        <div class="header-section pos-rel gray-border-bottom mb10 job-add-c1">     
+            <div class="header-left p0">
+				<div class="user-details">
+					<span class="inlineBlock f13 mr10"><img src="@Url.Content("~/Content/images/job-udi1.png")" class="mb-5 mr5" />Posted: @Model.CreatedOn.Value.ToLongDateString() @Model.CreatedOn.Value.ToShortTimeString()</span>
+                    <span class="inlineBlock f13 mr10 ml5"><img src="@Url.Content("~/Content/images/job-udi3.png")" class="mb-5 mr5" /> Ad # @Model.JobID</span>
+					<span class="inlineBlock mr10 ml5"> <img src="@Url.Content("~/Content/images/job-udi2.png")" class="mb-5 mr5" /> @(((Services)Model.CategoryId).ToEnumDescription())</span>
+                    <span class="rates ml5"><img src="@Url.Content("~/Content/images/job-udi4.png")" width="24" class="mb-5 mr5" /> $@Model.MinBudget USD</span>
+                    <a href="javascript:void(0)" class="underline-none floatRight report"> <img src="@Url.Content("~/Content/images/flag.png")" width="14" class="mb-3 mr10" /> Report </a>
+				</div>
+            </div>
+        </div>
+		<article>
+			<p>@Model.JobDescription</p>
+        </article>		
+        <article>
+			<p><strong class="dark-grey">Requirements: </strong>@Model.Requirements</p>
+        </article>		
+        <article>
+			<p><strong class="dark-grey">Specialties: </strong>@Model.Specialties</p>
+        </article>
+        @if (Model.BuyerJobAttachments != null && Model.BuyerJobAttachments.Count() > 0)
+        {
+        <div class="jobs dark-grey">
+		<p><strong class="dark-grey">Attachments</strong></p>
+			<ul>
+            @foreach (var item in Model.BuyerJobAttachments)
+            {
+				<li><a target="_blank" href="@Url.Action("DownloadJobFile", "User", new { @id = @item.AttachmentID, username = @Model.User1.UserName })"><span>@item.DisplayName</span></a></li>
+            }				
+			</ul>
+        </div>
+        }		
+		@*<div class="details row mt10">
+			<dl>
+				<dt>Posted By</dt>
+				<dd><a href="javascript:void(0)">@Model.User1.UserName</a></dd>
+			</dl>
+			<dl class="mt10">
+				<dt>Budget Details</dt>
+				<dd>$@Model.MinBudget to $@Model.MaxBudget USD</dd>
+			</dl>
+		</div>*@
+		<h3 class="main-heading mt10">Job Entries</h3>
+				<div class="row table-listing">
+					<table id="table1" width="100%" class="tablesorter">
+						<tbody>
+							<tr class="tablehead">
+								<th width="4%">
+									#
+								</th>
+								<th width="25%">
+									User Name
+								</th>
+								<th width="31%">
+									Reviews</th>
+                                <th width="15%">
+									Fixed Bid Price</th>
+                            @if (Model.BuyerID == (int)ViewBag.LoggedInUserId)
+                            {
+								<th width="*">
+									Actions
+								</th>
+                            }
+							</tr>
+                        @foreach (var item in Applicants)
+                        {
+							<tr class="even">
+								<td>
+									@Html.Raw(i++)
+								</td>
+								<td>@item.ShopOwnerName </td>
+								<td>
+                                    <script type="text/javascript">
+                                        jQuery(document).ready(function () {
+                                            $('#star_@item.ShopID').raty({
+                                                readOnly: true,
+                                                score: "@item.AvgRating"
+                                            });
+                                        });
+                                    </script>                            
+                                    <a href="@Url.Action("ShopFeedBack", "FeedBack", new { ShopName = Utility.SpacesToHifen(item.ShopName), ShopId = item.ShopID })"><div id="star_@item.ShopID" class="floatLeft"></div></a>
+                                </td>
+								<td>$@item.BidAmount USD</td>
+                            @if (Model.BuyerID == (int)ViewBag.LoggedInUserId)
+                            {
+                                <td>
+                                @if (item.RequestSent.HasValue && !item.RequestAccepted.HasValue)
+                                {
+                                    <span>Request Sent</span>
+                                }
+                                else if (item.RequestSent.HasValue && item.RequestAccepted.HasValue)
+                                {
+                                    <span>Awarded</span>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Compose", "Message", new { id = item.ShopOwnerName })" class="floatLeft mr10">Message</a>
+                                    <a href="javascript:;" class="action mr10" onclick="SetSentTo(this, @Model.JobID, @item.UserID)">Hire</a>
+                                    <a href="javascript:;" class="action" onclick="DeleteJobEntry(this, @item.JobApplicationID)">Delete</a>
+                                }
+                                </td>
+                            }
+							</tr>
+                        }
+						</tbody>
+					</table>
+                    <div class="row"><a href="@Url.Action("Jobs","User")" class="button1-blk floatRight mt10">Back</a></div>
+				</div>
+	</div>
+</div>
+@section scripts{      
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/job.js")" type="text/javascript"></script>
+}

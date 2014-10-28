@@ -1,0 +1,46 @@
+﻿@model Hub
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+Centro : Hubs
+}
+<div class="white-area-inner">
+    @Html.Partial("_BuyerLeftSideMenu")
+    <div class="profile-right-bar primary profile-edit">
+        <div class="right-panel one-column">
+<div class="row edit-from-profile pt10">
+	<div class="input-group">
+		<h2 align="left" class="ch-hd-in-dv">Hub Title : </h2>
+		<h3 class="ch-hd-in-dv"> @Model.Title </h3>
+        <h3 class="ch-hd-in-dv floatRight">
+        @if (Model.HubPicture != null)
+        {
+            <img width="100" src="@Url.Content("~/Images/" + Model.HubOwnerUsername + "/Hubs/" + Model.HubPicture)" />
+        }
+        else
+        {
+            <img width="100" src="@Url.Content("~/Content/Images/blog-default.jpg")" />
+        }
+        </h3>
+	</div>
+    <div class="input-group">
+		<h2 align="left" class="ch-hd-in-dv">Hub Description : </h2>
+		<h3 class="ch-hd-in-dv"> @Model.Description </h3>
+	</div>
+	<div class="input-group">
+		<h2 align="left" class="ch-hd-in-dv">Hub Topic : </h2>
+		<h3 class="ch-hd-in-dv"> @Model.HubTopicText </h3>
+	</div>
+    @if (Model.HubTemplateID == (int)HubTemplate.Template1)
+    {
+        <div>@Html.Partial("_ViewTemplate1", Model.HubItems)</div>
+    }
+    else
+    {
+        <div>@Html.Partial("_ViewTemplate2", Model.HubItems)</div>
+    }
+</div>      </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿@model List<Hub>
+@{
+    User shopOwner = (User)ViewBag.ShopOwner;
+    Shop shop = (Shop)ViewBag.Shop;
+    
+}
+
+@foreach (var item in Model.Where(m=>m.HubStatus==(int)HubStatus.Active).ToList() )
+{
+    item.Description = (item.Description != null && item.Description.Length > 370) ? item.Description.Substring(0, 369) : (item.Description != null ? item.Description : "");
+    item.HubItems = item.HubContents.ToList();
+    var user = ((SiteUserDetails)ViewBag.CentroUsers).LoggedInUser;
+    <div class="disp-hub-l1 mb20">
+		<span class="mr10">
+        @if (item.HubPicture != null) {
+            <img width="100" src="@Url.Content("~/Images/" + shopOwner.UserName + "/Hubs/" + item.HubPicture)" />
+        }
+        else {
+            <img width="100" src="@Url.Content("~/Content/Images/blog-default.jpg")" />
+        }
+        </span> 
+		<h3 class="pb3"><a href="@Url.Action("HubDetails", "Hub", new {ShopName=Utility.SpacesToHifen(item.HubShopName), HubTitle=Utility.SpacesToHifen(item.Title) })">@item.Title</a></h3>
+		<label>Posted @String.Format("{0:m}",item.CreatedOn), @String.Format("{0:yyyy}",item.CreatedOn)@* <a href="#"> 6 </a>*@</label>
+		<p class="mt5">@item.Description</p>
+	</div>
+}

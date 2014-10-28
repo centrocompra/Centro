@@ -1,0 +1,76 @@
+﻿@model Shop
+@{
+    ViewBag.Title = "Shop";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{ Shop Information }
+@{
+    SelectedTabs selectedTabs = ViewBag.SelectedTabs;
+    int shopId = Model == null ? 0 : Model.ShopID;
+    List<ShopSection> section = SellersHandler.ShopSectionsByShopId(Model.ShopID).List;
+    string count = section.Count() > 0 ? "trueaa" : "";
+    
+    var ajaxlink = Ajax.ActionLink("Sections", "_Sections", "User", new { shop_id = "shopId" }, new AjaxOptions { UpdateTargetId = "ui-tabs" }, new { @onclick = "SetTab(this)", @class = "Sections" });
+    string nextURL = Html.Raw(Server.HtmlDecode(ajaxlink.ToString())).ToString();
+    
+        
+}
+<div class="create-shop-steps-area">
+ 
+@Html.Partial("_SellerSubMenu", selectedTabs)
+ 
+</div>
+<div class="white-area-inner p20">
+<div class="right-panel one-column">
+    <div class="row"> <a href="javascript:;" class="button2 fRight" style="display:none;"><span class="fwd">List Items</span></a>
+   
+    <div>
+        <div class="tabs-outer">
+       
+        <ul class="tabs">
+       
+            <li class="active">@Ajax.ActionLink("Shop Info", "_ShopInfo", "User", null, new AjaxOptions { UpdateTargetId = "ui-tabs" }, new { @onclick = "SetTab(this)", @class = "ShopInfo" })</li>
+        @if (shopId > 0)
+        {
+            @*<li>@Ajax.ActionLink("Policies", "_Policies", "User", null, new AjaxOptions { UpdateTargetId = "ui-tabs" }, new { @onclick = "SetTab(this)", @class = "Policies" })</li>*@
+            <li>@Ajax.ActionLink("Sections", "_Sections", "User", new { shop_id = shopId }, new AjaxOptions { UpdateTargetId = "ui-tabs" }, new { @onclick = "SetTab(this)", @class = "Sections" })</li>
+            <li>@Ajax.ActionLink("Availability", "_ShopName", "User", null, new AjaxOptions { UpdateTargetId = "ui-tabs" }, new { @onclick = "SetTab(this)", @class = "ShopName" })</li>
+        }
+        else
+        {
+            @*<li><a href="javascript:;" onclick="ShopInfo($('#Submit'));">Policies</a></li>*@
+            <li><a href="javascript:;" onclick="ShopInfo($('#Submit'));">Sections</a></li>
+            <li><a href="javascript:;">Shop Availability</a></li>
+        }
+        </ul>
+        
+        </div>
+        <div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="ui-tabs">
+            @*@Html.Partial("_ShopInfo", Model)*@
+        </div>
+         @*<div class="user-register-msg-box"><div class="fwd top-msg">@ViewBag.UserRegDetail </div></div>*@
+    </div>
+    </div>
+</div>
+</div>
+
+@section scripts{
+<script type="text/javascript">
+    //var nextURL = '@nextURL.ToString()';
+    //console.log(nextURL);
+    //console.log('<a class="Sections" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#ui-tabs" href="/User/_Sections?shop_id=shopId" onclick="SetTab(this)">Sections</a>');
+</script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.core.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.widget.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.mouse.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.ui.sortable.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/custom/StepsCompleted.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/custom/CreateShop.js")"></script>
+<script src="@Url.Content("~/Scripts/Custom/stateCountry.js")" type="text/javascript"></script>
+}
+
+<script type="text/javascript">
+    var shop_id = '@shopId';
+    Policy = '@Model.PaymentPolicy';
+    Section = '@count';
+</script>

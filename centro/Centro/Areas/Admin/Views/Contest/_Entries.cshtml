@@ -1,0 +1,42 @@
+﻿@model PagingResult<ContestParticipantsViewModel>
+@if (Model.Status == ActionStatus.Successfull && Model.TotalCount > 0)
+{
+    foreach (ContestParticipantsViewModel item in Model.List)
+    {
+    <tr>
+        @*<td>
+            <input type="checkbox" id="@item.ContestID" class="pro" />
+        </td>*@
+        <td style="max-width: 350px;">@item.ProductTitle
+        </td>
+        <td>
+            @if (string.IsNullOrEmpty(item.ProductImage))
+            {
+                <img width="45" height="45" alt="" src="/Content/Images/Contest.png">
+            }
+            else
+            {
+                <img src="@Url.Content("~/Images/ProductImages/" + item.Username + "/" + item.ProductImage)" width="45" />
+            }
+        </td>
+        <td>@item.Username
+        </td>
+        <td align="center">
+            @(item.VoteUp ?? 0) (Votup)
+            @(item.VoteDown ?? 0) (Votdown)
+        </td>
+        @*<td align="center">
+            @Html.Raw(item.ContestParticipant.? "Active":"Inactive")
+        </td>*@
+        <td align="center" class="@item.UserID">
+            @*<a href="@Url.Action("Entries", "Contest", new { @Area="Admin", id=item.ContestParticipant.ContestparticipantID })">View Entries</a>*@
+            <input type="radio" name="First" onclick="SetWinner(this, @item.UserID)" />Winner
+            &nbsp;&nbsp;&nbsp;
+            <input type="radio" name="Second" onclick="SetWinner(this, @item.UserID)" />1st Runner up
+            &nbsp;&nbsp;&nbsp;
+            <input type="radio" name="Third" onclick="SetWinner(this, @item.UserID)" />2nd Runner up
+            &nbsp;&nbsp;&nbsp;
+        </td>
+    </tr>    
+    }
+}

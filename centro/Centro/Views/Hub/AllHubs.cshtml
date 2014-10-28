@@ -1,0 +1,64 @@
+﻿@model PagingResult<Hub>
+@{
+    ViewBag.Title = "All Hubs";
+    var user = (SiteUserDetails)ViewBag.CentroUsers;
+    //Layout = ViewBag.CentroUsers != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+    Layout = user.LoggedInUser != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@{
+   
+
+}
+@section title{
+ Hubs
+}
+<div class="row">
+
+    <aside class="floatLeft left-side">
+        @Html.Partial("_HubSearch")
+        <br />
+        @Html.Partial("_HubByTopic")
+    </aside>
+
+    <div class="profile-right-bar right-side all-hub-ryt-out floatLeft">
+        <h3 class="all-hub-ttl">Hubs
+            <div class="select floatRight mr10">
+                <label class="hub-sort">Sort By : </label>
+                <select class="hub-drp" id="drpSort" onchange="SortHub(this)">
+                    <option value="CreatedOn">All</option>
+                    <option value="CreatedOn">Most Recent</option>
+                    <option value="TotalView">Most Reviewed</option>
+                </select>
+            </div>
+        </h3>
+        <div class="white-area floatLeft all-hub-ryt">
+            @Html.Partial("_Paging") 
+            <div class="disp-hub-main row">
+                <div id="hub_result">
+                    @Html.Partial("_HubList", Model.List)
+                </div>
+               @Html.Partial("_Paging") 
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Custom/hubs.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/system/jquery.jcarousel.min.js")"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#mycarousel,#mycarousel1,#productImages').jcarousel();
+            setUserAndTopicID(null,null);
+            PageNumbering("@Model.TotalCount",null);
+        });
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@model HubCommentViewModel
+
+<div class="detailBox info" id="Div_@Model.CommentID">
+    @if (ViewBag.UserID == Model.HubUserID)
+    {
+        <div class="floatRight">
+            <a href="javascript:{}" onclick="DeleteComment(@Model.CommentID)">Delete</a>
+        </div>
+    }
+        <div class="left_img">
+        @if (!string.IsNullOrEmpty(Model.UserImage))
+        {
+            <img src="@Url.Content("~/Images/ProfileImage/")@Model.UserName/thumb_@Model.UserImage" alt="Shop Owner" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/Content/images/user.jpg")" alt="Shop Owner" />
+        }
+        </div>
+    <div class="right_content">
+        <div class="shop-listing">
+            <div class="head">
+                <h2><a href="javascript:{}">@Model.UserName</a></h2>
+            </div>
+            <div class="detail">
+                <p  class="breakword">
+                    <strong>Comment :</strong>
+                        @Html.Raw(Model.Comment.Replace("\r\n", "<br/>"))
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="clear"></div>
+</div>

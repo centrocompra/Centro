@@ -1,0 +1,45 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = ViewBag.CentroUsers.LoggedInUser != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+    }
+@section title{
+     Products
+}
+<aside class="floatLeft left-side">
+    @Html.Partial("_LeftMenu")
+</aside>
+<div class="right-side floatRight">
+	<div class="box fetured">
+        <div class="">
+            <h2>Products</h2>
+            <div id="Result">
+                @if (Model.List.Count > 0)
+                {
+                    @Html.Partial("_Products", Model)
+                }
+                else
+                {
+                    <div class="no-result">
+                        <br />
+                    <h3>No product found.</h3>
+                    </div>
+                    
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    paging.pageSize = 20;
+</script>
+<script src="@Url.Content("~/Scripts/Custom/searchproductsPaging.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    paging.pageSize = 20;
+</script>

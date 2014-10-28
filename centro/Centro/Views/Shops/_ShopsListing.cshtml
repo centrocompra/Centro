@@ -1,0 +1,146 @@
+﻿@model PagingResult<GetShopListingByServiceId_Result>
+@Html.Partial("_Paging") 
+<div class="custom_design">
+
+    @if (Model.TotalCount > 0)
+    {
+        Dictionary<int, string> SpentOver = new Dictionary<int, string>();
+        SpentOver.Add(100, "Over $100.00 USD");
+        SpentOver.Add(1000, "Over $1000.00 USD");
+        SpentOver.Add(10000, "Over $10000.00 USD");
+        SpentOver.Add(15000, "Over $15000.00 USD");
+        SpentOver.Add(20000, "Over $20000.00 USD");
+        SpentOver.Add(30000, "Over $30000.00 USD");
+        SpentOver.Add(40000, "Over $40000.00 USD");
+        SpentOver.Add(50000, "Over $50000.00 USD");
+        SpentOver.Add(60000, "Over $60000.00 USD");
+        SpentOver.Add(70000, "Over $70000.00 USD");
+        SpentOver.Add(80000, "Over $80000.00 USD");
+        SpentOver.Add(90000, "Over $90000.00 USD");
+        SpentOver.Add(100000, "Over $100000.00 USD");
+        SpentOver.Add(110000, "Over $110000.00 USD");
+        SpentOver.Add(120000, "Over $120000.00 USD");
+
+        foreach (var item in Model.List/*.Take(10)*/)
+        {
+            string shopOwnerName = (item.ShopOwnerFirstName + " " + item.ShopOwnerLastName.Substring(0, 1));
+            shopOwnerName = shopOwnerName.Length > 10 ? shopOwnerName.Substring(0, 10) : shopOwnerName;
+            //DateTimeSpan dateSpan = DateTimeSpan.CompareDates(item.LastLoginOn.Value, DateTime.Now);
+            TimeSpan dateSpan = DateTime.Now.Subtract(item.LastLoginOn.Value);
+            string lastactiveon = "";
+            if (dateSpan.Days > 1) { lastactiveon = dateSpan.Days + " days ago"; }
+            else if (dateSpan.Days == 1) { lastactiveon = "1 day ago"; }
+            else if (dateSpan.Hours > 1) { lastactiveon = dateSpan.Hours + " hours ago"; }
+            else if (dateSpan.Hours == 1) { lastactiveon = "1 hour ago"; }
+            else if (dateSpan.Minutes > 1) { lastactiveon = dateSpan.Minutes + " minutes ago"; }
+            else if (dateSpan.Minutes == 1) { lastactiveon = "1 minute ago"; }
+            else { lastactiveon = "just now"; }
+            List<string> list_rating_feedback = FeedBackHandler.GetShopTotalFeedBackAndAverageRating((int)item.ShopId).Results;
+            string shortbio = (item.AboutUs != null && item.AboutUs.Length > 420) ? item.AboutUs.Substring(0, 420) : item.AboutUs;
+            string[] servicesArray= (item.Materials+","+item.TagsAndMaterials).Split(new char[]{','},StringSplitOptions.RemoveEmptyEntries);
+            string[] location = { item.CityName, item.StateName, item.CountryName };
+
+            string AcceptingJob = item.AcceptJob.HasValue && item.AcceptJob.Value && !(string.IsNullOrEmpty(item.PaypalID))   ? "Yes" : "No";
+
+            decimal TotalSpent = SellersHandler.TotalSpent(item.UserId.Value).Object ?? 0;
+            string SpentOverText = SpentOver.OrderByDescending(m => m.Key).Where(m => TotalSpent > m.Key).FirstOrDefault().Value;
+            SpentOverText = string.IsNullOrEmpty(SpentOverText) ? "0.00" : SpentOverText;
+
+        <script>
+            $(document).ready(function () {
+                $('#star_@item.ShopId').raty({
+                    readOnly: true,
+                    score: '@list_rating_feedback[1]'
+                });
+            });
+
+        </script>
+        <div class="shop-services mb10 row">
+    <div class="white-area floatLeft w62pc p10 proto-min-ht">
+        <div class="image-section floatLeft pr10 ">            
+           @if (!String.IsNullOrEmpty(item.ShopOwnerProfilePicUrl))
+           {
+               <a href="~/Shop/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId">
+                <img src="@Url.Content("~/Images/ProfileImage/")@item.ShopOwnerUserName/thumb_@item.ShopOwnerProfilePicUrl" alt="Shop Owner" width="140"/></a>
+           }
+           else
+           {
+               <a href="~/Shop/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId">
+                <img src="@Url.Content("~/Content/images/user_img.png")" width="140" alt="Shop Owner" /></a>
+           }
+        </div>
+        <div class="details">
+            <h2 class="floatLeft">                
+                <a href="~/Shop/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId">
+                    @*@Html.Raw(shopOwnerName)*@
+                    @item.ShopOwnerUserName
+                </a>
+            </h2>
+            <div class="stars floatLeft star-cus">
+                <span>@list_rating_feedback[0]</span>
+                <a href="@Url.Action("ShopFeedBack", "FeedBack", new { ShopName = Utility.SpacesToHifen(item.ShopName), ShopId = item.ShopId })">
+                    <div class="rating floatLeft" id="star_@item.ShopId"></div>
+                </a>
+            </div>
+            <a href="javascript:void(0)" onclick="Follow(@item.UserId)" class="underline-none mt5 button2 floatRight ">Follow/Favorite</a>            
+            <p class="clearRyt">
+                from @Html.Raw(string.Join(", ", location))
+            </p>
+            <p class="pt10 clearRyt" style="overflow: hidden; height: 90px; text-align: justify;">
+                <strong>Short Bio:</strong> @item.AboutUs
+            </p>            
+        </div>        
+        <div class="divClear"></div>
+    </div>
+    <div class="white-area floatRight w32pc p10 proto-min-ht">
+        <div class="row follwed-sec-rt">
+            <p class="follwed-sec-rt-1"><a href="@Url.Action("UserHub","Hub",new { UserName = item.ShopOwnerUserName })"><strong>@item.TotalHubs</strong></a><span>Hubs </span></p>
+            <p class="follwed-sec-rt-1"><a href="@Url.Action("Contests","Products",new { shopname = Utility.SpacesToHifen(item.ShopName), shopid=@item.ShopId })"><strong>@item.TotalContest</strong></a><span>Contests </span></p>
+            <p class="follwed-sec-rt-1"><strong>@item.TotalFollowers</strong> <span>Followers </span></p>
+            <p class="follwed-sec-rt-1"><strong>@item.TotalEarning</strong> <span>Earned </span></p>
+        </div>
+        @*<span>last active: <strong>@lastactiveon</strong></span>*@
+        <div class="p10">
+            <strong class="floatLeft">Total Spent: </strong><strong class="floatRight">@SpentOverText</strong>
+        </div>
+        <div class="row mt15">
+            <a href="@Url.Action("Compose", "Message", new { id = @item.ShopOwnerUserName })" class="button1">Contact Designer </a>
+        @if(AcceptingJob=="Yes"){            
+            <a href="@Url.Action("CreateJob", "User", new { id = 0, from = "Recruit", username = item.ShopOwnerUserName })" class="button3 ml10">Hire </a>
+            }
+        </div>
+    </div>
+
+    <div class="white-area floatLeft w62pc p10  proto-min-line">
+        <div class="floatLeft">
+            <strong>SKILLS</strong>: @Html.Raw(string.Join(", ", item.Skills))
+        </div>
+    </div>
+    <div class="white-area floatRight w32pc bg-black-gray uppercase wht bold p10">
+        <div class="floatLeft">Currently Accepting Jobs?&nbsp;&nbsp;&nbsp;&nbsp;@AcceptingJob</div>
+    </div>
+    <div class="clear"></div>
+    <div class="proto-btm-thumb"> 
+    @if (!String.IsNullOrEmpty(item.ProductPictures))
+    {
+        string[] productPictures = item.ProductPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+        foreach (var item1 in productPictures.Take(10))
+        {
+        <a href="~/Shop/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId"><img src="~/Images/ProductImages/@item.ShopOwnerUserName/thumb_@item1" width="50" alt=""  /></a>
+        }
+    }   
+    </div>
+    <div class="clear"></div>
+</div>
+        }
+    
+        @Html.Partial("_Paging") 
+    }
+    else
+    {
+        <div class="no-result">
+            <h3>No Shop Found for this Service</h3>
+        </div>
+    }
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>

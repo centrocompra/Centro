@@ -1,0 +1,99 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+     Category wise Products
+}
+@{
+    List<Product> LastViewedProducts = (List<Product>)ViewBag.LastViewedProducts;
+    List<Hub> random_hubs = (List<Hub>)ViewBag.HubList;
+    List<ContestViewModel> RandomContest = ViewBag.RandomContest;
+    List<JobsViewModel> Randomjobs = ViewBag.RandomJobs;
+}
+<aside class="floatLeft left-side">
+    @Html.Partial("_LeftSideBuyerCategoryMenuLayout")
+</aside>
+<div class="right-side floatRight">
+    <div class="box fetured">
+        <div class="">
+            <h2>
+            @*<a class="seeall" href="javascript:;" onclick="SeeAll(this)">View All</a>Featured Products</h2>*@
+            <a class="gray-btn fr" href="@Url.Action("Index","Products")">View All</a>Featured Products</h2>
+            <div id="Result">
+                @Html.Partial("_Products", Model)
+            </div>
+        </div>
+    </div>
+    <div class="box home-specific">
+        @Html.Partial("_HubListForHome",random_hubs)       
+        <div class="right-box">
+            <div class="contest pl10 random-contest">
+                <h3><a href="@Url.Action("ViewContest", "Contest")" class="gray-btn fRight">View All</a> UX Challenges</h3>
+                @Html.Partial("_ContestList", RandomContest)
+            </div>        
+        </div>
+    </div>
+    <div class="twocolmn-box floatLeft recenty-viewed-product home-specific">
+        <div class="box">
+        <div class="box-inner">
+            <h3>Recently Viewed Products</h3>
+    @if (LastViewedProducts.Count() > 0)
+    {
+            <ul>
+        @foreach (Product p in LastViewedProducts)
+        {
+            <li>
+                @*<a href="~/Products/Product/@p.ShopName/@p.ProductID">*@
+                <a title="@p.Title" href="~/Products/@Utility.SpacesToHifen(p.ShopName)/@p.ShopId/@p.CategoryId/@p.ProductID" class="img">
+                <img src="@Url.Content("~/Images/ProductImages/" + @p.ShopOwnerUsername + "/" + p.PrimaryPicture)" width="92" height="82" alt="" />
+            </a></li>
+        }
+            </ul>
+    }
+    else
+{
+    <div class="row hub-NA">
+     No Product found
+    </div>
+}
+        </div>
+        </div>
+    </div>
+    <div class="twocolmn-box floatRight featured-sellers home-specific">
+        <div class="box">
+        <div class="box-inner p10">
+            @*<div class="car-btn"> <a href="#" class="prev"></a> <a href="#" class="next"></a> </div>*@
+            <h3>Jobs  <a href="/User/jobs" class="gray-btn fRight">View All</a> </h3>
+            <div class="random-jobs-home">
+        @if (Randomjobs.Count() > 0)
+        {
+            foreach (var item in Randomjobs)
+            {
+                <div class="home-job-outer pl10" onclick="window.location.href='/User/Job/@item.JobID/@item.JobTitle';">
+                    <div class="title"><a href="/User/Job/@item.JobID/@item.JobTitle"><strong>@item.JobTitle</strong></a></div>
+                    <div class="desc">@item.JobDescription</div>
+                    <div class="req"><strong>Requirements: </strong>@item.Requirements</div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="row job-NA">
+     No Job found
+    </div>
+        }
+        </div>
+        </div>
+    </div>
+</div></div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var category = '@ViewBag.Category';
+</script>
+<script src="@Url.Content("~/Scripts/Custom/featuredProductsPaging.js")" type="text/javascript"></script>

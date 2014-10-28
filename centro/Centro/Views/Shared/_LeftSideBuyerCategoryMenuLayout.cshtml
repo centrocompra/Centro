@@ -1,0 +1,125 @@
+﻿@{
+    var Categories = ProductsHandler.GetCategory().List;
+    List<ShopServices> services = ProductsHandler.GetServices();
+    List<HubTopic> hubTopics = HubHandler.GetHubTopics().List;
+    string[] url = Request.Url.AbsolutePath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+    string selectedCategory = "";
+    string selectedService = "";
+    if (url.Length == 3)
+    {
+        selectedCategory = url[2].Replace("-", " ");
+        selectedService = url[2].Replace("-", " ");
+    }
+}
+<div class="box">
+    
+    <div class="sections bor-bot">
+        <h3>Professional Services</h3>
+        <ul class="links">
+            @foreach (ShopServices service in services)
+            {
+                if (Utility.HifenToSpace(selectedService).ToLower() == service.ServiceName.ToLower())
+                {
+                <li><a class="active" href="/Shops/Services/@Utility.SpacesToHifen(service.ServiceName)">@service.ServiceName</a></li>
+                }
+                else
+                {
+                <li><a href="/Shops/Services/@Utility.SpacesToHifen(service.ServiceName)">@service.ServiceName</a></li>
+                }
+            }
+        </ul>
+    </div>
+    @*<div class="sections bor-bot">
+        <h3>Inventions</h3>
+        <ul class="links">
+            <li><a class="" href="#;">3D Prototyping Machines</a></li>
+            <li><a class="" href="#;">3D Material Creators</a></li>
+        </ul>
+    </div>*@
+    <div class="sections">
+        <h3>Browse Products</h3>
+        <ul class="links">
+            @foreach (Category cat in Categories.OrderBy(m => m.Name).ToList())
+            {
+                if (selectedCategory.ToLower() == cat.Name.ToLower())
+                {
+                <li><a class="active" href="/User/Category/@Utility.SpacesToHifen(cat.Name)">@cat.Name</a></li>
+                }
+                else
+                {
+                <li><a href="/User/Category/@Utility.SpacesToHifen(cat.Name)">@cat.Name</a></li>
+                }
+            }
+        </ul>
+    </div>
+    @if (ViewBag.Title != "All Hubs")
+    {
+        @*<div class="sections bor-bot">
+            <h3>Materials & Supplies</h3>
+            <ul class="links">
+                <li><a class="" href="#;">Bulk Wholesale 3D Printing Materials</a></li>
+                <li><a class="" href="#;">Basic 3D Printing Materials</a></li>
+                <li><a class="" href="#;">Raw 3D Printing Materials</a></li>
+            </ul>
+        </div>*@
+    }
+    else
+    {
+        <div class="sections bor-bot">
+            <h3>Explore</h3>
+            <ul class="links">
+                @foreach (var item in hubTopics)
+                {
+                    <li><a href="@Url.Action("HubsByTopic", "Hub", new { TopicName = Utility.SpacesToHifen(item.HubTopic1), TopicID = item.HubTopicID })">@item.HubTopic1</a></li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+<div class="box">
+    <div class="sections">
+        <h3>Newsletter Signup</h3>
+        <p>
+            Get gift ideas, editors' picks &amp; fresh trends in your inbox
+        </p>
+        <!-- Begin MailChimp Signup Form -->
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #mc_embed_signup {
+                background: #fff;
+                clear: left;
+                font: 14px Helvetica,Arial,sans-serif;
+            }
+            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+	           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        </style>
+        <div id="mc_embed_signup">
+            <form action="http://xicom.us7.list-manage.com/subscribe/post?u=da875b58b93736ddf0759bd30&amp;id=cab5a4131f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                @*<label for="mce-EMAIL">Subscribe to Newsletter</label>*@
+                @*<input type="text" value="" name="EMAIL" class="email text input-validation-error" id="mce-EMAIL" placeholder="email address">*@
+                <input type="text" value="" placeholder="Your Email id" name="EMAIL" id="mce-EMAIL" data-val-required="*Required." data-val-length-min="3" data-val-length-max="25"
+                    data-val-length="Mininum 3 and Maximum 25 characters are allowed." data-val="true" class="email text">
+                <span data-valmsg-replace="true" data-valmsg-for="EMAIL" class="field-validation-error"><span for="EMAIL" generated="true" class=""></span></span>
+                <div class="clear">
+                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                </div>
+            </form>
+        </div>
+
+        <!--End mc_embed_signup-->
+    </div>
+</div>
+@*<div class="box">
+    <div class="sections">
+        <h3>
+            Newsletter Signup</h3>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae ante at enim
+            fermentum facilisis.</p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusceet, consectetur adipiscing
+            elit. Fusce vitae ante at enim fermentum facilisis.Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Fusce vitae ante at enim fermentum facilisis.</p>
+        <a href="javascript:void(0)" class="mTop10">Lorem ipsum dolor sit amet</a>
+    </div>
+</div>*@

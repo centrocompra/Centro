@@ -1,0 +1,113 @@
+﻿@model PagingResult<GetRequestListingByBuyerOrSellerID_Result>
+<div class="search-msg">
+    <input type="text" placeholder="Search Messages" id="Search" onkeypress="searching(this, event);" />
+    <input type="submit" value="search" onclick="searchMessage(this);" />
+</div>
+<div class="clearIt"></div>
+<br />
+<div class="row table-listing">
+@if (Model.List.Count() > 0)
+{
+    <table id="table1" class="tablesorter tbl-chk-1">
+        <tbody>
+            <tr class="tablehead">
+                <th width="7%">
+                    ID
+                </th>
+                <th width="7%" style="word-wrap:break-word">
+                     Title
+                </th>
+                <th width="7%">
+                   Client Name
+                </th>
+                <th width="100px" valign="middle">
+                    Client Email
+                </th>
+                <th width="10%">
+                    Budget
+                </th>
+                 <th width="10%">
+                     Started On
+                </th>
+                <th width="15%">
+                     Updated On
+                </th>
+                
+                 <th width="11%">
+                     Status
+                </th>
+                <th  width="11%">
+                    Actions
+                </th>
+            </tr>
+             @foreach (var item in Model.List)
+             {
+                 string style = "style=font-weight:";
+                 style += (item.IsRead.HasValue && item.IsRead.Value) ? "normal" : "bold";
+            <tr class="@(item.RowNum % 2 != 0 ? "even" : "odd")" @style>
+                <td>
+                    @*@item.RowNum*@
+                    @item.RequestID
+                </td>
+                <td style="word-wrap: break-word; max-width: 90px ! important;">
+                   @item.RequestTitle
+                </td>
+                <td>
+                   @item.BuyerName
+                </td>
+                <td>
+                    <a href="mailto:@item.BuyerEmail">@item.BuyerEmail</a>
+                </td>
+                <td>
+                    $@item.MinBudget USD to $@item.MaxBudget USD
+                </td>
+                <td>
+                @item.CreatedOn.Value.ToString("D")
+                </td>
+                <td>
+                @item.UpdatedOn.Value.ToString("D")
+                </td>
+                
+                  <td>
+                    @(((CustomRequestStatus)item.RequestStatus).ToString())
+                </td>
+                <td align="center">
+                @if (item.RequestStatus == (int)CustomRequestStatus.Accepted || item.RequestStatus == (int)CustomRequestStatus.Working || item.RequestStatus == (int)CustomRequestStatus.OnHold || item.RequestStatus == (int)CustomRequestStatus.WaitingToStart)
+                {
+                    <a class="icons" title="View" href="@Url.Action("MyCustomOrder", "Message", new { id = item.RequestID })">
+                        <img src="@Url.Content("~/Content/Images/edit.png")"></a> 
+                }
+                else
+                {
+                    <a class="icons" title="View" href="@Url.Action("ViewRequest", "Message", new { id = item.RequestID })">
+                        <img src="@Url.Content("~/Content/Images/edit.png")"></a> 
+                }
+                   @* <a class="icons" href="javascript:void(0)"><img src="@Url.Content("~/Content/Images/cards-icon.png")"/></a>
+					<a class="icons" href="javascript:void(0)"><img src="@Url.Content("~/Content/Images/mail.png")"/></a>*@
+                </td>
+            </tr>
+             }
+          
+        </tbody>
+    </table>
+     <div id="pagingWrapper" class="pagingWrapper">
+        <div id="pager">
+            <span id="first">« First</span> <span id="previous">Previous</span> <span id="numeric">
+            </span><span id="next">Next</span> <span id="last">Last »</span>
+        </div>
+        <div id="pageInfo" class="pageInfo">
+        </div>
+    </div>
+}
+else
+{
+    @Html.Raw("No Request Found");
+}
+</div>
+
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var buyerValue = '@ViewBag.Buyer';
+    var draftValue = '@ViewBag.Draft';    
+</script>
+<script src="@Url.Content("~/Scripts/Custom/RequestPaging.js")" type="text/javascript"></script>

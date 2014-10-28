@@ -1,0 +1,109 @@
+﻿@model User
+@{
+    bool is_fav_shop = (bool)ViewBag.IsShopFavorite;
+    Shop shop = (Shop)ViewBag.Shop;
+    User shopOwner = Model;
+    string username = shopOwner.UserName.Length > 20 ? shopOwner.UserName.Substring(0, 20) : shopOwner.UserName;
+    List<string> list_rating_feedback = shop!=null? FeedBackHandler.GetShopTotalFeedBackAndAverageRating(shop.ShopID).Results: null;
+    Int32 userId = ViewBag.UserId;
+    UserSetting setting = shop!=null? UsersHandler.GetUsersetting(shop.UserId).Object: null;
+    TimeSpan dateSpan = DateTime.Now.Subtract(shopOwner.LastLoginOn);
+    string lastactiveon = "";
+    if (dateSpan.Days > 1) { lastactiveon = dateSpan.Days + " days ago"; }
+    else if (dateSpan.Days == 1) { lastactiveon = "1 day ago"; }
+    else if (dateSpan.Hours > 1) { lastactiveon = dateSpan.Hours + " hours ago"; }
+    else if (dateSpan.Hours == 1) { lastactiveon = "1 hour ago"; }
+    else if (dateSpan.Minutes > 1) { lastactiveon = dateSpan.Minutes + " minutes ago"; }
+    else if (dateSpan.Minutes == 1) { lastactiveon = "1 minute ago"; }
+    else { lastactiveon = "just now"; }
+    string shopURl = shop != null ? Url.Content("~/Shop/" + Utility.SpacesToHifen(shop.ShopName) + "/" + shop.ShopID) : "javascript:;";
+    string title = shop != null ? shop.ShopName : "Shop not exists.";
+}
+<div class="white-area floatLeft w68-row5 mb10">
+    <div class="image-section">
+        @if (is_fav_shop)
+        { 
+            <a href="javascript:;" onclick="RemoveFromFavorite(this, @shop.ShopID, false)" class="userfav" title="Remove shop from favorites">
+                &nbsp;</a>
+        }
+        else if(shop!=null)
+        { 
+            <a href="javascript:;" onclick="AddToFavorite(this, @shop.ShopID, false)" class="add-fav" title="Add shop to favorites">
+                &nbsp;</a>
+        }
+        <a href="@shopURl" title="@title">
+        @if (shopOwner.ProfilePicUrl != null)
+        {
+            <img src="@Url.Content("~/Images/ProfileImage/")@shopOwner.UserName/thumb_@shopOwner.ProfilePicUrl" alt="Shop Owner" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/Content/images/user_img.png")" alt="Shop Owner" />
+        }
+        </a>
+    </div>
+    <div class="details">
+        <h2 class="floatLeft">
+            <a href="@shopURl" title="@title">@Html.Raw(username)</a>
+        </h2>
+        @if (shop != null)
+        {
+        <div class="stars floatLeft">
+            <span>@list_rating_feedback[0]</span> <a href="@Url.Action("ShopFeedBack", "FeedBack", new { ShopName = Utility.SpacesToHifen(shop.ShopName), ShopId = shop.ShopID })">
+                <div id="star" class="floatLeft">
+                </div>
+            </a>
+        </div>
+        }
+        @if (shop!=null && shop.UserId != userId)
+        {
+            @*<a href="javascript:void(0)" onclick="Follow(@shop.UserId)" class="underline-none button2 floatRight">Follow/Favorite</a>*@
+        }
+       
+        <div class="divClear">
+        </div>
+        <p>
+       @*@if (shop != null)
+       { <strong class="mr10">UserID # @shop.ShopNumberID</strong>}*@
+            @if (setting != null && setting.ShowLocation)
+            {
+                <span>from @shopOwner.UserLocation</span>
+            }
+        </p>
+        <p class="pt10 h90px" style="overflow: hidden; text-align: justify;">
+            <strong>Short Bio:</strong> @shopOwner.AboutUs
+        </p>
+    </div>
+    <div class="divClear"></div>
+    @*<div class="row">
+        <div class="floatLeft mr10 mt10 w220px"><img class="floatLeft" src="@Url.Content("~/Content/Images/user-small-icon.png")" width="25px" /> 
+        @if (Model.Backlinked) { <a target="_blank" class="floatLetf ml5 mt5" href="http://www.linkedin.com/in/@Model.LinkedIn">www.linkedin.com/in/@Model.LinkedIn</a> }else{<span class="floatLeft ml5">www.linkedin.com/in/@Model.LinkedIn</span>}</div>
+        <div class="floatLeft mt10 w245px"><img class="floatLeft" src="@Url.Content("~/Content/Images/eye-small-icon.png")" width="25px" /> <span class="floatLeft ml5">Backlinked on Linkedin? @Html.Raw(Model.Backlinked ? "Yes" : "No")</span></div>
+        <div class="floatLeft mt10"><img class="floatLeft" src="@Url.Content("~/Content/Images/watch-small-icon.png")" width="25px" /> <span class="floatLeft ml5">Registered: @Model.CreatedOn.ToShortDateString()</span></div>
+    </div>*@
+</div>
+@*<div class="white-area w68-row5 mb10">
+    <div class="floatLeft">
+        @if (shop!=null &&  setting != null && setting.ShowSkills)
+        {
+            <strong>SKILLS :</strong> @shop.Skills
+        }
+        else
+        {
+            <span>&nbsp;</span>
+        }
+    </div>
+</div>
+*@
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>
+@if (shop != null)
+{
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $('#star').raty({
+            readOnly: true,
+            score: "@list_rating_feedback[1]"
+        });
+    });
+</script>
+}

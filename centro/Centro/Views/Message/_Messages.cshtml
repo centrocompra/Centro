@@ -1,0 +1,81 @@
+﻿@model PagingResult<MessagesListing_Result>
+<div class="row">
+<div class="search-msg">
+    <input type="text" placeholder="Search Messages" id="Search" onkeypress="searching(this, event);" />
+    <input type="submit" value="search" onclick="searchMessage(this);" />
+</div>
+@Html.Partial("_Paging")
+</div>
+<div class="clearIt"></div>
+
+    <div class="msg-options">
+        <input type="checkbox" onclick="checkall(this);" />
+        <a href="javascript:;" onclick="Delete(this)" >Delete</a>
+        <a href="javascript:;" onclick="markAsArchive(this)" >Mark As Archive</a>        
+    </div>
+    <div class="msg-list">    
+    <ul>
+@if (Model.List != null && Model.TotalCount>0)
+{
+    foreach (var item in Model.List)
+    {
+        if (item.IsRead.HasValue && !item.IsRead.Value && ViewBag.MessageType != (int)MessagePlaceHolder.Sent)
+        {                 
+        <li> 
+            <strong>
+            <input type="checkbox" id="@item.MessageID" />
+             <div class="comment-review">
+                <div class="sender"> 
+                @if((int)ViewBag.PlaceHolder == (int)MessagePlaceHolder.Sent) 
+                { 
+                    @Html.Raw(item.SentTo);
+                }
+                else
+                { 
+                    @Html.Raw(item.UserName); 
+                }
+            
+                <span class="gray"></span><br/>
+                    @item.CreatedOn.Value.ToLongDateString() @item.CreatedOn.Value.ToShortTimeString() </div>
+                <div class="msg"><a href="@Url.Action("MyMessage", "Message", new { id = item.MessageID })">@item.Subject</a>
+                    <p class="inbox-message">@item.Body</p>
+                </div>
+                 </div>
+            </strong>
+        </li>
+        }
+        else
+        {
+        <li>
+            <input type="checkbox" id="@item.MessageID" />
+            <div class="comment-review">
+            <div class="sender"> 
+            @if((int)ViewBag.PlaceHolder == (int)MessagePlaceHolder.Sent) 
+            { 
+                @Html.Raw(item.SentTo); 
+            }
+            else
+            { 
+                @Html.Raw(item.UserName); 
+            }
+            <span class="gray"></span><br/>
+                @item.CreatedOn.Value.ToLongDateString() @item.CreatedOn.Value.ToShortTimeString() </div>
+            <div class="msg"><a href="@Url.Action("MyMessage", "Message", new { id = item.MessageID })">@item.Subject</a>
+                <p class="inbox-message">@item.Body</p>
+            </div>
+            </div>
+        </li>
+        }
+    }
+}
+else
+{
+    <div>No record found.</div>
+}
+    </ul>                
+        @Html.Partial("_Paging")
+    </div>
+    
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+</script>

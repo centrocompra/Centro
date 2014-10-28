@@ -1,0 +1,26 @@
+﻿<div class="input-group-wb location-city hub-create-list">
+	<div class="autosuggest-wrapper1">
+		<textarea class="template2"  name="Count[0]" rows="15" cols="70" style="width: 100%"><div id="picture-div-0" aria-disabled="true"></div>
+	</textarea>    
+    <label class="add-photo-btn"><strong>upload</strong><span>
+                <input type="file" id="picture" name="file" onchange="UploadPicture2(this, 'picture-form',0);"/></span></label>    
+		@*<div class="submit mt0">
+			<input type="button" onclick="AddTemplate2(this)" class="button-plus" value="Add" />
+		</div>*@
+	</div>
+    <span data-valmsg-replace="true" data-valmsg-for="Count[0]" class="error-template2 field-validation-error ml15"></span>
+</div>
+
+
+@*
+<link rel="stylesheet" href="@Url.Content("~/Content/css/sample.css")" />*@
+<script type="text/javascript">
+    $("textarea.template2").jqte();
+    
+//    count = 1;
+//    $('#Rows').val('0');
+//    $('#Except').val('');
+//    rows.length = 0;
+//    except.length = 0;
+//    rows.push(0);
+</script>

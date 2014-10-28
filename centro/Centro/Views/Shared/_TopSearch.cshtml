@@ -1,0 +1,26 @@
+﻿ <div class="search">
+    @using (Html.BeginForm("Search", "Home"))
+    {
+        <input type="text" placeholder="Search for Digital Products, Physical Products, Usernames or Locations..." name="search" />
+        @*<div class="select">
+            <select name="searchType">
+                <option value="All">All</option>
+                <option value="Contests">Contests</option>
+                <option value="Hubs">Hubs/Articles</option>
+                <option value="Jobs">Jobs</option>
+                <option value="ProductsDownloadable">Products Downloadable</option>
+                <option value="ProductsPhysical">Products Physical</option>
+                <option value="Users">Users</option>
+
+                <option value="All">All</option>
+                <option value="Material">Materials</option>
+                <option value="Downloadable">Downloadable</option>
+                <option value="Physical">Physical</option>
+                <option value="Username">Username</option>
+                <option value="ShopName">ShopName</option>
+            </select>
+        </div>*@
+        <input type="hidden" name="searchType" value="All" />
+        <input type="submit" value="GO" />
+    }
+</div>

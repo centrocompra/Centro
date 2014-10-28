@@ -1,0 +1,330 @@
+﻿@model PagingResult<GetShopListingByServiceId_Result>
+<div class="custom_design">
+
+    @if (Model.TotalCount > 0)
+    {
+        foreach (var item in Model.List/*.Take(10)*/)
+        {
+            string shopOwnerName = (item.ShopOwnerFirstName + " " + item.ShopOwnerLastName.Substring(0, 1));
+            shopOwnerName = shopOwnerName.Length > 8 ? shopOwnerName.Substring(0, 8) : shopOwnerName;
+            //DateTimeSpan dateSpan = DateTimeSpan.CompareDates(item.LastLoginOn.Value, DateTime.Now);
+            TimeSpan dateSpan = DateTime.Now.Subtract(item.LastLoginOn.Value);
+            string lastactiveon = "";
+            if (dateSpan.Days > 1) { lastactiveon = dateSpan.Days + " days ago"; }
+            else if (dateSpan.Days == 1) { lastactiveon = "1 day ago"; }
+            else if (dateSpan.Hours > 1) { lastactiveon = dateSpan.Hours + " hours ago"; }
+            else if (dateSpan.Hours == 1) { lastactiveon = "1 hour ago"; }
+            else if (dateSpan.Minutes > 1) { lastactiveon = dateSpan.Minutes + " minutes ago"; }
+            else if (dateSpan.Minutes == 1) { lastactiveon = "1 minute ago"; }
+            else { lastactiveon = "just now"; }
+            List<string> list_rating_feedback = FeedBackHandler.GetShopTotalFeedBackAndAverageRating((int)item.ShopId).Results;
+            string shortbio = (item.AboutUs != null && item.AboutUs.Length > 420) ? item.AboutUs.Substring(0, 420) : item.AboutUs;
+        <script>
+            $(document).ready(function () {
+                $('#star_@item.ShopId').raty({
+                    readOnly: true,
+                    score: '@list_rating_feedback[1]'
+                });
+            });
+
+        </script>
+        <div class="detailBox info">
+            <div class="left_img">
+                <a href="~/Shop/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId">
+                    @if (!String.IsNullOrEmpty(item.ShopOwnerProfilePicUrl))
+                    {
+                        <img src="@Url.Content("~/Images/ProfileImage/")@item.ShopOwnerUserName/thumb_@item.ShopOwnerProfilePicUrl" alt="Shop Owner" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Content/Images/user_img.png")" alt="Shop Owner" width="113" height="90" />
+                    }
+                </a>
+            </div>
+            <div class="right_content">
+                <div class="btn1">
+                    <a href="@Url.Action("Compose", "Message", new { id = @item.ShopOwnerUserName })">Contact</a>
+                    <div class="clear5"></div>
+                    <a href="@Url.Action("SendCustomRequest", "Shops")/@Utility.SpacesToHifen(item.ShopName)">Submit Request</a>
+                </div>
+                <div class="shop-listing">
+                    <div class="head">
+                        <h2><a href="~/Shop/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId">@item.ShopOwnerUserName</a></h2>
+                        <a href="@Url.Action("ShopFeedBack", "FeedBack", new { ShopName=Utility.SpacesToHifen(item.ShopName),ShopId=item.ShopId})">
+                        <div class="rating" id="star_@item.ShopId">
+                          </div></a>
+                        <div class="comment1">
+                            <ul>
+                                <li><strong>@item.TotalHubs</strong> Hubs</li>
+                                <li><strong>@item.TotalContest</strong> Contest</li>
+                                <li><strong>457</strong> Following</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <h3 style="overflow: hidden; margin-bottom: 10px; height: 25px;">@item.WelcomeMessage</h3>
+                        <p>
+                            <input type="hidden" id="@item.UserId" value="@item.AboutUs" />
+                            @if (item.AboutUs != null && item.AboutUs.Length > 420)
+                            { <span>@shortbio...</span> <a href="javascript:;" onclick="ShowMore(this, @item.UserId)">more</a>}
+                            else
+                            { <span>@shortbio</span> }
+
+                        </p>
+                        <div class="image">
+                            <ul>
+                                @if (!String.IsNullOrEmpty(item.ProductPictures))
+                                {
+                                    string[] productPictures = item.ProductPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+                                    foreach (var item1 in productPictures)
+                                    {
+                                    <li><a href="javascript:;">
+                                        <img src="~/Images/ProductImages/@item.ShopOwnerUserName/thumb_@item1" height="50" width="50" alt=""  /></a></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="share">
+                            <ul>
+                                <li>Total Earned: $@item.TotalEarning</li>
+                                @if (item.CountryName != null)
+                                {
+                                    <li><span>@item.CountryName</span></li>
+                                }
+                                <li>last active:<span>@lastactiveon</span></li>
+                                <li>portfolio:<span class="num">12</span></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="btn">
+                    @if (!String.IsNullOrEmpty(item.ShopSpecialties))
+                    {
+                        string[] shopSpeciality = item.ShopSpecialties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+                        foreach (var item1 in shopSpeciality)
+                        {
+                        <a class="greenbtn first" href="javascript:;">@(((Speciality)(Convert.ToInt32(item1))).ToEnumDescription())</a>                               
+                        }
+                    }
+                    @if (!String.IsNullOrEmpty(item.TagsAndMaterials))
+                    {
+                        string[] tagList = item.TagsAndMaterials.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+                        foreach (var tag in tagList)
+                        {
+                        <a class="greenbtn first" href="javascript:;">@tag</a>
+                                
+                        }
+                    }
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+           
+@*<div class="box">
+        <div class="pro_name">
+            <div class="image-section">
+                @if (!String.IsNullOrEmpty(item.ShopOwnerProfilePicUrl))
+                {
+                    <img src="@Url.Content("~/Images/ProfileImage/")@item.ShopOwnerUserName/@item.ShopOwnerProfilePicUrl" width="113" height="90" alt="Shop Owner" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/Content/Images/user_img.png")" alt="Shop Owner" width="113" height="90" />
+                }
+            </div>
+            <div class="details">
+                <h3>
+                    @{
+                string shopOwnerName = (item.ShopOwnerFirstName + " " + item.ShopOwnerLastName.Substring(0, 1));
+                shopOwnerName = shopOwnerName.Length > 8 ? shopOwnerName.Substring(0, 8) : shopOwnerName;
+                    }
+                   
+                     <a href="~/Shop/@item.ShopName/@item.ShopId">@item.ShopOwnerUserName</a>
+                    </h3>
+                <div class="row pb5">
+                    <div class="stars floatLeft">
+                        <span>245</span>
+                        <img src="@Url.Content("~/Content/images/stars.png")" alt="stars"/>
+                    </div>
+                    <div class="total floatRight">
+                        <span>Total Earned:</span> <strong>$@item.TotalEarning</strong>
+                    </div>
+                </div>
+                <div class="divClear">
+                </div>
+                <p>
+                    @{
+                string createdString = "Joined ";
+                DateTime compareTo = DateTime.Parse(item.CreatedOn.Value.ToString());
+                DateTime now = DateTime.Parse(DateTime.Now.ToString());
+                var dateSpan = DateTimeSpan.CompareDates(compareTo, now);
+                if (dateSpan.Years > 0)
+                {
+                    if (dateSpan.Months > 0)
+                    {
+                        createdString += dateSpan.Years + " years ";
+                    }
+                    else
+                    {
+                        createdString += dateSpan.Years + " years ago";
+                    }
+                }
+                if (dateSpan.Months > 0)
+                {
+                    if (dateSpan.Years > 0)
+                    {
+                        createdString += "and " + dateSpan.Months + " months ago";
+                    }
+                    else
+                    {
+                        createdString += dateSpan.Months + " months ";
+                    }
+                }
+                if (dateSpan.Years <= 0 && dateSpan.Months <= 0)
+                {
+                    createdString += dateSpan.Days + " days ago";
+                }
+                string address = "";
+                if (!String.IsNullOrEmpty(item.CityName))
+                {
+                    address += item.CityName + ", ";
+                }
+                if (!String.IsNullOrEmpty(item.StateName))
+                {
+                    address += item.StateName + ", ";
+                }
+                if (!String.IsNullOrEmpty(item.CountryName))
+                {
+                    address += item.CountryName;
+                }
+                if (!String.IsNullOrEmpty(address))
+                {
+                    createdString += " from " + address;
+                }
+                    }
+                    @createdString</p>
+                <p class="pt10" style="height: 48px; overflow: hidden;">
+                    <strong>Short Bio:</strong>
+                    @item.AboutUs
+                </p>
+                <ul class="follow">
+                    <li><strong>89</strong> Hubs <em>/</em></li>
+                    <li><strong>2,145</strong> Followers <em>/</em></li>
+                    <li><strong>567</strong> Following</li>
+                </ul>
+            </div>
+            <div class="accolades">
+                <h3>
+                    Accolades</h3>
+                <img src="@Url.Content("~/Content/images/accolades.gif")" alt=""/>
+                <p>
+                    Hub Feedback: 2192 Useful / 384 Interesting / 638 Awesome / 280 Beautiful / 196
+                    Funny</p>
+            </div>
+            @if (!String.IsNullOrEmpty(item.PrinterType) || !String.IsNullOrEmpty(item.Dimensions) || !String.IsNullOrEmpty(item.Materials))
+            {
+                <div class="yellow_box">
+                    <h3>
+                        Service ofered:</h3>
+                    @if (!String.IsNullOrEmpty(item.PrinterType))
+                    {
+                        <p>
+                            <label>
+                                Printer Type: <strong>@item.PrinterType</strong></label>
+                        </p>
+                    }
+                    @if (!String.IsNullOrEmpty(item.Dimensions))
+                    {
+                        <p>
+                            <label>
+                                Dimensions: <strong>@item.Dimensions</strong></label>
+                        </p>
+                    }
+                    @if (!String.IsNullOrEmpty(item.Materials))
+                    {
+                        string[] matList = item.Materials.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        <p>
+                            <label>
+                                Material Types:
+                                @foreach (var mat in matList)
+                                {
+                                    <strong>@mat.Trim()</strong>
+                                }
+                            </label>
+                        </p>
+                    }
+                </div>
+            }
+        </div>
+         @if (!String.IsNullOrEmpty(item.ProductPictures))
+         {
+             <div class="speciality">
+                @{string[] productPictures = item.ProductPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();}
+                <div class="speciality_first">
+                    <h3>
+                        Shop Products:</h3>
+                    @foreach (var item1 in productPictures)
+                    {
+                        <span><img src="~/Images/ProductImages/@item.ShopOwnerUserName/@item1" height="50" width="50"/></span>
+                    }
+                </div>
+            </div>
+         }
+        @if (!String.IsNullOrEmpty(item.ShopSpecialties))
+        {
+            <div class="speciality">
+                @{string[] shopSpeciality = item.ShopSpecialties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();}
+                <div class="speciality_first">
+                    <h3>
+                        Shop Speciality:</h3>
+                    @foreach (var item1 in shopSpeciality)
+                    {
+                        <span>@(((Speciality)(Convert.ToInt32(item1))).ToEnumDescription())</span>
+                    }
+                </div>
+            </div>
+        }
+        <div class="keyword">
+            @if (!String.IsNullOrEmpty(item.TagsAndMaterials))
+            {
+                string[] tagList = item.TagsAndMaterials.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+                <div class="key_first">
+                    <h3>
+                        Keyword:</h3>
+                    @foreach (var tag in tagList)
+                    {
+                        <span>@tag</span>
+                    }
+                </div>
+            }
+            <div class="fRight">
+                <a href="@Url.Action("Compose", "Message", new { id = @item.ShopOwnerUserName })" class="btn-send-msg" title="Send Message">&nbsp;</a>
+                <a href="@Url.Action("SendCustomRequest", "Shops")/@item.ShopName" class="btn-custom-request" title="Custom Request">&nbsp;</a>
+            </div>
+        </div>
+        <div class="divClear">
+        </div>
+    </div>*@
+     
+        }
+    
+        <div id="pagingWrapper" class="pagingWrapper">
+            <div id="pager">
+                <span id="first">« First</span> <span id="previous">Previous</span> <span id="numeric"></span><span id="next">Next</span> <span id="last">Last »</span>
+            </div>
+            <div id="pageInfo" class="pageInfo">
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="no-result">
+
+            <br />
+            <h3>No Shop Found for this Service</h3>
+        </div>
+    }
+</div>

@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "MyContracts";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+
+@section title{
+     My Contracts
+}
+@{
+    var JobSentToMe = (PagingResult<JobsViewModel>)ViewBag.JobSentToMe;
+}
+
+    
+@Html.Partial("_ContratorMenuLeft")
+<div class="MyContracts actv-contrat-tbl mb20">
+    <h2><span class="title-start uppercase icon-headngs"> <span> <img src="@Url.Content("~/content/images/ico-hammer.png")" /> </span>CONTRACTOR</span>: <span class="title-rest">Keep your clients up to date and create invoices.</span>
+    <a href="/User/CreateJob" class="button-orng floatRight">Post a Job Listing</a>
+    </h2>
+    <div class="tabs-outer m0">
+        <ul class="tabs tabs-gry pl0">
+            <li class="active">@Ajax.ActionLink("Active", "_MyActiveClients", "User", null, new AjaxOptions { UpdateTargetId = "MyClients" }, new { @onclick = "SetTab(this)" })</li>
+            <li>@Ajax.ActionLink("Past", "_MyPastClients", "User", null, new AjaxOptions { UpdateTargetId = "MyClients" }, new { @onclick = "SetTab(this)" })</li>
+        </ul>
+    </div>
+    <div class="white-background row contracts-border">
+        <div class="row bg-white-gray mb10  posRel">
+            <span class="move-to-past-bottom movetopastclients">Contracts</span>
+            <span class="posAbs manage-team-heading orange ">Hired by:</span>
+            <a href="javascript:;" class="mt5 mb10 mr10 link1 floatRight movetopastclients" onclick="MoveTo(this,'past')">Move To Past</a>
+            <a href="javascript:;" class="mt5 mb10 mr10 link1 floatRight movetoactiveclients" onclick="MoveTo(this,'active')">Move To Active</a>
+            <input type="checkbox" class="mt8 mr5 floatRight checkall" />
+        </div>
+        <div id="MyClients" class="MyContrators">
+            @Html.Partial("_MyClients", "Active")
+        </div>
+    </div>
+    <div class="clear">&nbsp;</div>
+
+    <h2><span class="title-start uppercase icon-headngs"> <span> <img src="@Url.Content("~/content/images/ico-bag.png")" /> </span>BOSS</span>: <span class="title-rest">Manage, pay and run your own design team.</span></h2>
+    <div class="tabs-outer m0">
+        <ul class="tabs tabs-gry pl0">
+            <li class="active">@Ajax.ActionLink("Active", "_MyActiveContractors", "User", null, new AjaxOptions { UpdateTargetId = "MyContrators" }, new { @onclick = "SetTab(this)" })</li>
+            <li>@Ajax.ActionLink("Past", "_MyPastContractors", "User", null, new AjaxOptions { UpdateTargetId = "MyContrators" }, new { @onclick = "SetTab(this)" })</li>
+        </ul>
+    </div>
+    <div class="white-background row contracts-border">
+        <div class="row bg-white-gray mb10  posRel"> 
+            <span class="move-to-past-bottom movetopastcontrators">Contracts</span>
+            <span class="posAbs manage-team-heading orange ">Employing:</span>
+            <a href="javascript:;" class="mt5 mb10 mr10 link1 floatRight movetopastcontrators" onclick="MoveTo(this, 'past')">Move To Past</a>  
+            <a href="javascript:;" class="mt5 mb10 mr10 link1 floatRight movetoactivecontrators" onclick="MoveTo(this, 'active')">Move To Active</a>  
+            <input type="checkbox" class="mt8 mr5 floatRight checkall" />
+            </div>
+        <div id="MyContrators" class="MyContrators">
+            @Html.Partial("_MyContractors", "Active")
+        </div>
+    </div>
+    @*<div class="job-listing mt20 row">
+        <div class="tabs-outer m0">
+            <ul class="tabs">
+                <li class="active">@Ajax.ActionLink("Interview Invited", "_JobSentToMe", "User", new { page_no = 1, per_page_result = 6, sortOrder = "Desc", sortColumn = "CreatedOn" }, new AjaxOptions { UpdateTargetId = "jobs-listing" }, new { @onclick = "SetTab(this)" })</li>
+                <li>@Ajax.ActionLink("Jobs Applied", "_JobsApplied", "User", new { page_no = 1, per_page_result = 6 }, new AjaxOptions { UpdateTargetId = "jobs-listing" }, new { @onclick = "SetTab(this)" })</li>
+            </ul>            
+        </div>        
+	    <div class="job-left white-background row" id="jobs-listing">
+            @Html.Partial("_JobListing", JobSentToMe.List)
+        </div>
+    </div>*@
+</div>
+
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/custom/myContracts.js")" type="text/javascript"></script>
+   @* <script src="@Url.Content("~/Scripts/Custom/job.js")" type="text/javascript"></script>*@
+}

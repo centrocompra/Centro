@@ -1,0 +1,28 @@
+﻿@{
+    List<HubTopic> topics = HubHandler.GetHubTopics().List;
+    //topics.Add(new HubTopic { HubTopicID = 0, HubTopic1 = "All Hubs" });
+    string topic = Request.Url.AbsolutePath;
+    string allcls = "";
+    if(topic.Contains("HubByTopic")){
+        topic = Request.Url.Segments[2].Remove(Request.Url.Segments[2].LastIndexOf("/"));
+    }else if(topic.Contains("AllHubs")){
+        allcls = "active";
+    }
+}
+<div class="sections bor-bot box hub-topics">
+    <h3>Hubs/Articles Topics</h3>
+    <ul class="links">
+        @foreach (var item in topics)
+        {
+            if (Utility.HifenToSpace(topic).ToLower() == item.HubTopic1.ToLower())
+            {
+                <li><a class="active" href="@Url.Action("HubsByTopic", "Hub", new { TopicName = Utility.SpacesToHifen(item.HubTopic1), TopicID = item.HubTopicID })">@item.HubTopic1</a></li>
+            }
+            else
+            {
+                <li><a href="@Url.Action("HubsByTopic", "Hub", new { TopicName = Utility.SpacesToHifen(item.HubTopic1), TopicID = item.HubTopicID })">@item.HubTopic1</a></li>
+            }
+        }
+        <li><a class="@allcls" href="@Url.Action("AllHubs", "Hub")">View All</a></li>
+    </ul>
+</div>

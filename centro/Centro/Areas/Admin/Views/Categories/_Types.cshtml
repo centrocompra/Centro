@@ -1,0 +1,26 @@
+﻿@model PagingResult<BusinessLayer.Models.DataModel.Type>
+@{
+    List<BusinessLayer.Models.DataModel.Type> list = Model.List;
+}
+@if (Model.Status == ActionStatus.Successfull)
+{
+    foreach (BusinessLayer.Models.DataModel.Type item in list)
+    {
+       
+    <tr>
+        <td class="@item.TypeID">
+            <input type="checkbox" id="@item.TypeID" />
+        </td>
+        <td class="@item.Name">
+        @item.Name
+        </td>
+        <td class="@item.SubCategory.SubCategoryID">
+        @item.SubCategory.Name
+        </td>        
+        <td class="@item.TypeID" align="center">
+            <a href="@Url.Action("AddType", "Categories", new { id = item.TypeID })">
+                <img width="18" alt="Edit" src="@Url.Content("~/Images/edit.png")" title="Edit Type" /></a>
+        </td>
+    </tr>    
+    }
+}

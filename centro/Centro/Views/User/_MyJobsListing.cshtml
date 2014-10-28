@@ -1,0 +1,46 @@
+﻿@model PagingResult<JobsViewModel>
+
+@if (Model.TotalCount > 0)
+{
+    foreach (JobsViewModel item in Model.List)
+    {
+        string action = string.Empty;
+        if (ViewBag.LoggedInUsername == item.UserName) { action = "MyJob"; } else { action = "Job"; }
+        string cls = item.IsActive ? "active" : "in-active";
+        string deleted = item.IsDeleted ? "deleted" : "";
+        <tr class="@cls @deleted">
+            <td class="@item.JobID">@Html.Raw(item.IsActive && !item.IsDeleted ? "Active" : ( !item.IsDeleted? "Expired":"Awarded"))</td>
+            <td width="17%">
+            @if(item.IsActive && !item.IsDeleted){
+                <a href="@Url.Action("CreateJob", "User", new { id = item.JobID, from = "Recruit" })" class="">Edit</a> 
+                <a href="javascript:void(0)" onclick="ActivateDeactivateJob(this, @item.JobID,false)" class="">Deactivate</a>
+            } else if(!item.IsDeleted){
+                <a href="@Url.Action("CreateJob", "User", new { id = item.JobID, from = "Repost" })" class="">Repost</a> 
+                <a href="javascript:void(0)" onclick="DeleteJob(this, @item.JobID, 'Recruit')" class="">Delete</a>
+            } else{
+                <span>NA</span>
+            }                            
+            </td>
+            <td>
+                <div class="maxW100">
+                    <a href="@Url.Action(action, "User", new { id = @item.JobID, @title = Utility.SpacesToHifen(item.JobTitle) })">@item.JobTitle</a>
+                </div>
+            </td>
+            <td>$@item.MinBudget&nbsp;USD</td>
+            <td class="textCenter" valign="middle"><a class="bold-link orange" href="@Url.Action(action, "User", new { id = @item.JobID, @title = Utility.SpacesToHifen(item.JobTitle) })">@item.TotalApplicants</a></td>
+            <td align="center">@item.CreatedOn.Value.ToShortDateString()<br />
+            <span class="small-orange">Expire&nbsp;@item.CreatedOn.Value.AddDays(7).ToShortDateString()</span>
+            </td>
+            
+            <td>@Html.Raw(item.IsPrivate ? "Private" : "Public")</td>
+            <td>@item.JobID</td>
+        </tr>
+    }
+}
+else
+{
+    <tr><td colspan="8">No Record found</td></tr>
+}
+<script type="text/javascript">
+    var isAwared='@ViewBag.isAwared';
+</script>

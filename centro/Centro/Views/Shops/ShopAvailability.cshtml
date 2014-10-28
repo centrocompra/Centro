@@ -1,0 +1,167 @@
+﻿@model Shop
+@{
+    ViewBag.Title = "Shop";
+    Layout = ViewBag.CentroUsers != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Shop shop = Model;
+    User shopOwner = (User)ViewBag.ShopOwner;
+    List<ShopSection> shopSections = (List<ShopSection>)ViewBag.ShopSection;
+    string totalEarning = shopOwner.TotalEarning.HasValue ? "$" + shopOwner.TotalEarning.Value : "0";
+    string shopOwnerName = (shopOwner.FirstName + " " + shopOwner.LastName.Substring(0, 1));
+    shopOwnerName = shopOwnerName.Length > 10 ? shopOwnerName.Substring(0, 10) : shopOwnerName;
+    string username = shopOwner.UserName.Length > 10 ? shopOwner.UserName.Substring(0, 10) : shopOwner.UserName;
+    Int32 userId = ViewBag.UserId;
+    UserSetting setting = UsersHandler.GetUsersetting(shop.UserId).Object;
+    List<ShopAvailablity> slots = ViewBag.ShopAvailablity;
+    List<string> list_rating_feedback = FeedBackHandler.GetShopTotalFeedBackAndAverageRating(shop.ShopID).Results;
+    string TotalHub = HubHandler.GetTotalHubOfUser(shopOwner.UserID).Results[0];
+    string TotalContest = ContestHandler.GetTotalContestByUser(shopOwner.UserID).Results[1];
+    int TotalFollowers = AccountActivityHandler.GetUserTotalFollowers(shop.UserId).ID;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    //List<Favorite> favorites = new List<Favorite>();
+    bool is_fav_shop = (bool)ViewBag.IsShopFavorite;
+
+    TimeSpan dateSpan = DateTime.Now.Subtract(shopOwner.LastLoginOn);
+    string lastactiveon = "";
+    if (dateSpan.Days > 1) { lastactiveon = dateSpan.Days + " days ago"; }
+    else if (dateSpan.Days == 1) { lastactiveon = "1 day ago"; }
+    else if (dateSpan.Hours > 1) { lastactiveon = dateSpan.Hours + " hours ago"; }
+    else if (dateSpan.Hours == 1) { lastactiveon = "1 hour ago"; }
+    else if (dateSpan.Minutes > 1) { lastactiveon = dateSpan.Minutes + " minutes ago"; }
+    else if (dateSpan.Minutes == 1) { lastactiveon = "1 minute ago"; }
+    else { lastactiveon = "just now"; }
+    var services = SellersHandler.ShopServicesByShopId(shop.ShopID).List;
+    string[] servicesArray = services.Where(m => m.IsChecked).Select(m => m.ServiceName).OrderByDescending(m => m.Length).ToArray();
+    string AcceptingJob = shop.AcceptJob ? "Yes" : "No";
+    List<User> followers = AccountActivityHandler.GetUserFollowers(shopOwner.UserID).List;
+}
+
+@section title{
+ Shop Availability
+}
+
+<div class="product-details">
+    <div class="floatLeft w68pc">
+      @Html.Partial("_ShopInfoDetailTop", shopOwner)
+        <div class="white-area floatLeft  w68-row5 mb10">            
+            <div class="box fetured">
+                
+                    <div class="shop-availablity-main">
+                        <div class="shop-availablity-title floatLeft">Shop Availability </div>
+                        <div class="floatLeft time-zone orng ">TimeZone : @shop.TimeZone</div>
+                        <table class="availablity-chart availablity-chart1" width="100%">
+                            <tr class="availablity-chart-top">
+                                <td align="center"></td>
+                                <td align="center">Monday</td>
+                                <td align="center">Tuesday</td>
+                                <td align="center">Wednesday</td>
+                                <td align="center">Thursday</td>
+                                <td align="center">Friday</td>
+                                <td align="center">Saturday</td>
+                                <td align="center">Sunday</td>
+                            </tr>
+                            <tr class="availablity-chart-clkabl avl-chart-bl">
+                                <td>6AM-9AM</td>
+                                <td colspan="8" rowspan="7">
+                                    <table class="main-chart" width="100%">
+                                        @for (short row = 0; row < 7; row++)
+                                        {
+                                            <tr>
+                                                @for (short col = 0; col < 7; col++)
+                                                {
+                                                    if (slots.Where(m => m.RowNum == row && m.ColumnNum == col).Any())
+                                                    {
+                                                    <td align="center">
+                                                        <div class="slot available">@row @col</div>
+                                                    </td>
+                                                    }
+                                                    else
+                                                    {
+                                                    <td align="center">
+                                                        <div class="slot"></div>
+                                                    </td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="avl-chart-bl">
+                                <td>9AM-12PM</td>
+                            </tr>
+                            <tr class="avl-chart-bl">
+                                <td>12PM-3PM</td>
+                            </tr>
+                            <tr class="avl-chart-bl">
+                                <td>3PM-6PM</td>
+                            </tr>
+                            <tr class="avl-chart-bl">
+                                <td>6PM-9PM</td>
+                            </tr>
+                            <tr class="avl-chart-bl">
+                                <td>9PM-12AM</td>
+                            </tr>
+                            <tr class="avl-chart-bl">
+                                <td>12AM-6AM</td>
+                            </tr>
+                        </table>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="floatRight width30">
+       @Html.Partial("_UserProfileRightBox", shopOwner)
+        <aside class="product-right">
+            <a href="@Url.Action("ShopAvailability", "Shops", new { ShopName = Utility.SpacesToHifen(shop.ShopName), ShopID = shop.ShopID })" class="mb10 white-area tabs ">Availability</a>
+            @*<div class="white-area mt10 followed-by-top">
+            <h3 class="orange-left-arrow gray-border-bottom">@followers.Count() Followers</h3>
+             <ul class="followed-by mt10  jcarousel-skin-tango" id="MyFollowers">
+                @if (followers.Count() > 0)
+                {
+                    for (int i = 0; i < followers.Count; i++)
+                    {
+                        string action = followers[i].ShopID > 0 ? Url.Action("Shop", "Shops", new { id = followers[i].ShopName, shopid = followers[i].ShopID }) : "javascript:;";
+                        string title = followers[i].ShopID > 0 ? followers[i].FirstName + " " + followers[i].LastName : followers[i].FirstName + " " + followers[i].LastName + " (No Shop)";
+                    <li><a href="@action" title="@title">
+                        <img width="50" src="@Url.Content(string.IsNullOrEmpty(followers[i].ProfilePicUrl) ? "~/Images/avatar.png" : followers[i].ProfilePicUrl)" title="@title"></a></li>
+                    }
+                }
+                else
+                {
+                    <li class="width50">No follower yet.</li>
+                }
+
+            </ul>
+            <div class="divClear"></div>
+            </div>*@
+        </aside>
+    </div>
+</div>
+
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>
+}
+<script type="text/javascript">
+
+    var show_productTemplate = true;
+    var InactiveListing = 0;
+
+    $(document).ready(function () {
+        $('#star').raty({
+            readOnly: true,
+            score: "@list_rating_feedback[1]"
+        });
+
+        jQuery('#MyFollowers').jcarousel({
+            rows: 1
+        });
+    });
+
+</script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/system/jquery.jcarousel.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>

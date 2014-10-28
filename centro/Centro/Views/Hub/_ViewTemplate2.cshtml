@@ -1,0 +1,35 @@
+﻿@model List<HubContent>
+
+@foreach(HubContent item in Model)
+{
+    string text = item.ContentText;
+    int c = 0;
+    string pattern = ViewBag.Username;
+    string sentence = item.ContentText;
+    IList<int> indeces = new List<int>();
+    foreach (System.Text.RegularExpressions.Match match in System.Text.RegularExpressions.Regex.Matches(sentence, pattern))
+    {
+        indeces.Add(match.Index);
+        string a = text.Substring(match.Index, (ViewBag.Username + "/Hubs").Length);
+        string b = ViewBag.Username + "/Hubs";
+        if (a!=b)
+        {
+            text = text.Insert(match.Index + ViewBag.Username.Length + c, "/Hubs");
+            c += "/Hubs".Length;
+        }
+    }
+
+    text = text.Replace("Temp", "Images").Replace("<div></div>", "</br>");
+    
+    
+<div class="row gray-border-bottom mb10">
+	<div class="input-group input-group location-city hub-create-list hub-create-list-p2">
+		<div class="autosuggest-wrapper hub-dtl-tem2-btm-txt max-wth">
+            
+			<span>@*<blockquote class="mr10"> <img src="@Url.Content("~/Images/"+ViewBag.Username+"/Hubs/"+item.SavedName)" class="row gray-border" alt=""></blockquote>*@
+            @Html.Raw(text)
+            </span>
+		</div>
+	</div>
+</div>
+}

@@ -1,0 +1,39 @@
+﻿@using BusinessLayer.Models.ViewModel
+@{
+    HttpCookie AdminCookie = Request.Cookies[Cookies.AdminCookie];
+    SiteUserDetails user;
+    if(AdminCookie!=null){
+        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(AdminCookie.Value);
+        user = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(authTicket.UserData);
+    }
+    else{
+        user = null;        
+    }
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    @Html.Partial("_AdminScripts")
+    @RenderSection("styles", required:false)
+    @RenderSection("scripts", required:false)
+    <title>@RenderSection("title", required:false)</title>
+</head>
+<body>
+    <!--Wrapper Start from Here-->
+    <div id="wrapper">
+        <!--Header Start from Here-->
+        @Html.Partial("_Header", user)
+        <!--Header End  Here-->
+        <div id="container">
+         <div class="Message_DIV"><span></span></div>
+        <!--Container Start from Here-->
+        @RenderBody()
+        <!--Container end Here-->
+        </div>
+        <!--Footer Start from Here-->
+        @Html.Partial("_Footer")
+        <!--Footer End  Here-->
+    </div>
+    <!--Wrapper End from Here-->
+</body>
+</html>

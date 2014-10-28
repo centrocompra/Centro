@@ -1,0 +1,21 @@
+﻿<div class="row terms mb10">
+    <div class="floatLeft">
+        <input type="checkbox" name="one" />        
+    </div>
+    <div class="data">
+        I accept that Centro is a venue and does not screen its users or the content provided.<br /> 
+        I accept the risk, have done my due diligence, and am ready to move forward with the transaction.<br /> 
+        I agree to all the terms in the User Agreement and Privacy Policy on Centro. 
+    </div>
+    <span class="field-validation-error"></span>
+</div>
+<div class="row">
+    @if (ViewBag.InvoiceID != null && ViewBag.RequestID != null)
+    {
+    <input type="button" class="button1 ml20" value="I Accept" onclick="AcceptTermsAndConditions(this, @ViewBag.InvoiceID, @ViewBag.RequestID)" />
+    }
+    else
+    {
+        <input type="button" class="button1 ml20" value="I Accept" onclick="AcceptTermsAndConditions(this)" />
+    }
+</div>

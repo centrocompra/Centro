@@ -1,0 +1,49 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+    Category cat = SellersHandler.Category(Utility.HifenToSpace((string)ViewBag.Category)).Object;
+    List<SubCategory> subcat = SellersHandler.SubCategoriesGet(cat.CategoryID).List;
+}
+@section title{
+     Category wise Products
+}
+<aside class="floatLeft left-side">
+    @Html.Partial("_LeftSideBuyerCategoryMenuLayout")
+</aside>
+<div class="right-side floatRight">
+	<div class="box fetured">
+		<div class="">
+			<h2 class="floatLeft w95-4pc"> @Utility.HifenToSpace(ViewBag.Category)
+            <div class="pages">
+	            <label>Displaying <strong><span id="PageItemCount">@Model.List.Count()</span></strong> of <strong>@Model.TotalCount</strong></label>
+	            <strong>Sort By:</strong>
+	            <select onchange="SortProducts(this)">
+                    <option value="">--Select--</option>
+		            <option value="LastViewedOn" order="Desc">Recently Viewed</option>
+                    @*<option value="CreatedOn">Created On</option>
+                    <option value="Manufacturer">Manufacturer</option>
+                    <option value="Title">Title</option>*@
+                    <option value="UnitPrice" order="Asc">Price Low-High</option>
+                    <option value="UnitPrice" order="Desc">Price High-Low</option>
+	            </select>
+            </div></h2>
+            @foreach (var item in subcat)
+            {
+                <div class="sub-cat-box"><a href="@Url.Action("SubCategory", "Products", new { id = item.SubCategoryID, cat = Utility.SpacesToHifen(ViewBag.Category), name = Utility.SpacesToHifen(item.Name) })">@item.Name</a></div>
+            }
+            <div id="Result">
+                @Html.Partial("_Products", Model)
+            </div>
+		</div>
+	</div>
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var category = '@ViewBag.Category';
+</script>
+<script src="@Url.Content("~/Scripts/Custom/productsPaging.js")" type="text/javascript"></script>

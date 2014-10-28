@@ -1,0 +1,102 @@
+﻿@model PagingResult<OrderViewModel>
+@if (Model.List.Count() > 0)
+{   
+    string LoggedInUsername = ViewBag.LoggedInUsername;
+    if (Model.List[0].ShippingStatus == ShippingStatus.NotShipped && Model.List[0].OrderStatus==OrderStatus.Pending)
+    {
+        @*<div class="order-notes">
+            <div class="order-circle floatLeft">
+            Thank you for making a purchase! Please leave an honest review and cheer up a poor, beleagered enterpreneur! Every little bit of kindness will be heavily appreciated and will go a long way towards helping these startups get off the ground.
+            </div>
+        </div>*@
+    }
+    else if (Model.List[0].OrderStatus==OrderStatus.Completed)
+    {
+        @*<div class="order-notes">
+            Lorem ipsum text Neither is there anyone who loves pain itself since it is pain and thus wants to obtain it.
+        </div>*@
+    }
+    foreach (var item in Model.List)
+    {
+        string pic = "";
+        if(item.Type == "B"){
+            pic = item.SellerProfilePic != null ? Url.Content("~/Images/ProfileImage/" + item.ShopwOwnerUsername + "/" + item.SellerProfilePic) : Url.Content("~/images/avatar.png");
+        }else{
+            pic = item.BuyerProfilePic != null ? Url.Content("~/Images/ProfileImage/" + item.BuyerName + "/" + item.BuyerProfilePic) : Url.Content("~/images/avatar.png");
+        }
+        <div class="row mb20 items">
+	        <div class="left-section">
+		        <div class="image">                                                
+                    <img src="@pic" alt="">
+		        </div>
+		        <div class="details">
+			        @*<span class="grey">Order @item.OrderStatus</span>*@
+			        <h2 class="date">@item.OrderCreatedOn.ToLongDateString()</h2>
+			        <div class="order-no mt5"><span class="grey">ORDER#</span> @item.OrderId</div>
+			        <div class="status mt5 mb5"><strong class="colorOrange textUpper">status:</strong> @item.ShippingStatus.ToEnumWordify()</div>
+                    <a class="order-anchor" href="@Url.Action("OrderDetail", "Shops", new { id = item.OrderId, type = item.Type })">View Order Details</a>
+
+		        </div>
+	        </div>
+	
+	        <div class="right-section">
+		        <div class="buttons-section">
+                    @if (LoggedInUsername == item.ShopwOwnerUsername)
+                    {
+			            <a href="@Url.Action("Compose", "Message", new { id = @item.BuyerName })" class="orange-btn displayBlock">Contact Buyer</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Compose", "Message", new { id = @item.ShopwOwnerUsername })" class="orange-btn displayBlock">Contact Seller</a>                        
+                    }
+                    @if (item.ShippingStatus == ShippingStatus.NotShipped && item.OrderStatus == OrderStatus.Pending)
+                    {
+			            <a href="javascript:;" onclick="CancelOrder(this, @item.OrderId)" class="button2 displayBlock mt5">Cancel Order</a>
+                    }
+                    @if (LoggedInUsername != item.ShopwOwnerUsername && !item.IsFeedbackGiven)
+                    {
+                         <a class="button1-orange-dark mt5" onclick="LeaveFeedBack(@item.OrderId,2,'ByOrder')" href="javascript:void(0)">Leave Feedback</a> 
+                    }else{
+                      <a class="button1-orange-dark mt5" href="@Url.Action("ShopFeedBack", "FeedBack", new { ShopName = Utility.SpacesToHifen(item.ShopName), ShopId = item.ShopId})">View Feedback</a> 
+                    }
+		        </div>
+
+		        <div class="details">
+			    @if (LoggedInUsername == item.ShopwOwnerUsername)
+               {
+			        <div class="blue">Sold to: @item.BuyerName</div>
+               }
+               else
+               {
+                    <div class="blue">Sold by: <a href="~/Shop/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId">@item.ShopwOwnerUsername / @item.ShopName</a></div>
+                }
+                <span class="grey displayBlock mt5">Total Paid to Seller: <strong class="colorOrange">$@(Math.Round(item.ItemTotalPrice + item.ItemTotalShippingPrice + ((item.ItemTotalPrice)*item.Tax.Value/100),2)) USD</strong></span>
+                @if(item.IsPercentage){
+			        <span class="grey displayBlock mt5">Centro Fee @item.AdminCommission %: <strong class="colorOrange">$@(Math.Round(item.OrderAmount * item.AdminCommission / 100, 2)) USD</strong></span>
+                }
+                else
+                {
+			        <span class="grey displayBlock mt5"><span>Non Refundable<br />Centro Fee: </span><strong class="colorOrange">$@(Math.Round(item.AdminCommission, 2)) USD</strong></span>
+                }
+                    <strong><span class="grey displayBlock mt5">Tracking #: <strong class="colorOrange">@item.TrackingID</strong></span></strong>
+                   
+		        </div>
+	        </div>
+	        <div class="divClear"></div>
+        </div>
+    }
+}
+else
+{
+    <div class="row table-listing">
+No Order Found</div>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var status = '@ViewBag.Status';
+    var shop_id = "@ViewBag.ShopId";
+</script>
+<script src="@Url.Content("~/Scripts/System/jquery.raty.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Custom/feedback.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Custom/OrderListing.js")" type="text/javascript"></script>
+

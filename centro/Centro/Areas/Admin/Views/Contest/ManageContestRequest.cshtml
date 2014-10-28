@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Manage Challenge Request";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayOut.cshtml";
+}
+<h2>
+    Manage Challenge Request</h2>
+<div class="row mtop15">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" class="searchbox">
+        <tbody>
+            <tr valign="top">
+                <td align="left" class="searchbox">
+                    <div class="floatleft">
+                        <table cellspacing="0" cellpadding="4" border="0">
+                            <tbody>
+                                <tr valign="top">
+                                    <td valign="middle">
+                                        Search By Name
+                                    </td>
+                                    <td valign="middle" align="left">
+                                        <input type="text" value="" style="width: 300px;" name="login" id="login" class="input">
+                                    </td>
+                                    <td valign="middle" align="left">
+                                        <div class="black_btn2">
+                                            <span class="upper">
+                                                <input type="button" value="Submit" onclick="UserFilter(this);"></span></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

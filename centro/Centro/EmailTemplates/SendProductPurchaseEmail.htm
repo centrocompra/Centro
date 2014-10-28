@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Mailer</title>
+</head>
+<body>
+	<table width="800" align="center" border="0" cellspacing="0" cellpadding="8" style=" color:#636363; font: 13px Arial, Helvetica, sans-serif; border: solid 1px #ccc; padding: 1px">
+		<tr style="background-color: #aaa; color: #fff">
+			<td width="70%" align="left" valign="middle"><strong style="font-size: 16px">Centro - Order Details</strong></td>
+			<td width="30%" align="center" valign="top"><img src="http://Centro.ossmedia.com/content/images/logo.png" alt="" width="211" height="36" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" style=" font-size:13px; color:#636363;">Hi {BuyerName},</td>
+		</tr>
+		<tr>
+			<td colspan="2" style=" font-size:13px;">Thank you for purchasing an item from <strong>{ShopOwner}’s shop</strong>.<br /><br />
+				Please review your invoice &quot;<a href="{ManageOrderURL}" style="color: #ffb647;">here</a>&quot; and review the <a href="{FAQURL}" style="color: #ffb647;">FAQ</a> page if you 
+				have any questions. The shop owner ({ShopOwner}) will be required to ship the item 
+				within 3 days, else your payment (minus the Centro transaction fee) will 
+				be refunded back to your account.<br />
+				Order Number # {OrderID}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<table width="100%" border="0" cellspacing="0" cellpadding="5" style="border: 1px solid #ccc; padding: 1px">
+					<tr style="background-color: #ccc;">
+						<th width="28%" align="left" valign="middle">Title</th>
+						<th width="15%" align="left" valign="middle">Image</th>
+						<th width="29%" align="left" valign="middle">Quantity</th>
+						<th width="28%" align="left" valign="middle">Unit Price</th>
+					</tr>
+                    {productDetails} 
+					<tr>
+						<td colspan="2" rowspan="4" align="left" valign="middle">&nbsp;</td>
+						<td align="left" valign="middle"><strong>Shipping</strong></td>
+						<td align="left" valign="middle">${Shipping} USD</td>
+					</tr>
+					<tr>
+						<td align="left" valign="middle"><strong>Sales Tax at {Tax}(%)</strong></td>
+						<td align="left" valign="middle">${TaxValue} USD</td>
+					</tr>
+					<tr>
+						<td align="left" valign="middle"><strong>Centro fee {FeePercent}(%)</strong></td>
+						<td align="left" valign="middle">${FeeValue} USD</td>
+					</tr>
+					<tr>
+						<td align="left" valign="middle"><strong>Order Total</strong></td>
+						<td align="left" valign="middle">${TotalAmountToBePaid} USD</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><strong>Disclaimer:</strong> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard 
+             ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="border-top: 3px solid #ccc;">If you have any questions, please review our <a href="{FAQURL}" style="color: #ffb647;">FAQ</a> page and also our <a href="{TnCURL}" style="color: #ffb647;">Terms of Service</a> and <a href="{PPURL}" style="color: #ffb647;">Privacy Policy</a>.</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="font: 13px Arial, Helvetica, sans-serif">Thank you for your support!<br /><strong>Team Centro</strong></td>
+		</tr>
+	</table>
+</body>
+</html>

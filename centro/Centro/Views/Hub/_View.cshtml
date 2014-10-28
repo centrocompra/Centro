@@ -1,0 +1,25 @@
+﻿@model Hub
+
+<div class="row">
+	<div class="input-group hub-dtl-main-top">
+		<h2 class="hub-title row"> @Model.Title <span class="b-normal">By : @Model.User.UserName</span></h2>
+        <h3 class="ch-hd-in-dv floatLeft">
+        @if (Model.HubPicture != null)
+        {
+            <img width="100" src="@Url.Content("~/Images/" + Model.HubOwnerUsername + "/Hubs/" + Model.HubPicture)" />
+        }
+        </h3>
+        
+		<p class="hub-desc"> @Model.Description </p>
+        <span class="">Posted @String.Format("{0:m}",Model.CreatedOn), @String.Format("{0:yyyy}",Model.CreatedOn)</span>
+		@*<p class="hub-dtl-topic"> @Model.HubTopicText </p>*@
+	</div>
+    @if (Model.HubTemplateID == (int)HubTemplate.Template1)
+    {
+        <div>@Html.Partial("_ViewTemplate1", Model.HubItems)</div>
+    }
+    else
+    {
+        <div>@Html.Partial("_ViewTemplate2", Model.HubItems)</div>
+    }
+</div>    

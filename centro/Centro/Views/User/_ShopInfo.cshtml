@@ -1,0 +1,259 @@
+﻿@model Shop
+@{
+    var section = SellersHandler.ShopSectionsByShopId(Model.ShopID).List;
+    string count = (section != null && section.Count() > 0) ? "trueaa" : "";
+
+    List<Country> Countries = ViewBag.Countries;
+    var userCountries = new SelectList(Countries, "CountryID", "CountryName");
+
+    List<StateProvince> States = ViewBag.States;
+    var userStates = new SelectList(States, "StateID", "StateName");
+
+    List<City> Cities = ViewBag.Cities;
+    var userCity = new SelectList(Cities, "CityID", "CityName");
+
+    int shopCount = SellersHandler.ShopCount((User)ViewBag.User);
+    string ShopNumberID = (DateTime.Now.Month < 10 ? ("0" + DateTime.Now.Month) : DateTime.Now.Month.ToString()) + (DateTime.Now.Year - 2000).ToString() + (shopCount + 1).ToString();
+}
+@using (Html.BeginForm("SaveOrUpdateShopInfo", "User", FormMethod.Post, new { @class = "fullColumn" }))
+{
+    @Html.HiddenFor(s => s.ShopID)
+    @Html.HiddenFor(s => s.UserId)
+    @Html.HiddenFor(s => s.ShopBanner)
+    @Html.HiddenFor(s => s.IsClosed)
+    @Html.HiddenFor(s => s.IsDeleted)
+    @Html.HiddenFor(s => s.WelcomeMessage)
+    
+    @Html.Hidden("PaymentPolicy", "Dummy Text")
+    @Html.Hidden("RefundPolicy", "Dummy Text")
+    @Html.Hidden("SellerInformation", "Dummy Text")
+    @Html.Hidden("AdditionalInformation", "Dummy Text")
+    @Html.Hidden("DeliveryInformation", "Dummy Text")
+    @Html.Hidden("ShopAnnouncement", "Dummy Text")
+    @Html.HiddenFor(s => s.ShipToUSOnly)
+    @Html.HiddenFor(s => s.ShopTitle)
+    string username = ViewBag.Username;
+    @Html.Hidden("ShopName", username);
+    @Html.Hidden("ShopNumberID", ShopNumberID);
+    <div class="main-heading">
+        Shop Information<br>
+        @*<span class="orng f20">Flesh out your shop with the following information</span>.*@
+    </div>
+    <div class="box-out">
+        <div class="box-in">
+            <dl>
+                <dt class="bold">User Name</dt>
+                <dd class="pad-top">
+                    <div class="floatLeft w140px">@username</div>
+                    <div class="floatLeft bold w75px">Shop ID #</div>
+                    <div class="floatLeft">@ShopNumberID</div>
+                    @*@Html.TextBoxFor(m => m.ShopName, new { @style = "width: 515px;", @class = "input-box required", @maxlength = 500 })
+                    @Html.ValidationMessageFor(m => m.ShopName)*@
+                </dd>
+            </dl>
+            <dl>
+                <dt class="bold">Contact Info</dt>
+                <dd class="pad-top">
+                   <div class="row hintTxt">
+                        This information will be provided in the invoice receipt to your buyers when they purchase a product from your shop or when they contract out a job to you.
+                        This is to ensure that all parties will be able to get ahold of the one another in case of an emergency.</div>
+                    <dl class="Contact-info-inner">
+                        <dt>Your Name </dt>
+                        <dd> 
+                            <span class="slct-2">@Html.TextBoxFor(m => m.ContactFirstName, new { @class = "input-box required", @maxlength = 500 })
+                            @Html.ValidationMessageFor(m => m.ContactFirstName)</span>
+                            <span class="slct-2">@Html.TextBoxFor(m => m.ContactLastName, new { @class = "input-box required", @maxlength = 500 })
+                            @Html.ValidationMessageFor(m => m.ContactLastName)</span>
+                        </dd>
+                        <dt>Email</dt>
+                        <dd>
+                            @Html.TextBoxFor(m => m.ContactEmail, new { @style = "", @class = "input-box required", @maxlength = 500 })
+                            @Html.ValidationMessageFor(m => m.ContactEmail)
+                        </dd>
+                        <dt>Forwarding Address</dt>
+                        <dd>
+                            @Html.TextBoxFor(m => m.ContactAddress, new { @style = "", @class = "input-box required", @maxlength = 500 })
+                            @Html.ValidationMessageFor(m => m.ContactAddress)
+                        </dd>
+                        <dt>Country</dt>
+                        <dd>
+                            <span class="slct-3">@Html.DropDownListFor(m => m.ContactCountry, userCountries, "Select a country...", new { @class = "input-box", onchange = "OnCountryChange(this,'ContactState','ContactCity');" })
+                            @Html.ValidationMessageFor(m => m.ContactCountry)</span>
+                            <span class="slct-3">@Html.DropDownListFor(m => m.ContactState, userStates, "Select a state...", new { @class = "input-box", onchange = "OnStateChange(this,'ContactCity');" })
+                            @Html.ValidationMessageFor(m => m.ContactState)</span>
+                            <span class="slct-3">@Html.DropDownListFor(m => m.ContactCity, userCity, "Select a city...", new { @class = "input-box" })
+                            @Html.ValidationMessageFor(m => m.ContactCity)</span>
+                        </dd>
+                    </dl>
+                </dd>
+            </dl>
+            @*<dl>
+                <dt class="bold">Shop Slogan </dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.ShopTitle, new { @style = "width: 400px;", @class = "input-box required", @maxlength = 500 })
+                    @Html.ValidationMessageFor(m => m.ShopTitle)
+                </dd>
+            </dl>*@
+            @Html.HiddenFor(m => m.ShopBanner)
+            @*<dl>
+            <dt class="bold">Shop Banner Image </dt>
+            <dd>
+                <div class=" row"><a name="banner"></a>
+                <input type="file" id="shopBanner" name="shopBanner" datatype="image" message="Only GIF, JPG, PNG formats are allowed"
+                                allowed-formats=".gif.jpg.jpeg.png" required-message="Please upload a banner"
+                                onchange="FileSize();" />
+                
+                <span class="field-validation-error shopBanner"></span>
+                </div>
+            @if (!string.IsNullOrWhiteSpace(Model.ShopBanner))
+            {
+               <div class="add-banner">
+                <img style="float:left" src="@Url.Content("~/Images/ShopImages/" + username + "/Banner/" + Model.ShopBanner)" name="ShopBanner" height="50" />
+                <label onclick="DeleteBanner(this, @Model.ShopID)" class="close">x</label>
+               </div>
+            }
+            else
+            {
+                <div class="add-banner"> <img style="float:left" src="@Url.Content("~/Content/css/Images/banner.png")"  height="50" /></div>
+            }
+                <div class="row pt5">
+                    Upload a .jpg, .gif or .png that is 760px by 100px and no larger than 2MB.</div>
+            </dd>
+        </dl>*@
+            @*<dl>
+                <dt class="bold">Note to Buyers </dt>
+                <dd>
+                    <div class="row pb5 pt5 hintTxt">
+                        This information will be displayed in the invoice and on your profile page.
+                    </div>
+                    @Html.TextAreaFor(m => m.ShopAnnouncement, new { @style = "width: 515px;overflow: hidden; word-wrap: break-word; resize: horizontal; height: 97px;", @class = "input-box required", @maxlength = 200 })
+                    @Html.ValidationMessageFor(m => m.ShopAnnouncement)
+                </dd>
+            </dl>*@
+          @*  <dl>
+                <dt class="bold">Services </dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.MessageForBuyers, new { @style = "width: 400px;overflow: hidden; word-wrap: break-word; resize: horizontal; height: 97px;", @class = "input-box required", @maxlength = 2000 })
+                    @Html.ValidationMessageFor(m => m.MessageForBuyers)
+                    <div class="row pt5 hintTxt">
+                        We include this message on receipt pages and in the email buyers receive when they
+                        purchase from your shop.</div>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="bold">@Html.LabelFor(m => m.PrinterType)</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.PrinterType, new { @style = "width: 400px;", @class = "input-box", @maxlength = 500 })
+                </dd>
+            </dl>
+            <dl>
+                <dt class="bold">@Html.LabelFor(m => m.Dimensions)</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.Dimensions, new { @style = "width: 400px;", @class = "input-box", @maxlength = 500 })
+                </dd>
+            </dl>
+            <dl>
+                <dt class="bold">@Html.LabelFor(m => m.Materials)</dt>
+                <dd>
+                    <input type="text" id="Material" class="input-box" style="width: 160px;" />
+                    @Html.HiddenFor(m => m.Materials)
+                    <button class="button2 ml10" id="add-material" onclick="AddMaterial(this)" type="button">
+                        Add</button>
+                    <div class="row">
+                        <ul id="material-add" class="taglist-edit">
+                            @if (((List<String>)ViewBag.Materials).Count > 0)
+                            {
+                                foreach (var item in (List<String>)ViewBag.Materials)
+                                {
+                                <div class="material">
+                                    <span>@item.Trim()</span><label class="close" onclick="remove(this);">x</label>
+                                </div>
+                                }
+
+                            }
+                        </ul>
+                    </div>
+                </dd>
+            </dl>*@
+            <dl>
+                <dt class="bold">Services Offered </dt>
+                <dd>
+                    @Html.HiddenFor(m => m.ServiceId)
+                    @foreach (var service in (List<ShopServices>)ViewBag.ShopServices)
+                    {
+                        if (service.IsChecked)
+                        {
+                        @Html.CheckBox("ServiceOffered", true, new { @id = (int)service.ServiceId, @class = "mt2 " }) @Html.Raw("&nbsp;&nbsp;&nbsp;") @service.ServiceName
+                        }
+                        else
+                        { 
+                        @Html.CheckBox("ServiceOffered", false, new { @id = (int)service.ServiceId, @class = "mt2 " })  @Html.Raw("&nbsp;&nbsp;&nbsp;") @service.ServiceName 
+                        }
+                        @*@Html.Raw("<br/>")*@
+                        <div class="clear"></div>
+                    }
+                </dd>
+            </dl>
+            @*<dl>
+                <dt>Shop Speciality</dt>
+                <dd>
+                    @Html.HiddenFor(m => m.ShopSpecialties)
+                    @foreach (var speciality in (List<ShopSpeciality>)ViewBag.ShopSpeciality)
+                    {
+                        if (speciality.IsChecked)
+                        { 
+                             @Html.CheckBox("ShopSpeciality", true, new { @id = (int)speciality.SpecialityId }) @Html.Raw("&nbsp;&nbsp;&nbsp;") @speciality.SpecialityName
+                        }
+                        else
+                        {
+                             @Html.CheckBox("ShopSpeciality", false, new { @id = (int)speciality.SpecialityId }) @Html.Raw("&nbsp;&nbsp;&nbsp;") @speciality.SpecialityName
+                        }
+                         @Html.Raw("<br/>")
+                    }
+                </dd>
+            </dl>*@
+        @if (!Model.IsClosed && Model.ShopID > 0)
+        {
+            <dl>
+                <dt>Currently Accepting Job</dt>
+                <dd class="pt5">
+                    @Html.CheckBoxFor(m => m.AcceptJob, new { @class = "mt2 floatLeft" })
+                    <label class="pt5 pl5"> &nbsp; Yes </label><br />
+                </dd>
+            </dl>
+        }
+            <dl>
+                <dt>&nbsp;</dt>
+                <dd class="pt5">
+                    
+                    <div class="row pb5 pt5 hintTxt">
+                        Checkmark the box below if you acknowledge that information listed above is accurate, up-to-date. You, or ant other party who uses this account, will adhere to and be bound by CentroCompra's <a href="#">Terms of Use and Service</a> and <a href="#">Privacy Policy</a>. Please make sure to review the documents before checkmarketing the box.
+                    </div>
+                    
+                    @Html.CheckBox("TermsAndCondition", new { @class = "mt2 floatLeft" })
+                    <label class="pt5 pl5"> &nbsp; Yes, I have read both the Terms of Use and Service and Privacy Policy and agreed to all the terms. </label><br />
+                    <span data-valmsg-replace="true" data-valmsg-for="TermsAndCondition" class="field-validation-error">
+                        <span for="TermsAndCondition" generated="true" class="TermsAndCondition"></span></span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row text-right">
+        <button type="button" id="Submit" onclick="ShopInfo(this);" class="button1">
+            Save Changes</button>
+        @*@if (Model.ShopID > 0)
+        {*@
+            <button type="button" id="Submit1" onclick="ShopInfo(this,'next');" class="button1-blk">
+                Next</button>
+        @*}*@
+        <span id="submitFormDivErrorMessage"></span>
+    </div>
+}
+<script type="text/javascript">
+    var old_shop_id = '@Model.ShopID';    
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+        $('.ShopInfo').parent().parent().find('li').removeClass('active');
+        $('.ShopInfo').parent().addClass('active');
+    });
+</script>

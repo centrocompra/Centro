@@ -1,0 +1,86 @@
+﻿@{
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    SiteUserDetails SiteUserDetails = new SiteUserDetails();
+    #region If auth cookie is present
+    if (auth_cookie != null)
+    {
+        FormsAuthenticationTicket auth_ticket = FormsAuthentication.Decrypt(auth_cookie.Value);
+        SiteUserDetails = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<SiteUserDetails>(auth_ticket.UserData);
+        System.Web.HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new FormsIdentity(auth_ticket), null);
+    }
+    HttpCookie cartCookie = Request.Cookies[Cookies.CartCookie];
+    int cartItems = 0;
+    if (cartCookie != null)
+    {
+        Cart cart = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Cart>(cartCookie.Value);
+        foreach (var cartShop in cart.ShopCart)
+        {
+            foreach (var item in cartShop.ShopCartItems)
+            {
+                cartItems += item.Quantity;
+            }
+        }
+    }
+    #endregion
+}
+<div class="topheader">
+    <div class="topheadcenter">
+        <div class="cart-link">
+        @if (cartItems > 0)
+        {
+            <a class="cart-count" href="@Url.Action("MyCart", "Cart")">[@cartItems] Cart</a>
+        }
+        else
+        {
+            <a class="cart-count" href="#">Cart (0)</a>
+        }
+        </div>
+        <ul id="navMenu">
+            <li><a href="#">Help Center</a></li>
+            <li class="desh"><a href="javascript:;">Contact Us</a></li>
+            @if (SiteUserDetails.LoggedInUser == null)
+            {
+                <li class="login"><a href="javascript:;">Login</a></li>
+                <li><a href="javascript:;" id="signUp">Signup</a></li>
+            }
+            else
+            {
+                <li><span class="welcome">Welcome: </span><a href="@Url.Action("Profile", "User")" class="username">  
+                    @SiteUserDetails.LoggedInUser.Username</a>
+                    <ul class="submenu">                        
+                        <li><a href="@Url.Action("EditProfile", "User")">Edit Profile</a></li>
+                        <li><a href="@Url.Action("Shop", "User")">Edit Shop</a></li>
+                        <li><a href="@Url.Action("ListItems", "User")">Add/Edit Items</a></li>
+                        <li><a href="javascript:;" onclick="gotoAvailability(this)">Edit Availability</a></li>
+                        <li><a href="@Url.Action("GetPaid", "User")">Payments/Taxes</a></li>
+                        @*<li><a href="@Url.Action("ManageOrders", "Shops", new { id = "S" })">Manage Purchases (as a Seller)</a></li>
+                        <li><a href="@Url.Action("ManageOrders", "Shops", new { id = "B" })">Manage Purchases (as a Buyer)</a></li>*@
+                    </ul>
+
+                </li>
+                <li><a href="@Url.Action("Logout","Home")" id="signOut">Logout</a></li>
+            }
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var LoginRegister = {
+        Registration: function (sender) {
+            OpenPopupWindow({
+                url: '@Url.Action("_Registration", "Home")',
+                width: 557,
+                type: "GET",
+                title: "Registration"
+            });
+        }
+    }
+
+    function RegistrationAsCompany(sender) {
+        OpenPopupWindow({
+            url: '@Url.Action("_RegistrationAsCompany", "Home")',
+            width: 557,
+            type: "GET",
+            title: "Registration"
+        });
+    }
+</script>

@@ -1,0 +1,92 @@
+﻿@model List<FeedBackListing_Result>
+@{
+    ViewBag.Title = "FeedBacks";
+    SiteUserDetails loggedInUser = (SiteUserDetails)ViewBag.CentroUsers;
+    Layout = loggedInUser.LoggedInUser != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+Repclitivity :: My Reviews/Feedbacks
+}
+<aside class="floatLeft left-side">
+    @if (ViewBag.CentroUsers != null)
+    {
+        @Html.Partial("_LeftSideBuyerCategoryMenuLayout")
+    }
+    else
+    { 
+        @Html.Partial("_LeftSideMenuLayout")
+    }
+</aside>
+<div class="right-side floatRight">
+    <div class="custom_design">
+        <h2 class="custom-title">
+            @ViewBag.ShopName FeedBacks<div class="short-by-link">
+            </div>
+        </h2>
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+            <script>
+                $(document).ready(function () {
+                    $('#star_@item.FeedBackID').raty({
+                        readOnly: true,
+                        score: '@item.Rating'
+                    });
+                });
+
+            </script>
+            <div class="detailBox info">
+                <div class="left_img">
+                    @*<img src="@Url.Content("~/Images/ProfileImage/")@item.UserName/thumb_@item.UserImage" alt="Shop Owner" />*@
+                    <img src="@Url.Content("~/Images/ProfileImage/")@item.UserName/@item.UserImage" alt="Shop Owner" />
+                </div>
+                <div class="right_content">
+                    <div class="shop-listing">
+                        <div class="head">
+                            <h2><a href="javascript:{}">@item.UserName</a></h2>
+                            <div class="rating" id="star_@item.FeedBackID">
+                            </div>
+                        </div>
+                        <div class="detail">
+                            @if (item.RequestID != null)
+                            {
+                                <h3>Comment on custom request : @item.RequestTitle</h3>
+                            }
+                            else if (item.OrderID != null)
+                            {
+                                <h3>Comment on product : @item.ProductName</h3>
+                                if (item.ProductImage != null)
+                                {
+                                <img src="@Url.Content("~/Images/ProductImages/" + ViewBag.ShopOwner + "/" + item.ProductImage)" width="80" alt="" />
+                                }
+                                else
+                                {
+                                <img width="80" src="@Url.Content("~/Content/images/default_product.png")" />
+                                }
+                            }
+                        </div>
+                        <div class="detail">
+                            <h3>Client Comment</h3>
+                            <p>
+                                @item.Review
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="clear"></div>
+            </div>
+            }
+        }
+        else
+        {
+            <div class="detailBox info">
+                <h2>No feedbacks available</h2>
+            </div>
+        }
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>
+

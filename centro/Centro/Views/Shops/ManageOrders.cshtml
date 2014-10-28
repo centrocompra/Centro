@@ -1,0 +1,46 @@
+﻿@model PagingResult<OrderViewModel>
+@{
+    ViewBag.Title = "Manage Orders";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+ Manage Orders
+}
+@{
+    PagingResult<OrderViewModel> modelList = Model;
+    string Type=ViewBag.Type;
+    int id=(int)ViewBag.Id;
+    string t="";
+    if(Type.ToLower()=="s"){ t="Seller";} else{ t="User";}
+}
+<div class="white-area-inner custom-request">
+    @Html.Partial("_BuyerLeftSideMenu")
+    <div class="profile-right-bar primary">
+        <h3 class="main-heading">
+            Manage Orders (As a @t)
+            <a class="order-help" href="#">Need help? Check out our Learning Center</a>
+            </h3>
+        <div class="tabs-outer">
+            <ul class="tabs">
+                <li class="active">@Ajax.ActionLink("Pending", "_OrderListing", "Shops", new { id = @id, status = (int)OrderStatus.Pending , type=@Type }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                <li>@Ajax.ActionLink("Completed", "_OrderListing", "Shops", new { id = @id, status = (int)OrderStatus.Completed, type = @Type }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                <li>@Ajax.ActionLink("Canceled", "_OrderListing", "Shops", new { id = @id, status = (int)OrderStatus.Canceled, type = @Type }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+            </ul>
+        </div>
+        <div id="Result" class="buyers">
+                @Html.Partial("_OrderListing", modelList)
+        </div>
+    </div>
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+
+}
+<script type="text/javascript">
+    var totalCount = "@modelList.TotalCount";
+    var status = '@ViewBag.Status';
+    var id = "@ViewBag.Id";
+    var type = '@Type';
+</script>
+<script src="@Url.Content("~/Scripts/Custom/OrderListing.js")" type="text/javascript"></script>

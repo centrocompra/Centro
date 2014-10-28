@@ -1,0 +1,14 @@
+﻿@model CM
+@{
+    ViewBag.Title = "CareerBlogs";
+}
+@section title{
+Centro- Career Blogs
+}
+<div class="contentCntr">
+    <div class="contentcenter clearfix">
+        <div class="blogPage clearfix">
+            @Html.Raw(Model.PageContent)
+        </div>
+    </div>
+</div>

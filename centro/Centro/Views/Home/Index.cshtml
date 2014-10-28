@@ -1,0 +1,68 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var deals = ProductsHandler.GetActiveDeals();
+}
+@section title{
+Home
+}
+<div class="contentcenter clearfix">
+    @Html.Partial("_LeftMenu")
+    <div class="rightCntr">
+        @*<div class="menubox">
+            <ul>
+                <li><a href="#">My Account</a></li>
+                <li><a href="#">Wishlist</a></li>
+                <li><a href="#">Top 10 Products </a></li>
+                <li><a href="#">Top 10 Users</a></li>
+            </ul>
+        </div>*@
+        <div class="bannerBox">
+            <div class="slider">
+                <div class="flexslider">
+                    <ul class="slides">
+                    @foreach(var deal in deals)
+                    {
+                        <li>
+                            <div class="left">
+                                <h2>@deal.Title</h2>
+                                <p>@deal.SubTitle</p>
+                                <a class="gobtn" href="@Url.Action("ExclusiveDeals", "Products", new { id=deal.DealID })">Go</a>
+                            </div>
+                            <div class="right">
+                                <ul>
+                                @foreach (var item in deal.DealItems)
+                                {
+                                    <li>
+                                        <a class="deal-link" href="@Url.Action("ExclusiveDeals", "Products", new { id=deal.DealID, itemid=item.DealItemID })">
+                                        <h3>@item.Title</h3><img src="@Url.Content("~/Deals/"+item.PictureName)" alt="" /><p>@item.CategoryName</p>
+                                        </a>
+                                    </li>
+                                }
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                    </ul>
+                </div>
+            </div>
+            @*<div class="add">
+                <img src="~/Content/images/banner_img.png" alt="" />
+            </div>*@
+        </div>
+        <div class="productBox">
+            @Html.Partial("_Products", Model)
+            <a class="view" href="@Url.Action("Index", "Products")">View all</a>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ('@TempData["Status"]' != null && '@TempData["Status"]' != undefined && '@TempData["Status"]' != '') {
+                Message('@TempData["Message"]', parseInt('@TempData["Status"]'));
+            }
+        });
+    </script>
+}

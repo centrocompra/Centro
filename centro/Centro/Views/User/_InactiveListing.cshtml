@@ -1,0 +1,15 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    var shopId = ViewBag.ShopID;
+    SelectedProductListingTab tab = (SelectedProductListingTab)ViewBag.SelectedTab;
+}
+@Html.Partial("_Products", Model)
+<link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var ShopId = '@shopId';
+    var show_productTemplate = false;
+    var InactiveListing = 1;
+</script>
+<script src="@Url.Content("~/Scripts/Custom/productByShopPaging.js")" type="text/javascript"></script>

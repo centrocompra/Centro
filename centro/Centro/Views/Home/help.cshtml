@@ -1,0 +1,19 @@
+﻿@model CM
+@{
+    ViewBag.Title = "Help";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+Centro- Help?
+}
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Custom/forgotpassword.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Custom/signUp.js")" type="text/javascript"></script>
+}
+<div class="contentCntr">
+    <div class="contentcenter clearfix">
+        <div class="contactPage clearfix">
+            @Html.Raw(Model.PageContent)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿@model List<InvoiceViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+ Invoice Management
+}
+
+<div class="white-area-inner">
+    @Html.Partial("_BuyerLeftSideMenu")
+    <div class="profile-right-bar primary">
+        <div class="tabs-outer">
+            <ul class="tabs">
+                <li class="active">@Ajax.ActionLink("Invoice Received", "_Invoices", "Invoice", new { type = (int)MessagePlaceHolder.Inbox }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                <li >@Ajax.ActionLink("Invoice Sent", "_Invoices", "Invoice", new { type = (int)MessagePlaceHolder.Sent }, new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+            </ul>
+            
+        </div>
+        <div id="Result">
+            @Html.Partial("_Invoices", Model)
+        </div>
+    </div>    
+</div>
+<script src="@Url.Content("~/Scripts/Custom/invoice.js")" type="text/javascript"></script>

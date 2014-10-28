@@ -1,0 +1,89 @@
+﻿@model PagingResult<SubCategory>
+@{
+    ViewBag.Title = "Manage Sub-Categories";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayOut.cshtml";
+}
+<!--Body Start from Here-->
+<h1>
+    Manage Sub-Categories</h1>
+<div class="row mtop15">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" class="searchbox">
+        <tr valign="top">
+            <td align="left" class="searchbox">
+                <div class="floatleft">
+                    <table cellspacing="0" cellpadding="4" border="0">
+                        <tr valign="top">
+                            <td valign="middle">
+                                Search By Name
+                            </td>
+                            <td valign="middle" align="left">
+                                @Html.TextBox("login", null, new { @class = "input", @id = "login", @style = "width:300px;" })
+                            </td>
+                            <td valign="middle" align="left">
+                                <input type="button" onclick="UserFilter(this);" value="Submit" class="button1-blk" />
+                                <input type="button" onclick="DeleteSubCat(this);" value="Delete" class="button1-blk" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="floatright top5">
+                    <a href="@Url.Action("AddSubCategory", "Categories")" class="black_btn"><span>Add New Sub-Category</span></a>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="row mtop15">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" class="listing">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" onclick="javascript:CheckAll(this);" />
+                </th>
+                <th>
+                    <span class="Name">Name</span><img src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="sort(this);" />
+                </th>
+                <th>
+                    <span class="Category.Name">Category</span><img src="@Url.Content("~/Content/images/asc.gif")" class="sort up" onclick="sort(this);" />
+                </th>                
+                <th style="text-align: center">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody id="Result">
+            @Html.Partial("_SubCategories", Model)
+        </tbody>
+    </table>
+    @Html.Partial("_Paging")
+</div>
+<!--Body end Here-->
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<style type="text/css">
+    th
+    {
+        font-size: 13px;
+        font-weight: bold;
+        background-color: #ddd;
+    }
+    th, td
+    {
+        padding: 2px 5px;
+    }
+    select
+    {
+        margin-bottom: 0px !important;
+    }
+    .sort
+    {
+        vertical-align: middle;
+        cursor: pointer;
+    }
+</style>
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";      
+</script>
+<script src="@Url.Content("~/Scripts/Custom/admin/subcategoryPaging.js")" type="text/javascript"></script>

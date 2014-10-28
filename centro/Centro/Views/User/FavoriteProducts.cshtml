@@ -1,0 +1,28 @@
+﻿@model List<ProductViewModel>
+@{
+    ViewBag.Title = "FavoriteProducts";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+    var user = (SiteUserDetails)ViewBag.CentroUsers;    
+}
+@section title{
+Centro : My Favorites
+}
+
+<div class="white-area-inner custom-request">
+    @Html.Partial("_BuyerLeftSideMenu")
+    <div class="profile-right-bar primary">
+        <h3 class="main-heading">
+            My Favorites</h3>
+        <div class="tabs-outer">
+            <ul class="tabs">
+                <li class="active">@Ajax.ActionLink("Products", "_FavProducts", "User", new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+                <li>@Ajax.ActionLink("Shops", "_FavShops", "User", new AjaxOptions { UpdateTargetId = "Result" }, new { @onclick = "SetTab(this)" })</li>
+            </ul>
+        </div>
+        <div id="Result">
+               @Html.Partial("_FavProducts", Model)
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Scripts/Custom/favorites.js")" type="text/javascript"></script>

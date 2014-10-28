@@ -1,0 +1,114 @@
+﻿@model List<HubContent>
+<div class="input-group-wb location-city hub-create-list">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        if (i == 0)
+        {
+        <div class="mb20 autosuggest-wrapper1 row">
+            <div class="floatRight width50">
+                <blockquote class="pdl12p gray-border-left ml20 ">
+                    @if (Model[i].SavedName != null)
+                    {
+                        <div class="file-div-@i" style="display:none;">
+                            <label class="add-photo-btn">
+                                <strong>upload</strong><span>
+                                    <input type="file" id="picture" name="file" onchange="UploadPicture(this, 'picture-form',@i);"/></span></label>
+                        </div>
+                        <div id="picture-div-@i">
+                            <div class="image-box image-box1">
+                                <img src="@Url.Content("~/Images/" + ViewBag.UserName + "/Hubs/" + Model[i].SavedName)" />
+                                <label onclick="DeletePic(this,null,@i)" class="close" >x</label>
+                            </div>
+                            &nbsp;
+                        </div>
+                    
+                    }
+                    else
+                    {
+                    
+                        <div class="file-div-@i" >
+                            <label class="add-photo-btn">
+                                <strong>upload</strong><span>
+                                    <input type="file" id="picture" name="file" onchange="UploadPicture(this, 'picture-form',@i);" /></span></label>
+                        </div>
+                        <div id="picture-div-@i"></div>
+                    }
+
+                </blockquote>
+                <div class="submit ml10 mt0">
+                    <input type="button" class="button-plus" value="Add" onclick="AddRowEdit(this);" />
+                </div>
+            </div>
+            <input type="hidden" id="hdnContentID_@i" name="hdnContentID_@i" value="@Model[i].HubContentID" />
+            <input type="hidden" id="hdnImageName_@i" name="hdnImageName_@i" value="@Model[i].SavedName" />
+
+            <textarea class="width45 template1" name="Count_@i" data-val-required="*Required." data-val="true">@Model[i].ContentText</textarea>
+            <span data-valmsg-replace="true" data-valmsg-for="Count_@i" class="field-validation-valid ml15"></span>
+        </div>
+        }
+        else
+        {
+        <div class="mb20 autosuggest-wrapper1 row  autosuggest-wrapper-@i">
+            <div class="floatRight width50">
+                <blockquote class="pdl12p gray-border-left ml20 ">
+                    @if (Model[i].SavedName != null)
+                    { 
+                        <div class="file-div-@i" style="display:none;">
+                            <label class="add-photo-btn">
+                                <strong>upload</strong><span>
+                                    <input type="file" id="picture" name="file" onchange="UploadPicture(this, 'picture-form',@i);"/></span></label>
+                        </div>
+                        <div id="picture-div-@i">
+                            <div class="image-box image-box1">
+                                <img src="@Url.Content("~/Images/" + ViewBag.UserName + "/Hubs/" + Model[i].SavedName)" />
+                                <label onclick="DeletePic(this,null,@i)" class="close" >x</label>
+                            </div>
+                            &nbsp;
+                        </div>
+                    }
+                    else
+                    { 
+                        <div class="file-div-@i">
+                            <label class="add-photo-btn">
+                                <strong>upload</strong><span>
+                                    <input type="file" id="picture" name="file" onchange="UploadPicture(this, 'picture-form',@i);"/></span></label>
+                        </div>
+                        <div id="picture-div-@i"></div>
+                    }
+
+
+                </blockquote>
+                <div class="submit ml10">
+                    <input type="button" class="button-minus" value="Remove" onclick="RemoveRowEdit(this,'autosuggest-wrapper-@i    ',@i);" />
+                </div>
+            </div>
+            <input type="hidden" id="hdnContentID_@i" name="hdnContentID_@i" value="@Model[i].HubContentID" />
+            <input type="hidden" id="hdnImageName_@i" name="hdnImageName_@i" value="@Model[i].SavedName" />
+            <textarea id="Count_@i" class="width45" name="Count_@i" data-val-required="*Required." data-val="true">@Model[i].ContentText</textarea>
+            <span data-valmsg-replace="true" data-valmsg-for="Count_@i" class="field-validation-valid ml15"></span>
+        </div>
+        }
+    }
+
+
+</div>
+
+
+<script type="text/javascript">
+    //$("textarea.template1").jqte();
+//    count = 1;
+//    $('#Rows').val('0');
+//    $('#Except').val('');
+//    rows.length = 0;
+//    except.length = 0;
+//    rows.push(0);
+</script>
+<style type="text/css">
+    .jqte {
+        width: 395px !important;
+    }
+
+    .jqte_editor, .jqte_source {
+        min-height: 150px !important;
+    }
+</style>

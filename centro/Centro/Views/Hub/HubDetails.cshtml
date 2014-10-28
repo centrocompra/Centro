@@ -1,0 +1,327 @@
+﻿@model Hub
+@{
+    ViewBag.Title = "Hub";
+    Layout = ViewBag.CentroUsers != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Shop shop = (Shop)ViewBag.Shop;
+    User shopOwner = (User)ViewBag.User;
+    ViewBag.UserName = shopOwner.UserName;
+    //List<ShopSection> shopSections = (List<ShopSection>)ViewBag.ShopSection;
+    string totalEarning = shopOwner.TotalEarning.HasValue ? "$" + shopOwner.TotalEarning.Value : "0";
+    string shopOwnerName = (shopOwner.FirstName + " " + shopOwner.LastName.Substring(0, 1));
+    shopOwnerName = shopOwnerName.Length > 8 ? shopOwnerName.Substring(0, 8) : shopOwnerName;
+    string username = shopOwner.UserName.Length > 10 ? shopOwner.UserName.Substring(0, 10) : shopOwner.UserName;
+    Int32 LoggeInUserId = ViewBag.UserId;
+    ViewBag.HubUserID = Model.UserID;
+    UserSetting setting = UsersHandler.GetUsersetting(shopOwner.UserID).Object;
+    //List<ShopAvailablity> slots = ViewBag.ShopAvailablity;
+    List<Product> shopProducts = shop != null ? ProductsHandler.ProductsByShopId(shop.ShopID).List : null;
+    HubComment obj_hub_comment = new HubComment();
+    obj_hub_comment.HubID = Model.HubID;
+    obj_hub_comment.UserID = LoggeInUserId;
+    obj_hub_comment.HubTopicText = Utility.SpacesToHifen(Model.HubTopicText);
+    obj_hub_comment.HubOwnerUserName = shopOwner.UserName;
+    obj_hub_comment.HubPicture = Model.HubPicture;
+    List<HubCommentViewModel> hubComments = (List<HubCommentViewModel>)ViewBag.HubComments;
+    int hubcount = hubComments.Count();
+    string TotalHub = HubHandler.GetTotalHubOfUser(shopOwner.UserID).Results[0];
+    string TotalContest = ContestHandler.GetTotalContestByUser(shopOwner.UserID).Results[1];
+    int TotalFollowers = shop != null ? AccountActivityHandler.GetUserTotalFollowers(shop.UserId).ID : 0;
+    TimeSpan dateSpan = DateTime.Now.Subtract(shopOwner.LastLoginOn);
+    string lastactiveon = "";
+    if (dateSpan.Days > 1) { lastactiveon = dateSpan.Days + " days ago"; }
+    else if (dateSpan.Days == 1) { lastactiveon = "1 day ago"; }
+    else if (dateSpan.Hours > 1) { lastactiveon = dateSpan.Hours + " hours ago"; }
+    else if (dateSpan.Hours == 1) { lastactiveon = "1 hour ago"; }
+    else if (dateSpan.Minutes > 1) { lastactiveon = dateSpan.Minutes + " minutes ago"; }
+    else if (dateSpan.Minutes == 1) { lastactiveon = "1 minute ago"; }
+    else { lastactiveon = "just now"; }
+    var services = shop != null ? SellersHandler.ShopServicesByShopId(shop.ShopID).List : null;
+    string[] servicesArray = services != null ? services.Where(m => m.IsChecked).Select(m => m.ServiceName).OrderByDescending(m => m.Length).ToArray() : null;
+    string AcceptingJob = shop != null && shop.AcceptJob && !string.IsNullOrEmpty(shopOwner.PaypalID) ? "Yes" : "No";
+    bool is_fav_shop = (bool)ViewBag.IsShopFavorite;
+    List<string> list_rating_feedback = shop != null ? FeedBackHandler.GetShopTotalFeedBackAndAverageRating(shop.ShopID).Results : null;
+    ViewBag.HubTitle = Model.Title;
+    List<User> followers = AccountActivityHandler.GetUserFollowers(shopOwner.UserID).List;
+    string url = Request.Url.AbsoluteUri;
+}
+@section title{
+ Hub Details
+}
+
+<div class="product-details">
+
+<div class="floatLeft w68pc">
+    @Html.Partial("_ShopInfoDetailTop", shopOwner)
+    
+    <div class="product-left mt5 mb10">
+            <div class="white-area floatLeft  hub-detail-out">
+                @*<div class="disp-hub-banner row">
+				    <img src="images/add-banner.png" alt="" class="row mb20"> 
+			    </div>*@
+                <div class="row">
+                    <h4><a href="@Url.Action("AllHubs", "Hub")">Hubs</a> > 
+                    <a href="@Url.Action("HubsByTopic", "Hub", new { TopicName = Utility.SpacesToHifen(Model.HubTopicText), TopicID = Model.HubTopicID })">@Model.HubTopicText</a> >
+                    @if (shop != null)
+                    {
+                   <a href="~/Shop/@Utility.SpacesToHifen(shop.ShopName)/@shop.ShopID">@Model.HubOwnerUsername </a>@Html.Raw(" > ")
+                    }
+                    else
+                    {
+                        @Html.Raw(Model.HubOwnerUsername) @Html.Raw(" > ")
+                    }
+                    <a href="javascript:;" title="@Model.Title">@Html.Raw(Model.Title.Length > 25 ? Model.Title.Substring(0, 25) + "..." : Model.Title)</a>
+                    </h4>
+                </div>
+                <div class="disp-hub-main row">
+                    @if (Model.HubStatus == (int)HubStatus.Active)
+                    {
+                        string addthisAttr = "addthis:url='http://Centro.xicom.info/Hubs/ankit123/Topic1/hisddsada' addthis:title='" + Model.Title + "' addthis:description='via Centro' ";
+                        <div class="floatRight">
+                            <!-- AddThis Button BEGIN -->
+
+                            <div class="addthis_toolbox addthis_default_style addthis_16x16_style" addthis:url="@Model.HubURL" addthis:title="@Model.Title" addthis:description="via &#064; Centro">
+
+                                <a class="addthis_button_facebook"></a>
+                                <a class="addthis_button_twitter"></a>
+                                <a class="addthis_button_linkedin"></a>
+                                <a class="addthis_button_pinterest_share"></a>
+                                <a class="addthis_button_google_plusone_share"></a>
+                                <a class="addthis_button_stumbleupon"></a>
+                            </div>
+                            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51a727b64ac7643f"></script>
+                            <!-- AddThis Button END -->
+
+                            @*<span class='st_sharethis'  displaytext='ShareThis'></span>
+                        <span class='st_facebook'  displaytext='Facebook'></span>
+                        <span class='st_twitter' displaytext='Tweet'></span>
+                        <span class='st_linkedin' displaytext='LinkedIn'></span>
+                        <span class='st_pinterest' displaytext='Pinterest'></span>
+                        <span class='st_email' displaytext='Email'></span>*@
+
+                        </div>
+                        //if (ViewBag.CentroUsers != null)
+                        //{
+                        <a href="javascript:void(0)" onclick="SaveReportMessage('@url')" class="underline-none floatRight add-to-favs clearRyt mt5">
+                            <img src="@Url.Content("~/Content/images/flag.png")" width="14" class="mb-3 mr10" />Report</a>
+                        //}
+                        @Html.Partial("_View", Model)
+                    }
+                    else
+                    {
+                        <div>Hub has been deactivated by owner.</div>
+                    }
+                </div>
+            </div>
+            @if (LoggeInUserId > 0)
+            {
+                <div class="white-area floatLeft mt20 hub-detail-out">
+                    @Html.Partial("_AddComment", obj_hub_comment)
+                </div>
+            }
+
+            <div class="white-area floatLeft mt20 hub-detail-out">
+                <a name="comments"></a>
+                <h3 class="row">Comments</h3>
+                <div id="HubCommentRes">
+                    @Html.Partial("_ViewHubComments", hubComments)
+                </div>
+            </div>
+
+            @*<div class="product-left">
+        
+            <div class="box fetured mt20">
+                <div class="box-inner product-outer-main">
+               
+                    <div id="Result" class="product-out bg-white">
+                        @Html.Partial("_Hubs", Model)
+                    </div>
+                
+                </div>
+            </div>
+        </div>*@
+        </div>
+</div>
+<div class="floatRight width30">
+    @Html.Partial("_UserProfileRightBox", shopOwner)
+    <aside class="product-right mt10">
+    @if (shop != null)
+    {
+        <a href="@Url.Action("ShopAvailability", "Shops", new { ShopName = Utility.SpacesToHifen(shop.ShopName), ShopID = shop.ShopID })" class="white-area tabs ">Availability</a>
+    
+        <div class="white-area mt10">
+            <h3 class="gray-arrow gray-border-bottom"><a class="read-more" href="~/Shop/@Utility.SpacesToHifen(shop.ShopName)/@shop.ShopID">@shopOwner.UserName's shop</a></h3>
+            <div class="paging">
+                <a href="javascript:void(0)">&nbsp;</a>
+                <a href="javascript:void(0)" class="next">&nbsp;</a>
+            </div>
+        @if (shopProducts.Count() > 0)
+        {
+            <ul class="images jcarousel-skin-tango" id="mycarousel">
+                @foreach (var p in shopProducts)
+                {
+                    <li>
+                        <a href="~/Products/@Utility.SpacesToHifen(shop.ShopName)/@shop.ShopID/@p.CategoryId/@p.ProductID">
+                            @if (p.PrimaryPicture != null)
+                            {
+                                <img height="78" src="@Url.Content("~/Images/ProductImages/" + shopOwner.UserName + "/thumb_" + p.PrimaryPicture)" alt="" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/Content/images/product_img1.png")" alt="product image">
+                            }
+                            <span>$@p.UnitPrice</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div class="mt10">No product found</div>
+        }
+            <div class="divClear"></div>
+        </div>
+    }
+       @* @if (shopOwner.UserID != LoggeInUserId)
+        {
+            <div class="white-area mt20">
+                <h3>Shop Owner</h3>
+                <div class="shop-owner">
+                    @if (shopOwner.ProfilePicUrl != null)
+                    {
+
+                        <img src="@Url.Content(shopOwner.ProfilePicUrl)" class="floatLeft" height="100" width="100" alt="Shop Owner" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content("~/Images/avatar.png")" alt="Shop Owner" height="100" width="100" class="floatLeft" />
+                    }
+                    @if (LoggeInUserId != shopOwner.UserID)
+                    {
+                        <a href="@Url.Action("Compose", "Message", new { id = @shopOwner.UserName })" class="contact mb10">Contact</a>
+                        <a href="@Url.Action("SendCustomRequest", "Shops", new { id = @shop.ShopName })" class="contact">Custom Request</a>
+                    }
+                </div>
+            </div>
+        }*@
+        @if (shop != null)
+        {
+        @*<div class="white-area mt10">
+            <h3>Shop Info</h3>
+            <ul>
+                @if (!String.IsNullOrEmpty(shop.MessageForBuyers))
+                {
+                    <li><a href="javascript:void(0);" onclick="ShopInformation('MessageForBuyers',@shop.ShopID);">Message For Buyers</a></li>
+                }
+                @if (!String.IsNullOrEmpty(shop.SellerInformation))
+                {
+                    <li><a href="javascript:void(0);" onclick="ShopInformation('SellerInfo',@shop.ShopID);">Seller Information</a></li>
+                }
+                <li><a href="javascript:void(0);" onclick="ShopInformation('Policy',@shop.ShopID);">Shop Policies</a></li>
+            </ul>
+        </div>*@
+        }
+        @*@if (LoggeInUserId != shopOwner.UserID)
+                 {
+				<div class="white-area mt20">
+					<h3>Actions</h3>
+					<a href="javascript:void(0)" class="add-to-favs">Add to favorites</a>
+				</div>
+                 }*@
+
+        <div class="white-area mt10 followed-by-top">
+            <h3 class="orange-left-arrow gray-border-bottom">@followers.Count() Followers</h3>
+            @*@if (followers.Count > 5)
+            {
+                <a href="javascript:void(0)" class="view-all">View all</a>
+            }*@
+            <ul class="followed-by mt10 jcarousel-skin-tango" id="MyFollowers">
+                @if (followers.Count() > 0)
+                {
+                    for (int i = 0; i < (followers.Count > 5 ? 5 : followers.Count); i++)
+                    {
+                        string action = followers[i].ShopID > 0 ? Url.Action("Shop", "Shops", new { id = followers[i].ShopName, shopid = followers[i].ShopID }) : "javascript:;";
+                        string title = followers[i].ShopID > 0 ? followers[i].FirstName + " " + followers[i].LastName : followers[i].FirstName + " " + followers[i].LastName + " (No Shop)";
+                    <li><a title="@title" href="@action">
+                        <img width="50" src="@Url.Content(followers[i].ProfilePicUrl != null ? followers[i].ProfilePicUrl : "~/Content/Images/user_img.png")" alt=""></a></li>
+                    }
+                }
+                else
+                {
+                    <li class="width50">No follower yet.</li>
+                }
+
+            </ul>
+            @*<div class="divClear"></div>
+            <a href="javascript:void(0)" class="followe">Followe "Username"</a>*@
+            <div class="divClear"></div>
+        </div>
+
+       <a href="@Url.Action("UserHub", "Hub", new { UserName = shopOwner.UserName })" class="white-area tabs mt10 ">@TotalHub Articles/Hubs</a>
+            @*<a href="/Contest/ViewContest/@username" class="white-area tabs mt10">@TotalContest Contest</a>            
+            <a href="@Url.Action("Contests", "Products", new { shopname = @Utility.SpacesToHifen(shop.ShopName), shopid = @shop.ShopID })" class="white-area tabs mt10">@TotalContest</a>
+            *@
+
+        @if (!string.IsNullOrEmpty(shopOwner.Licence))
+        {
+        <div class="orange-area p20 mb10 ac mt10">
+            @Html.Raw(shopOwner.Licence.Replace("\r\n", "<br/>"))
+        </div>
+        }
+        @{
+            string[] keywords = !string.IsNullOrWhiteSpace(Model.Keywords)? Model.Keywords.Split(new string[]{ ","}, StringSplitOptions.RemoveEmptyEntries):null;
+        }
+        @if (keywords != null)
+        {
+        <div class="keywords-outer">
+            <h2>Keywords</h2>
+            @foreach (string item in keywords)
+            {
+               <div class="keyword">@item</div>
+            }
+        </div>
+        }
+    </aside>
+</div>
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/jquery.fancybox-1.3.4.css")" rel="stylesheet" type="text/css"/>
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/Custom/reports.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/hubs.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.fancybox-1.3.4.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/system/jquery.jcarousel.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>
+    <script type="text/javascript">var switchTo5x = true;</script>
+
+
+    @*<meta property="og:title" content="@Model.Title" />
+    <meta property="og:type" content="Sharing Widgets" />
+     <meta property="og:url" content="http://Centro.xicom.info/Hubs/ankit123/Topic1/hisddsada" />
+     
+     <meta property="og:description" content="Just testing!" />
+     <meta property="og:site_name" content="via Centro" /> 
+    
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({ publisher: "534b32a7-7bf6-4734-8301-951b2751c693", doNotHash: false, doNotCopy: false, hashAddressBar: false });</script>*@
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#mycarousel,#mycarousel1,#productImages').jcarousel();
+
+            $('#star').raty({
+                readOnly: true,
+                score: "@list_rating_feedback!=null ? list_rating_feedback[1]: 0"
+            });
+
+            jQuery('#MyFollowers').jcarousel({
+                rows: 1
+            });
+        });
+
+
+    </script>
+}

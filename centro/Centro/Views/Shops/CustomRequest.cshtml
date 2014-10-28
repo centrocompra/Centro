@@ -1,0 +1,189 @@
+﻿@model PrototypeRequest
+@{
+    ViewBag.Title = "CustomRequest";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+ Send Custom Request
+}
+@{
+    Shop shop = (Shop)ViewBag.Shop;
+    User shopOwner = (User)ViewBag.ShopOwner;
+    var CategoryList = (List<SelectListItem>)ViewBag.CategoryList;
+}
+
+<div class="white-area-inner">
+    <div class="right-panel one-column">
+        <div class="row">
+            <div class="ui-tabs-panel ui-widget-content ui-corner-bottom" id="ui-tabs-1">
+                <div class="right-panel one-column">
+                    <h3 class="main-heading">
+                        Custom Prototype Request form</h3>
+                    @using (Ajax.BeginForm("SendCustomRequest", "Shops", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "Request.OnRequestComplete" }, new { @name = "customRequest" }))
+                    {
+                        @Html.HiddenFor(m => m.RequestID);
+                        @Html.HiddenFor(m => m.ShopId);
+                        @Html.HiddenFor(m => m.SellerId);
+                        <div class="box-out">
+                            <div class=" box-in">
+                                <div class="row custom_prototype_request_form">
+                                    <dl>
+                                        <dt class="bold">@Html.LabelFor(m => m.RequestTitle)</dt>
+                                        <dd>
+                                            @Html.TextBoxFor(m => m.RequestTitle, new { @class = "input-box" })
+                                            @Html.ValidationMessageFor(m => m.RequestTitle)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Category</dt>
+                                        <dd>
+                                            @Html.DropDownListFor(m => m.CategoryId, CategoryList, new { @class = "input-box" })
+                                            @Html.ValidationMessageFor(m => m.CategoryId)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">@Html.LabelFor(m => m.Description)</dt>
+                                        <dd>
+                                            @Html.TextAreaFor(m => m.Description, 3, 50, new { @class = "input-box", @maxlength = "2000" })
+                                            @Html.ValidationMessageFor(m => m.Description)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Requirements</dt>
+                                        <dd>
+                                            @Html.TextAreaFor(m => m.Requirements, 3, 50, new { @class = "input-box", @maxlength = "2000" })
+                                            @Html.ValidationMessageFor(m => m.Requirements)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Ideal Start Date</dt>
+                                        <dd>
+                                            @Html.TextBoxFor(m => m.IdealStartDate, new { @class = "input-box", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(m => m.IdealStartDate)
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">&nbsp;</dt>
+                                        <dd class="multi-box">
+                                            <div class="col">
+                                                <label>
+                                                    @Html.LabelFor(m => m.Dimensions)
+                                                </label>
+                                                <span class="innerError">
+                                                    @Html.TextBoxFor(m => m.Dimensions, new { @class = "input-box" })
+                                                    @Html.ValidationMessageFor(m => m.Dimensions)
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <label>
+                                                    @Html.LabelFor(m => m.Material)
+                                                </label>
+                                                <span class="innerError">
+                                                    @Html.TextBoxFor(m => m.Material, new { @class = "input-box" })
+                                                    @Html.ValidationMessageFor(m => m.Material)
+                                                </span>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Your Budget</dt>
+                                        <dd class="multi-box">
+                                            <div class="col">
+                                                <label>
+                                                    Min Budget
+                                                    @*@Html.LabelFor(m => m.MinBudget)*@
+                                                </label>
+                                                <span class="innerError">
+                                                    @Html.TextBoxFor(m => m.MinBudget, new { @class = "input-box" })
+                                                    @Html.ValidationMessageFor(m => m.MinBudget)
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <label>
+                                                    Max Budget
+                                                    @*@Html.LabelFor(m => m.MaxBudget)*@
+                                                </label>
+                                                <span class="innerError">
+                                                    @Html.TextBoxFor(m => m.MaxBudget, new { @class = "input-box" })
+                                                    @Html.ValidationMessageFor(m => m.MaxBudget)
+                                                </span>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Attachments</dt>
+                                        <dd>
+                                            <input type="file" id="requestAttachment" class="input-box " name="requestAttachment"
+                                                onchange="UploadRequestAttachment(this, 'request-attachment-form');" />
+                                            <span class="field-validation-error" data-valmsg-replace="true" id="request_attachment_msg"
+                                                data-valmsg-for="requestAttachment"></span><span class="field-validation-error shopBanner">
+                                                </span>
+                                            <div class="uploaded-files line">
+                                            @if (ViewBag.RequestAttachments != null)
+                                            {
+                                                foreach (var item in (List<FileAttachmentViewModel>)ViewBag.RequestAttachments)
+                                                {
+                                                    <div class="image-box">@item.DisplayName<label class="close" onclick="DeleteFile(this,'@item.SavedName');">x</label></div>
+                                                }
+                                            }
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Shop Name</dt>
+                                        @Html.HiddenFor(m => m.RequestStatus)
+                                        <dd>
+                                            @shop.ShopName
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Shop Owner</dt>
+                                        <dd>
+                                            @shopOwner.FirstName @shopOwner.LastName
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt class="bold">Shop Owner Details</dt>
+                                        <dd>
+                                            Email: @shopOwner.EmailId<br />
+                                            @if (!String.IsNullOrEmpty(shopOwner.UserLocation))
+                                            {
+                                                @Html.Raw("Address: ") @shopOwner.UserLocation 
+                                            }</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input type="button" value="Send Request" onclick="SendCustonRequest(this,@((int)CustomRequestStatus.Submitted));" class="button1"/>
+                            <input type="button" value="Save as Draft" onclick="SendCustonRequest(this,@((int)CustomRequestStatus.Draft));" class="button1"/>
+                            @if (Model.RequestID > 0)
+                            {
+                                 <input type="button" onclick="DeleteRequest('@Model.RequestID');" value="Delete Request" class="button1"/>
+                            }
+                           @* <a href="@Url.Action("ManageRequests", "Shops")" class="button1" style="vertical-align:top;">Cancel</a>*@
+                        </div>
+               
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form style="display: none;" id="request-attachment-form" action="" enctype="multipart/form-data"
+method="post">
+</form>
+@section scripts{
+    <script src="@Url.Content("~/Scripts/System/jquery-ui-1.8.20.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Custom/CustomRequest.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ResetUnobtrusiveValidation($('form'));
+            if ($('#RequestID').val() != '0')
+                $('#IdealStartDate').val($('#IdealStartDate').val().substring(0, $('#IdealStartDate').val().indexOf(' ')));
+            else
+                $('#IdealStartDate').val('');
+            $("#IdealStartDate").datepicker({ minDate: new Date() });
+        });
+    </script>
+}

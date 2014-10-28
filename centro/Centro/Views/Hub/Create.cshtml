@@ -1,0 +1,121 @@
+﻿@model Hub
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+
+    SelectList hubtopics = new SelectList(Model.HubTopics, "HubTopicID", "HubTopic1");
+
+    //Shop shop_obj = (Shop)ViewBag.Shop;
+    string username = (string)ViewBag.UserName;
+
+    string baseURL = string.Empty;
+    baseURL = "http://" + Request.Url.Host + (Request.Url.Port == 80 ? "/" : ":"+Request.Url.Port + "/")  + "Hubs/" + username +"/{hub-id}/";
+}
+@section title{
+ Create a hub
+}
+<div class="white-area-inner">
+    @Html.Partial("_BuyerLeftSideMenu")
+    <div class="profile-right-bar">
+        <div class="primary profile-edit">
+            <div class="top-head row">
+                <h2>Create A Hub </h2>
+            </div>
+            @using (Ajax.BeginForm("SaveHub", "hub", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnHubComplete" }, new { @class = "section-inner" }))
+            {
+                <input type="hidden" name="Rows" id="Rows" value="0" />
+                <input type="hidden" name="Except" id="Except" value="" />
+                <div class="row edit-from-profile pt10">
+                    <div class="section-inner">
+                        <h2 align="left" class="ch-hd-in">Hub Title</h2>
+                        <div class="input-group input-group-wb location-city">
+                            <label for="permalink" class="label">Permalink</label>
+                            <div class="autosuggest-wrapper w550px mt0" style="color: #1772B2">
+                                @Html.HiddenFor(h => h.HubURL)
+                                @baseURL<span id="spnHubUrl"></span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="city3" class="label">Enter your Title</label>
+                            <div class="autosuggest-wrapper w550px mt0">
+                                @Html.TextBoxFor(h => h.Title, new { @class = "text", @placeholder = "Hub Title", @onblur = "SetHubUrl(this)" })
+                                @Html.ValidationMessageFor(h => h.Title)
+                                <input type="hidden" value="@username" id="username" />
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="city3" class="label">Description</label>
+                            <div class="autosuggest-wrapper w550px mt0">
+                                @Html.TextAreaFor(h => h.Description, new { @class = "text", @Style="height:100px;" , @placeholder = "Hub Description" })
+                                @Html.ValidationMessageFor(h => h.Description)
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="city3" class="label">Picture</label>
+                            <div class="autosuggest-wrapper w550px hub mt0">
+                                <input style="width:35%;float:left;margin-right:10px;" type="file" id="picture" name="file" onchange="UploadHubPicture(this, 'picture-form');" />
+                                <p class="floatLeft" style="font-style:italic; font-size:11px; color:#999;"> Only GIF, JPG, PNG, BMP formats are allowed and Image must be between 200x200 to 1024x1024 pixel. </p>
+                                <div id="picture-div-hub" class="picture-div"></div>
+                            </div>
+                        </div>
+                        <h2 align="left" class="pt10 row ch-hd-in">Hub Topic</h2>
+                        <div class="input-group location-city">
+                            <label for="permalink" class="label">Choose a topic</label>
+                            <div class="floatLeft">
+                                @Html.DropDownListFor(h => h.HubTopicID, hubtopics, new { @class = "selection-b", @onchange = "SetHubUrl(this)" })
+                                @*<a href="#" class="p20"> Start over </a>
+								<a href="#"> Go back </a>*@
+                            </div>
+                        </div>
+                        <h2 align="left" class="pt10 row ch-hd-in">Hub Search</h2>
+                        <div class="input-group">
+                            <label for="permalink" class="label">Keywords</label>
+                            <div class="floatLeft">
+                                @Html.TextBoxFor(m => m.Keywords, new { @class = "text" })
+                            </div>
+                        </div>
+                        <h2 align="left" class="pt10 row ch-hd-in">Hub Format
+                            <label class="font-normal">Choose a Hub type (which can be modified later)</label></h2>
+                        <div class="input-group input-group location-city">
+                            <a href="javascript:;" onclick="setHubTemplate(this, 1)" class="m20 floatLeft">
+                                <img class="selected" src="@Url.Content("~/Content/images/Hub-p1.png")" alt="">
+                            </a>
+                            <a href="javascript:;" onclick="setHubTemplate(this, 2)" class="m20 floatLeft">
+                                <img src="@Url.Content("~/Content/images/Hub-p2.png")" alt="">
+                            </a>
+                            @Html.HiddenFor(m => m.HubTemplateID)
+                        </div>
+                        <div class="input-group-wb location-city pt10 row" id="Result">
+                            @Html.Partial("_Template1")
+                        </div>
+                    </div>
+                </div>
+                <div class="submit row mt12">
+                    <input type="submit" class="button1 floatRight" value="Save" />
+                </div>
+            }
+            <form style="display: none;" id="picture-form" action="" enctype="multipart/form-data" method="post"></form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Custom/hubs.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery-te-1.3.6.js")"></script>
+    <link href="@Url.Content("~/Content/css/jquery-te-1.3.6.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        function OnBegin() {
+            var go = true;
+            $('.template2').each(function () {
+                if ($(this).val().indexOf('www.') != -1 || $(this).val().indexOf('http:') != -1 ||
+                        $(this).val().indexOf('https:') != -1 || $(this).val().indexOf('href="') != -1 ||
+                        $(this).val().indexOf('\<a') != -1) {
+                    go = false;
+                    $('.error-template2').html('Hyperlinks ar not allowed.').show();                    
+                } else {
+                    $('.error-template2').html('').hide();
+                }
+            });
+            if (!go) return false;
+        }
+    </script>
+}

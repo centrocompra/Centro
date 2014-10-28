@@ -1,0 +1,41 @@
+﻿/*.Wrapper{margin: 0px auto;display: block;}*/
+.gridContent{}
+div.Grid{background-color: #fcfcfc;border: dashed 1px gray;border-bottom: none;padding: 5px;display: block;height: 100px;clear: both;-ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr=#fff, endColorStr=#efe)";background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#efe));background-image: -moz-linear-gradient(top,#fff,#efefef);background-image: -o-linear-gradient(#fff,#efe);}
+div.Grid img{float: left;width: 100px;margin-right: 5px;border: 1px solid #ccc;}
+div.Grid div{float: left;}
+label{color: #2664A0;font-weight: bold;padding: 3px 5px;}
+.None{display: none;}
+.PageActive{background-position: 0% 0%;color: #2664a0;cursor: pointer;font-family: tahoma,Arial,Helvetica,sans-serif;font-size: 11px;font-style: normal;font-variant: normal;font-weight: normal;line-height: 1.3em;text-align: center;margin: 0 0 0 2px;padding: 2px 6px 3px;border: 1px solid #ccc;background-color: #f6f6f6; /*-ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr=#fff, endColorStr=#efe)";*/background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#efe));background-image: -moz-linear-gradient(top,#fff,#efefef);background-image: -o-linear-gradient(#fff,#efe);-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;white-space: nowrap;vertical-align: middle;cursor: pointer;overflow: visible;display: inline-block;}
+.PageInActive{font-family: tahoma,Arial,Helvetica,sans-serif;font-size: 11px;font-style: normal;font-variant: normal;font-weight: normal;line-height: 1.3em;color: #000;background: #ddd;-moz-boz-shadow: none;-webkit-box-shadow: none;box-shadow: none;border-color: #ccc;margin: 0 0 0 2px;padding: 2px 6px 3px;border: 1px solid #ccc;background: #f6f6f6;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;white-space: nowrap;vertical-align: middle;overflow: visible;display: inline-block;}
+span.PageActive:hover{background-position: 0% 0%;text-decoration: underline;border-color: #999;/*-ms-filter: "progid:DXImageTransform.Microsoft.Gradient(startColorStr=#fff, endColorStr=#EBEBEB)";*/-moz-box-shadow: 0 0 3px #999;-webkit-box-shadow: 0 0 3px #999;box-shadow: 0 0 3px #999;background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#ebebeb));background-color: #f3f3f3;background-repeat: repeat;background-attachment: scroll;}
+.currentPage{font-weight: bold;}
+.pageInfo{text-align: center;padding-top: 3px;}
+.pagingWrapper{color: #000000;text-align: right;padding: 10px 0;clear: both; float:right;}
+/*.pagingWrapper #pager, .pagingWrapper .pageInfo{margin: 5px;}*/
+.Loading{background: none repeat scroll 0 0 #FFFFFF;color: #000000;height: 14px;margin: 0 auto;padding: 10px;position: relative;width: 100px;z-index: 10;}
+.hide{display:none;}
+.nDiv{display:none;background-color: #FFF;border: 1px solid Gray;overflow: visible;position: absolute;visibility: visible;width: 150px;z-index: 7000;text-align:left;margin-left: -136px;margin-top: -2px;box-shadow:0 2px 4px rgba(0, 0, 0, 0.2);}
+.nDivRow{width:144px;clear:both; margin:2px 2px;; padding:2px; float:left;}
+.nDivRow:hover{background-color:#f4f2f2;}
+.ndcol1{float: left;/*padding: 4px 3px 3px; width: 10px;*/ margin-right:6px;}
+.ndcol2{float: left;/*padding: 2px;width: 80%;*/}
+.arrow-up{background-image:url(images/arrow-up.png);height:4px;width:8px;margin-bottom:2px;cursor:pointer;}
+.arrow-down{background-image:url(images/arrow-down.png);height:4px;width:8px;cursor:pointer;}
+.colName{float:left;position:relative; padding-right:15px;}
+.arrow-up-down{float:left;position:absolute;top:6px; right:2px;}
+.searchPaging{margin:20px 0 0;display:none;text-align:left;}
+.searchPaging input{width:100px;}
+.searchPopup{cursor:pointer;}
+.gridHeader{width:99.5% !important;}
+.gridAction{float:right;width:56px;}
+#Loading{background-color: White;border: 2px solid #2195b9;color: #000000; height: 24px; margin:-12px 0 0 -80px;overflow: visible; position: fixed; visibility: visible; width: 160px; z-index: 10000; padding:1px; font-weight:bold; left:50%; top:50%;border-radius: 5px 5px 5px 5px;box-shadow: 0 0 10px #2195b9;text-align:center;}
+/* By tarun */
+.gridContent td,
+#BranchContent div.tr1{white-space:nowrap;}
+.action a:first-child{ margin-right:5px;}
+.action a:first-child img{margin-top:4px;}
+.action a{display:inline-block; margin-right:3px; *display:inline; width:16px; height:16px;}
+.action a img{margin-top:5px;}
+.action{padding-right:20px!important;}
+.ndcol1 input{ float:left; padding:0px;}
+table.scroll-table td { word-wrap:break-word !important;}

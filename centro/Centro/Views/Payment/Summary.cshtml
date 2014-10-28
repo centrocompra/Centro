@@ -1,0 +1,189 @@
+﻿@model PaymentDetails
+@{
+    ViewBag.Title = "Summary";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+    Cart Summary
+}
+@{
+    ShopCart shopCart = ViewBag.ShopCart;
+    Shop shop = SellersHandler.ShopByShopId(shopCart.ShopID).Object;
+    SiteFee siteFee = Config.SiteFee;
+}
+<div class="checkout_breadcrumbs checkout_breadcrumb_6">
+    <div id="breadcrumb-cart" class="checkout_breadcrumb checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div style="height: 50px" class="checkout_breadcrumb_title">
+                Cart</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_w">
+            </div>
+        </div>
+    </div>    
+    <div id="breadcrumb-address" class="checkout_breadcrumb  checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Address</div>
+            Billing &amp; Shipping
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_w">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-confirmation" class="checkout_breadcrumb  checkout_breadcrumb_active">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Review</div>
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_wb">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-payment" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Payment</div>
+            PayPal or Credit Card
+        </div>
+        <div class="checkout_breadcrumb_img">
+            <div class="checkout_breadcrumb_img_b">
+            </div>
+        </div>
+    </div>
+    <div id="breadcrumb-receipt" class="checkout_breadcrumb ">
+        <div class="checkout_breadcrumb_text">
+            <div class="checkout_breadcrumb_title">
+                Receipt</div>
+        </div>
+        <div class="clearfixfix">
+        </div>
+    </div>
+    <div class="clearfixfix">
+    </div>
+</div>
+
+@using (Ajax.BeginForm("MakePayment", "Payment", new AjaxOptions { OnBegin = "OnBegin", OnComplete = "OnComplete" }, new { @id="payment-form" }))
+{
+<div class="white-area-inner checkout">
+	<div class="columns gray-border no-padding">
+		<h3>Your Order Details<span class="h3-inside-right"><a href="@Url.Action("MyCart", "Cart")" class="button1" >Edit Order</a></span></h3>
+
+		<div class="product-details m20 gray-border">
+        <ul>
+			<li>S.No.</li>
+			<li class="w75px">Item Image</li>
+			<li class="w200px">Item Name</li>
+			<li class="w100px">Item Unit Price</li>
+            <li class="w25px"></li>
+            <li class="w75px">Quantity</li>
+            <li class="w25px"></li>
+            <li class="w100px">Total</li>
+            <li class="w25px"></li>
+            <li class="w75px">Shipping</li>
+            <li class="w25px"></li>
+            <li class="w100px">Total</li>
+		</ul>
+        @foreach (var item in shopCart.ShopCartItems.Where(m => m.IsShippingAvailable || m.IsDownloadable).ToList())
+        {
+            Product prod = ProductsHandler.ProductById(item.ProductID).Object;
+			<ul>
+				<li>1</li>
+				<li class="w75px">
+                @if (prod.PrimaryPicture != null)
+                {
+                    <img src="@Url.Content("~/Images/ProductImages/" + prod.ShopOwnerUsername + "/thumb_" + @prod.PrimaryPicture)" alt="" />
+                }
+                else
+                {
+                    <img height="50" width="50" alt="" src="@Url.Content("~/Content/images/default_product.png")">
+                }
+                </li>
+				<li class="w200px">@prod.Title</li>
+				<li class="w100px">$@prod.UnitPrice USD</li>
+                <li class="w25px">x</li>
+                <li class="w75px">@item.Quantity</li>                
+                <li class="w25px">=</li>
+                <li class="w100px">$@(item.UnitPrice * item.Quantity) USD</li>
+                <li class="w25px">+</li>
+                <li class="w75px">$@item.TotalShippingPrice USD</li>
+                <li class="w25px">=</li>
+                <li class="w100px">$@(item.UnitPrice * item.Quantity + item.TotalShippingPrice) USD</li>
+			</ul>
+        }         
+        <ul>            
+            <li class="w43px floatRight">&nbsp;</li>
+            <li class="w100px floatRight">$@Math.Round((decimal)(shopCart.ItemTotalPrice * shopCart.Tax / 100), 2) USD</li>
+            <li class="w25px floatRight">=</li>
+            <li class="w130px floatRight">Sales Tax at @shopCart.Tax (%)</li>
+        </ul>
+        <ul>            
+            <li class="w43px floatRight">&nbsp;</li>
+        @if (siteFee.IsPercentage)
+        {
+            <li class="w100px floatRight">$@Math.Round((decimal)((shopCart.ItemTotalPrice) * siteFee.SiteFee1 / 100), 2) USD</li>
+        }
+        else
+        {
+            <li class="w100px floatRight">$@Math.Round(siteFee.SiteFee1, 2) USD</li>
+        }
+            <li class="w25px floatRight">=</li>
+        @if (siteFee.IsPercentage)
+        {
+            <li class="w140px floatRight">Centro Fees @siteFee.SiteFee1 (%)</li>
+        }
+        else
+        {
+            <li class="w140px floatRight">Centro Fees </li>
+        }
+        </ul>
+        <ul>            
+            <li class="w43px floatRight">&nbsp;</li>
+            <li class="w100px floatRight"><strong>$@shopCart.TotalAmountToBePaid USD</strong></li>
+            <li class="w25px floatRight">=</li>
+            <li class="w75px floatRight"><strong>Grand Total</strong></li>
+        </ul>
+			<div class="clearIt"></div>
+		</div>
+	</div>
+
+	<div class="columns mt20">
+		<div class="column floatLeft gray-border">
+			<h3>Billing Info.<span class="h3-inside-right"><a href="@Url.Action("Checkout", "Payment", new { ShopName = shop.ShopName })" class="button1-blk" >Edit Billing Info</a></span></h3>
+			<div class="same pb20">
+				@*<p>**** **** **** @Model.CardNumber.Substring(Model.CardNumber.Length - 4, 4) /Exp. @Model.ExpiryMonth-@Model.ExpiryYear</p>*@
+				<address>
+					@Model.BillingAddress.FirstName @Model.BillingAddress.LastName<br />
+					@Model.BillingAddress.Address<br />
+                    @SellersHandler.GetCityById(Model.BillingAddress.CityId).Object.CityName, @SellersHandler.GetStateById(Model.BillingAddress.StateId).Object.StateName,<br />
+                    @SellersHandler.GetCountryByID(Model.BillingAddress.CountryId).Object.CountryName - @Model.BillingAddress.PostCode
+				</address>
+			</div>
+		</div>
+    @if (ViewBag.ShowShipping == true)
+    {
+		<div class="column floatRight gray-border">
+			<h3>Shipping Info.<span class="h3-inside-right"><a href="@Url.Action("Checkout", "Payment", new { ShopName = shop.ShopName })" class="button1-blk" >Edit Shipping Info</a></span></h3>
+			<div class="same pb20">
+				
+				<address>
+					@Model.ShippingAddress.FirstName @Model.ShippingAddress.LastName<br />
+					@Model.ShippingAddress.Address<br />
+					@SellersHandler.GetCityById(Model.ShippingAddress.CityID).Object.CityName, @SellersHandler.GetStateById(Model.ShippingAddress.StateID).Object.StateName,<br />
+                     @SellersHandler.GetCountryByID(Model.ShippingAddress.CountryID).Object.CountryName - @Model.ShippingAddress.PostCode
+				</address>
+			</div>
+		</div>
+    }
+		<div class="clearIt"></div>
+	</div>
+
+	@*<a href="javascript:void(0)" class="floatRight button2"><span class="fwd">Submit</span></a>*@
+    <button class="button1 floatRight" id="Submit" type="button" onclick="TermsAndConditions(this)">Submit</button>
+</div>
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/custom/payment.js")"></script>

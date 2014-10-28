@@ -1,0 +1,76 @@
+﻿@model Report
+
+@{
+    List<ReportType> ReportTypes = ViewBag.ReportTypes;
+    var lstreportType = new SelectList(ReportTypes, "ReportTypeValue", "ReportTypeText");
+    User user = null;
+    if (Model.UserID.HasValue)
+    {
+        user = (User)ViewBag.UserDetail;
+    }
+}
+@using (Ajax.BeginForm("SendReportMessage", "Hub", FormMethod.Post, new AjaxOptions { OnComplete = "ReportSent" }, new { @class="report-form" }))
+{
+    <div class="autofeedback">
+        <span name="StatusMessagePopup" class="errormessage" style="display: none; width: 478px; margin-bottom: 15px"></span>
+    </div>
+    <div id="star" onclick="SaveRating(this)"></div>
+    
+    @Html.HiddenFor(f => f.RequestSentFromURL, new { value = Model.RequestSentFromURL })
+    <div class="mt12">
+        <label>Report Type: </label> 
+        @Html.DropDownListFor(f => f.ReportType, lstreportType)
+        @Html.ValidationMessageFor(f => f.ReportType)
+
+        <label class="floatRight">@DateTime.Now.ToShortDateString() , @DateTime.Now.ToShortTimeString()</label>
+    </div>
+    <div class="mt12">
+        <label>Link:</label> @Model.RequestSentFromURL
+    </div>
+    if (Model.UserID.HasValue)
+    {
+    @Html.HiddenFor(f => f.UserID, new { value = Convert.ToInt32(Model.UserID.Value) })
+    }
+    if (user != null)
+    { 
+    <div class="mt12">
+        <label>Reported By: </label> @user.UserName
+    </div>
+    @Html.HiddenFor(f => f.FirstName, new { value = Model.FirstName })
+    @Html.HiddenFor(f => f.LastName, new { value = Model.LastName })
+    @Html.HiddenFor(f => f.EmailID, new { value = Model.EmailID })
+    }
+    else
+    {
+    <div class="mt12">
+        @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First Name" })
+        @Html.ValidationMessageFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.LastName, new { placeholder = "Last Name", @class = "ml20" })
+    </div>
+    
+    <div class="mt12">
+        @Html.TextBoxFor(m => m.EmailID, new { placeholder = "Email Id" })
+        @Html.ValidationMessageFor(m => m.EmailID)
+        @Html.TextBoxFor(m => m.Phone, new { placeholder = "Phone Number", @class = "ml20" })
+        @Html.ValidationMessageFor(m => m.Phone)
+    </div>
+    <div class="mt12">
+        <p>Please put an active Phone Number and Email if you wish for us to resolve the issue as may have additional questions for you.</p>
+    </div>
+    
+    }
+
+    <div class="mt12">
+        <label>Message: </label> 
+        @Html.TextAreaFor(f => f.Message, new { @class = "row no-resize" })
+        @Html.ValidationMessageFor(f => f.Message)
+    </div>
+    <div class="mt12 floatLeft">
+        <input type="submit" value="Submit" class="button1" />
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+    });
+</script>

@@ -1,0 +1,93 @@
+﻿@model User
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+@section title{
+    Profile
+}
+@{
+    var user = (SiteUserDetails)ViewBag.CentroUsers;
+    var shop = SellersHandler.ShopByUserId(user.LoggedInUser.Id).Object;
+}
+<div class="white-area-inner">
+    @Html.Partial("_BuyerLeftSideMenu", user)
+    <div class="profile-right-bar primary">
+         <div class="profile_right_head">
+            Who do you know on CentroCompra? Find your friends now.
+            <div class="pre_nxt">
+                <a onclick="EditProfile(24)" href="/User/EditProfile">Edit Profile</a>
+            </div>
+        </div>
+        <div class="primary">
+            <div class="top-head row">
+                @*<a href="@Url.Action("EditProfile", "User")" class="button1 fRight"><span>Edit Profile</span></a>*@
+                <h2>
+                    My Profile
+                </h2>
+            </div>
+            <div class="section">
+                <div class="profile-module clear " id="bio">
+                    <div>
+                        <h3>
+                            About</h3>
+                        <p class="wrap">
+                            @Model.AboutUs
+                        </p>
+                        <ul class="extra wrap">
+                            @*<li>@((Gender)Model.Gender)</li>*@
+                            @if (Model.DateofBirth != null)
+                            {
+                                <li>Born on&nbsp;@(Model.DateofBirth.HasValue?Model.DateofBirth.Value.ToLongDateString():"") </li>
+                            }
+                            <li>Joined&nbsp;@Model.CreatedOn.ToString("D") </li>
+                        </ul>
+                        @*<h3>
+                            Favorite Materials</h3>
+                        <p class="wrap">
+                            @if (!String.IsNullOrEmpty(Model.UserTagsList))
+                            {
+                                string[] arr = Model.UserTagsList.Split(new char[] { ',' });
+                                foreach (var item in arr)
+                                {
+                                <a href="#;">@item</a> 
+                                }
+
+                            }
+                        </p>*@
+                    </div>
+                </div>
+            </div>
+           @* <div class="section last-section">
+                <div class="profile-module clear ">
+                    <div>
+                        <div id="favorite-listings" class="profile-gallery clear">
+                            <div class="head">
+                                <h3 class="image-indent">
+                                    Favorite items</h3>
+                                <a href="@Url.Action("FavoriteProducts", "User")" class="more">See more </a>
+                            </div>
+                            <ul>
+                            @{
+                                var list = UsersHandler.GetFavoriteProductsByUserId(user.LoggedInUser.Id).List;
+                                foreach(var item in list.Take(8))
+                                {
+                                    <li class="image-wrapper "><a href="~/Products/@Utility.SpacesToHifen(item.ShopName)/@item.ShopId/@item.CategoryId/@item.ProductID">
+                                    @if (item.PrimaryPicture != null){
+                                       <img width="50" src="@Url.Content("~/Images/ProductImages/" + item.ShopOwnerName + "/thumb_" + item.PrimaryPicture)" />
+                                    }
+                                    else{
+                                        <img width="50" src="@Url.Content("~/Content/images/default_product.png")" />
+                                    }
+                                    </a>  </li>
+                                }
+                            }   
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>*@
+        </div>
+    </div>
+</div>

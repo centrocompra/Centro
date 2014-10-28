@@ -1,0 +1,13 @@
+﻿@model ICollection<AuthenticationClientData>
+@using (Html.BeginForm("ExternalLogin", "Home", FormMethod.Post, new { @class = "fbLogin1" }))
+{
+    <div id="fb-register-container">
+        @foreach (AuthenticationClientData p in Model)
+        {
+            
+            <button type="submit" class="@(p.DisplayName == "twitter" ? "twitter" : "fbLogin")" name="provider" value="@p.AuthenticationClient.ProviderName" title="Log in using your @p.DisplayName account">
+                Sign in using @p.DisplayName
+            </button>
+        }
+    </div>
+}

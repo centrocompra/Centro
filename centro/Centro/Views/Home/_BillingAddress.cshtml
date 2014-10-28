@@ -1,0 +1,106 @@
+﻿@model BillingAddress
+@{
+    List<Country> Countries = ViewBag.Countries;
+    var userCountries = new SelectList(Countries, "CountryID", "CountryName");
+
+    List<StateProvince> States = ViewBag.States;
+    var userStates = new SelectList(States, "StateID", "StateName");
+
+    List<City> Cities = ViewBag.Cities;
+    var userCity = new SelectList(Cities, "CityID", "CityName");
+
+   
+}
+@using (Ajax.BeginForm("BillingAddress", "Home", null, new AjaxOptions { OnBegin = "OnBegin", OnComplete = "BillingAddress.OnBillingAddressComplete" }))
+{
+    @Html.HiddenFor(m => m.UserID);
+    @Html.HiddenFor(m => m.BillingAddressID);
+    <div class="edit-from-profile">
+        <div class="section-inner">
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    @Html.LabelFor(m => m.FirstName)</label>
+                <p class="full-name">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "input-box", @style = "width:450px !important;" })
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </p>
+            </div>
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    @Html.LabelFor(m => m.LastName)</label>
+                <p class="full-name">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "input-box", @style = "width:450px !important;" })
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </p>
+            </div>
+            <div class="input-group">
+                <label for="full-name" class="label">
+                    @Html.LabelFor(m => m.Email)</label>
+                <p class="full-name">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "input-box", @style = "width:450px !important;" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </p>
+            </div>
+            <div class="input-group location-city">
+                <label for="city3" class="label">
+                    @Html.LabelFor(m => m.CountryId)</label>
+                <div class="autosuggest-wrapper">
+                    @Html.DropDownListFor(m => m.CountryId, userCountries, "Select a country...", new { @style = "width:450px;", @class = "input-box", onchange = "OnCountryChange(this,'StateId','CityId');" })
+                    @Html.ValidationMessageFor(m => m.CountryId)
+                </div>
+            </div>
+            <div class="input-group location-city">
+                <label for="city3" class="label">
+                    @Html.LabelFor(m => m.StateId)</label>
+                <div class="autosuggest-wrapper">
+                    @Html.DropDownListFor(m => m.StateId, userStates, "Select a state...", new { @style = "width:450px;", @class = "input-box", onchange = "OnStateChange(this, 'CityId');" })
+                    @Html.ValidationMessageFor(m => m.StateId)
+                </div>
+            </div>
+            <div class="input-group location-city">
+                <label for="city3" class="label">
+                    @Html.LabelFor(m => m.CityId)</label>
+                <div class="autosuggest-wrapper">
+                    @Html.DropDownListFor(m => m.CityId, userCity, "Select a city...", new { @style = "width:450px;", @class = "input-box" })
+                    @Html.ValidationMessageFor(m => m.CityId)
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="bio" class="label">
+                    @Html.LabelFor(m => m.Address)</label>
+                <p class="full-name">
+                    @Html.TextAreaFor(m => m.Address, 3, 50, new { @class = "text text-wide" })
+                    @Html.ValidationMessageFor(m => m.Address)
+                </p>
+            </div>
+            <div id="postCode" class="input-group">
+                <label for="full-name" class="label">
+                    @Html.LabelFor(m => m.PostCode)</label>
+                <p class="full-name">
+                    @Html.TextBoxFor(m => m.PostCode, new { @class = "input-box", @style = "width:450px !important;", @maxlength = "6" })
+                    @Html.ValidationMessageFor(m => m.PostCode)
+                </p>
+            </div>
+            <div id="isPrimary" class="input-group">
+                <label for="full-name" class="label">
+                    Is Primary</label>
+                <p class="full-name">
+                    @Html.CheckBoxFor(m => m.IsPrimary)
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="submit row mt12">
+        <a class="button1-blk floatRight" href="@Url.Action("ManageBillingAddress", "Home")">Cancel</a>
+        <input type="submit" class="button1 floatRight mr10" value="Submit" />        
+    </div>
+            
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        ResetUnobtrusiveValidation($('form'));
+        if ($("#PostCode").val() == "0") {
+            $("#PostCode").val("");
+        }
+    });
+</script>

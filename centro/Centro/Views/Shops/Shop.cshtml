@@ -1,0 +1,122 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    ViewBag.Title = "Shop";
+    Layout = ViewBag.CentroUsers != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Shop shop = (Shop)ViewBag.Shop;
+    User shopOwner = (User)ViewBag.ShopOwner;
+    List<ShopSection> shopSections = (List<ShopSection>)ViewBag.ShopSection;
+    string totalEarning = shopOwner.TotalEarning.HasValue ? "$" + shopOwner.TotalEarning.Value : "0";
+    string shopOwnerName = (shopOwner.FirstName + " " + shopOwner.LastName.Substring(0, 1));
+    shopOwnerName = shopOwnerName.Length > 10 ? shopOwnerName.Substring(0, 10) : shopOwnerName;
+    string username = shopOwner.UserName.Length > 10 ? shopOwner.UserName.Substring(0, 10) : shopOwner.UserName;
+    Int32 userId = ViewBag.UserId;
+    UserSetting setting = UsersHandler.GetUsersetting(shop.UserId).Object;
+    List<ShopAvailablity> slots = ViewBag.ShopAvailablity;
+    List<string> list_rating_feedback = FeedBackHandler.GetShopTotalFeedBackAndAverageRating(shop.ShopID).Results;
+    string TotalHub = HubHandler.GetTotalHubOfUser(shopOwner.UserID).Results[0];
+    string TotalContest = ContestHandler.GetTotalContestByUser(shopOwner.UserID).Results[1];
+    int TotalFollowers = AccountActivityHandler.GetUserTotalFollowers(shop.UserId).ID;
+    HttpCookie auth_cookie = Request.Cookies[Cookies.UserCookie];
+    List<Favorite> favorites = new List<Favorite>();
+    bool is_fav_shop = (bool)ViewBag.IsShopFavorite;
+
+    TimeSpan dateSpan = DateTime.Now.Subtract(shopOwner.LastLoginOn);
+    string lastactiveon = "";
+    if (dateSpan.Days > 1) { lastactiveon = dateSpan.Days + " days ago"; }
+    else if (dateSpan.Days == 1) { lastactiveon = "1 day ago"; }
+    else if (dateSpan.Hours > 1) { lastactiveon = dateSpan.Hours + " hours ago"; }
+    else if (dateSpan.Hours == 1) { lastactiveon = "1 hour ago"; }
+    else if (dateSpan.Minutes > 1) { lastactiveon = dateSpan.Minutes + " minutes ago"; }
+    else if (dateSpan.Minutes == 1) { lastactiveon = "1 minute ago"; }
+    else { lastactiveon = "just now"; }
+    var services = SellersHandler.ShopServicesByShopId(shop.ShopID).List;
+    string[] servicesArray = services.Where(m => m.IsChecked).Select(m => m.ServiceName).OrderByDescending(m => m.Length).ToArray();
+    string AcceptingJob = shop.AcceptJob && !string.IsNullOrEmpty(shopOwner.PaypalID) ? "Yes" : "No";
+    List<User> followers = AccountActivityHandler.GetUserFollowers(shopOwner.UserID).List;
+}
+
+
+@section title{
+     Shop Details
+}
+<div class="product-details">
+    <div class="floatLeft w68pc">
+        @Html.Partial("_ShopInfoDetailTop", shopOwner)
+        <div class="product-left mb10">
+            <div class="box fetured">
+                <div class="box-inner product-outer-main">
+                    <h2>Products</h2>
+                    <div id="Result" class="product-out shop">
+                        @Html.Partial("_ShopProducts", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="floatRight width30">
+        @Html.Partial("_UserProfileRightBox", shopOwner)
+        <aside class="product-right">
+            <a href="@Url.Action("ShopAvailability", "Shops", new { ShopName = Utility.SpacesToHifen(shop.ShopName), ShopID = shop.ShopID })" class="mb10 white-area tabs ">Availability</a>
+                                                <div class="white-area mb10">
+            <h3>Shop Sections</h3>
+            <ul class="links">
+                <li><a href="javascript:void(0);" onclick="FilterProducts(this,'null');">All Products</a></li>
+                @foreach (var item in shopSections.OrderBy(m => m.DisplayOrder))
+                {
+                    <li><a href="javascript:void(0);"onclick="FilterProducts(this,'@item.ShopSectionID');">@item.SectionName</a></li> 
+                }
+
+            </ul>
+        </div>
+        @*<div class="white-area mb10 followed-by-top" id="followers">
+            <h3 class="orange-left-arrow gray-border-bottom">@followers.Count() Followers
+            </h3>
+            <ul class="followed-by mt10 jcarousel-skin-tango" id="MyFollowers">
+                @if (followers.Count() > 0)
+                {
+                    for (int i = 0; i < (followers.Count); i++)
+                    {
+                        string action = followers[i].ShopID > 0 ? Url.Action("Shop", "Shops", new { id = followers[i].ShopName, shopid = followers[i].ShopID }) : "javascript:;";
+                        string title = followers[i].ShopID > 0 ? followers[i].FirstName + " " + followers[i].LastName : followers[i].FirstName + " " + followers[i].LastName + " (No Shop)";
+                    <li><a title="@title" href="@action">
+                        <img width="50" src="@Url.Content(followers[i].ProfilePicUrl != null ? followers[i].ProfilePicUrl : "~/Content/images/user_img.png")" alt=""></a></li>
+                    }
+                }
+                else
+                {
+                    <li class="width50">No follower yet.</li>
+                }
+            </ul>            
+            <div class="divClear"></div>
+        </div>*@
+        </aside>
+    </div>
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var ShopId = '@shop.ShopID';
+    var show_productTemplate = true;
+    var InactiveListing = 0;
+
+    $(document).ready(function () {
+        $('#star').raty({
+            readOnly: true,
+            score: "@list_rating_feedback[1]"
+        });
+
+        jQuery('#MyFollowers').jcarousel({
+            rows: 1
+        });
+    });
+
+</script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/system/jquery.jcarousel.min.js")"></script>
+<script src="@Url.Content("~/Scripts/Custom/productByShopPaging.js")" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>

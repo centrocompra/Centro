@@ -1,0 +1,27 @@
+﻿using System.Web.Mvc;
+
+namespace Centro.Areas.Admin
+{
+    public class AdminAreaRegistration : AreaRegistration
+    {
+        public override string AreaName
+        {
+            get
+            {
+                return "Admin";
+            }
+        }
+
+        public override void RegisterArea(AreaRegistrationContext context)
+        {
+            
+            context.MapRoute(
+                "Admin_default",
+                "Admin/{controller}/{action}/{id}",
+                new { controller = "Home", action = "Dashboard", id = UrlParameter.Optional },
+                //new { controller = "Home", action = "LogIn", id = UrlParameter.Optional },
+                new[] { "Centro.Areas.Admin.Controllers" }
+            );
+        }
+    }
+}

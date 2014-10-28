@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "auth";
+    Layout = null;
+}
+
+<html>
+<head>
+    <title>Centro Secure Login</title>
+    <style type="text/css">
+    fieldset{font-family: arial;font-size: 11px;width: 250px;margin:100px auto;}
+    div{float: left;text-align: center;width: 100%;}
+</style>
+</head>
+<body>
+<form action="@Url.Action("auth","auth")" method="post">
+<div>
+    <fieldset>
+        <legend>Login</legend>
+        <table>
+            <tr>
+                <td>Username: </td>
+                <td><input type="text" name="username" /></td>
+            </tr>
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" name="password" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Submit</button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    </div>
+</form>
+</body></html>

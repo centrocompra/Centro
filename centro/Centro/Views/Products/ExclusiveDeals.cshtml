@@ -1,0 +1,50 @@
+﻿@model PagingResult<ProductsListing_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Category cat=SellersHandler.Category(Utility.HifenToSpace((string)ViewBag.Category)).Object;
+    //List<SubCategory> subcat = SellersHandler.SubCategoriesGet(cat.CategoryID).List;
+    DealViewModel deal = ViewBag.Deal;
+    DealItem dealItem = ViewBag.DealItem;
+}
+@section title{
+Exclusive Deals
+}
+<aside class="floatLeft left-side">
+    @Html.Partial("_LeftMenu")
+</aside>
+<div class="right-side floatRight">
+    <div class="box fetured">
+        <div class="">
+            <h2 class="floatLeft w95-4pc">@deal.Title
+                @if (dealItem != null)
+                {
+                    @Html.Raw("(" + dealItem.Title + ")");
+                }
+@*<div class="pages">
+	            <label>Displaying <strong><span id="PageItemCount">@Model.List.Count()</span></strong> of <strong>@Model.TotalCount</strong></label>
+	            <strong>Sort By:</strong>
+	            <select onchange="SortProducts(this)">
+                    <option value="">--Select--</option>
+		            <option order="Desc" value="LastViewedOn">Last Viewed</option>
+                    <option order="Desc" value="CreatedOn">Created On</option>
+                    <option order="Asc" value="Manufacturer">Manufacturer</option>
+                    <option order="Asc" value="Title">Title</option>
+                    <option order="Asc" value="UnitPrice">Price</option>
+	            </select>
+            </div>*@
+            </h2>
+            <div id="Result">
+                @Html.Partial("_Products", Model)
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+</script>
+<script src="@Url.Content("~/Scripts/Custom/productsPaging.js")" type="text/javascript"></script>

@@ -1,0 +1,81 @@
+﻿@model SelectedTabs
+@{
+    ShopSignUpStepCompleted stepCompleted = ViewBag.StepCompleted;
+    int shop_id = ViewBag.ShopId;
+    bool shopClosed = (shop_id > 0 && SellersHandler.IsShopClosed(shop_id) != null) ? SellersHandler.IsShopClosed(shop_id) : true;
+    bool paypal = shop_id > 0 ? !string.IsNullOrEmpty(UsersHandler.UserByShopId(shop_id).Object.PaypalID) : false;
+}
+@if (shopClosed)
+{
+    if (stepCompleted == null)
+    {
+        <ul class="create-shop-steps">
+            <li class="@(Model.SellerMainTab == SelectedSellerTab.ShopDetails ? "selected" : "")">
+                <a href="@Url.Action("Shop", "User")"><strong>Shop Details</strong> Choose a shop name
+                    and enter more details.</a> </li>            
+            <li class="@(Model.SellerMainTab == SelectedSellerTab.GetPaid ? "selected" : "")"><a
+                href="javascript:;"><strong>Get Paid</strong> Set up the payment methods you accept.</a>
+            </li>
+            <li class="@(Model.SellerMainTab == SelectedSellerTab.ListItems ? "selected" : "")">
+                <a href="javascript:;"><strong>List Items</strong> What are you going to sell? Add and
+                    edit listings here.</a> </li>
+            <li class="@(Model.SellerMainTab == SelectedSellerTab.PreviewShop ? "selected" : "")">
+                <a href="javascript:;"><strong>Preview Shop</strong></a> </li>
+        </ul>
+    }
+    else
+    {
+        string shopdetails, listitems, getpaid, previewshop;
+        ShopSignupStepCompleted step = (ShopSignupStepCompleted)stepCompleted.StepCompleted;
+        shopdetails = step >= ShopSignupStepCompleted.ShopDetails ? "completed" : "selected";
+        getpaid = step >= ShopSignupStepCompleted.GetPaid ? "completed" : Model.SellerMainTab == SelectedSellerTab.GetPaid ? "selected" : "";
+        listitems = step >= ShopSignupStepCompleted.ListItems ? "completed" : Model.SellerMainTab == SelectedSellerTab.ListItems ? "selected" : "";
+        previewshop = step >= ShopSignupStepCompleted.ListItems && !shopClosed ? "completed" : Model.SellerMainTab == SelectedSellerTab.PreviewShop ? "selected" : "";
+        <ul class="create-shop-steps">
+            <li class="@shopdetails"><a href="@Url.Action("Shop", "User")"><strong>Shop Details</strong>
+                Choose a shop name and enter more details.</a> </li>   
+        @if (step == ShopSignupStepCompleted.ShopDetails && shopdetails != "completed")
+        {
+            <li class="@getpaid"><a href="javascript:;"><strong>Get Paid</strong>Set up the payment methods you accept.</a> </li>
+            <li class="@listitems"><a href="javascript:;"><strong>List Items</strong>What are you going to sell? Add and edit listings here.</a> </li>
+            <li class="@previewshop"><a href="javascript:;"><strong>Preview Shop</strong></a></li>
+        }
+        else if (step == ShopSignupStepCompleted.ShopDetails && shopdetails == "completed")
+        {
+            <li class="@getpaid"><a href="@Url.Action("GetPaid", "User")"><strong>Get Paid</strong>Set up the payment methods you accept.</a> </li>
+            <li class="@listitems"><a href="javascript:;"><strong>List Items</strong>What are you going to sell? Add and edit listings here.</a> </li>
+            <li class="@previewshop"><a href="javascript:;"><strong>Preview Shop</strong></a></li>
+        }
+        else if (step == ShopSignupStepCompleted.GetPaid && getpaid != "completed")
+        {
+            <li class="@getpaid"><a href="@Url.Action("GetPaid", "User")"><strong>Get Paid</strong>Set up the payment methods you accept.</a> </li>
+            <li class="@listitems"><a href="javascript:;"><strong>List Items</strong>What are you going to sell? Add and edit listings here.</a> </li>
+            <li class="@previewshop"><a href="javascript:;"><strong>Preview Shop</strong></a></li>
+        }
+        else if (step == ShopSignupStepCompleted.GetPaid && getpaid == "completed")
+        {
+            <li class="@getpaid"><a href="@Url.Action("GetPaid", "User")"><strong>Get Paid</strong>Set up the payment methods you accept.</a> </li>
+            <li class="@listitems"><a href="@Url.Action("ListItems", "User")"><strong>List Items</strong>What are you going to sell? Add and edit listings here.</a> </li>
+            <li class="@previewshop"><a href="javascript:;"><strong>Preview Shop</strong></a></li>
+        }
+        else if (step == ShopSignupStepCompleted.ListItems && listitems != "completed")
+        {
+            <li class="@getpaid"><a href="@Url.Action("GetPaid", "User")"><strong>Get Paid</strong>Set up the payment methods you accept.</a> </li>
+            <li class="@listitems"><a href="@Url.Action("ListItems", "User")"><strong>List Items</strong>What are you going to sell? Add and edit listings here.</a> </li>
+            <li class="@previewshop"><a href="javascript:;"><strong>Preview Shop</strong></a></li>
+        }
+        else if (step == ShopSignupStepCompleted.ListItems && listitems == "completed")
+        {
+            <li class="@getpaid"><a href="@Url.Action("GetPaid", "User")"><strong>Get Paid</strong>Set up the payment methods you accept.</a> </li>
+            <li class="@listitems"><a href="@Url.Action("ListItems", "User")"><strong>List Items</strong>What are you going to sell? Add and edit listings here.</a> </li>
+            <li class="@previewshop"><a href="@Url.Action("PreviewShop", "User")"><strong>Preview Shop</strong></a></li>
+        }
+        else
+        {
+            <li class="@getpaid"><a href="javascript:;"><strong>Get Paid</strong>Set up the payment methods you accept.</a> </li>
+            <li class="@listitems"><a href="javascript:;"><strong>List Items</strong>What are you going to sell? Add and edit listings here.</a> </li>
+            <li class="@previewshop"><a href="javascript:;"><strong>Preview Shop</strong></a></li>
+        }
+        </ul>
+    }
+}

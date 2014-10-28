@@ -1,0 +1,48 @@
+﻿@model PagingResult<GetShopListingByServiceId_Result>
+@{
+    ViewBag.Title = "ShopByServices";
+    Layout = ViewBag.CentroUsers != null ? "~/Views/Shared/_BuyerLayout.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@section title{
+     Shop Listing For @ViewBag.ServiceName
+}
+<aside class="floatLeft left-side">
+@if (ViewBag.CentroUsers != null)
+{
+    @Html.Partial("_LeftSideBuyerCategoryMenuLayout")
+}
+else
+{ 
+    @Html.Partial("_LeftSideMenuLayout")
+}
+</aside>
+<div class="right-side floatRight">
+    <div class="custom_design">
+        <h2 class="custom-title">
+            @Utility.HifenToSpace(ViewBag.ServiceName) <div class="short-by-link">
+            <strong>Sort By:</strong>
+            <select onchange="SortShops(this)" style="">
+                <option value="">--Select--</option>
+                @*<option value="CreatedOn">All</option>*@
+                <option value="CreatedOn">Recently Viewed</option>
+                <option value="Rating">Reviews High-Low</option>
+                <option value="TotalEarning">Total Earned High-Low</option>                
+            </select>
+        </div></h2>
+       
+        <div id="Result">
+            @Html.Partial("_ShopsListing", Model)
+        </div>
+    </div>
+</div>
+@section scripts{
+    <link href="@Url.Content("~/Content/paging/style.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/Custom/paging.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/custom/preview.js")"></script>
+    <script src="@Url.Content("~/Scripts/System/jquery.raty.min.js")"></script>
+}
+<script type="text/javascript">
+    var totalCount = "@Model.TotalCount";
+    var ActiveServiceID = '@ViewBag.ServiceID';    
+</script>
+<script src="@Url.Content("~/Scripts/Custom/shopsByServices.js")" type="text/javascript"></script>
